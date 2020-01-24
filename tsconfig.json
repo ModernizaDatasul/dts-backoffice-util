@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "dts-backoffice-util": [
+        "dist/dts-backoffice-util"
+      ],
+      "dts-backoffice-util/*": [
+        "dist/dts-backoffice-util/*"
+      ]
+    }
   }
 }
