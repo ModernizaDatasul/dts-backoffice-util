@@ -1,6 +1,6 @@
 ## Changelog
 
-**0.0.10 (24-01-2020)**
+**0.0.11 (24-01-2020)**
 
 Primeira versão, serviços disponíveis:
 - breadcrumb-control.service
