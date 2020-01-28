@@ -50,12 +50,13 @@ DEFINE TEMP-TABLE tt-param NO-UNDO
     FIELD usuario AS CHARACTER
     FIELD perfil AS INTEGER.
 ```
-Parâmetros
+Parâmetros:
+
 | Nome  |  Tipo | Descrição |
 | ------------ | --- | ------------ |
 | programName | String | Nome da API|
 | externalName | String | Nome da API completo, pasta + nome |
-| parameters | Array<> | Objeto representando a Temp-Table que será enviada ao progress |
+| parameters | Array | Objeto representando a Temp-Table que será enviada ao progress |
 | endExecution | EventEmitter```<boolean>``` | Evento que será emitido ao finalizar o agendamento |
 **0.0.11 (24-01-2020)**
 
@@ -103,7 +104,8 @@ this.preferenceService.setProfile(profile)
 });
 ```
 
-Métodos
+Métodos:
+
 | Nome  |  Parâmetros  | Resultado |
 | ------------ | ------------ |--- |
 | setProfile  | IProfile | Nenhum resultado, erros devem ser tratados|
@@ -137,7 +139,8 @@ this.sessionService.getUserLogin().subscribe((user) => {
 	this.notification.success(`O usuário logado é ${user}`);
 });
 ```
-Métodos
+Métodos:
+
 | Nome  |  Parâmetros  | Resultado |
 | ------------ | ------------ |--- |
 | getUserLogin  |  | Retorna um Observable<String> com o login do usuário|
@@ -183,7 +186,8 @@ this.reportService.generate(params).subscribe(() => {
 	this.notification.error("Não foi possível baixar o arquivo");
 });
 ```
-Métodos
+Métodos:
+
 | Nome  |  Parâmetros  | Resultado |
 | ------------ | ------------ |--- |
 | generate  | IReportServiceParams, showLoading (opcional): boolean | Retorna o arquivo binário gerado pelo datasul-report e faz o download do arquivo |
@@ -232,7 +236,8 @@ import { BreadcrumbControlService } from 'dts-backoffice-util';
 ```
 
 
-Métodos
+Métodos:
+
 | Nome  |  Parâmetros  | Resultado |
 | ------------ | ------------ |--- |
 | newBreadcrumb  |  | Cria um novo breadcrumb e armazena no contexto do serviço |
@@ -255,7 +260,8 @@ Importação:
   import { DateUtil } from 'dts-backoffice-util';
 ```
 
-Métodos
+Métodos:
+
 | Nome  |  Parâmetros  | Resultado |
 | ------------ | ------------ |--- |
 | dateToQueryParam | date: Date | Transforma data para o padrão YYYY-MM-DD |
