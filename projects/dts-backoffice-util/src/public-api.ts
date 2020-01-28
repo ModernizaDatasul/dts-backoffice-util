@@ -24,8 +24,7 @@ export * from './lib/interfaces/totvs-response.interface';
 export * from './lib/interfaces/filter-range.interface';
 // Interfaces
 
-// Default
-export * from './lib/dts-backoffice-util.component';
+// Schedule Execution
+export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.component';
 export * from './lib/dts-backoffice-util.module';
-// Default
-
+// Schedule Execution

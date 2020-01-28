@@ -1,8 +1,9 @@
 {
   "name": "dts-backoffice-util",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "peerDependencies": {
     "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3"
+    "@angular/core": "^8.0.3",
+    "@angular/forms": "^8.0.3"
   }
 }

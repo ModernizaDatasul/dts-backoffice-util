@@ -1,0 +1,110 @@
+<form #scheduleExecutionForm="ngForm">
+    <div class="po-row po-lg-12 po-xl-12">
+        <po-radio-group
+            class="po-lg-12 po-xl-12"
+            name="typeExecution"
+            [(ngModel)]="model.typeExecution"
+            name="radioGroupBasic"
+            p-label="Data de Execução"
+            [p-options]="TypeExecutionOptions"
+            (p-change)="changeTypeExecution()"
+        >
+        </po-radio-group>
+
+        <po-datepicker *ngIf="model.typeExecution == 2"
+            class="po-xl-3 po-lg-3 po-md-3 po-sm-3"
+            name="model.executionAppointmentDate"
+            [(ngModel)]="model.executionAppointmentDate"
+            p-label="Agendar Para"
+        >
+        </po-datepicker>
+
+        <po-input *ngIf="model.typeExecution == 2"
+            name="executionAppointmentHour"
+            [(ngModel)]="model.executionAppointmentHour"
+            p-label="Hora"
+            p-mask="99:99"
+            p-mask-format-model="true"
+            p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+            p-error-pattern="Hora inválida"
+            class="po-xl-3 po-lg-3 po-md-3 po-sm-3"
+        >
+        </po-input>
+    </div>
+    <div class="po-row po-lg-12 po-xl-12">
+        <po-combo
+            class="po-xl-12 po-lg-12 po-md-12 po-sm-12"
+            name="executionServer"
+            [(ngModel)]="model.executionServer"
+            p-field-label="des_servid_exec"
+            p-field-value="cod_servid_exec"
+            p-label="Servidor de Execução"
+            p-placeholder="Servidor de Execucão"
+            [p-filter-service]="rpwService">
+          </po-combo>
+        </div>
+    <div class="po-row po-lg-12 po-xl-12">
+        <po-switch
+            name="repeatExec"
+            p-label="Repetir ocorrência?"
+            [(ngModel)]="model.repeatExecution"
+            class="po-xl-6 po-lg-6 po-md-6 po-sm-6"
+            p-label-off="Não"
+            p-label-on="Sim"
+            (click)="setActiveTab(model.activeTab)"
+        >
+        </po-switch>
+    </div>
+
+    <div class="po-row" *ngIf="model.repeatExecution">
+
+        <po-tabs>
+            <po-tab p-label="Diária" [p-active]="model.activeTab === 1" (p-click)="setActiveTab(1)">
+                <div class="po-row po-lg-12 po-xl-12">
+                    <po-input
+                        name="executionAppointmentHourDaily"
+                        [(ngModel)]="model.executionAppointmentHourDaily"
+                        p-label="Hora"
+                        p-mask="99:99"
+                        p-mask-format-model="true"
+                        p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+                        p-error-pattern="Hora inválida"
+                        class="po-xl-3 po-lg-3 po-md-3 po-sm-3"
+                        >
+                    </po-input>
+                </div>
+            </po-tab>
+
+            <po-tab p-label="Mensal" [p-active]="model.activeTab === 2" (p-click)="setActiveTab(2)">
+                <div class="po-row po-lg-12 po-xl-12">
+                    <po-input
+                        name="executionAppointmentHourWeekly"
+                        [(ngModel)]="model.executionAppointmentHourWeekly"
+                        p-label="Hora"
+                        p-mask="99:99"
+                        p-mask-format-model="true"
+                        p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+                        p-error-pattern="Hora inválida"
+                        class="po-xl-3 po-lg-3 po-md-3 po-sm-3"
+                        >
+                    </po-input>
+                    <po-multiselect
+                        class="po-xl-6 po-lg-6 po-md-6 po-sm-6"
+                        name="selectWeeklys"
+                        [(ngModel)]="model.selectWeeklys"
+                        p-label="Dias de Execução"
+                        [p-options]="weeklyOptions"
+                    >
+                    </po-multiselect>
+                </div>
+            </po-tab>
+        </po-tabs>
+    </div>
+    <div class="po-xl-12 po-lg-12 po-md-12 po-sm-12" style="padding-top: 15px;">
+        <po-button
+            style="float: right;"
+            p-label="Gerar Agendamento RPW"
+            (click)="executeSchedule()">
+        </po-button>
+    </div>
+</form>

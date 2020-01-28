@@ -1,5 +1,62 @@
 ## Changelog
 
+**0.0.12 (28-01-2020)**
+
+**TotvsScheduleExecutionComponent:** Componente para realização de agendamentos RPW.
+
+**Dependências:** Para usar esse componente deve ser instalado no projeto o pacote rxjs-compat. <br/>
+- **npm i rxjs-compat --save**
+
+**Importação:** No módulo da aplicação importar o módulo abaixo:
+```
+@NgModule({
+    declarations: [
+        ...
+    ],
+    imports: [
+        ...,
+        DtsBackofficeUtilsModule.forRoot()
+    ],
+    providers: [],
+    bootstrap: [...]
+})
+```
+
+No HTML usar da seguinte forma:
+```
+<app-totvs-schedule-execution 
+  programName="pdapi701"
+  externalName="pdp/pdapi701"
+  parameters="parametersRpw"
+  (endExecution)="endExecution($event)">
+</app-totvs-schedule-execution>
+```
+
+**Definição no JavaScript:**
+```
+this.parametersRpw = [
+    { chave: 'destino', valor: 2, tipo: 'integer' },
+    { chave: 'arquivo', valor: '', tipo: 'character' },
+    { chave: 'usuario', valor: 'FERNANDO', tipo: 'character' },
+    { chave: 'perfil', valor: 880, tipo: 'integer' }
+];
+
+```
+**Definição no Progress:**
+```
+DEFINE TEMP-TABLE tt-param NO-UNDO
+    FIELD destino AS INTEGER
+    FIELD arquivo AS CHARACTER
+    FIELD usuario AS CHARACTER
+    FIELD perfil AS INTEGER.
+```
+Parâmetros
+| Nome  |  Tipo | Descrição |
+| ------------ | --- | ------------ |
+| programName | String | Nome da API|
+| externalName | String | Nome da API completo, pasta + nome |
+| parameters | Array<> | Objeto representando a Temp-Table que será enviada ao progress |
+| endExecution | EventEmitter```<boolean>``` | Evento que será emitido ao finalizar o agendamento |
 **0.0.11 (24-01-2020)**
 
 Primeira versão, serviços disponíveis:
@@ -16,9 +73,7 @@ Primeira versão, serviços disponíveis:
 - generic-functions.utils
 
 
-## Datasul Backoffice Utils
-
-##### **Profile Service**
+**Profile Service**
 
 Salvar preferências do usuáro.
 
