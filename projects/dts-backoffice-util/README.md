@@ -7,7 +7,7 @@
 **Dependências:** Para usar esse componente deve ser instalado no projeto o pacote rxjs-compat. <br/>
 - **npm i rxjs-compat --save**
 
-**Importação:** No módulo da aplicação importar o módulo abaixo:
+**Importação:** No módulo que irá usar o agendamento importar o módulo abaixo:
 ```
 @NgModule({
     declarations: [
