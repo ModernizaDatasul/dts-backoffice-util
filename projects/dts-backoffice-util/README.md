@@ -1,5 +1,8 @@
 ## Changelog
 
+**0.0.14 (31-01-2020)**
+Correção no **TotvsScheduleExecutionComponent:** Adicionando o "zero" na frente da hora que forem menor que 10
+
 **0.0.13 (30-01-2020)**
 
 **dtsDateFormat:** PIPE para formatar datas, ele foi criado pois o PIPE date do angular não consegue formatada datas inferiores a 1901.
