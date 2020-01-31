@@ -3,7 +3,7 @@
 **Guia de contribuição**
 - Os componentes e utils dessa biblioteca são utilizados em várias squads, tenha responsabilidade na alteração;
 
-- Nenhum commit será feito direto na branch, para contribuir você deve fazer um fork do;projeto e então abrir um 'Pull Request' (PR)
+- Nenhum commit será feito direto na branch, para contribuir você deve fazer um fork do projeto e então abrir um 'Pull Request' (PR)
 
 - Esse PR será avaliado por **Alexandre Weber Dalabona** ou **Adriano de Avila**;
 
