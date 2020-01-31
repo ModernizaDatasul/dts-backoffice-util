@@ -70,15 +70,15 @@ export class TotvsScheduleExecutionComponent implements OnInit {
       const date = new Date();
 
       this.model.executionAppointmentDate = date;
-      this.model.executionAppointmentHour = date.getHours() + ':' + this.addZero(date.getMinutes());
+      this.model.executionAppointmentHour = this.addZero(date.getHours()) + ':' + this.addZero(date.getMinutes());
     }
 
     setActiveTab(codTab) {
       const date = new Date();
 
       this.model.activeTab = codTab;
-      this.model.executionAppointmentHourDaily = date.getHours() + ':' + this.addZero(date.getMinutes());
-      this.model.executionAppointmentHourWeekly = date.getHours() + ':' + this.addZero(date.getMinutes());
+      this.model.executionAppointmentHourDaily = this.addZero(date.getHours()) + ':' + this.addZero(date.getMinutes());
+      this.model.executionAppointmentHourWeekly = this.addZero(date.getHours()) + ':' + this.addZero(date.getMinutes());
     }
 
     addZero(i) {
