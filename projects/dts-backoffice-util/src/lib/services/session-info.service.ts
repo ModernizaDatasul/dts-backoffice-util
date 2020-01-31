@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ISessionInfo } from './model/session-info.model';
+import { ISessionInfo } from '../model/session-info.model';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -4,7 +4,7 @@ Data Criação: 06/08/2018
 */
 
 import { PoDisclaimer, PoI18nPipe, PoCheckboxGroupOption, PoMultiselectOption } from '@portinari/portinari-ui';
-import { IFilterRangeCharacter, IFilterRangeNumber, IFilterRangeDate } from '../lib/interfaces/filter-range.interface';
+import { IFilterRangeCharacter, IFilterRangeNumber, IFilterRangeDate } from '../../lib/interfaces/filter-range.interface';
 import { PoNotificationService } from '@portinari/portinari-ui';
 
 export class DisclaimerUtil {

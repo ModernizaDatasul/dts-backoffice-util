@@ -1,5 +1,54 @@
 ## Changelog
 
+**0.0.13 (30-01-2020)**
+
+**dtsDateFormat:** PIPE para formatar datas, ele foi criado pois o PIPE date do angular não consegue formatada datas inferiores a 1901.
+
+**Importação:** No módulo de funcionalidade importar o módulo abaixo:
+```
+@NgModule({
+    declarations: [
+        ...
+    ],
+    imports: [
+        ...,
+        DtsBackofficeUtilsModule
+    ],
+    providers: [],
+    bootstrap: [...]
+})
+```
+
+Exemplo de uso:
+```
+<po-info p-label="Data"
+        [p-value]="date | dtsDateFormat : 'dd/MM/yyyy'">
+</po-info>
+
+<po-info p-label="Data"
+         [p-value]="date | dtsDateFormat : 'MM/dd/yyyy'">
+</po-info>
+```
+
+**openPath:** Função openPath criada para abrir telas em nova aba do Datasul.
+| Nome  |  Parâmetros  | Resultado |
+| ------------ | -------------- |--- |
+| openPath  | programName Parameters OpenParent| Abre a tela em uma nova aba do Datasul|
+
+Importação:
+```
+import { MenuDatasulService } from 'dts-backoffice-util';
+
+constructor(public menuDatasulService: MenuDatasulService) {
+}
+```
+
+Exemplo de uso:
+```
+this.menuDatasulService
+    .openPath('html.inquiryItem', '1509;10;1', true);
+```
+
 **0.0.12 (28-01-2020)**
 
 **TotvsScheduleExecutionComponent:** Componente para realização de agendamentos RPW.

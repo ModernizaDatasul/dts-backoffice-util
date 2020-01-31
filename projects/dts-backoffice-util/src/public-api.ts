@@ -3,20 +3,20 @@
  */
 
 // Services
-export * from './lib/session-info.service'; // Doc OK
-export * from './lib/profile.service';      // Doc OK
-export * from './lib/report.service';       // Doc OK
-export * from './lib/breadcrumb-control.service'; // Doc OK
-export * from './lib/menu-datasul.service';
-export * from './lib/cache-params.service';
+export * from './lib/services/session-info.service';
+export * from './lib/services/profile.service';
+export * from './lib/services/report.service';
+export * from './lib/services/breadcrumb-control.service';
+export * from './lib/services/menu-datasul.service';
+export * from './lib/services/cache-params.service';
 // Services
 
 // Utils
-export * from './lib/date.util'; // Doc OK
-export * from './lib/disclaimer.util';
-export * from './lib/field-validation.util';
-export * from './lib/filter-range.util';
-export * from './lib/generic-functions.utils';
+export * from './lib/utils/date.util';
+export * from './lib/utils/disclaimer.util';
+export * from './lib/utils/field-validation.util';
+export * from './lib/utils/filter-range.util';
+export * from './lib/utils/generic-functions.utils';
 // Utils
 
 // Interfaces
@@ -28,3 +28,7 @@ export * from './lib/interfaces/filter-range.interface';
 export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.component';
 export * from './lib/dts-backoffice-util.module';
 // Schedule Execution
+
+// Pipes
+export * from './lib/pipes/dts-date-format.pipe';
+// Pipes

@@ -8,10 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 // import { BrowserModule } from '@angular/platform-browser';
 import { RpwService } from './components/totvs-schedule-execution/totvs-schedule-execution.service';
 import { CommonModule } from '@angular/common';
+import { DtsDateFormatPipe } from './pipes/dts-date-format.pipe';
 
 @NgModule({
   declarations: [
-    TotvsScheduleExecutionComponent
+    TotvsScheduleExecutionComponent,
+    DtsDateFormatPipe
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { CommonModule } from '@angular/common';
     HttpClientModule
   ],
   exports: [
-    TotvsScheduleExecutionComponent
+    TotvsScheduleExecutionComponent,
+    DtsDateFormatPipe
   ],
   providers: [
     RpwService
