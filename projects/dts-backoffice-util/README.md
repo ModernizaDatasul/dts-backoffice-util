@@ -1,6 +1,31 @@
 ## Changelog
 
+**0.0.17 (03-02-2020):** 
+
+Arquivo css para aplicar estilo TOTVS no Kendo Grid
+
+Para utilizado deve ser importado o CSS no angular.json, conforme abaixo
+
+```
+
+"styles": [
+  "node_modules/@totvs/portinari-theme/css/po-theme-default.min.css",
+  "node_modules/@progress/kendo-theme-default/dist/all.css",
+  "node_modules/dts-backoffice-util/lib/css/kendo.min.css",
+  "src/styles.css"
+],
+```
+
+**0.0.16 (03-02-2020):** 
+
+Ajustes documentação
+
+**0.0.15 (03-02-2020)**
+
+Correção no **ReportService:** Realizado ajuste para a impressão funciona no novo framework
+
 **0.0.14 (31-01-2020)**
+
 Correção no **TotvsScheduleExecutionComponent:** Adicionando o "zero" na frente da hora que forem menor que 10
 
 **0.0.13 (30-01-2020)**

@@ -4,69 +4,71 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
 
 export interface IProperty {
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 }
 
 export interface IReportServiceParams {
-    reportName: string;
-    programName: string;
-    properties: Array<IProperty>;
-    dialect: string;
-    downloadName: string;
-    download: boolean;
-    format: ReportFormats;
+  reportName: string;
+  programName: string;
+  properties: Array<IProperty>;
+  dialect: string;
+  downloadName: string;
+  download: boolean;
+  format: ReportFormats;
 }
 
 export enum ReportFormats {
-    XLSX = 'xlsx',
-    PDF = 'pdf',
-    DOCX = 'docx',
-    HTML = 'html'
+  XLSX = 'xlsx',
+  PDF = 'pdf',
+  DOCX = 'docx',
+  HTML = 'html'
 }
 
 @Injectable()
 
 export class ReportService {
-    public readonly URL = '/dts/datasul-report/resources/run/';
+  public readonly URL = window.location.href.indexOf('totvs-menu') > 0 ? '/totvs-menu/rest/report/run/'
+                        : '/dts/datasul-report/resources/run/';
 
-    constructor(public httpClient: HttpClient) { }
 
-    generate(params: IReportServiceParams, showLoading: boolean = true): Observable<Blob> {
-        const headers = { 'X-Portinari-Screen-Lock': showLoading ? 'true' : 'false'};
+  constructor(public httpClient: HttpClient) { }
 
-        let reportURL = `${this.URL}${params.reportName}`;
+  generate(params: IReportServiceParams, showLoading: boolean = true): Observable<Blob> {
+    const headers = { 'X-Portinari-Screen-Lock': showLoading ? 'true' : 'false' };
 
-        if (params.properties.length > 0) {
-            reportURL += '?';
+    let reportURL = `${this.URL}${params.reportName}`;
 
-            params.properties.forEach((property: IProperty) => {
-                reportURL += `c_properties=${property.name}&c_values=${property.value}`;
-            });
+    if (params.properties.length > 0) {
+      reportURL += '?';
+
+      params.properties.forEach((property: IProperty) => {
+        reportURL += `c_properties=${property.name}&c_values=${property.value}`;
+      });
+    }
+
+    reportURL += `&dialect=${params.dialect}&format=${params.format}`;
+    reportURL += `&program=${params.programName}&resultFileName=${params.downloadName}`;
+
+    return this.httpClient.post(reportURL, {}, { headers, responseType: 'blob' })
+      .pipe(map(report => {
+        if (params.download) {
+          this.download(report, `${params.reportName}.${params.format}`);
         }
+        return report;
+      }));
+  }
 
-        reportURL += `&dialect=${params.dialect}&format=${params.format}`;
-        reportURL += `&program=${params.programName}&resultFileName=${params.downloadName}`;
+  download(file: Blob, fileName: string) {
+    const binaryData = [file];
+    const downloadLink = document.createElement('a');
+    const urlDownload = window.URL.createObjectURL(new Blob(binaryData, { type: file.type }));
 
-        return this.httpClient.post(reportURL, {}, { headers, responseType: 'blob' })
-                              .pipe(map(report => {
-            if (params.download) {
-                this.download(report, `${params.reportName}.${params.format}` );
-            }
-            return report;
-        }));
-    }
-
-    download(file: Blob, fileName: string) {
-        const binaryData = [file];
-        const downloadLink = document.createElement('a');
-        const urlDownload = window.URL.createObjectURL(new Blob(binaryData, { type: file.type }));
-
-        downloadLink.href = urlDownload;
-        downloadLink.setAttribute('download', fileName);
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        window.URL.revokeObjectURL(urlDownload);
-        downloadLink.remove();
-    }
+    downloadLink.href = urlDownload;
+    downloadLink.setAttribute('download', fileName);
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    window.URL.revokeObjectURL(urlDownload);
+    downloadLink.remove();
+  }
 }

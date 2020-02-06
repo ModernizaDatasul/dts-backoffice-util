@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build dts-backoffice-util && npm run uglifycss && npm run build-styles",
+    "uglifycss": "uglifycss ./projects/dts-backoffice-util/src/lib/css/kendo.css > ./projects/dts-backoffice-util/src/lib/css/kendo.min.css",
+    "build-styles": "cpx ./projects/dts-backoffice-util/src/lib/css/kendo.min.css ./dist/dts-backoffice-util/lib/css",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,9 +23,11 @@
     "@angular/router": "~8.0.0",
     "@portinari/portinari-ui": "1.23.0",
     "@totvs/thf-kendo": "4.0.2",
+    "cpx": "^1.5.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "~6.4.0",
     "tslib": "^1.9.0",
+    "uglifycss": "0.0.29",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
