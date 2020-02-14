@@ -102,9 +102,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     ngDoCheck() {
         const change = this.differ.diff(this.data);
-        // if (change) {
-        //     this.initializeData();
-        // }
+        if (change) {
+            this.initializeData();
+        }
     }
 
     sortChange(sort: Array<SortDescriptor>) {
