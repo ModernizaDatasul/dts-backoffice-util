@@ -1,5 +1,11 @@
 ## Changelog
 
+**0.0.18 (14-02-2020):** 
+
+Ajuste no serviço **disclaimer.util.ts** para possibilitar a tradução do value no **makeDisclaimerFromMultiSelect**. Foi incluido um novo parâmetro **tradValue** para indicar se deve ou não ser traduzido.
+Para tradução o value deve estar no literals que foi enviado para o serviço
+
+
 **0.0.17 (03-02-2020):** 
 
 Arquivo css para aplicar estilo TOTVS no Kendo Grid

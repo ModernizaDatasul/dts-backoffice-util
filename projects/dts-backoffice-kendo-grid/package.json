@@ -1,0 +1,18 @@
+{
+  "name": "dts-backoffice-kendo-grid",
+  "version": "0.0.2",
+  "peerDependencies": {
+    "@progress/kendo-angular-buttons": "^5.2.3",
+    "@progress/kendo-angular-common": "^1.2.2",
+    "@progress/kendo-angular-dateinputs": "^4.2.2",
+    "@progress/kendo-angular-dropdowns": "^4.2.4",
+    "@progress/kendo-angular-excel-export": "^3.1.2",
+    "@progress/kendo-angular-grid": "^4.6.3",
+    "@progress/kendo-angular-inputs": "^6.4.2",
+    "@progress/kendo-angular-intl": "^2.0.1",
+    "@progress/kendo-angular-l10n": "^2.0.1",
+    "@progress/kendo-angular-pdf-export": "^2.0.2",
+    "@progress/kendo-angular-popup": "^3.0.5",
+    "@progress/kendo-data-query": "^1.5.2"
+  }
+}

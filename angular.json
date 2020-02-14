@@ -37,6 +37,41 @@
           }
         }
       }
-    }},
-  "defaultProject": "dts-backoffice-util"
+    },
+    "dts-backoffice-kendo-grid": {
+      "projectType": "library",
+      "root": "projects/dts-backoffice-kendo-grid",
+      "sourceRoot": "projects/dts-backoffice-kendo-grid/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/dts-backoffice-kendo-grid/tsconfig.lib.json",
+            "project": "projects/dts-backoffice-kendo-grid/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/dts-backoffice-kendo-grid/src/test.ts",
+            "tsConfig": "projects/dts-backoffice-kendo-grid/tsconfig.spec.json",
+            "karmaConfig": "projects/dts-backoffice-kendo-grid/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/dts-backoffice-kendo-grid/tsconfig.lib.json",
+              "projects/dts-backoffice-kendo-grid/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  }
 }

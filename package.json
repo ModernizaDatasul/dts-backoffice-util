@@ -4,7 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build dts-backoffice-util && npm run uglifycss && npm run build-styles",
+    "build": "ng build dts-backoffice-util && npm run pack",
+    "pack": "cd ./dist/dts-backoffice-util && npm pack",
+    "build-grid": "ng build dts-backoffice-kendo-grid && npm run pack-grid",
+    "pack-grid": "cd ./dist/dts-backoffice-kendo-grid && npm pack",
     "uglifycss": "uglifycss ./projects/dts-backoffice-util/src/lib/css/kendo.css > ./projects/dts-backoffice-util/src/lib/css/kendo.min.css",
     "build-styles": "cpx ./projects/dts-backoffice-util/src/lib/css/kendo.min.css ./dist/dts-backoffice-util/lib/css",
     "test": "ng test",
