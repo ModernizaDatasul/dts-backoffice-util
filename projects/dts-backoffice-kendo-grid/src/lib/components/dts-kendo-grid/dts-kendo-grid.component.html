@@ -29,7 +29,7 @@
     <button kendoGridPDFCommand *ngIf="exportButtons"><span class='k-icon k-i-file-pdf'></span></button>
   </ng-template>
 
-  <kendo-grid-checkbox-column
+  <kendo-grid-checkbox-column *ngIf="selectable"
       [width]="40"
       [headerClass]="{'text-center': true}"
       [class]="{'text-center': true}"

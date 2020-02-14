@@ -34,6 +34,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     editedRowIndex = -1;
     editedProducted: any;
     formGroup: FormGroup;
+    groups: Array<GroupDescriptor> = [];
     gridView: GridDataResult;
     sortableObject: any;
     sort: Array<SortDescriptor> = [];
@@ -63,21 +64,23 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     ngAfterViewInit() {
-        document.querySelector('#k-grid0-select-all').addEventListener('click', () => {
-            const element: any = document.querySelector('.k-checkbox');
-            this.data.forEach((item, i) => {
-                this.data[i].$selected = element.checked;
-            });
-        });
-
-        document.querySelectorAll('.k-checkbox').forEach((item, index) => {
-            if (index !== 0) {
-                item.addEventListener('click', (evt) => {
-                    this.data[index - 1].$selected = !this.data[index - 1].$selected;
-                    evt.stopPropagation();
+        if (this.selectable) {
+            document.querySelector('#k-grid0-select-all').addEventListener('click', () => {
+                const element: any = document.querySelector('.k-checkbox');
+                this.data.forEach((item, i) => {
+                    this.data[i].$selected = element.checked;
                 });
-            }
-        });
+            });
+
+            document.querySelectorAll('.k-checkbox').forEach((item, index) => {
+                if (index !== 0) {
+                    item.addEventListener('click', (evt) => {
+                        this.data[index - 1].$selected = !this.data[index - 1].$selected;
+                        evt.stopPropagation();
+                    });
+                }
+            });
+        }
     }
 
     ngOnInit() {
@@ -122,7 +125,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         // if (state.group.length > 2) {
         //     state.group.splice(0, 1);
         // }
-
         this.state = state;
         this.gridView = process(this.data, this.state);
     }
