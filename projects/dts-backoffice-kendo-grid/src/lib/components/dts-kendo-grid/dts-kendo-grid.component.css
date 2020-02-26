@@ -16572,3 +16572,34 @@ li.k-item.k-drag-clue {
 .k-grid td.k-state-selected, .k-grid tr.k-state-selected>td {
     background-color: #f3fafc!important;
 }
+
+.d-actions {
+    color: #0c9abe;
+    font-family: NunitoSans,sans-serif;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.d-action {
+    font-family: NunitoSans,sans-serif !important;
+    color: #0c9abe;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.d-action-span {
+    padding-right: 3px;
+    color: #0c9abe;
+}
+
+.k-grid-norecords {
+    text-align: center;
+    vertical-align: middle;
+    font-family:NunitoSans-Bold, sans-serif;
+    font-size:12px;
+}
+
+.k-grid-norecords > td {
+    padding: 15px 0px 15px 0px;
+}

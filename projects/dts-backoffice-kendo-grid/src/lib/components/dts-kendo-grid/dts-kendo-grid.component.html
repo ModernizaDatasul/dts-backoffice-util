@@ -16,12 +16,11 @@
   (edit)="editHandler($event)"
   (remove)="removeHandler($event)"
   (save)="saveHandler($event)">
+
   <kendo-grid-messages
     [noRecords]="literals.noRecords"
     [groupPanelEmpty]="literals.groupPanelEmpty">
   </kendo-grid-messages>
-
-  <!-- [selectable]="{enabled: true, checkboxOnly: true}" -->
 
   <ng-template kendoGridToolbarTemplate *ngIf="addButton || exportButtons" >
     <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add }}</button>
@@ -34,14 +33,13 @@
       [headerClass]="{'text-center': true}"
       [class]="{'text-center': true}"
       [resizable]="false"
-      [columnMenu]="false"
+      [columnMenu]="true"
       [showSelectAll]="true"
       (selectAllChange)="onClickColumn($event)"
       (click)="onClickColumn($event)">
   </kendo-grid-checkbox-column>
 
   <div *ngFor="let col of columns; let i = index">
-
     <kendo-grid-column
         (click)="onClickColumn(col)"
         [field]="col.column"
@@ -51,14 +49,12 @@
         [format]="col.format"
         [editor]="col.type">
 
-        <!-- <ng-template kendoGridCellTemplate let-data *ngIf="col.checkbox" let-columnIndex="columnIndex" let-rowIndex="rowIndex">
-            <po-checkbox
-                name="checkbox">
-          </po-checkbox>
-        </ng-template> -->
-
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
             {{ data[col.column] | date : col.format }}
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">
+            {{ data[col.column] | currency : col.format }}
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-type *ngIf="col.type === 'label'">
@@ -76,9 +72,22 @@
   </div>
 
   <kendo-grid-command-column title="" width="80" locked="true" *ngIf="isCommandColumnVisible()">
-    <ng-template kendoGridCellTemplate let-isNew="isNew">
-      <button kendoGridRemoveCommand class="k-primary" *ngIf="showRemoveButton" >{{ literals.remove }}</button>
-      <button kendoGridCancelCommand class="k-primary" (click)="cancelPropagation($event)">{{ isNew ? literals.undo : literals.cancel }} </button>
+    <ng-template kendoGridCellTemplate let-data>
+
+        <div *ngIf="actions.length > 1">
+            <span class="d-actions po-icon po-icon-more po-clickable"
+                  #target
+                  (click)="onClickActions($event, data)">
+            </span>
+        </div>
+
+        <div *ngIf="actions.length === 1">
+            <span class="d-action-span po-icon {{actions[0].icon}} po-clickable"></span>
+            <span class="d-action po-clickable"
+                  (click)="onClickAction(data, actions[0])">{{ actions[0].label }}
+            </span>
+        </div>
+
     </ng-template>
   </kendo-grid-command-column>
 
@@ -98,4 +107,23 @@
             [disabled]="showMoreDisabled">{{ literals.showMore }}
     </button>
   </div>
+</div>
+
+<div id="popupRef"
+     class="po-popup"
+     [hidden]="!showPopup">
+
+    <ng-content select="[p-popup-header-template]"></ng-content>
+    <div class="po-popup-arrow po-arrow-top-right"></div>
+    <div class="po-popup-item-default"
+         *ngFor="let action of actions; let actionIndex = index"
+         (click)="executeAction(action)">
+
+        <div *ngIf="action.visible !== false">
+            <span *ngIf="action.icon"
+                  class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
+
+            <span class="d-action po-clickable">{{ action.label }}</span>
+        </div>
+    </div>
 </div>

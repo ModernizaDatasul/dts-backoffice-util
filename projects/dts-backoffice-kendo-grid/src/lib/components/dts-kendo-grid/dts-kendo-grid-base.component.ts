@@ -65,21 +65,6 @@ import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
  */
 export abstract class DtsKendoGridBaseComponent {
 
-  private _sortable: boolean;
-
-  private _selectable: boolean;
-
-  private _editable: boolean;
-
-  private _groupable: boolean;
-
-  /** Lista de objeto a serem exibidos. Este atributo aceita um array de objetos JSON. */
-  @Input('d-data') data: Array<any>;
-
-
-  /** Objeto com as informações das colunas a serem exibidas. */
-  @Input('d-columns') columns: Array<DtsKendoGridColumn>;
-
   /** Habilita a opção de ordenação dos dados nas colunas. */
   @Input('d-sortable') set sortable(sortable: boolean) {
     this._sortable = sortable != null && sortable.toString() === '' ? true : this.convertToBoolean(sortable);
@@ -106,8 +91,6 @@ export abstract class DtsKendoGridBaseComponent {
   get editable() {
     return this._editable;
   }
-
-  @Input('d-groups') groups: any;
   /** Habilita a opção para agrupamento, permitindo agrupar no máximo dois níveis. */
   @Input('d-groupable') set groupable(groupable: boolean) {
     this._groupable = groupable != null && groupable.toString() === '' ? true : this.convertToBoolean(groupable);
@@ -119,6 +102,23 @@ export abstract class DtsKendoGridBaseComponent {
   get groupable() {
     return this._groupable;
   }
+
+  private _sortable: boolean;
+
+  private _selectable: boolean;
+
+  private _editable: boolean;
+
+  private _groupable: boolean;
+
+  /** Lista de objeto a serem exibidos. Este atributo aceita um array de objetos JSON. */
+  @Input('d-data') data: Array<any>;
+
+
+  /** Objeto com as informações das colunas a serem exibidas. */
+  @Input('d-columns') columns: Array<DtsKendoGridColumn>;
+
+  @Input('d-groups') groups: any;
 
   /** Recebe valores "true" ou "false" para habilitar ou desabilitar o botão "Carregar Mais Resultados". */
   @Input('d-show-more-disabled') showMoreDisabled = 'false';
@@ -176,6 +176,9 @@ export abstract class DtsKendoGridBaseComponent {
    *
    * Recebe um método para carregar mais resultados e habilita o botão desta opção.
    */
+
+  @Input('d-actions') actions = [];
+
   @Output('d-show-more') showMore = new EventEmitter<any>();
 
   /**
@@ -199,6 +202,8 @@ export abstract class DtsKendoGridBaseComponent {
   @Output('d-group-change') dtsGroupChange = new EventEmitter<any>();
 
   protected parentRef: any;
+
+  protected clickoutListener: () => void;
 
   abstract onShowMore(): void;
 

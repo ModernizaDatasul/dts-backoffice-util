@@ -4,10 +4,19 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build dts-backoffice-util && npm run pack",
-    "pack": "cd ./dist/dts-backoffice-util && npm pack",
-    "build-grid": "ng build dts-backoffice-kendo-grid && npm run pack-grid",
+
+    "build-local-lib": "ng build dts-backoffice-util && npm run pack-utils",
+    "build-local-grid": "ng build dts-backoffice-kendo-grid && npm run pack-grid",
+
+    "pack-utils": "cd ./dist/dts-backoffice-util && npm pack",
     "pack-grid": "cd ./dist/dts-backoffice-kendo-grid && npm pack",
+
+    "build-publish-utils": "ng build dts-backoffice-util && npm run publish-utils",
+    "publish-utils": "cd ./dist/dts-backoffice-util && npm publish",
+
+    "build-publish-grid": "ng build dts-backoffice-kendo-grid && npm run publish-grid",
+    "publish-grid": "cd ./dist/dts-backoffice-kendo-grid && npm publish",
+
     "uglifycss": "uglifycss ./projects/dts-backoffice-util/src/lib/css/kendo.css > ./projects/dts-backoffice-util/src/lib/css/kendo.min.css",
     "build-styles": "cpx ./projects/dts-backoffice-util/src/lib/css/kendo.min.css ./dist/dts-backoffice-util/lib/css",
     "test": "ng test",

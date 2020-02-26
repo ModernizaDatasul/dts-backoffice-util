@@ -1,8 +1,18 @@
 // tslint:disable: component-selector
 // tslint:disable: no-input-rename
 import {
-    Component, DoCheck, Input, IterableDiffers, OnInit, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation, AfterViewInit
+    Component,
+    DoCheck,
+    Input,
+    IterableDiffers,
+    OnInit,
+    Renderer2,
+    ViewChild,
+    ViewContainerRef,
+    ViewEncapsulation,
+    AfterViewInit
 } from '@angular/core';
+
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataStateChangeEvent, GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
@@ -26,24 +36,42 @@ import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
     selector: 'dts-kendo-grid',
     encapsulation: ViewEncapsulation.None,
     templateUrl: './dts-kendo-grid.component.html',
-    styleUrls: ['./custom-telerik.css',
-        './dts-kendo-grid.component.css']
+    styleUrls: ['./custom-telerik.css', './dts-kendo-grid.component.css']
 })
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit {
 
+    currentRow: any;
+
+    editable = false;
+
     editedRowIndex = -1;
+
     editedProducted: any;
+
     formGroup: FormGroup;
+
     groups: Array<GroupDescriptor> = [];
+
     gridView: GridDataResult;
-    sortableObject: any;
-    sort: Array<SortDescriptor> = [];
-    state: State = { skip: 0 };
+
+    left = 0;
+
     selectableSettings = {
         checkboxOnly: true,
         mode: 'multiple'
     };
-    editable = false;
+
+    showPopup = false;
+
+    sortableObject: any;
+
+    sort: Array<SortDescriptor> = [];
+
+    state: State = { skip: 0 };
+
+    target: any;
+
+    top = 0;
 
     @Input('d-grid-filter-state') availableGridState: State;
 
@@ -55,6 +83,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     private differ: any;
 
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
+
+    @ViewChild('popupRef', { static: false }) popupRef: any;
 
     constructor(viewRef: ViewContainerRef, private renderer: Renderer2, differs: IterableDiffers) {
         super();
@@ -71,15 +101,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                     this.data[i].$selected = element.checked;
                 });
             });
-
-            document.querySelectorAll('.k-checkbox').forEach((item, index) => {
-                if (index !== 0) {
-                    item.addEventListener('click', (evt) => {
-                        this.data[index - 1].$selected = !this.data[index - 1].$selected;
-                        evt.stopPropagation();
-                    });
-                }
-            });
         }
     }
 
@@ -89,15 +110,20 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             'click',
             ({ target }) => {
                 this.validateSaveEventInDocument(target);
+
+                if (target.className === 'k-checkbox-label' && target.htmlFor !== 'k-grid0-select-all') {
+                    const index = +target.getAttribute('for').replace('k-grid0-checkbox', '');
+                    this.selectRow(index);
+                }
             });
 
         this.initializeColumns();
         this.initializeSorter();
         this.initializeData();
 
-        // if (!this.editable) {
-        //     this.grid = null;
-        // }
+        if (!this.editable) {
+            this.grid = null;
+        }
     }
 
     ngDoCheck() {
@@ -105,6 +131,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (change) {
             this.initializeData();
         }
+    }
+
+    selectRow(index) {
+        this.gridView.data[index].$selected = !this.gridView.data[index].$selected;
     }
 
     sortChange(sort: Array<SortDescriptor>) {
@@ -320,12 +350,11 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     // Define se a coluna de ações será visível.
     isCommandColumnVisible(): boolean {
-        return this.showRemoveButton || this.editable || this.addButton;
+        return true; // this.showRemoveButton || this.editable || this.addButton;
     }
 
     // Carrega os dados do grid novamente, com ou sem agrupamento.
     private loadData() {
-        console.log('this.isGroup()', this.isGroup());
         if (this.isGroup()) {
             this.loadDataGroupable();
         } else {
@@ -395,7 +424,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         this.gridView = {
             data: this.data,
-            total: this.data.length
+            total: this.data ? this.data.length : 0
         };
     }
 
@@ -421,8 +450,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         // na linha abaixo eu estou atualizando a fonte de dados
         // principal com a fonte de dados ordenada para os indices
         // não se perderem na hora de salvar uma edição.
-        for (let i = 0, dataLength = dataUpdated.length; i < dataLength; i++) {
-            this.data[i] = dataUpdated[i];
+        if (dataUpdated) {
+            for (let i = 0, dataLength = dataUpdated.length; i < dataLength; i++) {
+                this.data[i] = dataUpdated[i];
+            }
         }
     }
 
@@ -475,8 +506,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                 column.format = undefined;
             },
             currency: column => {
-                column.type = 'numeric';
-                column.format = '{0:c}';
+                column.type = 'currency';
+                column.format = column.format ? column.format : 'BRL';
             },
             date: column => {
                 column.type = 'date';
@@ -525,4 +556,72 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     onClickColumn($event) {
     }
 
+    onClickAction(row: any, action: any) {
+        action.action(row);
+    }
+
+    executeAction(action: any) {
+        action.action(this.currentRow);
+    }
+
+    // popup controllers
+    onClickActions($event: Event, row: any) {
+        this.currentRow = { ...row };
+        this.showPopup = true;
+        this.target = $event.target;
+
+        this.setPopupPosition(this.target);
+
+        this.clickoutListener = this.renderer.listen('document', 'click', (event: MouseEvent) => {
+            this.closePopupOnClickout(event);
+        });
+    }
+
+    setPopupPosition(target: any) {
+        const popupRef: any = document.querySelector('#popupRef');
+        const divOffset = this.offset(this.target);
+
+        this.left = divOffset.left;
+        this.top = divOffset.top;
+
+        popupRef.style.top = `${this.top + 20}px`;
+        popupRef.style.left = `${this.left - 35}px`;
+    }
+
+    offset(el: any) {
+        const element = el.getBoundingClientRect();
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        return { top: element.top + scrollTop, left: element.left + scrollLeft }
+    }
+
+
+    elementContains(element: HTMLElement, className: string) {
+        return element && element.classList.contains(className);
+    }
+
+    clickedOutDisabledItem(event) {
+        const containsItemDisabled = this.elementContains(event.target, 'po-popup-item-disabled') ||
+            this.elementContains(event.target.parentElement, 'po-popup-item-disabled');
+
+        return !containsItemDisabled;
+    }
+
+    clickedOutHeaderTemplate(event) {
+        const popupHeaderTemplate = this.popupRef && this.popupRef.nativeElement.querySelector('[p-popup-header-template]');
+        return !(popupHeaderTemplate && popupHeaderTemplate.contains(event.target));
+    }
+
+    clickedOutTarget(event) {
+        return this.target && !this.target.contains(event.target);
+    }
+
+    closePopupOnClickout(event: MouseEvent) {
+        if (this.clickedOutTarget(event) && this.clickedOutDisabledItem(event) && this.clickedOutHeaderTemplate(event)) {
+            this.showPopup = false;
+        }
+    }
+
+    // popup controllers
 }
