@@ -96,6 +96,7 @@
   <kendo-grid-pdf fileName="grid.pdf" [allPages]="true">
     <kendo-grid-pdf-margin top="1cm" left="1cm" right="1cm" bottom="1cm"></kendo-grid-pdf-margin>
   </kendo-grid-pdf>
+
 </kendo-grid>
 
 <div class="k-grid-show-more po-offset-xl-4 po-offset-lg-4 po-offset-md-3 po-lg-4 po-md-6"
@@ -109,19 +110,21 @@
   </div>
 </div>
 
-<div id="popupRef"
+<div id="popupRef{{idPopup}}"
      class="po-popup"
      [hidden]="!showPopup">
 
     <ng-content select="[p-popup-header-template]"></ng-content>
+
     <div class="po-popup-arrow po-arrow-top-right"></div>
+
     <div class="po-popup-item-default"
          *ngFor="let action of actions; let actionIndex = index"
          (click)="executeAction(action)">
 
         <div *ngIf="action.visible !== false">
             <span *ngIf="action.icon"
-                  class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
+                class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
 
             <span class="d-action po-clickable">{{ action.label }}</span>
         </div>

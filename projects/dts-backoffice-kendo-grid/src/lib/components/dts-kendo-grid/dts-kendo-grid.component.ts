@@ -10,7 +10,8 @@ import {
     ViewChild,
     ViewContainerRef,
     ViewEncapsulation,
-    AfterViewInit
+    AfterViewInit,
+    ElementRef
 } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -73,6 +74,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     top = 0;
 
+    idPopup = this.create_UUID();
+
     @Input('d-grid-filter-state') availableGridState: State;
 
     /** Habilita a opção para exportação dos dados. */
@@ -85,8 +88,14 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
 
     @ViewChild('popupRef', { static: false }) popupRef: any;
+    @ViewChild('gridCustom', { static: false }) gridCustom: ElementRef;
 
-    constructor(viewRef: ViewContainerRef, private renderer: Renderer2, differs: IterableDiffers) {
+
+
+    constructor(viewRef: ViewContainerRef,
+        private renderer: Renderer2,
+        differs: IterableDiffers,
+        private el: ElementRef) {
         super();
         this.parentRef = viewRef['_view']['component'];
         this.allData = this.allData.bind(this);
@@ -94,27 +103,32 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     ngAfterViewInit() {
-        if (this.selectable) {
-            document.querySelector('#k-grid0-select-all').addEventListener('click', () => {
-                const element: any = document.querySelector('.k-checkbox');
-                this.data.forEach((item, i) => {
-                    this.data[i].$selected = element.checked;
-                });
+        this.renderer.listen(
+            this.el.nativeElement,
+            'click',
+            ({ target }) => {
+                const isSelectAll = target.getAttribute('class') === 'k-checkbox-label' &&
+                    target.outerHTML.indexOf('-select-all') > -1;
+
+                const isSelectOne = target.getAttribute('class') === 'k-checkbox-label' &&
+                    target.outerHTML.indexOf('-select-all') === -1;
+
+                if (isSelectOne) {
+                    const index = +target.getAttribute('for').split('-')[2].replace('checkbox', '');
+                    this.selectRow(index);
+                } else if (isSelectAll) {
+                    this.selectRows(target.getAttribute('for'));
+                }
             });
-        }
     }
 
     ngOnInit() {
+
         this.renderer.listen(
             'document',
             'click',
             ({ target }) => {
                 this.validateSaveEventInDocument(target);
-
-                if (target.className === 'k-checkbox-label' && target.htmlFor !== 'k-grid0-select-all') {
-                    const index = +target.getAttribute('for').replace('k-grid0-checkbox', '');
-                    this.selectRow(index);
-                }
             });
 
         this.initializeColumns();
@@ -131,6 +145,14 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (change) {
             this.initializeData();
         }
+    }
+    selectRows(selector) {
+        const element: any = document.querySelector(`#${selector}`);
+        const isChecked = !element.checked;
+
+        this.data.forEach((item, i) => {
+            this.data[i].$selected = isChecked;
+        });
     }
 
     selectRow(index) {
@@ -568,6 +590,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     onClickActions($event: Event, row: any) {
         this.currentRow = { ...row };
         this.showPopup = true;
+
         this.target = $event.target;
 
         this.setPopupPosition(this.target);
@@ -578,7 +601,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     setPopupPosition(target: any) {
-        const popupRef: any = document.querySelector('#popupRef');
+        const popupRef: any = document.querySelector(`#popupRef${this.idPopup}`);
         const divOffset = this.offset(this.target);
 
         this.left = divOffset.left;
@@ -621,6 +644,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (this.clickedOutTarget(event) && this.clickedOutDisabledItem(event) && this.clickedOutHeaderTemplate(event)) {
             this.showPopup = false;
         }
+    }
+
+    create_UUID() {
+        let dt = new Date().getTime();
+        const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = (dt + Math.random() * 16) % 16 | 0;
+            dt = Math.floor(dt / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
     }
 
     // popup controllers
