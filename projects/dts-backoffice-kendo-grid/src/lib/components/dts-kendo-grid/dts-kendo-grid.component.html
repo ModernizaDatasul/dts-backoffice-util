@@ -18,7 +18,8 @@
   (cellClick)="editClickHandler($event)"
   (edit)="editHandler($event)"
   (remove)="removeHandler($event)"
-  (save)="saveHandler($event)">
+  (save)="saveHandler($event)"
+  [rowSelected]="isRowSelected">
 
   <kendo-grid-messages
     [noRecords]="literals.noRecords || localLiterals.noRecords"
@@ -47,13 +48,7 @@
 
   <kendo-grid-checkbox-column *ngIf="selectable"
       [width]="40"
-      [headerClass]="{'text-center': true}"
-      [class]="{'text-center': true}"
-      [resizable]="false"
-      [columnMenu]="true"
-      [showSelectAll]="true"
-      (selectAllChange)="onClickColumn($event)"
-      (click)="onClickColumn($event)">
+      [showSelectAll]="true">
   </kendo-grid-checkbox-column>
 
   <div *ngFor="let col of columns; let i = index">
@@ -68,6 +63,10 @@
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
             {{ data[col.column] | date : col.format }}
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'numeric'">
+            {{ data[col.column] | number : col.format }}
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">

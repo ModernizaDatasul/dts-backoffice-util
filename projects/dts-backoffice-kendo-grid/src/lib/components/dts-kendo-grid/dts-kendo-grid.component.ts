@@ -16,9 +16,9 @@ import {
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { DataStateChangeEvent, GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
+import { DataStateChangeEvent, GridComponent, GridDataResult, SelectAllCheckboxState, RowArgs } from '@progress/kendo-angular-grid';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
-import { GroupDescriptor, process, State, orderBy, SortDescriptor } from '@progress/kendo-data-query';
+import { GroupDescriptor, process, State, orderBy, filterBy, SortDescriptor } from '@progress/kendo-data-query';
 
 import { DtsKendoGridBaseComponent } from './dts-kendo-grid-base.component';
 import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
@@ -85,6 +85,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     language = localStorage.getItem('user.language') || navigator.language;
 
+
     @Input('d-grid-filter-state') availableGridState: State;
 
     /** Habilita a opção para exportação dos dados. */
@@ -102,13 +103,17 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
 
     constructor(viewRef: ViewContainerRef,
-        private renderer: Renderer2,
         differs: IterableDiffers,
+        private renderer: Renderer2,
         private el: ElementRef) {
         super();
         this.parentRef = viewRef['_view']['component'];
         this.allData = this.allData.bind(this);
         this.differ = differs.find([]).create(null);
+    }
+
+    isRowSelected = (row: RowArgs) => {
+        return row.dataItem.$selected;
     }
 
     ngAfterViewInit() {
@@ -233,15 +238,38 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const element: any = document.querySelector(`#${selector}`);
         const isChecked = !element.checked;
 
-        this.data.forEach((item, i) => {
-            // Alterar o valor do $selected de todos os registros para ficar igual ao checkbox da tabela
-            this.data[i].$selected = isChecked;
-        });
+        // Os registros estão espalhados dentro dos agrupadores
+        if (this.gridView.data[0].items) {
+            this.gridView.data.forEach((data) => {
+                data.items.forEach((item) => {
+                    item.$selected = isChecked;
+                });
+            });
+        } else {
+            this.gridView.data.forEach((item, i) => {
+                // Alterar o valor do $selected de todos os registros para ficar igual ao checkbox da tabela
+                this.gridView.data[i].$selected = isChecked;
+            });
+        }
     }
 
     selectRow(index) {
         // Inverte o valor do $selected da linha
-        this.data[index].$selected = !this.data[index].$selected;
+        let count = 0;
+
+        // Os registros estão espalhados dentro dos agrupadores
+        if (this.gridView.data[0].items) {
+            this.gridView.data.forEach((data) => {
+                data.items.forEach((item) => {
+                    if (count === index) {
+                        item.$selected = !item.$selected;
+                    }
+                    count++;
+                });
+            });
+        } else {
+            this.gridView.data[index].$selected = !this.gridView.data[index].$selected;
+        }
     }
 
     sortChange(sort: Array<SortDescriptor>) {
@@ -441,7 +469,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     onShowMore() {
         this.showMore.emit(null);
-        this.state.filter = undefined;
+        // this.state.filter = undefined;
         this.loadData();
     }
 
@@ -534,12 +562,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             data: this.data,
             total: this.data ? this.data.length : 0
         };
+
+        this.gridView = process(filterBy(this.data, this.state.filter), { filter: this.state.filter });
     }
 
     private loadDataGroupable() {
-        this.gridView = process(orderBy(this.data, this.sort), { group: this.groups });
+        this.gridView = process(filterBy(this.data, this.state.filter), { filter: this.state.filter });
+        this.gridView = process(orderBy(this.gridView.data, this.sort), { group: this.groups });
+
         this.dataArrayOrdered = [];
-        this.getObjects(this.gridView.data);
+        // this.getObjects(this.gridView.data);
         this.updateIndex(this.dataArrayOrdered);
     }
 
@@ -578,6 +610,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             this.data = [];
         }
 
+        this.gridView = process(filterBy(this.data, this.state.filter), { filter: this.state.filter });
+
         if (this.groupable) {
             this.initializeGroups();
             this.loadDataGroupable();
@@ -611,7 +645,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const lookupTableType = {
             number: column => {
                 column.type = 'numeric';
-                column.format = undefined;
+                column.format = column.format ? column.format : '2.2-3';;
             },
             currency: column => {
                 column.type = 'currency';
@@ -665,6 +699,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     onClickColumn($event) {
+        console.log('onClickColumn');
     }
 
     onClickAction(row: any, action: any) {
@@ -673,6 +708,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     executeAction(action: any) {
         action.action(this.currentRow);
+    }
+
+    onSelectAllChange(checkedState: SelectAllCheckboxState) {
+        console.log(checkedState);
     }
 
     // popup controllers
