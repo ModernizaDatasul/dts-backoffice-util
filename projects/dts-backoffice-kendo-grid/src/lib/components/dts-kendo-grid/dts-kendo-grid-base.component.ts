@@ -167,7 +167,9 @@ export abstract class DtsKendoGridBaseComponent {
    * undo: Descartar
    *
    */
-  @Input('d-literals') literals: any;
+  @Input('d-literals') literals: any = {};
+
+  @Input('d-filterable') filterable = false;
 
   /**
    * @optional

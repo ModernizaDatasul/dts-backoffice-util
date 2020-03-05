@@ -1,4 +1,7 @@
+<!-- [filterable]="filterable ? 'menu' : ''" -->
 <kendo-grid
+  [filter]="state.filter"
+  [filterable]="filterable ? 'menu' : ''"
   scrollable="none"
   [data]="gridView"
   [sortable]="sortableObject"
@@ -18,12 +21,26 @@
   (save)="saveHandler($event)">
 
   <kendo-grid-messages
-    [noRecords]="literals.noRecords"
-    [groupPanelEmpty]="literals.groupPanelEmpty">
+    [noRecords]="literals.noRecords || localLiterals.noRecords"
+    [groupPanelEmpty]="literals.groupPanelEmpty || localLiterals.groupPanelEmpty"
+    [filterContainsOperator]="literals.filterContainsOperator || localLiterals.filterContainsOperator"
+    [filterAndLogic]="literals.filterAndLogic || localLiterals.filterAndLogic"
+    [filterOrLogic]="literals.filterOrLogic || localLiterals.filterOrLogic"
+    [filterEqOperator]="literals.filterEqOperator || localLiterals.filterEqOperator"
+    [filterNotEqOperator]="literals.filterNotEqOperator || localLiterals.filterNotEqOperator"
+    [filterNotContainsOperator]="literals.filterNotContainsOperator || localLiterals.filterNotContainsOperator"
+    [filterStartsWithOperator]="literals.filterStartsWithOperator || localLiterals.filterStartsWithOperator"
+    [filterEndsWithOperator]="literals.filterEndsWithOperator || localLiterals.filterEndsWithOperator"
+    [filterIsNullOperator]="literals.filterIsNullOperator || localLiterals.filterIsNullOperator"
+    [filterIsNotNullOperator]="literals.filterIsNotNullOperator || localLiterals.filterIsNotNullOperator"
+    [filterIsEmptyOperator]="literals.filterIsEmptyOperator || localLiterals.filterIsEmptyOperator"
+    [filterIsNotEmptyOperator]="literals.filterIsNotEmptyOperator || localLiterals.filterIsNotEmptyOperator"
+    [filterClearButton]="literals.filterClearButton || localLiterals.filterClearButton"
+    [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton">
   </kendo-grid-messages>
 
   <ng-template kendoGridToolbarTemplate *ngIf="addButton || exportButtons" >
-    <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add }}</button>
+    <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add || localLiterals.add }}</button>
     <button type="button" kendoGridExcelCommand *ngIf="exportButtons" ><span class="k-icon k-i-file-excel"></span></button>
     <button kendoGridPDFCommand *ngIf="exportButtons"><span class='k-icon k-i-file-pdf'></span></button>
   </ng-template>
@@ -62,6 +79,19 @@
                 <span *ngIf="label.value === type[col.column]"
                       class="po-table-column-label po-{{ label.color }}">{{label.label}}
                 </span>
+            </div>
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-type *ngIf="col.type === 'subtitle'">
+            <div class="d-subtitle" >
+                <div *ngFor="let label of col.labels">
+                    <!-- <span *ngIf="isValidSubtitle(label.value, type[col.column])"
+                           class="po-mr-1 po-table-subtitle-circle po-{{ label.color }}">{{label.label}}
+                    </span> -->
+                    <span *ngIf="isValidSubtitle(label.value, type[col.column])"
+                          class="po-mr-1 po-table-column-label po-{{ label.color }}">{{label.label}}
+                    </span>
+                </div>
             </div>
         </ng-template>
 
@@ -105,7 +135,7 @@
 
     <button class="k-grid-show-more-button po-button po-text-ellipsis"
             (click)="onShowMore()"
-            [disabled]="showMoreDisabled">{{ literals.showMore }}
+            [disabled]="showMoreDisabled">{{ literals.showMore || localLiterals.showMore}}
     </button>
   </div>
 </div>

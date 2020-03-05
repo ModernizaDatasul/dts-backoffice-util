@@ -23,6 +23,7 @@ import { GroupDescriptor, process, State, orderBy, SortDescriptor } from '@progr
 import { DtsKendoGridBaseComponent } from './dts-kendo-grid-base.component';
 import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
 
+
 /**
  * @docsExtends DtsKendoGridBaseComponent
  *
@@ -68,13 +69,21 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     sort: Array<SortDescriptor> = [];
 
-    state: State = { skip: 0 };
-
     target: any;
 
     top = 0;
 
     idPopup = this.create_UUID();
+
+    state: State = {};
+
+    columnFilter = {
+        filter: false
+    };
+
+    localLiterals: any;
+
+    language = localStorage.getItem('user.language') || navigator.language;
 
     @Input('d-grid-filter-state') availableGridState: State;
 
@@ -103,14 +112,19 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     ngAfterViewInit() {
+        // Escuta todos os eventos de clique que ocorrem dentro do componente
         this.renderer.listen(
             this.el.nativeElement,
             'click',
             ({ target }) => {
-                const isSelectAll = target.getAttribute('class') === 'k-checkbox-label' &&
+                // Foi clicado no checkbox da tabela, todas as linhas serão marcadas
+                const isSelectAll = target.getAttribute('class') &&
+                    target.getAttribute('class').indexOf('k-checkbox-label') > -1 &&
                     target.outerHTML.indexOf('-select-all') > -1;
 
-                const isSelectOne = target.getAttribute('class') === 'k-checkbox-label' &&
+                // Foi clicado no checkbox da linha
+                const isSelectOne = target.getAttribute('class') &&
+                    target.getAttribute('class').indexOf('k-checkbox-label') > -1 &&
                     target.outerHTML.indexOf('-select-all') === -1;
 
                 if (isSelectOne) {
@@ -138,6 +152,75 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (!this.editable) {
             this.grid = null;
         }
+
+        this.setLocalLiterals();
+    }
+
+    setLocalLiterals() {
+        const allLiterals = {
+            'pt-BR': {
+                noRecords: 'Nenhum registro encontrado',
+                groupPanelEmpty: 'Arraste o cabeçalho da coluna e solte aqui para agrupar os dados por essa coluna',
+                filterAndLogic: 'E',
+                filterOrLogic: 'Ou',
+                filterContainsOperator: 'Contêm',
+                filterNotContainsOperator: 'Não contêm',
+                filterEqOperator: 'Igual',
+                filterNotEqOperator: 'Não é igual',
+                filterStartsWithOperator: 'Começa com',
+                filterEndsWithOperator: 'Termina com',
+                filterIsNullOperator: 'É nulo',
+                filterIsNotNullOperator: 'Não é nulo',
+                filterIsEmptyOperator: 'É vazio',
+                filterIsNotEmptyOperator: 'Não é vazio',
+                filterClearButton: 'Limpar',
+                filterFilterButton: 'Filtrar',
+                add: 'Salvar',
+                showMore: 'Carregar mais resultados'
+            },
+            'en-US': {
+                noRecords: 'No records available',
+                groupPanelEmpty: 'Drag a column header and drop it here to group by that column',
+                filterAndLogic: 'And',
+                filterOrLogic: 'Or',
+                filterContainsOperator: 'Contains',
+                filterNotContainsOperator: 'Does not contain',
+                filterEqOperator: 'Is equal to',
+                filterNotEqOperator: 'Is not equal to',
+                filterStartsWithOperator: 'Starts with',
+                filterEndsWithOperator: 'Ends with',
+                filterIsNullOperator: 'Is null',
+                filterIsNotNullOperator: 'Is not null',
+                filterIsEmptyOperator: 'Is empty',
+                filterIsNotEmptyOperator: 'Is not empty',
+                filterClearButton: 'Clear',
+                filterFilterButton: 'Filter',
+                add: 'Save',
+                showMore: 'Load more data'
+            },
+            es: {
+                noRecords: 'No hay registros disponibles.',
+                groupPanelEmpty: 'Arrastre la columna y suéltela aquí para agrupar los datos por esa columna',
+                filterAndLogic: 'Y',
+                filterOrLogic: 'O',
+                filterContainsOperator: 'Contiene',
+                filterNotContainsOperator: 'No contiene',
+                filterEqOperator: 'Es igual a',
+                filterNotEqOperator: 'No es igual a',
+                filterStartsWithOperator: 'Comienza con',
+                filterEndsWithOperator: 'Termina con',
+                filterIsNullOperator: 'Es nula',
+                filterIsNotNullOperator: 'No es nula',
+                filterIsEmptyOperator: 'Esta vacía',
+                filterIsNotEmptyOperator: 'No esta vacía',
+                filterClearButton: 'Clara',
+                filterFilterButton: 'Filtrar',
+                add: 'Salvar',
+                showMore: 'Cargar más datos'
+            }
+        };
+
+        this.localLiterals = allLiterals[this.language];
     }
 
     ngDoCheck() {
@@ -151,12 +234,14 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const isChecked = !element.checked;
 
         this.data.forEach((item, i) => {
+            // Alterar o valor do $selected de todos os registros para ficar igual ao checkbox da tabela
             this.data[i].$selected = isChecked;
         });
     }
 
     selectRow(index) {
-        this.gridView.data[index].$selected = !this.gridView.data[index].$selected;
+        // Inverte o valor do $selected da linha
+        this.data[index].$selected = !this.data[index].$selected;
     }
 
     sortChange(sort: Array<SortDescriptor>) {
@@ -356,6 +441,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     onShowMore() {
         this.showMore.emit(null);
+        this.state.filter = undefined;
         this.loadData();
     }
 
@@ -541,6 +627,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             },
             label: column => {
                 column.type = 'label';
+            },
+            subtitle: column => {
+                column.type = 'subtitle';
             }
         };
 
@@ -654,6 +743,12 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
         return uuid;
+    }
+
+    isValidSubtitle(rowValue: any, labels: string) {
+        const listLabels = labels ? labels.split(',') : [];
+
+        return listLabels.some((list) => list === rowValue);
     }
 
     // popup controllers

@@ -16603,3 +16603,7 @@ li.k-item.k-drag-clue {
 .k-grid-norecords > td {
     padding: 15px 0px 15px 0px;
 }
+
+.d-subtitle {
+    display: flex;
+}
