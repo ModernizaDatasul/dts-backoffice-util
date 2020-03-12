@@ -9,8 +9,8 @@ export interface IProperty {
 }
 
 export interface IReportServiceParams {
-  reportName: string;
-  programName: string;
+  reportName: string; // Nome do rptDesign
+  programName: string; // Programa Progress
   properties: Array<IProperty>;
   dialect: string;
   downloadName: string;

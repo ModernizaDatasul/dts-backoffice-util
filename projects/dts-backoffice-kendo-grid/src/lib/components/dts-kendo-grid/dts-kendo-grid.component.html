@@ -19,7 +19,8 @@
   (edit)="editHandler($event)"
   (remove)="removeHandler($event)"
   (save)="saveHandler($event)"
-  [rowSelected]="isRowSelected">
+  [rowSelected]="isRowSelected"
+  [reorderable]="reorderable">
 
   <kendo-grid-messages
     [noRecords]="literals.noRecords || localLiterals.noRecords"
@@ -59,14 +60,17 @@
         [width]="col.width"
         [filter]="col.filter"
         [format]="col.format"
-        [editor]="col.type">
+        [editor]="col.type"
+        [headerClass]="{'d-number-header': col.type === 'numeric'}">
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
             {{ data[col.column] | date : col.format }}
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'numeric'">
-            {{ data[col.column] | number : col.format }}
+            <div style="text-align: right;">
+                {{ data[col.column] | number : col.format }}
+            </div>
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">
@@ -97,6 +101,7 @@
         <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="col.groupHeader">
             {{value}}
         </ng-template>
+
     </kendo-grid-column>
   </div>
 

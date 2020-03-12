@@ -16607,3 +16607,7 @@ li.k-item.k-drag-clue {
 .d-subtitle {
     display: flex;
 }
+
+.d-number-header {
+    text-align: right !important;
+}

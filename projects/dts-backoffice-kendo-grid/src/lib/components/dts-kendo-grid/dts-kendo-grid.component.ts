@@ -85,6 +85,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     language = localStorage.getItem('user.language') || navigator.language;
 
+    selectedAll = false;
 
     @Input('d-grid-filter-state') availableGridState: State;
 
@@ -137,6 +138,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                     this.selectRow(index);
                 } else if (isSelectAll) {
                     this.selectRows(target.getAttribute('for'));
+                    this.selectedAll = true;
                 }
             });
     }
@@ -162,67 +164,75 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     setLocalLiterals() {
+        const pt = {
+            noRecords: 'Nenhum registro encontrado',
+            groupPanelEmpty: 'Arraste o cabeçalho da coluna e solte aqui para agrupar os dados por essa coluna',
+            filterAndLogic: 'E',
+            filterOrLogic: 'Ou',
+            filterContainsOperator: 'Contêm',
+            filterNotContainsOperator: 'Não contêm',
+            filterEqOperator: 'Igual',
+            filterNotEqOperator: 'Não é igual',
+            filterStartsWithOperator: 'Começa com',
+            filterEndsWithOperator: 'Termina com',
+            filterIsNullOperator: 'É nulo',
+            filterIsNotNullOperator: 'Não é nulo',
+            filterIsEmptyOperator: 'É vazio',
+            filterIsNotEmptyOperator: 'Não é vazio',
+            filterClearButton: 'Limpar',
+            filterFilterButton: 'Filtrar',
+            add: 'Salvar',
+            showMore: 'Carregar mais resultados'
+        };
+
+        const en = {
+            noRecords: 'No records available',
+            groupPanelEmpty: 'Drag a column header and drop it here to group by that column',
+            filterAndLogic: 'And',
+            filterOrLogic: 'Or',
+            filterContainsOperator: 'Contains',
+            filterNotContainsOperator: 'Does not contain',
+            filterEqOperator: 'Is equal to',
+            filterNotEqOperator: 'Is not equal to',
+            filterStartsWithOperator: 'Starts with',
+            filterEndsWithOperator: 'Ends with',
+            filterIsNullOperator: 'Is null',
+            filterIsNotNullOperator: 'Is not null',
+            filterIsEmptyOperator: 'Is empty',
+            filterIsNotEmptyOperator: 'Is not empty',
+            filterClearButton: 'Clear',
+            filterFilterButton: 'Filter',
+            add: 'Save',
+            showMore: 'Load more data'
+        };
+
+        const es = {
+            noRecords: 'No hay registros disponibles.',
+            groupPanelEmpty: 'Arrastre la columna y suéltela aquí para agrupar los datos por esa columna',
+            filterAndLogic: 'Y',
+            filterOrLogic: 'O',
+            filterContainsOperator: 'Contiene',
+            filterNotContainsOperator: 'No contiene',
+            filterEqOperator: 'Es igual a',
+            filterNotEqOperator: 'No es igual a',
+            filterStartsWithOperator: 'Comienza con',
+            filterEndsWithOperator: 'Termina con',
+            filterIsNullOperator: 'Es nula',
+            filterIsNotNullOperator: 'No es nula',
+            filterIsEmptyOperator: 'Esta vacía',
+            filterIsNotEmptyOperator: 'No esta vacía',
+            filterClearButton: 'Clara',
+            filterFilterButton: 'Filtrar',
+            add: 'Salvar',
+            showMore: 'Cargar más datos'
+        };
+
         const allLiterals = {
-            'pt-BR': {
-                noRecords: 'Nenhum registro encontrado',
-                groupPanelEmpty: 'Arraste o cabeçalho da coluna e solte aqui para agrupar os dados por essa coluna',
-                filterAndLogic: 'E',
-                filterOrLogic: 'Ou',
-                filterContainsOperator: 'Contêm',
-                filterNotContainsOperator: 'Não contêm',
-                filterEqOperator: 'Igual',
-                filterNotEqOperator: 'Não é igual',
-                filterStartsWithOperator: 'Começa com',
-                filterEndsWithOperator: 'Termina com',
-                filterIsNullOperator: 'É nulo',
-                filterIsNotNullOperator: 'Não é nulo',
-                filterIsEmptyOperator: 'É vazio',
-                filterIsNotEmptyOperator: 'Não é vazio',
-                filterClearButton: 'Limpar',
-                filterFilterButton: 'Filtrar',
-                add: 'Salvar',
-                showMore: 'Carregar mais resultados'
-            },
-            'en-US': {
-                noRecords: 'No records available',
-                groupPanelEmpty: 'Drag a column header and drop it here to group by that column',
-                filterAndLogic: 'And',
-                filterOrLogic: 'Or',
-                filterContainsOperator: 'Contains',
-                filterNotContainsOperator: 'Does not contain',
-                filterEqOperator: 'Is equal to',
-                filterNotEqOperator: 'Is not equal to',
-                filterStartsWithOperator: 'Starts with',
-                filterEndsWithOperator: 'Ends with',
-                filterIsNullOperator: 'Is null',
-                filterIsNotNullOperator: 'Is not null',
-                filterIsEmptyOperator: 'Is empty',
-                filterIsNotEmptyOperator: 'Is not empty',
-                filterClearButton: 'Clear',
-                filterFilterButton: 'Filter',
-                add: 'Save',
-                showMore: 'Load more data'
-            },
-            es: {
-                noRecords: 'No hay registros disponibles.',
-                groupPanelEmpty: 'Arrastre la columna y suéltela aquí para agrupar los datos por esa columna',
-                filterAndLogic: 'Y',
-                filterOrLogic: 'O',
-                filterContainsOperator: 'Contiene',
-                filterNotContainsOperator: 'No contiene',
-                filterEqOperator: 'Es igual a',
-                filterNotEqOperator: 'No es igual a',
-                filterStartsWithOperator: 'Comienza con',
-                filterEndsWithOperator: 'Termina con',
-                filterIsNullOperator: 'Es nula',
-                filterIsNotNullOperator: 'No es nula',
-                filterIsEmptyOperator: 'Esta vacía',
-                filterIsNotEmptyOperator: 'No esta vacía',
-                filterClearButton: 'Clara',
-                filterFilterButton: 'Filtrar',
-                add: 'Salvar',
-                showMore: 'Cargar más datos'
-            }
+            pt: { ...pt },
+            en: { ...en },
+            es: { ...es },
+            'pt-BR': { ...pt },
+            'en-US': { ...en }
         };
 
         this.localLiterals = allLiterals[this.language];
@@ -462,9 +472,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     onSelectionChange(event) {
-        const itemSelected = event && event.selectedRows[0] && event.selectedRows[0].dataItem;
+        const itemSelected = event && event.selectedRows[0] && event.selectedRows[0].dataItem ?
+            event.selectedRows[0].dataItem : event.deselectedRows[0].dataItem;
 
-        this.selectionChange.emit({ data: itemSelected });
+        if (this.selectedAll) {
+            this.selectionChange.emit({ data: this.gridView.data });
+        } else {
+            this.selectionChange.emit({ data: itemSelected });
+        }
+
+        this.selectedAll = false;
     }
 
     onShowMore() {
@@ -645,7 +662,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const lookupTableType = {
             number: column => {
                 column.type = 'numeric';
-                column.format = column.format ? column.format : '2.2-3';;
+                column.format = column.format ? column.format : '2.2-3';
             },
             currency: column => {
                 column.type = 'currency';

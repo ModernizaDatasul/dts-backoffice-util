@@ -181,6 +181,8 @@ export abstract class DtsKendoGridBaseComponent {
 
   @Input('d-actions') actions = [];
 
+  @Input('d-reorderable') reorderable = false;
+
   @Output('d-show-more') showMore = new EventEmitter<any>();
 
   /**
