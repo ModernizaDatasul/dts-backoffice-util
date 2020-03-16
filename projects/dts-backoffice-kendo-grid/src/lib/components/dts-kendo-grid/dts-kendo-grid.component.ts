@@ -181,6 +181,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsNotEmptyOperator: 'Não é vazio',
             filterClearButton: 'Limpar',
             filterFilterButton: 'Filtrar',
+            filterGteOperator: 'Maior ou igual que',
+            filterGtOperator: 'Maior que',
+            filterLtOperator: 'Menor que',
+            filterLteOperator: 'Menor ou igual que',
+            filterAfterOrEqualOperator: 'Depois ou igual que',
+            filterAfterOperator: 'Depois de',
+            filterBeforeOrEqualOperator: 'Antes ou igual que',
+            filterBeforeOperator: 'Antes de',
+            filterIsTrue: 'Sim',
+            filterIsFalse: 'Não',
             add: 'Salvar',
             showMore: 'Carregar mais resultados'
         };
@@ -202,6 +212,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsNotEmptyOperator: 'Is not empty',
             filterClearButton: 'Clear',
             filterFilterButton: 'Filter',
+            filterGteOperator: 'Is greater than or equal to',
+            filterGtOperator: 'Is greater than',
+            filterLtOperator: 'Is less than',
+            filterLteOperator: 'Is less than or equal to',
+            filterAfterOrEqualOperator: 'Is after or equal to',
+            filterAfterOperator: 'Is after',
+            filterBeforeOrEqualOperator: 'Is before or equal to',
+            filterBeforeOperator: 'Is before',
+            filterIsTrue: 'Yes',
+            filterIsFalse: 'No',
             add: 'Save',
             showMore: 'Load more data'
         };
@@ -223,6 +243,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsNotEmptyOperator: 'No esta vacía',
             filterClearButton: 'Clara',
             filterFilterButton: 'Filtrar',
+            filterGteOperator: 'Es mayor o igual que',
+            filterGtOperator: 'Es mayor que',
+            filterLtOperator: 'Es menor que',
+            filterLteOperator: 'Es menor o igual que',
+            filterAfterOrEqualOperator: 'Es posterior o igual a',
+            filterAfterOperator: 'Es posterior',
+            filterBeforeOrEqualOperator: 'Es anterior o igual a',
+            filterBeforeOperator: 'Es antes',
+            filterIsTrue: 'Sí',
+            filterIsFalse: 'No',
             add: 'Salvar',
             showMore: 'Cargar más datos'
         };
@@ -235,7 +265,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             'en-US': { ...en }
         };
 
-        this.localLiterals = allLiterals[this.language];
+        this.localLiterals = allLiterals[this.language] || allLiterals['pt-br'];
     }
 
     ngDoCheck() {
@@ -662,7 +692,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const lookupTableType = {
             number: column => {
                 column.type = 'numeric';
-                column.format = column.format ? column.format : '2.2-3';
+                column.format = column.format ? column.format : '';
             },
             currency: column => {
                 column.type = 'currency';
@@ -681,6 +711,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             },
             subtitle: column => {
                 column.type = 'subtitle';
+            },
+            checkbox: column => {
+                column.type = 'checkbox';
             }
         };
 
@@ -691,7 +724,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                 column.type = 'text';
             }
         });
-
     }
 
     private isChildOf(el, className) {
@@ -716,7 +748,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     onClickColumn($event) {
-        console.log('onClickColumn');
     }
 
     onClickAction(row: any, action: any) {
@@ -728,7 +759,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     onSelectAllChange(checkedState: SelectAllCheckboxState) {
-        console.log(checkedState);
     }
 
     // popup controllers
@@ -806,6 +836,18 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         return listLabels.some((list) => list === rowValue);
     }
-
     // popup controllers
+
+    getFilterType(type: string) {
+        switch (type) {
+            case 'date':
+                return 'date';
+            case 'numeric':
+                return 'numeric';
+            case 'checkbox':
+                return 'boolean';
+            default:
+                return 'text';
+        }
+    }
 }

@@ -1,4 +1,4 @@
-<!-- [filterable]="filterable ? 'menu' : ''" -->
+<!-- [filterable]="filterable ? 'menu' : ''"-->
 <kendo-grid
   [filter]="state.filter"
   [filterable]="filterable ? 'menu' : ''"
@@ -22,6 +22,8 @@
   [rowSelected]="isRowSelected"
   [reorderable]="reorderable">
 
+  <!-- https://www.telerik.com/kendo-angular-ui/components/grid/api/CustomMessagesComponent/ -->
+
   <kendo-grid-messages
     [noRecords]="literals.noRecords || localLiterals.noRecords"
     [groupPanelEmpty]="literals.groupPanelEmpty || localLiterals.groupPanelEmpty"
@@ -38,7 +40,18 @@
     [filterIsEmptyOperator]="literals.filterIsEmptyOperator || localLiterals.filterIsEmptyOperator"
     [filterIsNotEmptyOperator]="literals.filterIsNotEmptyOperator || localLiterals.filterIsNotEmptyOperator"
     [filterClearButton]="literals.filterClearButton || localLiterals.filterClearButton"
-    [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton">
+    [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton"
+    [filterGteOperator]="literals.filterGteOperator || localLiterals.filterGteOperator"
+    [filterGtOperator]="literals.filterGtOperator || localLiterals.filterGtOperator"
+    [filterLtOperator]="literals.filterLtOperator || localLiterals.filterLtOperator"
+    [filterLteOperator]="literals.filterLteOperator || localLiterals.filterLteOperator"
+    [filterAfterOrEqualOperator]="literals.filterAfterOrEqualOperator || localLiterals.filterAfterOrEqualOperator"
+    [filterAfterOperator]="literals.filterAfterOperator || localLiterals.filterAfterOperator"
+    [filterBeforeOrEqualOperator]="literals.filterBeforeOrEqualOperator || localLiterals.filterBeforeOrEqualOperator"
+    [filterBeforeOperator]="literals.filterBeforeOperator || localLiterals.filterBeforeOperator"
+    [filterIsTrue]="literals.filterIsTrue || localLiterals.filterIsTrue"
+    [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse"
+    >
   </kendo-grid-messages>
 
   <ng-template kendoGridToolbarTemplate *ngIf="addButton || exportButtons" >
@@ -48,7 +61,7 @@
   </ng-template>
 
   <kendo-grid-checkbox-column *ngIf="selectable"
-      [width]="40"
+      [width]="30"
       [showSelectAll]="true">
   </kendo-grid-checkbox-column>
 
@@ -58,19 +71,26 @@
         [field]="col.column"
         [title]="col.label"
         [width]="col.width"
-        [filter]="col.filter"
-        [format]="col.format"
+        [filter]="getFilterType(col.type)"
         [editor]="col.type"
-        [headerClass]="{'d-number-header': col.type === 'numeric'}">
+        [headerClass]="{'d-number-header': col.type === 'numeric', 'd-column-header': true}">
+
+        <ng-template kendoGridFilterMenuTemplate *ngIf="col.type === 'date'"
+                     let-filter let-column="column" let-filterService="filterService">
+            <kendo-grid-date-filter-menu [column]="column" [filter]="filter" [filterService]="filterService">
+            </kendo-grid-date-filter-menu>
+        </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
             {{ data[col.column] | date : col.format }}
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'numeric'">
-            <div style="text-align: right;">
-                {{ data[col.column] | number : col.format }}
-            </div>
+            <div style="text-align: right;">{{ data[col.column] | number : col.format }}</div>
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'checkbox'">
+            <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">

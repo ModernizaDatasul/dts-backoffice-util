@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ExcelModule, GridModule, PDFModule } from '@progress/kendo-angular-grid';
 
 import { DtsKendoGridComponent } from './dts-kendo-grid.component';
+import { FormsModule } from '@angular/forms';
 
 /**
  * @description
@@ -13,6 +14,7 @@ import { DtsKendoGridComponent } from './dts-kendo-grid.component';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     GridModule,
     ExcelModule,
     PDFModule

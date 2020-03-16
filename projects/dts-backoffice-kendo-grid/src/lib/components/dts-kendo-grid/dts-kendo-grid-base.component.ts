@@ -111,12 +111,19 @@ export abstract class DtsKendoGridBaseComponent {
 
   private _groupable: boolean;
 
+  public columns: Array<DtsKendoGridColumn>;
+
+
   /** Lista de objeto a serem exibidos. Este atributo aceita um array de objetos JSON. */
   @Input('d-data') data: Array<any>;
 
 
   /** Objeto com as informações das colunas a serem exibidas. */
-  @Input('d-columns') columns: Array<DtsKendoGridColumn>;
+//   @Input('d-columns') _columns: Array<DtsKendoGridColumn>;
+
+  @Input('d-columns') set dColumns(columns: Array<DtsKendoGridColumn>) {
+      this.columns = JSON.parse(JSON.stringify(columns));
+  }
 
   @Input('d-groups') groups: any;
 
