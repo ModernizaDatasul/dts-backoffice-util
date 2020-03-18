@@ -42,7 +42,7 @@ import { DtsBackofficeKendoGridModule } from 'dts-backoffice-kendo-grid';
 
 **Como deve ficar:**
 
-![enter image description here](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/src/lib/assets/example-1.png?raw=true)
+![Exemplo](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/src/lib/assets/example-1.gif?raw=true)
 
 **Parâmetros**:
 
