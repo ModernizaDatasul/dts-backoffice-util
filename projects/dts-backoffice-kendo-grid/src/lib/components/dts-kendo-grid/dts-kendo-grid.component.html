@@ -50,8 +50,7 @@
     [filterBeforeOrEqualOperator]="literals.filterBeforeOrEqualOperator || localLiterals.filterBeforeOrEqualOperator"
     [filterBeforeOperator]="literals.filterBeforeOperator || localLiterals.filterBeforeOperator"
     [filterIsTrue]="literals.filterIsTrue || localLiterals.filterIsTrue"
-    [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse"
-    >
+    [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse">
   </kendo-grid-messages>
 
   <ng-template kendoGridToolbarTemplate *ngIf="addButton || exportButtons" >
@@ -74,12 +73,6 @@
         [filter]="getFilterType(col.type)"
         [editor]="col.type"
         [headerClass]="{'d-number-header': col.type === 'numeric', 'd-column-header': true}">
-
-        <ng-template kendoGridFilterMenuTemplate *ngIf="col.type === 'date'"
-                     let-filter let-column="column" let-filterService="filterService">
-            <kendo-grid-date-filter-menu [column]="column" [filter]="filter" [filterService]="filterService">
-            </kendo-grid-date-filter-menu>
-        </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
             {{ data[col.column] | date : col.format }}
@@ -109,10 +102,12 @@
             <div class="d-subtitle" >
                 <div *ngFor="let label of col.labels">
                     <!-- <span *ngIf="isValidSubtitle(label.value, type[col.column])"
-                           class="po-mr-1 po-table-subtitle-circle po-{{ label.color }}">{{label.label}}
+                           [p-tooltip]="label.tooltip"
+                          class="po-mr-1 po-table-subtitle-circle po-{{ label.color }}">{{label.label}}
                     </span> -->
                     <span *ngIf="isValidSubtitle(label.value, type[col.column])"
-                          class="po-mr-1 po-table-column-label po-{{ label.color }}">{{label.label}}
+                           [p-tooltip]="label.tooltip"
+                           class="po-mr-1 po-table-column-label po-{{ label.color }}">{{label.label}}
                     </span>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import { ExcelModule, GridModule, PDFModule } from '@progress/kendo-angular-grid
 
 import { DtsKendoGridComponent } from './dts-kendo-grid.component';
 import { FormsModule } from '@angular/forms';
-
+import { PoTooltipModule } from './directives/po-tooltip/po-tooltip.module';
 /**
  * @description
  *
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     GridModule,
     ExcelModule,
+    PoTooltipModule,
     PDFModule
   ],
   declarations: [

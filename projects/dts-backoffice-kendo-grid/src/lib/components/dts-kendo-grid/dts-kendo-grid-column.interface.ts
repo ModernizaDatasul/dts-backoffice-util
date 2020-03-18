@@ -10,6 +10,7 @@ interface DtsLabel {
     value: string | number;
     label: string;
     color: string;
+    tooltip: string;
 }
 
 export interface DtsKendoGridColumn {
@@ -24,6 +25,7 @@ export interface DtsKendoGridColumn {
 
     /** Tamanho da coluna em pixels. */
     width?: number;
+
 
     /**
      * Informa se a coluna está agrupada.
