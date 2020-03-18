@@ -1,46 +1,83 @@
 ## Componente que implementa o Kendo Grid
 
+Exemplo de uso:
+
+Importar o módulo:
+```
+import { DtsBackofficeKendoGridModule } from 'dts-backoffice-kendo-grid';
+
+@NgModule({
+    declarations: [
+        ...
+    ],
+    imports: [
+        ...
+        DtsBackofficeKendoGridModule,
+    ],
+    providers: [
+        ...
+    ],
+})
+```
+
+Utilizar no html:
+
+```
+<dts-kendo-grid 
+  class="po-md-12"
+  [d-columns]="columns"
+  [d-data]="dataItems"
+  [d-groupable]="true"
+  [d-selectable]="true"
+  (d-selection-change)="onSelectionChange($event)"
+  [d-sortable]="true"
+  [d-filterable]="true"
+  [d-editable]="true"
+  [d-reorderable]="true">
+</dts-kendo-grid>
+```
 **Parâmetros**:
 
-**INPUT - d-sortable (boolean)**
+**INPUT - d-sortable (boolean)** <br/>
 Habilta a ordenação da coluna ao clicar no cabeçalho.
 
-**INPUT - d-selectable (boolean)** 
+**INPUT - d-selectable (boolean)** <br/>
 Cria uma coluna no inicio do GRID para permitir a seleção de uma ou mais linhas.
 
-**INPUT - d-groupable (boolean)**
+**INPUT - d-groupable (boolean)** <br/>
 Habilita a opção para agrupamento de colunas.
 
-**INPUT - d-data (Array < any >)**
+**INPUT - d-data (Array < any >)** <br/>
 Lista de objeto a serem exibidos.
-**INPUT - d-columns (Array < DtsKendoGridColumn > )**
+**INPUT - d-columns (Array < DtsKendoGridColumn > )** <br/>
 Objeto com as informações das colunas a serem exibidas.
 
-**INPUT - d-show-more-disabled (boolean)**
+**INPUT - d-show-more-disabled (boolean)** <br/>
 Habilitar ou desabilitar o botão "Carregar Mais Resultados".
 
-**INPUT - d-show-cancel-button (boolean)**
+**INPUT - d-show-cancel-button (boolean)** <br/>
 Habilita o botão "Cancelar" permitindo que o usuário possa cancelar a alteração da linha.
 
-**INPUT - d-show-remove-button (boolean)**
+**INPUT - d-show-remove-button (boolean)** <br/>
 Habilita o botão "Cancelar" permitindo que o usuário possa remover uma linha do grid.
 
-**INPUT - d-show-add-button (boolean)**
+**INPUT - d-show-add-button (boolean)** <br/>
 Habilita o botão para adicionar linhas.
 
-**INPUT - d-save-action (string)**
+**INPUT - d-save-action (string)** <br/>
 Executa um método antes de salvar uma linha editada no dts-kendo-grid. Este método recebe como parâmetro o atributo "event", para acessar o objeto selecionado no dts-kendo-grid utilizando o "event.data".  Se o método retornar o valor booleano "true", a edição da linha é confirmada, caso contrário as informações alteradas serão canceladas.
 
-**INPUT - d-remove-action (string)**
+**INPUT - d-remove-action (string)** <br/>
 Executa um método antes de remover uma linha selecionada no dts-kendo-grid. Este método recebe como parâmetro o atributo "event", para acessar o objeto selecionado no dts-kendo-grid utilizando o "event.data". Se o método retornar o valor booleano "true", a remoção da linha é confirmada, caso contrário as informações serão mantidas.
 
-**INPUT - d-add-action (string)**
+**INPUT - d-add-action (string)** <br/>
 Método executado antes de adicionar uma nova linha ao dts-kendo-grid. Esse método recebe como parâmetro o atributo "data" contendo a referência do objeto que será adicionado, dessa forma é possível informar alguns valores para a nova linha. Para que as alterações sejam efetivadas, deve-se retornar "true". É possível cancelar a inclusão de uma nova linha retornando "false", nesse caso as informações serão descartadas e a nova linha não será incluída no dts-kendo-grid.
 
-**INPUT - d-literals (objeto)**
+**INPUT - d-literals (objeto)** <br/>
 Objeto com as literais que serão utilizadas dentro do componente, caso não seja enviado será utilizado os valores de tradução que o componente já possui em português, inglês e espanhol.
 ```
 // Pode ser enviado um objeto parcial, por exemplo, quero customizar apenas a tradução do 'groupPanelEmpty' então mando o objeto abaixo:
+
 {
 	groupPanelEmpty:  'Minha tradução',
 }
@@ -77,23 +114,23 @@ Objeto com as literais que serão utilizadas dentro do componente, caso não sej
 	showMore:  'Carregar mais resultados'
 };
 ```
-**INPUT - d-filterable (boolean)**
+**INPUT - d-filterable (boolean)** <br/>
 Habilita a opção de filtro nas colunas do GRID. 
 
-**INPUT - d-actions (Array)** 
+**INPUT - d-actions (Array)**  <br/>
 Lista de ações que devem ser apresentadas nas linhas do GRID, funciona semelhante a p-actions do portinari.
 
-**OUTPUT - d-show-more (função)**
+**OUTPUT - d-show-more (Função)** <br/>
 Função que deve ser executado ao clicar no botão "showMore" (Carregar mais resultados).
 
-**OUTPUT - d-selection-change (funcão)**
+**OUTPUT - d-selection-change (Função)** <br/>
 Evento de seleção de linha que chama um método do componente. Este atributo é utilizado em conjunto com o atributo "d-selectable".
 
-**OUTPUT - d-save-value (função)**
+**OUTPUT - d-save-value (Função)** <br/>
 Evento disparado ao salvar dados do modo de edição inline, recebendo o modelo que foi alterado.
 
-**OUTPUT - d-group-change (função)**
-Não implementado
+**OUTPUT - d-group-change (Função)** <br/>
+Evento disparador quando ocorrer o agrupamento das colunas
 
 **Interfaces**
 
@@ -109,7 +146,7 @@ DtsKendoGridColumn
 | required | boolean | Se for passado o valor "true" o campo se torna obrigatório no modo edição habilitado |
 | type | string | Define o tipo da coluna. Valores válidos: string, number, date, currency, label e subtitle |
 | format | string | Formata os dados da coluna de acordo com o tipo |
-| labels | Array < DtsLabel > | Lista de valores que poderão exibidos quando "type" = subtitle|
+| labels | Array < DtsLabel > | Lista de valores que poderão ser exibidos quando "type" = subtitle|
 
 DtsLabel (Interface utilizado nos campos do tipo label e subtitle)
 
