@@ -1,5 +1,8 @@
 ## Changelog
 
+**0.0.19 (18-03-2020):** 
+Correção no **TotvsScheduleExecutionComponent:** A hora da execução estava indo com a data errada, não respeitando o que era informado em tela.      
+
 **0.0.18 (14-02-2020):** 
 
 Ajuste no serviço **disclaimer.util.ts** para possibilitar a tradução do value no **makeDisclaimerFromMultiSelect**. Foi incluido um novo parâmetro **tradValue** para indicar se deve ou não ser traduzido.
