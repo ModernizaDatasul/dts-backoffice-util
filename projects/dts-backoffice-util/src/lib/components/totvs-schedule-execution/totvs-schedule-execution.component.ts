@@ -100,9 +100,10 @@ export class TotvsScheduleExecutionComponent implements OnInit {
       this.jsonObject.executionParameter = {};
 
       if (this.model.typeExecution === 1) {
-        this.jsonObject.firstExecution = new Date();
+        const date = new Date();
+        this.jsonObject.firstExecution = date.getFullYear() + '-' + (date.getMonth() + 1)  + '-' + date.getDate() + 'T' + this.addZero(date.getHours()) + ':' + this.addZero(date.getMinutes()) + ':00.000Z';
       } else if (this.model.typeExecution === 2) {
-        this.jsonObject.firstExecution = new Date(this.model.executionAppointmentDate + 'T' + this.model.executionAppointmentHour);
+        this.jsonObject.firstExecution = this.model.executionAppointmentDate + 'T' + this.model.executionAppointmentHour + ':00.000Z';
       }
 
       this.jsonObject.executionParameter.parametros = [];
