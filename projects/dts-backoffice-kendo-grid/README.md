@@ -1,4 +1,4 @@
-## Componente que implementa o Kendo Grid
+## Componente que implementa o [Kendo GRID](https://www.telerik.com/kendo-angular-ui/components/grid/)
 
 Exemplo de uso:
 
