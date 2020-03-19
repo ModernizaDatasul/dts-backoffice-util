@@ -606,11 +606,11 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.updateIndex(orderBy(this.data, this.sort));
 
         this.gridView = {
-            data: this.data,
+            data: this.data || [],
             total: this.data ? this.data.length : 0
         };
 
-        this.gridView = process(filterBy(this.data, this.state.filter), { filter: this.state.filter });
+        this.gridView = process(filterBy(this.data || [], this.state.filter), { filter: this.state.filter });
     }
 
     private loadDataGroupable() {

@@ -1,5 +1,11 @@
 ## Changelog
 
+**0.0.21 (19-03-2020):** 
+Correção no **ReportService:** Ajuste no nome do arquivo de download, não estava respeitando o parâmetro enviado.
+
+**0.0.20 (19-03-2020):** 
+Correção no **ReportService:** Ajuste na montagem da URL, não estava mandando & quando havia mais de um parâmetro.
+
 **0.0.19 (18-03-2020):** 
 Correção no **TotvsScheduleExecutionComponent:** A hora da execução estava indo com a data errada, não respeitando o que era informado em tela.      
 

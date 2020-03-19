@@ -42,7 +42,10 @@ export class ReportService {
     if (params.properties.length > 0) {
       reportURL += '?';
 
-      params.properties.forEach((property: IProperty) => {
+      params.properties.forEach((property: IProperty, index: number) => {
+        if (index > 0) {
+          reportURL += '&';
+        }
         reportURL += `c_properties=${property.name}&c_values=${property.value}`;
       });
     }
@@ -53,7 +56,7 @@ export class ReportService {
     return this.httpClient.post(reportURL, {}, { headers, responseType: 'blob' })
       .pipe(map(report => {
         if (params.download) {
-          this.download(report, `${params.reportName}.${params.format}`);
+          this.download(report, `${params.downloadName}.${params.format}`);
         }
         return report;
       }));

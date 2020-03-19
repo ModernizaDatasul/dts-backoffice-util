@@ -122,7 +122,7 @@ export abstract class DtsKendoGridBaseComponent {
 //   @Input('d-columns') _columns: Array<DtsKendoGridColumn>;
 
   @Input('d-columns') set dColumns(columns: Array<DtsKendoGridColumn>) {
-      this.columns = JSON.parse(JSON.stringify(columns));
+      this.columns = columns ? JSON.parse(JSON.stringify(columns)) : [];
   }
 
   @Input('d-groups') groups: any;
