@@ -129,6 +129,9 @@ Habilita a opção de filtro nas colunas do GRID.
 **INPUT - d-actions (Array)** 
 Lista de ações que devem ser apresentadas nas linhas do GRID, funciona semelhante a p-actions do portinari.
 
+**INPUT - d-reorderable (Boolean)**
+Habilita a mudança da ordem das colunas, através do arrastar e soltar no cabeçalho da coluna.
+
 **OUTPUT - d-show-more (Função)**
 Função que deve ser executado ao clicar no botão "showMore" (Carregar mais resultados).
 
