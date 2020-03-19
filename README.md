@@ -1,5 +1,7 @@
 [**Documentação dos Componentes e Utils**](https://github.com/ModernizaDatasul/dts-backoffice-util/tree/master/projects/dts-backoffice-util "Readme")
 
+[**Documentação do Dts Kendo GRID**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/README.md)
+
 **Guia de contribuição**
 - Os componentes e utils dessa biblioteca são utilizados em várias squads, tenha responsabilidade na alteração
 
@@ -15,7 +17,7 @@
 
 **IMPORTANTE**
 
-Antes de fazer o PR lembre-se de atualizar o arquivo [README](https://github.com/ModernizaDatasul/dts-backoffice-util/tree/master/projects/dts-backoffice-util "Readme"), de preferência incrementar o **CHANGELOG** e **obrigatoriamente** descrever qual foi a alteração realizada (se possível com  exemplos de uso).
+Antes de fazer o PR lembre-se de atualizar o arquivo README, de preferência incrementar o **CHANGELOG** e **obrigatoriamente** descrever qual foi a alteração realizada (se possível com  exemplos de uso).
 
 
 Em caso de dúvidas, falar com **Alexandre Weber Dalabona** ou **Adriano de Avila**.
