@@ -356,7 +356,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     saveLine() {
         if (this.editable && this.formGroup) {
             let newRowValue;
+            let oldRowValue;
             if (this.editedRowIndex >= 0) {
+                oldRowValue = {...this.data[this.editedRowIndex]};
                 newRowValue = Object.assign(this.data[this.editedRowIndex], this.formGroup.value);
                 this.data[this.editedRowIndex] = newRowValue;
             } else if (this.addButtonCalled) {
@@ -365,7 +367,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                 this.addButtonCalled = false;
             }
 
-            this.saveValue.emit({ data: newRowValue });
+            this.saveValue.emit({ data: newRowValue, oldData: oldRowValue });
         }
 
         this.initializeSorter();
