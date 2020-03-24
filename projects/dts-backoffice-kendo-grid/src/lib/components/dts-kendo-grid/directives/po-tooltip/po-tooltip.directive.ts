@@ -39,6 +39,8 @@ export class PoTooltipDirective extends PoTooltipBaseDirective implements OnInit
   private tooltipContent;
   private tooltipOffset: number = 8;
 
+  private isShow = true;
+
   private eventListenerFunction: () => void;
 
   constructor(private elementRef: ElementRef,
@@ -53,8 +55,10 @@ export class PoTooltipDirective extends PoTooltipBaseDirective implements OnInit
   }
 
   @HostListener('mouseenter') onMouseEnter() {
+    this.isShow = true;
+
     setTimeout(() => {
-      if (this.tooltip) {
+      if (this.tooltip && this.isShow) {
         this.tooltipContent ? this.showTooltip() : this.createTooltip();
 
         this.removeArrow(this.arrowDirection);
@@ -66,12 +70,13 @@ export class PoTooltipDirective extends PoTooltipBaseDirective implements OnInit
 
         this.lastTooltipText = this.tooltip;
       }
-    });
+    }, 500);
 
   }
 
   @HostListener('mouseleave') onMouseLeave() {
     this.hideTooltip();
+    this.isShow = false;
   }
 
   private addArrow(arrowDirection) {
