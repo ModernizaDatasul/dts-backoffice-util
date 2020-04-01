@@ -1,4 +1,5 @@
 ## Changelog
+**0.0.22 (01-04-2020):** Repasse da biblioteca.
 
 **0.0.21 (19-03-2020):** 
 Correção no **ReportService:** Ajuste no nome do arquivo de download, não estava respeitando o parâmetro enviado.
