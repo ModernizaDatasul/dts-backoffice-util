@@ -67,5 +67,12 @@ export interface DtsKendoGridColumn {
     format?: string;
 
     labels?: Array<DtsLabel>;
+
+    // Para formatar moeda com o PIPE do angular
+    // https://angular.io/api/common/CurrencyPipe
+    currency?: string;
+
+    symbol?: string;
+
 }
 

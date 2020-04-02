@@ -698,7 +698,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             },
             currency: column => {
                 column.type = 'currency';
-                column.format = column.format ? column.format : 'BRL';
+                column.currency = column.currency ? column.currency : 'BRL';
+                column.symbol = column.symbol ? column.symbol : '1.2-2';
             },
             date: column => {
                 column.type = 'date';

@@ -159,6 +159,8 @@ DtsKendoGridColumn
 | type | string | Define o tipo da coluna. Valores válidos: string, number, date, currency, label e subtitle |
 | format | string | Formata os dados da coluna de acordo com o tipo |
 | labels | Array < DtsLabel > | Lista de valores que poderão ser exibidos quando "type" = subtitle|
+| currency | string | Moeda utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe)|
+| symbol | string | Formato utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe) |
 
 DtsLabel (Interface utilizado nos campos do tipo label e subtitle)
 
