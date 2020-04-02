@@ -152,7 +152,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                 this.validateSaveEventInDocument(target);
             });
 
-        this.initializeColumns();
+        // this.initializeColumns();
         this.initializeSorter();
         this.initializeData();
 
@@ -646,13 +646,13 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
     }
 
-    private initializeColumns(): void {
-        if (!this.columns) {
-            this.columns = [];
-        } else {
-            this.defineColumnType();
-        }
-    }
+    // initializeColumns(): void {
+    //     if (!this.columns) {
+    //         this.columns = [];
+    //     } else {
+    //         this.defineColumnType();
+    //     }
+    // }
 
     private initializeData(): void {
         if (!this.data) {
@@ -689,45 +689,45 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     // Define a configuração da coluna em modo edição de acordo com o tipo informado.
-    private defineColumnType() {
+    // defineColumnType() {
 
-        const lookupTableType = {
-            number: column => {
-                column.type = 'numeric';
-                column.format = column.format ? column.format : '';
-            },
-            currency: column => {
-                column.type = 'currency';
-                column.currency = column.currency ? column.currency : 'BRL';
-                column.symbol = column.symbol ? column.symbol : '1.2-2';
-            },
-            date: column => {
-                column.type = 'date';
-                column.format = column.format && column.format.trim().length > 0 ? `${column.format}` : 'dd/MM/yyyy';
-            },
-            string: column => {
-                column.type = 'text';
-                column.format = undefined;
-            },
-            label: column => {
-                column.type = 'label';
-            },
-            subtitle: column => {
-                column.type = 'subtitle';
-            },
-            checkbox: column => {
-                column.type = 'checkbox';
-            }
-        };
+    //     const lookupTableType = {
+    //         number: column => {
+    //             column.type = 'numeric';
+    //             column.format = column.format ? column.format : '';
+    //         },
+    //         currency: column => {
+    //             column.type = 'currency';
+    //             column.currency = column.currency ? column.currency : 'BRL';
+    //             column.symbol = column.symbol ? column.symbol : '1.2-2';
+    //         },
+    //         date: column => {
+    //             column.type = 'date';
+    //             column.format = column.format && column.format.trim().length > 0 ? `${column.format}` : 'dd/MM/yyyy';
+    //         },
+    //         string: column => {
+    //             column.type = 'text';
+    //             column.format = undefined;
+    //         },
+    //         label: column => {
+    //             column.type = 'label';
+    //         },
+    //         subtitle: column => {
+    //             column.type = 'subtitle';
+    //         },
+    //         checkbox: column => {
+    //             column.type = 'checkbox';
+    //         }
+    //     };
 
-        this.columns.forEach(column => {
-            if (column.type && lookupTableType.hasOwnProperty(column.type.trim().toLowerCase())) {
-                lookupTableType[column.type.trim().toLowerCase()](column);
-            } else {
-                column.type = 'text';
-            }
-        });
-    }
+    //     this.columns.forEach(column => {
+    //         if (column.type && lookupTableType.hasOwnProperty(column.type.trim().toLowerCase())) {
+    //             lookupTableType[column.type.trim().toLowerCase()](column);
+    //         } else {
+    //             column.type = 'text';
+    //         }
+    //     });
+    // }
 
     private isChildOf(el, className) {
         while (el && el.parentElement) {
