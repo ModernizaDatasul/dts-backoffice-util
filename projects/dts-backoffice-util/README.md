@@ -1,4 +1,6 @@
 ## Changelog
+**2.0.00 (12-04-2020):** ATUALIZAÇÃO: **PORTINARI v2** E **ANGULAR 9**.
+
 **0.0.22 (01-04-2020):** Repasse da biblioteca.
 
 **0.0.21 (19-03-2020):** 

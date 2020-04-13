@@ -3,7 +3,7 @@ Versão: 1.003
 Data Criação: 18/04/2019
 */
 
-import { PoMultiselectOption, PoSelectOption } from '@portinari/portinari-ui';
+import { PoMultiselectOption, PoSelectOption } from '@po-ui/ng-components';
 
 export interface ChartSeries {
       name?: string;

@@ -2,7 +2,7 @@ import { map } from 'rxjs/internal/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PoComboOption, PoComboFilter } from '@portinari/portinari-ui';
+import { PoComboOption, PoComboFilter } from '@po-ui/ng-components';
 
 @Injectable()
 

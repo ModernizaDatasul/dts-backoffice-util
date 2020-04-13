@@ -3,7 +3,7 @@ import {
   TotvsScheduleExecutionComponent
 } from './components/totvs-schedule-execution/totvs-schedule-execution.component';
 import { FormsModule } from '@angular/forms';
-import { PoModule, PoI18nService } from '@portinari/portinari-ui';
+import { PoModule, PoI18nService } from '@po-ui/ng-components';
 import { HttpClientModule } from '@angular/common/http';
 // import { BrowserModule } from '@angular/platform-browser';
 import { RpwService } from './components/totvs-schedule-execution/totvs-schedule-execution.service';
@@ -31,7 +31,7 @@ import { DtsDateFormatPipe } from './pipes/dts-date-format.pipe';
 })
 
 export class DtsBackofficeUtilsModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<DtsBackofficeUtilsModule> {
     return {
       ngModule: DtsBackofficeUtilsModule,
       providers: [RpwService]

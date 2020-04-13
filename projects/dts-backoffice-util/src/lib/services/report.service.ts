@@ -35,7 +35,7 @@ export class ReportService {
   constructor(public httpClient: HttpClient) { }
 
   generate(params: IReportServiceParams, showLoading: boolean = true): Observable<Blob> {
-    const headers = { 'X-Portinari-Screen-Lock': showLoading ? 'true' : 'false' };
+    const headers = { 'X-PO-Screen-Lock': showLoading ? 'true' : 'false' };
 
     let reportURL = `${this.URL}${params.reportName}`;
 

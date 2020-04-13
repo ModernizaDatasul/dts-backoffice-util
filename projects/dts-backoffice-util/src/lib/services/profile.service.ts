@@ -31,7 +31,7 @@ export class ProfileService {
     constructor(public http: HttpClient) { }
 
     setProfile(profile: IProfile): Observable<any> {
-        const headers = { 'X-Portinari-Screen-Lock': 'true' };
+        const headers = { 'X-PO-Screen-Lock': 'true' };
         const { pageId, userCode } = profile;
 
         return this.http
@@ -48,7 +48,7 @@ export class ProfileService {
     }
 
     private getProfile(profile: IProfile, dataType: EDataType, showLoading?: string): Observable<any> {
-        const headers = { 'X-Portinari-Screen-Lock': showLoading };
+        const headers = { 'X-PO-Screen-Lock': showLoading };
         const { pageId, dataCode, userCode } = profile;
 
         return this.http

@@ -4,7 +4,7 @@ Data Criação: 06/08/2018
 */
 
 import { Injectable } from '@angular/core';
-import { PoBreadcrumb } from '@portinari/portinari-ui';
+import { PoBreadcrumb } from '@po-ui/ng-components';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable()

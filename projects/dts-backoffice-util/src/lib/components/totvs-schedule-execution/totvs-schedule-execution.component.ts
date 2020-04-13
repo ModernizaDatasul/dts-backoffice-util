@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
-import { PoRadioGroupOption, PoLookupColumn, PoI18nService, PoNotificationService } from '@portinari/portinari-ui';
+import { PoRadioGroupOption, PoLookupColumn, PoI18nService, PoNotificationService } from '@po-ui/ng-components';
 import { ParametersRpw } from './totvs-schedule-execution.model';
 import { NgForm } from '@angular/forms';
 import { RpwService } from './totvs-schedule-execution.service';

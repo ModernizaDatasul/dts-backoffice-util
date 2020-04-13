@@ -3,9 +3,9 @@ Versão: 1.008
 Data Criação: 06/08/2018
 */
 
-import { PoDisclaimer, PoI18nPipe, PoCheckboxGroupOption, PoMultiselectOption } from '@portinari/portinari-ui';
+import { PoDisclaimer, PoI18nPipe, PoCheckboxGroupOption, PoMultiselectOption } from '@po-ui/ng-components';
 import { IFilterRangeCharacter, IFilterRangeNumber, IFilterRangeDate } from '../../lib/interfaces/filter-range.interface';
-import { PoNotificationService } from '@portinari/portinari-ui';
+import { PoNotificationService } from '@po-ui/ng-components';
 
 export class DisclaimerUtil {
   poNotification: PoNotificationService;

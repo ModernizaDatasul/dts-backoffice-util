@@ -3,7 +3,7 @@ Versão: 1.002
 Data Criação: 19/02/2019
 */
 
-import { PoNotificationService, PoI18nPipe } from '@portinari/portinari-ui';
+import { PoNotificationService, PoI18nPipe } from '@po-ui/ng-components';
 import { DisclaimerUtil } from './disclaimer.util';
 
 export class FieldValidationUtil {
