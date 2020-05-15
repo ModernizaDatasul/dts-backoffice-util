@@ -26,7 +26,9 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         public poNotification: PoNotificationService) {
     }
 
-    TypeExecutionOptions: Array<PoRadioGroupOption>;
+    executionTypeOptions: Array<PoRadioGroupOption>;
+    frequencyOptions: Array<PoRadioGroupOption>;
+    frequencyTypeOptions: Array<PoRadioGroupOption>;
     weeklyOptions: Array<PoRadioGroupOption>;
     model: ParametersRpw;
     columns: Array<PoLookupColumn>;
@@ -48,43 +50,78 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     }
 
     setupComponents() {
-        this.TypeExecutionOptions = [
+        this.executionTypeOptions = [
             { label: 'Executar Hoje', value: 1 },
             { label: 'Agendar Execução', value: 2 }
         ];
-        this.weeklyOptions = [
-            { label: 'Domingo', value: 'SUNDAY' },
-            { label: 'Segunda', value: 'MONDAY' },
-            { label: 'Terça', value: 'TUESDAY' },
-            { label: 'Quarta', value: 'WEDNESDAY' },
-            { label: 'Quinta', value: 'THURSDAY' },
-            { label: 'Sexta', value: 'FRIDAY' },
-            { label: 'Sábado', value: 'SATURDAY' }
+
+        this.frequencyOptions = [
+            { label: 'Uma vez no dia', value: 'no' },
+            { label: 'Várias vezes no dia', value: 'yes' }
         ];
+
+        this.frequencyTypeOptions = [
+            { label: 'Hora(s)', value: 'hour' },
+            { label: 'Minuto(s)', value: 'minute' }
+        ];
+
+        this.weeklyOptions = [
+            { label: 'Domingo', value: 'Sunday' },
+            { label: 'Segunda', value: 'Monday' },
+            { label: 'Terça', value: 'Tuesday' },
+            { label: 'Quarta', value: 'Wednesday' },
+            { label: 'Quinta', value: 'Thursday' },
+            { label: 'Sexta', value: 'Friday' },
+            { label: 'Sábado', value: 'Saturday' }
+        ];
+
         this.columns = [
             { property: 'cod_servid_exec', label: 'Código' },
             { property: 'des_servid_exec', label: 'Descrição' }
         ];
 
         this.model = new ParametersRpw();
-        this.model.typeExecution = 1;
+        this.model.executionType = 1;
         this.model.activeTab = 1;
         this.model.repeatExecution = false;
     }
 
-    changeTypeExecution() {
+    isExecutionSchedule(): boolean {
+        return (this.model.executionType === 2);
+    }
+
+    isRepeatExecution(): boolean {
+        return this.model.repeatExecution;
+    }
+
+    isFrenquency(): boolean {
+        return (this.model.frequency === 'yes');
+    }
+
+    changeRepeatExecution() {
         const date = new Date();
 
-        this.model.executionAppointmentDate = date;
-        this.model.executionAppointmentHour = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
+        this.model.execAppointHourInit = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
+        this.model.execAppointHourFinal = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
+        this.model.selectWeeklys = [];
+        this.model.dayOfMonth = 0;
+        this.model.frequency = 'no';
+        this.model.frequencyType = 'hour';
+        this.model.frequencyValue = 0;
+    }
+
+    changeExecutionType() {
+        const date = new Date();
+
+        this.model.execAppointDate = date;
+        this.model.execAppointHour = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
+    }
+
+    changeTypeFrequency() {
     }
 
     setActiveTab(codTab) {
-        const date = new Date();
-
         this.model.activeTab = codTab;
-        this.model.executionAppointmentHourDaily = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
-        this.model.executionAppointmentHourWeekly = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
     }
 
     addZero(i) {
@@ -104,11 +141,12 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         this.jsonObject.recurrent = this.model.repeatExecution;
         this.jsonObject.executionParameter = {};
 
-        if (this.model.typeExecution === 1) {
+        if (this.model.executionType === 1) {
             const date = new Date();
             this.jsonObject.firstExecution = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()}T${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}:00.000Z`;
-        } else if (this.model.typeExecution === 2) {
-            this.jsonObject.firstExecution = `${this.model.executionAppointmentDate}T${this.model.executionAppointmentHour}:00.000Z`;
+        }
+        if (this.model.executionType === 2) {
+            this.jsonObject.firstExecution = `${this.model.execAppointDate}T${this.model.execAppointHour}:00.000Z`;
         }
 
         this.jsonObject.executionParameter.parametros = [];
@@ -122,40 +160,64 @@ export class TotvsScheduleExecutionComponent implements OnInit {
 
         // Executa hoje ou agendada
         this.rpwService.createRpw(this.jsonObject).subscribe(() => {
-            this.poNotification.success('Execução efetuada com sucesso!');
+            this.poNotification.success('Execução efetuada com sucesso !');
         });
 
         if (this.model.repeatExecution) {
             if (this.model.activeTab === 1) {
                 this.jsonObject.daily = {
-                    hour: this.getHourOrMinute(this.model.executionAppointmentHourDaily, 'h'),
-                    minute: this.getHourOrMinute(this.model.executionAppointmentHourDaily, 'm')
+                    hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
+                    minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm')
                 };
-            } else if (this.model.activeTab === 2) {
+            }
+
+            if (this.model.activeTab === 2) {
                 this.jsonObject.weekly = {
-                    hour: this.getHourOrMinute(this.model.executionAppointmentHourWeekly, 'h'),
-                    minute: this.getHourOrMinute(this.model.executionAppointmentHourWeekly, 'm'),
+                    hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
+                    minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
                     daysOfWeek: this.model.selectWeeklys
                 };
             }
-            // Monthy não será aplicado nesse momento
-            // this.jsonObject.monthly = {'hour': '14', 'minute': '50', 'day': '27'};
 
-            // Executa a diária ou mensal
+            if (this.model.activeTab === 3) {
+                this.jsonObject.monthly = {
+                    hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
+                    minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
+                    day: this.model.dayOfMonth
+                };
+            }
+
+            if (this.isFrenquency()) {
+                this.jsonObject.rangeExecutions = {
+                    frequency: {
+                        type: this.model.frequencyType,
+                        value: this.model.frequencyValue
+                    },
+                    rangeLimit: {
+                        hour: this.getHourOrMinute(this.model.execAppointHourFinal, 'h'),
+                        minute: this.getHourOrMinute(this.model.execAppointHourFinal, 'm')
+                    }
+                };
+            }
+
+            // Executa a diária, semanal ou mensal
             this.rpwService.createRpw(this.jsonObject).subscribe(() => {
-
             });
         }
 
         this.endExecution.emit('endExecution');
     }
 
-    getHourOrMinute(value, type) {
-        if (type === 'h') {
-            return value.substring(0, 2);
-        } else if (type === 'm') {
-            return value.substring(3, 6);
-        }
+    getHourOrMinute(value: string, type: string): number {
+        if (type === 'h') { return +value.substring(0, 2); }
+        if (type === 'm') { return +value.substring(3, 6); }
+    }
+
+    compareHour(hourInit: string, hourFinal: string): boolean {
+        if (hourInit === hourFinal) { return false; }
+        if (this.getHourOrMinute(hourInit, 'h') < this.getHourOrMinute(hourFinal, 'h')) { return true; }
+        if (this.getHourOrMinute(hourInit, 'm') > this.getHourOrMinute(hourFinal, 'm')) { return false; }
+        return true;
     }
 
     validate(): boolean {
@@ -170,20 +232,37 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             return false;
         }
 
-        if (this.model.typeExecution === 2 && (!this.model.executionAppointmentDate || !this.model.executionAppointmentHour)) {
-            this.poNotification.error('Informar a data e a hora para a execução.');
+        if (this.isExecutionSchedule() && (!this.model.execAppointDate || !this.model.execAppointHour)) {
+            this.poNotification.error('Informar a data e a hora para agendamento da execução.');
             return false;
         }
 
         if (this.model.repeatExecution) {
-            if (this.model.activeTab === 1 && !this.model.executionAppointmentHourDaily) {
-                this.poNotification.error('Informar a hora para a execução diária.');
+            if (!this.model.execAppointHourInit) {
+                this.poNotification.error('Informar a hora de início para a execução.');
                 return false;
             }
 
-            if (this.model.activeTab === 2 && (!this.model.executionAppointmentHourWeekly || this.model.selectWeeklys.length === 0)) {
-                this.poNotification.error('Informar a hora e os dias da semana para a execução mensal.');
+            if (this.model.activeTab === 2 && (this.model.selectWeeklys.length === 0)) {
+                this.poNotification.error('Informar os dias da semana para a execução.');
                 return false;
+            }
+
+            if (this.model.activeTab === 3 && (!this.model.dayOfMonth)) {
+                this.poNotification.error('Informar o dia para a execução.');
+                return false;
+            }
+
+            if (this.isFrenquency()) {
+                if (!this.compareHour(this.model.execAppointHourInit, this.model.execAppointHourFinal)) {
+                    this.poNotification.error('Hora Fim deve ser maior que Hora Início.');
+                    return false;
+                }
+
+                if (this.model.frequencyValue === 0) {
+                    this.poNotification.error('Informar a frequência de execução (A cada hora/minuto).');
+                    return false;
+                }
             }
         }
 

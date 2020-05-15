@@ -1,11 +1,15 @@
 export class ParametersRpw {
-    typeExecution: Number;
-    executionAppointmentDate: Date;
-    executionAppointmentHour: String;
-    executionServer: String;
+    executionType: number;
+    execAppointDate: Date;
+    execAppointHour: string;
+    executionServer: string;
     repeatExecution: boolean;
-    executionAppointmentHourDaily: String;
-    executionAppointmentHourWeekly: String;
-    activeTab: Number;
+    frequency: string;
+    frequencyType: string;
+    frequencyValue: number;
+    execAppointHourInit: string;
+    execAppointHourFinal: string;
+    activeTab: number;
     selectWeeklys: [];
+    dayOfMonth: number;
 }

@@ -1,11 +1,13 @@
 ## Changelog
 
-**2.0.01 (15-05-2020):** Ajuste no componente **TotvsScheduleExecutionComponent**:<br>
-- Inclusão do atributo (opicional) "programEMS5": Indica que o programa a ser executado é do EMS5.<br>
-- Inclusão do atributo (opicional) "programVersion": Indica a versão do programa progress a ser executado.<br>
-- Alterado o parâmetro "endExecution": Para ser um função (e não boolean). Será disparada a função depois que retornar do serviço de agendamento.
+**2.0.1 / 2.0.2 (15-05-2020):** Ajustes no componente **TotvsScheduleExecutionComponent**:
+- Inclusão do atributo (opicional) **"programEMS5"**: Indica que o programa a ser executado é do EMS5.
+- Inclusão do atributo (opicional) **"programVersion"**: Indica a versão do programa progress a ser executado.
+- Alterado o parâmetro **"endExecution"**: Para ser um função (e não boolean). Será disparada a função depois que retornar do serviço de agendamento.
+- Incluída a opção de Recorrência **"Mensal"** (Agora temos: Diária, Semanal e Mensal);
+- Incluída a opção de **"Frequência"**, permitido que a execução seja repetida várias vezes no mesmo dia (quando for Recorrência).
 
-**2.0.00 (12-04-2020):** ATUALIZAÇÃO: **PORTINARI v2** E **ANGULAR 9**.
+**2.0.0 (12-04-2020):** ATUALIZAÇÃO: **PORTINARI v2** E **ANGULAR 9**.
 
 **0.0.22 (01-04-2020):** Repasse da biblioteca.
 
@@ -127,9 +129,9 @@ No HTML usar da seguinte forma:
 <app-totvs-schedule-execution 
   programName="pdapi701"
   externalName="pdp/pdapi701"
-  parameters="parametersRpw"
   programEMS5="no"
   programVersion=""
+  parameters="parametersRpw"
   (endExecution)="endExecution($event)">
 </app-totvs-schedule-execution>
 ```
