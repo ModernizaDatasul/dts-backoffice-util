@@ -1,4 +1,10 @@
 ## Changelog
+
+**2.0.01 (15-05-2020):** Ajuste no componente **TotvsScheduleExecutionComponent**:<br>
+- Inclusão do atributo (opicional) "programEMS5": Indica que o programa a ser executado é do EMS5.<br>
+- Inclusão do atributo (opicional) "programVersion": Indica a versão do programa progress a ser executado.<br>
+- Alterado o parâmetro "endExecution": Para ser um função (e não boolean). Será disparada a função depois que retornar do serviço de agendamento.
+
 **2.0.00 (12-04-2020):** ATUALIZAÇÃO: **PORTINARI v2** E **ANGULAR 9**.
 
 **0.0.22 (01-04-2020):** Repasse da biblioteca.
@@ -16,7 +22,6 @@ Correção no **TotvsScheduleExecutionComponent:** A hora da execução estava i
 
 Ajuste no serviço **disclaimer.util.ts** para possibilitar a tradução do value no **makeDisclaimerFromMultiSelect**. Foi incluido um novo parâmetro **tradValue** para indicar se deve ou não ser traduzido.
 Para tradução o value deve estar no literals que foi enviado para o serviço
-
 
 **0.0.17 (03-02-2020):** 
 
@@ -123,6 +128,8 @@ No HTML usar da seguinte forma:
   programName="pdapi701"
   externalName="pdp/pdapi701"
   parameters="parametersRpw"
+  programEMS5="no"
+  programVersion=""
   (endExecution)="endExecution($event)">
 </app-totvs-schedule-execution>
 ```
@@ -147,12 +154,15 @@ DEFINE TEMP-TABLE tt-param NO-UNDO
 ```
 Parâmetros:
 
-| Nome  |  Tipo | Descrição |
-| ------------ | --- | ------------ |
-| programName | String | Nome da API|
-| externalName | String | Nome da API completo, pasta + nome |
-| parameters | Array | Objeto representando a Temp-Table que será enviada ao progress |
-| endExecution | EventEmitter```<boolean>``` | Evento que será emitido ao finalizar o agendamento |
+| Nome  |  Tipo | Obrigatório | Descrição |
+| - | - | - | - |
+| programName | string | Sim | Nome da API|
+| externalName | string | Sim | Nome da API completo, pasta + nome |
+| programEMS5 | boolean | Não | Indica se o programa progress é do EMS5 |
+| programVersion | string | Não | Versão do programa progress |
+| parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress |
+| endExecution | EventEmitter | Não | Evento que será emitido ao finalizar o agendamento |
+
 **0.0.11 (24-01-2020)**
 
 Primeira versão, serviços disponíveis:

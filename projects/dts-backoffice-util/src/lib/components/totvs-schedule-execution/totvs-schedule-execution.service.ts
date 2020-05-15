@@ -8,9 +8,10 @@ import { PoComboOption, PoComboFilter } from '@po-ui/ng-components';
 
 export class RpwService implements PoComboFilter {
 
-    // private apiUrl = '/dts/datasul-rest/resources/prg/cdp/v1/usersConfigApp';
     private apiUrl = '/dts/datasul-rest/resources/prg/cdp/v1/genericsZoom';
     private urlJobScheduler = '/dts/datasul-rest/resources/prg/framework/v1/jobScheduler';
+    //private apiUrl = '/genericsZoom';
+    //private urlJobScheduler = '/jobScheduler';
 
     constructor(public http: HttpClient) { }
 
