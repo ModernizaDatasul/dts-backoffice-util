@@ -129,9 +129,9 @@ No HTML usar da seguinte forma:
 <app-totvs-schedule-execution 
   programName="pdapi701"
   externalName="pdp/pdapi701"
-  programEMS5="no"
+  programEMS5="false"
   programVersion=""
-  parameters="parametersRpw"
+  [parameters]="parametersRpw"
   (endExecution)="endExecution($event)">
 </app-totvs-schedule-execution>
 ```
