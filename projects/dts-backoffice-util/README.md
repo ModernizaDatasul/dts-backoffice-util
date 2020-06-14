@@ -1,5 +1,7 @@
 ## Changelog
 
+**2.0.3 (13-06-2020):** Ajuste do método **"atzBooleanFromDisclamer"** do **DisclaimerUtils** para retornar um valor **verdadeiramente boolean**. Em alguns casos, retornava uma string com "true" ou "false". Assim o componente **"po-switch"** não funciona corretamente.  
+
 **2.0.1 / 2.0.2 (15-05-2020):** Ajustes no componente **TotvsScheduleExecutionComponent**:
 - Inclusão do atributo (opicional) **"programEMS5"**: Indica que o programa a ser executado é do EMS5.
 - Inclusão do atributo (opicional) **"programVersion"**: Indica a versão do programa progress a ser executado.
