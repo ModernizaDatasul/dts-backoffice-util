@@ -1,4 +1,4 @@
-import { Input } from '@angular/core';
+import { Input, Directive } from '@angular/core';
 
 import { PO_CONTROL_POSITIONS } from './po-control-position/po-control-position.constants';
 
@@ -15,9 +15,10 @@ const PO_TOOLTIP_POSITION_DEFAULT = 'bottom';
  * orientação do usuário. A ativação dele pode estar em qualquer componente ou tag HTML.
  *
  * Para textos maiores ou no caso de haver a necessidade de utilizar algum outro elemento como
- * conteúdo deve-se utilizar o [**po-popover**](https://portinari.io/documentation/po-popover?view=doc).
+ * conteúdo deve-se utilizar o [**po-popover**](https://po-ui.io/documentation/po-popover?view=doc).
  */
 
+@Directive()
 export class PoTooltipBaseDirective {
 
   private _tooltip: string = '';
@@ -30,7 +31,7 @@ export class PoTooltipBaseDirective {
    */
   @Input('p-tooltip') set tooltip(tooltip: string) {
     if (tooltip && tooltip.length > CONTENT_MAX_LENGTH) {
-       this._tooltip = tooltip.substring(0, CONTENT_MAX_LENGTH);
+      this._tooltip = tooltip.substring(0, CONTENT_MAX_LENGTH);
     } else {
       this._tooltip = tooltip;
     }

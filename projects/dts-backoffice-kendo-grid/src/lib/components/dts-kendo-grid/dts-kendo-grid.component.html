@@ -64,9 +64,8 @@
       [width]="30"
       [showSelectAll]="true">
   </kendo-grid-checkbox-column>
-
-  <div *ngFor="let col of columns; let i = index">
-    <kendo-grid-column
+  
+    <kendo-grid-column *ngFor="let col of columns; let i = index"
         (click)="onClickColumn(col)"
         [field]="col.column"
         [title]="col.label"
@@ -121,7 +120,6 @@
         </ng-template>
 
     </kendo-grid-column>
-  </div>
 
   <kendo-grid-command-column title="" width="80" locked="true" *ngIf="isCommandColumnVisible()">
     <ng-template kendoGridCellTemplate let-data>

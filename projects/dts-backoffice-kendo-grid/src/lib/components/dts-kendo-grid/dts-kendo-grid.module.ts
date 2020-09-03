@@ -21,9 +21,8 @@ import { PoTooltipModule } from './directives/po-tooltip/po-tooltip.module';
     PDFModule
   ],
   declarations: [
-    DtsKendoGridComponent
   ],
-  exports: [DtsKendoGridComponent],
+  exports: [],
   providers: [],
   schemas: []
 })

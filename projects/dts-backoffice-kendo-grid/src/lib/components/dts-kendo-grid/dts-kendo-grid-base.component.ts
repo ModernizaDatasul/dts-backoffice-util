@@ -1,7 +1,7 @@
 // tslint:disable: variable-name
 // tslint:disable: no-input-rename
 // tslint:disable: no-output-rename
-import { Input, EventEmitter, Output } from '@angular/core';
+import { Input, EventEmitter, Output, Directive } from '@angular/core';
 import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
 
 /**
@@ -63,6 +63,7 @@ import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
  *
  * > É importante seguir essa ordem para que o tema padrão do `kendo-grid` seja sobreposto pelo tema personalizado do `DTS`.
  */
+@Directive()
 export abstract class DtsKendoGridBaseComponent {
 
     /** Habilita a opção de ordenação dos dados nas colunas. */

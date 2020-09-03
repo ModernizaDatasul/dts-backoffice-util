@@ -1,63 +1,12 @@
-## Changelog
+# Documentação dos Componentes e Utils
 
-**2.0.3 (13-06-2020):** Ajuste do método **"atzBooleanFromDisclamer"** do **DisclaimerUtils** para retornar um valor **verdadeiramente boolean**. Em alguns casos, retornava uma string com "true" ou "false". Assim o componente **"po-switch"** não funciona corretamente.  
+ÚLTIMA VERSÃO: **2.0.4 (02-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
-**2.0.1 / 2.0.2 (15-05-2020):** Ajustes no componente **TotvsScheduleExecutionComponent**:
-- Inclusão do atributo (opicional) **"programEMS5"**: Indica que o programa a ser executado é do EMS5.
-- Inclusão do atributo (opicional) **"programVersion"**: Indica a versão do programa progress a ser executado.
-- Alterado o parâmetro **"endExecution"**: Para ser um função (e não boolean). Será disparada a função depois que retornar do serviço de agendamento.
-- Incluída a opção de Recorrência **"Mensal"** (Agora temos: Diária, Semanal e Mensal);
-- Incluída a opção de **"Frequência"**, permitido que a execução seja repetida várias vezes no mesmo dia (quando for Recorrência).
+<br>
 
-**2.0.0 (12-04-2020):** ATUALIZAÇÃO: **PORTINARI v2** E **ANGULAR 9**.
+# dtsDateFormat
 
-**0.0.22 (01-04-2020):** Repasse da biblioteca.
-
-**0.0.21 (19-03-2020):** 
-Correção no **ReportService:** Ajuste no nome do arquivo de download, não estava respeitando o parâmetro enviado.
-
-**0.0.20 (19-03-2020):** 
-Correção no **ReportService:** Ajuste na montagem da URL, não estava mandando & quando havia mais de um parâmetro.
-
-**0.0.19 (18-03-2020):** 
-Correção no **TotvsScheduleExecutionComponent:** A hora da execução estava indo com a data errada, não respeitando o que era informado em tela.      
-
-**0.0.18 (14-02-2020):** 
-
-Ajuste no serviço **disclaimer.util.ts** para possibilitar a tradução do value no **makeDisclaimerFromMultiSelect**. Foi incluido um novo parâmetro **tradValue** para indicar se deve ou não ser traduzido.
-Para tradução o value deve estar no literals que foi enviado para o serviço
-
-**0.0.17 (03-02-2020):** 
-
-Arquivo css para aplicar estilo TOTVS no Kendo Grid
-
-Para utilizado deve ser importado o CSS no angular.json, conforme abaixo
-
-```
-
-"styles": [
-  "node_modules/@totvs/portinari-theme/css/po-theme-default.min.css",
-  "node_modules/@progress/kendo-theme-default/dist/all.css",
-  "node_modules/dts-backoffice-util/lib/css/kendo.min.css",
-  "src/styles.css"
-],
-```
-
-**0.0.16 (03-02-2020):** 
-
-Ajustes documentação
-
-**0.0.15 (03-02-2020)**
-
-Correção no **ReportService:** Realizado ajuste para a impressão funciona no novo framework
-
-**0.0.14 (31-01-2020)**
-
-Correção no **TotvsScheduleExecutionComponent:** Adicionando o "zero" na frente da hora que forem menor que 10
-
-**0.0.13 (30-01-2020)**
-
-**dtsDateFormat:** PIPE para formatar datas, ele foi criado pois o PIPE date do angular não consegue formatada datas inferiores a 1901.
+**Objetivo:** PIPE para formatar datas, ele foi criado pois o PIPE date do angular não consegue formatada datas inferiores a 1901.
 
 **Importação:** No módulo de funcionalidade importar o módulo abaixo:
 ```
@@ -85,10 +34,14 @@ Exemplo de uso:
 </po-info>
 ```
 
-**openPath:** Função openPath criada para abrir telas em nova aba do Datasul.
-| Nome  |  Parâmetros  | Resultado |
+<br>
+
+# openPath 
+
+**Objetivo:** Função openPath criada para abrir telas em nova aba do Datasul.
+| Nome | Parâmetros | Descrição |
 | ------------ | -------------- |--- |
-| openPath  | programName Parameters OpenParent| Abre a tela em uma nova aba do Datasul|
+| openPath  | programName Parameters OpenParent | Abre a tela em uma nova aba do Datasul |
 
 Importação:
 ```
@@ -104,9 +57,11 @@ this.menuDatasulService
     .openPath('html.inquiryItem', '1509;10;1', true);
 ```
 
-**0.0.12 (28-01-2020)**
+<br>
 
-**TotvsScheduleExecutionComponent:** Componente para realização de agendamentos RPW.
+# TotvsScheduleExecutionComponent
+
+**Objetivo:** Componente para realização de agendamentos RPW.
 
 **Dependências:** Para usar esse componente deve ser instalado no projeto o pacote rxjs-compat. <br/>
 - **npm i rxjs-compat --save**
@@ -158,34 +113,20 @@ DEFINE TEMP-TABLE tt-param NO-UNDO
 ```
 Parâmetros:
 
-| Nome  |  Tipo | Obrigatório | Descrição |
+| Nome | Tipo | Obrigatório | Descrição |
 | - | - | - | - |
-| programName | string | Sim | Nome da API|
+| programName | string | Sim | Nome da API |
 | externalName | string | Sim | Nome da API completo, pasta + nome |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5 |
 | programVersion | string | Não | Versão do programa progress |
 | parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress |
 | endExecution | EventEmitter | Não | Evento que será emitido ao finalizar o agendamento |
 
-**0.0.11 (24-01-2020)**
+<br>
 
-Primeira versão, serviços disponíveis:
-- breadcrumb-control.service
-- cache-params.service
-- menu-datasul.service
-- profile.service
-- report.service
-- session-info.service
-- date.util
-- disclaimer.util
-- field-validation.util
-- filter-range.util
-- generic-functions.utils
+# Profile Service
 
-
-**Profile Service**
-
-Salvar preferências do usuáro.
+**Objetivo:** Salvar preferências do usuáro.
 
 Importação:
 ```
@@ -193,7 +134,6 @@ import { ProfileService, IProfile } from 'dts-backoffice-util';
 
 constructor(public preferenceService: ProfileService) {
 }
-
 ```
 
 Exemplo de Uso:
@@ -215,25 +155,25 @@ this.preferenceService.setProfile(profile)
 
 Métodos:
 
-| Nome  |  Parâmetros  | Resultado |
+| Nome | Parâmetros | Descrição |
 | ------------ | ------------ |--- |
-| setProfile  | IProfile | Nenhum resultado, erros devem ser tratados|
-| getProfileAsString  | IProfile <br/> showLoading  | Retorna o valor salvo como uma string  |
-| getProfileAsJSON  | IProfile <br/> showLoading  | Retorna o valor salvo como um objeto (JSON) |
+| setProfile | IProfile | Nenhum resultado, erros devem ser tratados |
+| getProfileAsString | IProfile <br/> showLoading | Retorna o valor salvo como uma string  |
+| getProfileAsJSON | IProfile <br/> showLoading | Retorna o valor salvo como um objeto (JSON) |
 
 Interface
-| Nome  |  Tipo  | Obrigatório| Descrição |
-| ------------ |--------| ------------ |--- |
+| Nome | Tipo | Obrigatório | Descrição |
+| ------------ | -------- | ------------ | --- |
 | pageId | string | Sim | Código da página |
 | dataCode | string | Sim | Código do parâmetro | 
 | userCode | string | Sim | Código do usuário (login) |
-| dataValue | string | Não | Valor a ser salvo, nos GET'S é opcional |
+| dataValue | string | Não | Valor a ser salvo, nos GET's é opcional |
 
----
+<br>
 
-**UserLoginService**
+# UserLoginService
 
-Retorna o login do usuário tanto no framework atual e quanto no novo framework.
+**Objetivo:** Retorna o login do usuário tanto no framework atual e quanto no novo framework.
 
 Importação:
 ```
@@ -250,15 +190,15 @@ this.sessionService.getUserLogin().subscribe((user) => {
 ```
 Métodos:
 
-| Nome  |  Parâmetros  | Resultado |
+| Nome  |  Parâmetros  | Descrição |
 | ------------ | ------------ |--- |
-| getUserLogin  |  | Retorna um Observable<String> com o login do usuário|
+| getUserLogin |  | Retorna um Observable<String> com o login do usuário |
 
----
+<br>
 
-**ReportService**
+# ReportService
 
-Faz a chamada do datasul-report e realiza o download do arquivo caso seja especificado.
+**Objetivo:** Faz a chamada do datasul-report e realiza o download do arquivo caso seja especificado.
 
 Importação:
 ```
@@ -333,36 +273,36 @@ declare enum ReportFormats {
     HTML = "html"
 }
 ```
----
 
-**BreadcrumbControlService** 
+<br>
 
-Realiza a criação e controle do breadcrumb das telas.
+# BreadcrumbControlService 
+
+**Objetivo:** Realiza a criação e controle do breadcrumb das telas.
 
 Importação:
 ```
 import { BreadcrumbControlService } from 'dts-backoffice-util';
 ```
 
-
 Métodos:
 
-| Nome  |  Parâmetros  | Resultado |
+| Nome  |  Parâmetros  | Descrição |
 | ------------ | ------------ |--- |
-| newBreadcrumb  |  | Cria um novo breadcrumb e armazena no contexto do serviço |
-| addBreadcrumb  | literal: string <br/> activatedRoute: ActivatedRoute | Adiciona um novo item ao breadcrumb do contexto do serviço |
-| addBreadcrumbURL  | literal: string <br/> url: string  | Adiciona um novo item ao breadcrumb do contexto do serviço |
-| updBreadcrumbURL  | literal: string <br/> valueOld: string <br/> valueNew: string  | Alterar o breadcrumb do contexto do serviço  |
-| getBreadcrumb  |  | Retorna breadcrumb do contexto do serviço |
-| getCurrentRouter  |  |  |
-| getPrevRouter  |  |  |
-| hasPreviousRouter  |  |  |
+| newBreadcrumb | | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb de ser reiniciado. |
+| addBreadcrumb | INPUT: literal (string) <br> INPUT: activatedRoute (ActivatedRoute) | Adiciona um item ao breadcrumb, considerando a URL atual da tela. |
+| addBreadcrumbURL | INPUT: literal (string) <br> INPUT: url (string) | Adiciona um item ao breadcrumb, informando uma URL específica. |
+| updBreadcrumbURL | INPUT: literal (string) <br> INPUT: valueOld (string) <br> INPUT: valueNew (string) | Altera uma informação qualquer, contida na URL do item informado. |
+| getBreadcrumb | OUTPUT: breadcrumb (PoBreadcrumb) | Retorna o breadcrumb atual completo. |
+| getCurrentRouter | OUTPUT: url (string) | Retorna a URL do breadcrumb do item corrente. |
+| getPrevRouter | OUTPUT: url (string) | Retorna a URL do breadcrumb do item anterior. |
+| hasPreviousRouter | OUTPUT: exist (boolean) | Indica se existe um item de breadcrumb anterior. |
 
---- 
+<br> 
 
-**DateUtil**
+# DateUtil
 
-Manipula informações de data.
+**Objetivo:** Manipula informações de data.
 
 Importação:
 ```
@@ -371,7 +311,7 @@ Importação:
 
 Métodos:
 
-| Nome  |  Parâmetros  | Resultado |
+| Nome  |  Parâmetros  | Descrição |
 | ------------ | ------------ |--- |
 | dateToQueryParam | date: Date | Transforma data para o padrão YYYY-MM-DD |
 | queryParamToDate | param: string | Transforma data no padrão YYYY-MM-DD para DATE |
@@ -379,3 +319,27 @@ Métodos:
 | ajustDate | param: any | Ajusta a data retornando o padrão DATE |
 | ajustDateToModel | values: Object <br/> fieldName: string | Ajusta a data para o padrão DATE - utilizada nos construtores dos modelos |
 | pad | number: Number |  Adicona zero a esquerda do número |
+
+<br> 
+
+# DisclaimerUtil
+
+xxxx
+
+<br> 
+
+# FieldValidationUtil
+
+xxxx
+
+<br> 
+
+# FilterRangeUtil
+
+xxxx
+
+<br> 
+
+# GenericFunctionsUtils
+
+xxxx

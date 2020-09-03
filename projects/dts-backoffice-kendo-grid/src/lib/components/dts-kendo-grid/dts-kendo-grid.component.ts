@@ -98,17 +98,18 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
 
-    @ViewChild('popupRef', { static: false }) popupRef: any;
-    @ViewChild('gridCustom', { static: false }) gridCustom: ElementRef;
+    @ViewChild('popupRef') popupRef: any;
+    @ViewChild('gridCustom') gridCustom: ElementRef;
 
-
-
-    constructor(viewRef: ViewContainerRef,
+    constructor(
+        viewRef: ViewContainerRef,
         differs: IterableDiffers,
         private renderer: Renderer2,
         private el: ElementRef) {
         super();
-        this.parentRef = viewRef['_view']['component'];
+
+        //Rever implementacao no Angular 9
+        //this.parentRef = viewRef['_view']['component'];
         this.allData = this.allData.bind(this);
         this.differ = differs.find([]).create(null);
     }
@@ -156,10 +157,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.initializeSorter();
         this.initializeData();
 
-        if (!this.editable) {
-            this.grid = null;
-        }
-
         this.setLocalLiterals();
     }
 
@@ -191,7 +188,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterBeforeOperator: 'Antes de',
             filterIsTrue: 'Sim',
             filterIsFalse: 'Não',
-            add: 'Salvar',
+            add: 'Adicionar',
             showMore: 'Carregar mais resultados'
         };
 
@@ -222,7 +219,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterBeforeOperator: 'Is before',
             filterIsTrue: 'Yes',
             filterIsFalse: 'No',
-            add: 'Save',
+            add: 'Add',
             showMore: 'Load more data'
         };
 
@@ -253,7 +250,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterBeforeOperator: 'Es antes',
             filterIsTrue: 'Sí',
             filterIsFalse: 'No',
-            add: 'Salvar',
+            add: 'Agregar',
             showMore: 'Cargar más datos'
         };
 
@@ -358,7 +355,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             let newRowValue;
             let oldRowValue;
             if (this.editedRowIndex >= 0) {
-                oldRowValue = {...this.data[this.editedRowIndex]};
+                oldRowValue = { ...this.data[this.editedRowIndex] };
                 newRowValue = Object.assign(this.data[this.editedRowIndex], this.formGroup.value);
                 this.data[this.editedRowIndex] = newRowValue;
             } else if (this.addButtonCalled) {
