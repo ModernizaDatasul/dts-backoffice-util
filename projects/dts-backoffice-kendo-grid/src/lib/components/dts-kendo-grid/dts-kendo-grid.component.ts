@@ -1,28 +1,11 @@
-// tslint:disable: component-selector
-// tslint:disable: no-input-rename
-import {
-    Component,
-    DoCheck,
-    Input,
-    IterableDiffers,
-    OnInit,
-    Renderer2,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-    AfterViewInit,
-    ElementRef
-} from '@angular/core';
-
+import { Component, DoCheck, IterableDiffers, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ViewEncapsulation, AfterViewInit, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { DataStateChangeEvent, GridComponent, GridDataResult, SelectAllCheckboxState, RowArgs } from '@progress/kendo-angular-grid';
+import { DataStateChangeEvent, GridComponent, GridDataResult, SelectAllCheckboxState, RowArgs, CommandColumnComponent } from '@progress/kendo-angular-grid';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
-import { GroupDescriptor, process, State, orderBy, filterBy, SortDescriptor } from '@progress/kendo-data-query';
-
+import { GroupDescriptor, process, State, SortDescriptor } from '@progress/kendo-data-query';
 import { DtsKendoGridBaseComponent } from './dts-kendo-grid-base.component';
 import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
-
 
 /**
  * @docsExtends DtsKendoGridBaseComponent
@@ -35,22 +18,24 @@ import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
  * </example>
  */
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'dts-kendo-grid',
     encapsulation: ViewEncapsulation.None,
     templateUrl: './dts-kendo-grid.component.html',
     styleUrls: ['./custom-telerik.css', './dts-kendo-grid.component.css']
 })
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit {
+    @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
+    @ViewChild('popupRef') popupRef: any;
+    @ViewChild('gridCustom') gridCustom: ElementRef;
 
     currentRow: any;
 
-    editable = false;
-
-    editedRowIndex = -1;
-
-    editedProducted: any;
-
+    isNewRow = false;
+    EditedRow: any = null;
+    tableEditIndex = -1;
     formGroup: FormGroup;
+    cancelButton = false;
 
     groups: Array<GroupDescriptor> = [];
 
@@ -73,6 +58,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     top = 0;
 
+    idGrid = `idGrid${this.create_UUID(true)}`;
     idPopup = this.create_UUID();
 
     state: State = {};
@@ -87,31 +73,29 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     selectedAll = false;
 
-    @Input('d-grid-filter-state') availableGridState: State;
-
-    /** Habilita a opção para exportação dos dados. */
-    @Input('d-show-export-buttons') exportButtons = false;
-
-    private addButtonCalled = false;
     private dataArrayOrdered: Array<any>;
     private differ: any;
 
-    @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
-
-    @ViewChild('popupRef') popupRef: any;
-    @ViewChild('gridCustom') gridCustom: ElementRef;
-
     constructor(
-        viewRef: ViewContainerRef,
         differs: IterableDiffers,
         private renderer: Renderer2,
         private el: ElementRef) {
         super();
 
-        //Rever implementacao no Angular 9
-        //this.parentRef = viewRef['_view']['component'];
         this.allData = this.allData.bind(this);
         this.differ = differs.find([]).create(null);
+    }
+
+    isShowToolbarGrid(): boolean {
+        return (this.addButton || this.exportButtons);
+    }
+
+    isEditGrid(): boolean {
+        return (this.editable || this.addButton);
+    }
+
+    isInEditionGrid(): boolean {
+        return (this.EditedRow || this.isNewRow);
     }
 
     isRowSelected = (row: RowArgs) => {
@@ -145,12 +129,17 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     ngOnInit() {
-
         this.renderer.listen(
             'document',
             'click',
             ({ target }) => {
-                this.validateSaveEventInDocument(target);
+                this.validateSaveEventInDocument(target, 'click');
+            });
+        this.renderer.listen(
+            'document',
+            'keydown',
+            ({ target, key }) => {
+                this.validateSaveEventInDocument(target, key);
             });
 
         // this.initializeColumns();
@@ -189,6 +178,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsTrue: 'Sim',
             filterIsFalse: 'Não',
             add: 'Adicionar',
+            cancel: 'Cancelar',
             showMore: 'Carregar mais resultados'
         };
 
@@ -220,6 +210,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsTrue: 'Yes',
             filterIsFalse: 'No',
             add: 'Add',
+            cancel: 'Cancel',
             showMore: 'Load more data'
         };
 
@@ -251,6 +242,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsTrue: 'Sí',
             filterIsFalse: 'No',
             add: 'Agregar',
+            cancel: 'Cancelar',
             showMore: 'Cargar más datos'
         };
 
@@ -271,6 +263,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             this.initializeData();
         }
     }
+
     selectRows(selector) {
         const element: any = document.querySelector(`#${selector}`);
         const isChecked = !element.checked;
@@ -311,10 +304,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     sortChange(sort: Array<SortDescriptor>) {
         this.sort = sort;
-
-        if (this.sort && this.sort[0].dir && !this.isGroupingBy(this.sort[0].field)) {
-            this.loadData();
-        }
     }
 
     isGroupingBy(field) {
@@ -322,46 +311,58 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     dataStateChange(state: DataStateChangeEvent) {
-        // Esta condição foi realizada para não deixar adicionar mais de 2 grupos devido
-        // a um problema no kendo grid. Ja tem um chamado aberto para este problema.
-        // if (state.group.length > 2) {
-        //     state.group.splice(0, 1);
-        // }
         this.state = state;
+        this.refreshGrid();
+    }
+
+    refreshGrid() {
         this.gridView = process(this.data, this.state);
     }
 
     addHandler({ sender }) {
-        if (this.editedRowIndex >= 0) {
-            this.closeEditor(sender, this.editedRowIndex);
+        if (this.isInEditionGrid()) {
+            if (!this.saveClick()) {
+                return;
+            }
         }
 
-        this.addButtonCalled = true;
+        this.isNewRow = true;
+        this.cancelButton = true;
 
         this.createFormGroup();
 
-        if (this.addAction) {
-            if (this.executeFunctionValidation(this.addAction, this.formGroup.value)) {
+        if (this.editActions && this.editActions.addAction) {
+            if (this.executeFunctionValidation(this.editActions.addAction, this.formGroup.value)) {
                 this.formGroup.setValue(this.formGroup.value);
             } else {
                 return;
             }
         }
+
         sender.addRow(this.formGroup);
     }
 
     saveLine() {
-        if (this.editable && this.formGroup) {
+        if (!this.isEditGrid()) {
+            return;
+        }
+
+        if (!this.isInEditionGrid()) {
+            return;
+        }
+
+        if (this.formGroup) {
             let newRowValue;
             let oldRowValue;
-            if (this.editedRowIndex >= 0) {
-                oldRowValue = { ...this.data[this.editedRowIndex] };
-                newRowValue = Object.assign(this.data[this.editedRowIndex], this.formGroup.value);
-                this.data[this.editedRowIndex] = newRowValue;
-            } else if (this.addButtonCalled) {
+
+            if (this.isNewRow) {
+                oldRowValue = {};
                 newRowValue = this.formGroup.value;
                 this.data.push(newRowValue);
-                this.addButtonCalled = false;
+            } else {
+                oldRowValue = Object.assign({}, this.EditedRow);
+                Object.assign(this.EditedRow, this.formGroup.value);
+                newRowValue = this.EditedRow;
             }
 
             this.saveValue.emit({ data: newRowValue, oldData: oldRowValue });
@@ -371,43 +372,40 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     editClickHandler(event) {
+        if (!this.isEditGrid()) {
+            return;
+        }
+
+        if (this.isInEditionGrid()) {
+            this.saveClick();
+            return;
+        }
+
         if (!this.editable) {
             return;
         }
 
-        let { rowIndex } = event;
-        const { dataItem } = event;
-        if (this.executeFunctionValidation(this.saveAction, { data: this.data[this.editedRowIndex] })) {
-            if (!this.isValidForm() && this.formGroup) {
-                return;
-            }
-            this.saveLine();
-        }
-
-        // Verifica se está utilizando agrupamento e busca o indice atualizado
-        // do objeto que está sendo editado no momento.
-        if (this.isGroup()) {
-            rowIndex = this.getRowIndex(this.data, dataItem);
+        if (event && event.column instanceof CommandColumnComponent) {
+            return;
         }
 
         this.editHandler({
             sender: this.grid,
-            rowIndex,
-            dataItem
+            rowIndex: event.rowIndex,
+            dataItem: event.dataItem
         });
-        this.grid.editRow(rowIndex);
     }
 
     editHandler({ sender, rowIndex, dataItem }) {
-        if (!this.editable) {
-            // this.changeSelectedStatus(rowIndex);
+        if (!this.isEditGrid()) {
             return;
         }
 
         this.sortableObject = null;
+        this.EditedRow = dataItem;
+        this.tableEditIndex = rowIndex;
+        this.cancelButton = true;
 
-        this.closeEditor(sender);
-        this.editedProducted = Object.assign({}, dataItem);
         this.formGroup = new FormGroup({});
         const keys = Object.keys(dataItem);
         for (let count = 0; count <= keys.length; count++) {
@@ -420,39 +418,31 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             }
         }
 
-        this.editedRowIndex = rowIndex;
         sender.editRow(rowIndex, this.formGroup);
     }
 
-    saveClick() {
+    saveClick(): boolean {
         if (!this.validateSaveClick()) {
-            return;
+            return false;
         }
 
         this.saveLine();
         this.closeEditor(this.grid);
-        this.loadData();
+        this.refreshGrid();
+
+        return true;
     }
 
-    closeEditor(grid, rowIndex = this.editedRowIndex) {
+    closeEditor(grid) {
         if (grid) {
-            grid.closeRow(rowIndex);
-        }
-        this.editedRowIndex = undefined;
-        this.formGroup = undefined;
-    }
-
-    saveHandler({ sender, rowIndex, formGroup, isNew }) {
-        const item = formGroup.value;
-        if (isNew && !this.editable) {
-            this.data.push(item);
-        } else {
-            this.data[rowIndex] = Object.assign(this.data[rowIndex], item);
+            grid.closeRow(this.tableEditIndex);
         }
 
-        this.loadData();
-
-        sender.closeRow(rowIndex);
+        this.isNewRow = false;
+        this.EditedRow = null;
+        this.tableEditIndex = -1;
+        this.formGroup = null;
+        this.cancelButton = false;
     }
 
     // Cancela a propagação de eventos no botão "Cancelar" da edição por linhas.
@@ -460,26 +450,14 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         event.stopPropagation();
     }
 
-    cancelHandler({ sender, rowIndex }) {
-        if (this.editedProducted != null) {
-            this.data[rowIndex] = this.editedProducted;
-            this.editedProducted = null;
-        }
+    onChooseBtCancel() {
+        this.cancelHandler({ sender: this.grid });
+    }
 
-        this.loadData();
-
+    cancelHandler({ sender }) {
         this.closeEditor(sender);
     }
 
-    removeHandler({ rowIndex }) {
-        if (this.removeAction && !this.executeFunctionValidation(this.removeAction, { data: this.data[rowIndex] })) {
-            return;
-        }
-        this.data.splice(rowIndex, 1);
-        this.loadData();
-    }
-
-    // Verifica se o formulário está válido
     isValidForm() {
         return (this.formGroup && this.formGroup.valid);
     }
@@ -490,15 +468,15 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         };
     }
 
-    changeValueCheckbox(event, index, data, column) {
-        if (!this.editable) {
-            event.target.checked = !event.target.checked;
-            return;
-        }
-        data[column] = event.target.checked;
-        this.data[index] = Object.assign(data);
-        this.saveValue.emit({ data: this.data[index] });
-    }
+    // changeValueCheckbox(event, index, data, column) {
+    //     if (!this.isEditGrid()) {
+    //         event.target.checked = !event.target.checked;
+    //         return;
+    //     }
+    //     data[column] = event.target.checked;
+    //     this.data[index] = Object.assign(data);
+    //     this.saveValue.emit({ data: this.data[index] });
+    // }
 
     onSelectionChange(event) {
         const itemSelected = event && event.selectedRows[0] && event.selectedRows[0].dataItem ?
@@ -515,33 +493,27 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     onShowMore() {
         this.showMore.emit(null);
-        // this.state.filter = undefined;
-        this.loadData();
     }
 
     groupChange(groups: Array<GroupDescriptor>) {
+        if (this.isInEditionGrid()) {
+            if (!this.saveClick()) {
+                return;
+            }
+        }
+
         this.groups = groups;
         this.dtsGroupChange.emit(this.groups);
-        this.loadData();
     }
 
     cleanGroups(): void {
         this.groups.splice(0, this.groups.length);
-        this.loadDataDefault();
+        this.refreshGrid();
     }
 
     // Define se a coluna de ações será visível.
     isCommandColumnVisible(): boolean {
-        return true; // this.showRemoveButton || this.editable || this.addButton;
-    }
-
-    // Carrega os dados do grid novamente, com ou sem agrupamento.
-    private loadData() {
-        if (this.isGroup()) {
-            this.loadDataGroupable();
-        } else {
-            this.loadDataDefault();
-        }
+        return true; // this.showRemoveButton || this.isEditGrid();
     }
 
     private createFormGroup() {
@@ -556,30 +528,23 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     // Se for passada uma função para validação e ela retornar True
     private executeFunctionValidation(func, param) {
-        return (func && this.parentRef[func](param));
-    }
-
-    // Procura um objeto dentro de um array de objetos, sem considerar nenhum atributo único.
-    private getRowIndex(arr, searchFor) {
-        for (let i = 0; i < arr.length; i++) {
-            const isEqual = Object.keys(searchFor).every(key => (arr[i][key] === searchFor[key]));
-            if (isEqual) {
-                return i;
-            }
-        }
-
-        return -1;
+        return (func && func(param));
     }
 
     private validateSaveClick(): boolean {
-        if (this.addButtonCalled && this.saveAction && this.formGroup) {
-            if (!this.executeFunctionValidation(this.saveAction, { data: this.formGroup.value })) {
+        if (this.editActions && this.editActions.saveAction && this.formGroup) {
+            let editLine;
+
+            if (this.isNewRow) {
+                editLine = this.formGroup.value;
+            } else {
+                editLine = Object.assign({}, this.EditedRow);
+                editLine = Object.assign(editLine, this.formGroup.value);
+            }
+
+            if (editLine && !this.executeFunctionValidation(this.editActions.saveAction, editLine)) {
                 return false;
             }
-        } else if (this.editedRowIndex >= 0 && this.saveAction &&
-            !this.executeFunctionValidation(this.saveAction, { data: this.data[this.editedRowIndex] })) {
-            this.closeEditor(this.grid, this.editedRowIndex);
-            return false;
         }
 
         if (!this.isValidForm()) {
@@ -589,36 +554,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return true;
     }
 
-    private isGroup() {
-        return (this.groups && this.groups.length > 0);
-    }
-
     private getColumn(key): DtsKendoGridColumn {
         return this.columns.find(element => element.column === key);
-    }
-
-    private loadDataDefault() {
-        // A variavel "this.data" é a fonte de dados principal,
-        // na linha abaixo eu estou atualizando a fonte de dados
-        // principal com a fonte de dados ordenada para os indices
-        // não se perderem na hora de salvar uma edição.
-        this.updateIndex(orderBy(this.data, this.sort));
-
-        this.gridView = {
-            data: this.data || [],
-            total: this.data ? this.data.length : 0
-        };
-
-        this.gridView = process(filterBy(this.data || [], this.state.filter), { filter: this.state.filter });
-    }
-
-    private loadDataGroupable() {
-        this.gridView = process(filterBy(this.data, this.state.filter), { filter: this.state.filter });
-        this.gridView = process(orderBy(this.gridView.data, this.sort), { group: this.groups });
-
-        this.dataArrayOrdered = [];
-        // this.getObjects(this.gridView.data);
-        this.updateIndex(this.dataArrayOrdered);
     }
 
     private getObjects(data: Array<any>) {
@@ -631,39 +568,19 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         });
     }
 
-    private updateIndex(dataUpdated) {
-        // A variavel "this.data" é a fonte de dados principal,
-        // na linha abaixo eu estou atualizando a fonte de dados
-        // principal com a fonte de dados ordenada para os indices
-        // não se perderem na hora de salvar uma edição.
-        if (dataUpdated) {
-            for (let i = 0, dataLength = dataUpdated.length; i < dataLength; i++) {
-                this.data[i] = dataUpdated[i];
-            }
-        }
-    }
-
-    // initializeColumns(): void {
-    //     if (!this.columns) {
-    //         this.columns = [];
-    //     } else {
-    //         this.defineColumnType();
-    //     }
-    // }
-
     private initializeData(): void {
-        if (!this.data) {
-            this.data = [];
-        }
-
-        this.gridView = process(filterBy(this.data, this.state.filter), { filter: this.state.filter });
+        if (!this.data) { this.data = []; }
 
         if (this.groupable) {
             this.initializeGroups();
-            this.loadDataGroupable();
-        } else {
-            this.loadDataDefault();
         }
+
+        this.gridView = {
+            data: this.data,
+            total: this.data.length
+        };
+
+        this.refreshGrid();
     }
 
     private initializeSorter(): void {
@@ -685,65 +602,32 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
     }
 
-    // Define a configuração da coluna em modo edição de acordo com o tipo informado.
-    // defineColumnType() {
+    matches(el, selector) {
+        return (el.matches || el.msMatchesSelector).call(el, selector);
+    }
 
-    //     const lookupTableType = {
-    //         number: column => {
-    //             column.type = 'numeric';
-    //             column.format = column.format ? column.format : '';
-    //         },
-    //         currency: column => {
-    //             column.type = 'currency';
-    //             column.currency = column.currency ? column.currency : 'BRL';
-    //             column.symbol = column.symbol ? column.symbol : '1.2-2';
-    //         },
-    //         date: column => {
-    //             column.type = 'date';
-    //             column.format = column.format && column.format.trim().length > 0 ? `${column.format}` : 'dd/MM/yyyy';
-    //         },
-    //         string: column => {
-    //             column.type = 'text';
-    //             column.format = undefined;
-    //         },
-    //         label: column => {
-    //             column.type = 'label';
-    //         },
-    //         subtitle: column => {
-    //             column.type = 'subtitle';
-    //         },
-    //         checkbox: column => {
-    //             column.type = 'checkbox';
-    //         }
-    //     };
-
-    //     this.columns.forEach(column => {
-    //         if (column.type && lookupTableType.hasOwnProperty(column.type.trim().toLowerCase())) {
-    //             lookupTableType[column.type.trim().toLowerCase()](column);
-    //         } else {
-    //             column.type = 'text';
-    //         }
-    //     });
-    // }
-
-    private isChildOf(el, className) {
-        while (el && el.parentElement) {
-
-            if (this.hasClass(el.parentElement, className)) {
-                return true;
-            }
-            el = el.parentElement;
+    private validateSaveEventInDocument(target: any, event: string) {
+        if (!this.isEditGrid()) {
+            return;
         }
-        return false;
-    }
 
-    private hasClass(el, className) {
-        return new RegExp(className).test(el.className);
-    }
+        if (!this.isInEditionGrid()) {
+            return;
+        }
 
-    private validateSaveEventInDocument(target: any) {
-        if (!this.isChildOf(target, 'k-grid-content') && !this.isChildOf(target, 'k-grid-toolbar')) {
+        if (event === 'Enter' ||
+            !this.matches(target, `#${this.idGrid} tbody *, #${this.idGrid} .k-grid-toolbar .k-button`)) {
+
+            if (this.matches(target, '.po-toaster, .po-toaster-message, .po-icon-close')) {
+                return;
+            }
+
             this.saveClick();
+            return;
+        }
+
+        if (event === 'Escape') {
+            this.onChooseBtCancel();
         }
     }
 
@@ -794,7 +678,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return { top: element.top + scrollTop, left: element.left + scrollLeft }
     }
 
-
     elementContains(element: HTMLElement, className: string) {
         return element && element.classList.contains(className);
     }
@@ -821,13 +704,15 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
     }
 
-    create_UUID() {
+    create_UUID(firstpart = false) {
         let dt = new Date().getTime();
-        const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             const r = (dt + Math.random() * 16) % 16 | 0;
             dt = Math.floor(dt / 16);
-            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
+        if (firstpart) { uuid = uuid.split('-')[0]; }
+
         return uuid;
     }
 
@@ -836,7 +721,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         return listLabels.some((list) => list === rowValue);
     }
-    // popup controllers
 
     getFilterType(type: string) {
         switch (type) {

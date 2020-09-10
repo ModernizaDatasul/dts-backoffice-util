@@ -2,7 +2,7 @@
 // tslint:disable: no-input-rename
 // tslint:disable: no-output-rename
 import { Input, EventEmitter, Output, Directive } from '@angular/core';
-import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
+import { DtsKendoGridColumn, DtsEditAction } from './dts-kendo-grid-column.interface';
 
 /**
  * @description
@@ -70,7 +70,6 @@ export abstract class DtsKendoGridBaseComponent {
     @Input('d-sortable') set sortable(sortable: boolean) {
         this._sortable = sortable != null && sortable.toString() === '' ? true : this.convertToBoolean(sortable);
     }
-
     get sortable() {
         return this._sortable;
     }
@@ -79,7 +78,6 @@ export abstract class DtsKendoGridBaseComponent {
     @Input('d-selectable') set selectable(selectable: boolean) {
         this._selectable = selectable != null && selectable.toString() === '' ? true : this.convertToBoolean(selectable);
     }
-
     get selectable() {
         return this._selectable;
     }
@@ -88,10 +86,10 @@ export abstract class DtsKendoGridBaseComponent {
     @Input('d-editable') set editable(editable: boolean) {
         this._editable = editable != null && editable.toString() === '' ? true : this.convertToBoolean(editable);
     }
-
     get editable() {
         return this._editable;
     }
+
     /** Habilita a opção para agrupamento, permitindo agrupar no máximo dois níveis. */
     @Input('d-groupable') set groupable(groupable: boolean) {
         this._groupable = groupable != null && groupable.toString() === '' ? true : this.convertToBoolean(groupable);
@@ -99,7 +97,6 @@ export abstract class DtsKendoGridBaseComponent {
             this.cleanGroups();
         }
     }
-
     get groupable() {
         return this._groupable;
     }
@@ -114,10 +111,8 @@ export abstract class DtsKendoGridBaseComponent {
 
     public columns: Array<DtsKendoGridColumn>;
 
-
     /** Lista de objeto a serem exibidos. Este atributo aceita um array de objetos JSON. */
     @Input('d-data') data: Array<any>;
-
 
     /** Objeto com as informações das colunas a serem exibidas. */
     //   @Input('d-columns') _columns: Array<DtsKendoGridColumn>;
@@ -132,38 +127,17 @@ export abstract class DtsKendoGridBaseComponent {
     /** Recebe valores "true" ou "false" para habilitar ou desabilitar o botão "Carregar Mais Resultados". */
     @Input('d-show-more-disabled') showMoreDisabled = 'false';
 
-    /** Habilita o botão "Remover" permitindo que o usuário possa remover uma linha do dts-kendo-grid. */
-    @Input('d-show-cancel-button') showCancelButton = true;
-
-    /** Habilita o botão "Remover" permitindo que o usuário possa remover uma linha do dts-kendo-grid. */
-    @Input('d-show-remove-button') showRemoveButton = false;
-
     /** Habilita o botão para adicionar linhas. */
     @Input('d-show-add-button') addButton = false;
 
     /**
-     * Executa um método antes de salvar uma linha editada no dts-kendo-grid. Este método recebe como parâmetro o atributo "event",
+     * Objeto com as Funções que serão disparadas Antes da Inclusão e Antes de Salvar a linha na editada.
+     * Estes funções receberão como parâmetro o atributo "event",
      * para acessar o objeto selecionado no dts-kendo-grid utilizando o "event.data".
      * Se o método retornar o valor booleano "true", a edição da linha é confirmada,
      * caso contrário as informações alteradas serão canceladas.
      */
-    @Input('d-save-action') saveAction?: string;
-
-    /**
-     * Executa um método antes de remover uma linha selecionada no dts-kendo-grid. Este método recebe como parâmetro o atributo "event",
-     * para acessar o objeto selecionado no dts-kendo-grid utilizando o "event.data".
-     * Se o método retornar o valor booleano "true", a remoção da linha é confirmada,
-     * caso contrário as informações serão mantidas.
-     */
-    @Input('d-remove-action') removeAction?: string;
-
-    /**
-     * Método executado antes de adicionar uma nova linha ao dts-kendo-grid. Esse método recebe como parâmetro o atributo "data" contendo a
-     * referência do objeto que será adicionado, dessa forma é possível informar alguns valores para a nova linha. Para que as
-     * alterações sejam efetivadas, deve-se retornar "true". É possível cancelar a inclusão de uma nova linha
-     * retornando "false", nesse caso as informações serão descartadas e a nova linha não será incluída no dts-kendo-grid.
-     */
-    @Input('d-add-action') addAction?: string;
+    @Input('d-edit-actions') editActions?: DtsEditAction;
 
     /**
      * Objeto com as literais que serão utilizadas para as mensagens de:
@@ -187,10 +161,12 @@ export abstract class DtsKendoGridBaseComponent {
      *
      * Recebe um método para carregar mais resultados e habilita o botão desta opção.
      */
-
     @Input('d-actions') actions = [];
 
     @Input('d-reorderable') reorderable = false;
+
+    /** Habilita a opção para exportação dos dados. */
+    @Input('d-show-export-buttons') exportButtons = false;
 
     @Output('d-show-more') showMore = new EventEmitter<any>();
 
@@ -213,8 +189,6 @@ export abstract class DtsKendoGridBaseComponent {
     @Output('d-save-value') saveValue = new EventEmitter<any>();
 
     @Output('d-group-change') dtsGroupChange = new EventEmitter<any>();
-
-    protected parentRef: any;
 
     protected clickoutListener: () => void;
 

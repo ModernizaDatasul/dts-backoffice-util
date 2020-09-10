@@ -6,11 +6,11 @@
  * Interface para definição das colunas do dts-kendo-grid.
  */
 
-interface DtsLabel {
+ export interface DtsLabel {
     value: string | number;
     label: string;
     color: string;
-    tooltip: string;
+    tooltip?: string;
 }
 
 export interface DtsKendoGridColumn {
@@ -73,6 +73,9 @@ export interface DtsKendoGridColumn {
     currency?: string;
 
     symbol?: string;
-
 }
 
+export interface DtsEditAction {
+    addAction?: Function;
+    saveAction?: Function;
+}

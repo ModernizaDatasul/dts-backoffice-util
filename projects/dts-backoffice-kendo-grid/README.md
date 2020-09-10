@@ -1,12 +1,12 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.0.0 (02-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.1.0 (10-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
 ## Objetivo
 
-Componente que encapsula o [Kendo GRID](https://www.telerik.com/kendo-angular-ui/components/grid/), facilitando o desenvolvimento (similar ao **PO-UI**) e agregando novas funcionalidades.
+Componente que encapsula o [Kendo Grid](https://www.telerik.com/kendo-angular-ui/components/grid/), facilitando o desenvolvimento (similar ao **PO-UI**) e agregando novas funcionalidades.
 
 <br>
 
@@ -82,21 +82,20 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 
 | Parâmetro | Tipo | Descrição |
 |--|--|--|
-| **d-sortable** | boolean | Habilta a ordenação da coluna ao clicar no cabeçalho. |
-|**d-selectable**| boolean | Cria uma coluna no inicio do GRID para permitir a seleção de uma ou mais linhas. |
+| **d-sortable** | boolean | Habilita a ordenação da coluna ao clicar no cabeçalho. |
+|**d-selectable**| boolean | Cria uma coluna no início do Grid para permitir a seleção de uma ou mais linhas. |
 | **d-groupable** | boolean | Habilita a opção para agrupamento de colunas. |
-| **d-filterable** | boolean | Habilita a opção de filtro nas colunas do GRID. | 
-| **d-editable** | boolean | Habilta a edição de linha no GRID. |
-| **d-show-add-button** | boolean | Habilita o botão para adicionar linhas. |
+| **d-filterable** | boolean | Habilita a opção de filtro nas colunas do Grid. | 
+| **d-editable** | boolean | Habilita a edição de linha no Grid.<br>Quando habilitado e o usuário estiver incluindo ou alterando uma linha, ao clicar em qualquer lugar fora desta linha, a inclusão/alteração será confirmar. É possível utilizar a teclas **"Enter"** para confirmar a inclusão/alteração, ou **"Esc"** para cancelar. Se a Toolbar do Grid estiver visível, também será apresentado o botão **"Cancelar"**, que tem a mesma ação do tecla **"Esc"**. |
+| **d-show-add-button** | boolean | Disponibiliza o botão "Adicionar" no Toolbar do Grid, utilizado para inclusão de novas linhas. |
 | **d-reorderable** | boolean | Habilita a mudança da ordem das colunas, através do arrastar e soltar no cabeçalho da coluna. |
-| **d-show-export-buttons** | boolean | Disponibiliza os botões de Exportação do GRID: Excel e PDF. | 
-| **d-actions** | Array | Lista de ações que devem ser apresentadas nas linhas do GRID, funciona semelhante a p-actions do PO-UI. |
-| **d-columns** | Array | Objetos com as informações das colunas a serem exibidas. O objeto deve utilizar a interface **DtsKendoGridColumn**. |
-| **d-data** | Array | Informações que serão apresentadas no GRID. |
+| **d-show-export-buttons** | boolean | Disponibiliza os botões de Exportação do Grid: Excel e PDF. | 
+| **d-actions** | Array | Lista de ações que devem ser apresentadas nas linhas do Grid, funciona semelhante a p-actions do PO-UI. |
+| **d-columns** | Array | Objetos com as informações das colunas a serem exibidas. O Objeto deve utilizar a interface **DtsKendoGridColumn**. |
+| **d-data** | Array | Informações que serão apresentadas no Grid. |
 | **d-show-more-disabled** | boolean | Habilitar ou desabilitar o botão "Carregar Mais Resultados". |
 | **d-literals** | Object | Objeto com as literais que serão utilizadas dentro do componente, caso não seja enviado será utilizado os valores de tradução que o componente já possui em português, inglês e espanhol. Ver abaixo o tópico **Literais do Componente** para verificar as literais disponíveis. |
-| **d-add-action** | Function | Método executado antes de adicionar uma nova linha ao GRID. Esse método recebe como parâmetro o atributo "data" contendo a referência do objeto que será adicionado, dessa forma é possível informar alguns valores para a nova linha. Para que as alterações sejam efetivadas, deve-se retornar "true". É possível cancelar a inclusão de uma nova linha retornando "false", nesse caso as informações serão descartadas e a nova linha não será incluída no GRID. |
-| **d-save-action** | Function | Método executado antes de salvar uma linha editada no GRID. Este método recebe como parâmetro o atributo "event", para acessar o objeto selecionado no GRID utilizando "event.data". Se o método retornar o valor booleano "true", a edição da linha é confirmada, caso contrário as informações alteradas serão canceladas. |
+| **d-edit-actions** | Object | Objeto com as funções que serão disparadas durante a Edição de uma Linha no Grid, para por exemplo, trazer valores padrões em uma inclusão, ou validar uma alteração. O Objeto deve utilizar a interface **DtsEditAction**. |
 | **(d-selection-change)** | EventEmitter | Evento disparado quando a linha é selecionada. Este evento é utilizado em conjunto com o parâmetro "d-selectable". |
 | **(d-save-value)** | EventEmitter | Evento disparado ao salvar dados do modo de edição da linha, recebendo o modelo que foi alterado. |
 | **(d-group-change)** | EventEmitter | Evento disparador quando ocorrer o agrupamento das colunas. |
@@ -143,6 +142,7 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 | **filterIsTrue** | Sim |
 | **filterIsFalse** | Não |
 | **add** | Adicionar |
+| **cancel** | Cancelar |
 | **showMore** | Carregar mais resultados |
 
 <br>
@@ -153,7 +153,7 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 
 **DtsKendoGridColumn**
 
-**Objetivo:** Definir as colunas do GRID.
+**Objetivo:** Definir as colunas do Grid.
 
 | Propriedade | Tipo | Descrição |
 |--|--|--| 
@@ -169,15 +169,96 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 | **currency** | string | Moeda utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
 | **symbol** | string | Formato utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
 
+**Exemplo:** 
+```
+columns: Array<DtsKendoGridColumn>;
+		
+this.columns = [
+	{ column: 'code', required: true, label: this.literals['code'], editable: true, type: 'number' },
+	{ column: 'shortName', required: true, label: this.literals['shortName'], editable: true, type: 'string' },
+	{ column: 'name', label: this.literals['name'], editable: true, type: 'string' },
+	{ column: 'country', label: this.literals['country'], editable: true, type: 'string' },
+	{ column: 'tax', label: this.literals['tax'], editable: true, type: 'checkbox' },
+	{ column: 'taxValue', label: this.literals['taxValue'], editable: true, type: 'currency', currency: 'BRL', symbol: '1.2-9' },
+	{ column: 'admissDate', label: this.literals['admissDate'], type: 'date', format: this.literals['dateFormat'] }
+];
+```
+
 <br>
 
 **DtsLabel**
 
-**Objetivo:** Apresentar os valores em formato de **tags** coloridas. Utilizado nos campos do tipo label e subtitle. 
+**Objetivo:** Apresentar os valores em formato de **Tags** coloridas. Utilizado nos campos do tipo label e subtitle. 
 
 | Propriedade | Tipo | Descrição |
 |--|--|--| 
 | **value** | string | Valor do campo. |
 | **label** | string | Texto que será exibido dentro. |
-| **color** | string | Cor que será exbido, deve ser utilizada cores disponíveis no PO-UI. |
+| **color** | string | Cor que será exibido, deve ser utilizada cores disponíveis no PO-UI. |
 | **tooltip** | string | Texto que será exibido ao passar o mouse por cima, se aplica apenas para o tipo subtitle. |
+
+**Exemplo:**<br>
+```
+statusLabelList: Array<DtsLabel>;
+statesSubtitleList: Array<DtsLabel>;
+columns: Array<DtsKendoGridColumn>;
+	
+this.statusLabelList = [
+	{ value: 1, label: literals['active'], color: 'color-11' },
+	{ value: 2, label: literals['inactive'], color: 'color-07' },
+	{ value: 3, label: literals['blocked'], color: 'color-08' }
+];
+
+this.statesSubtitleList = [
+	{ value: 'RS', label: literals['rsTag'], color: 'color-01', tooltip: literals['rsDesc'] },
+	{ value: 'SC', label: literals['scTag'], color: 'color-05', tooltip: literals['scDesc'] },
+	{ value: 'PR', label: literals['prTag'], color: 'color-09', tooltip: literals['prDesc'] },
+	{ value: 'SP', label: literals['spTag'], color: 'color-12', tooltip: literals['spDesc'] },
+	{ value: 'RJ', label: literals['rjTag'], color: 'color-08', tooltip: literals['rjDesc'] },
+	{ value: 'BH', label: literals['bhTag'], color: 'color-03', tooltip: literals['hbDesc'] }
+];
+
+this.columns = [
+	{ column: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
+	{ column: 'states', label: this.literals['states'], type: 'subtitle', labels: this.statesSubtitleList }
+];
+```
+
+<br>
+
+**DtsEditAction**
+
+**Objetivo:** Definir as funções que serão disparadas durante a edição de uma linha no Grid. 
+
+| Propriedade | Tipo | Descrição |
+|--|--|--|
+| addAction | Function | Método executado antes de adicionar uma nova linha ao Grid. Ele recebe como parâmetro o modelo do objeto que está sendo incluído, dessa forma é possível informar alguns valores para a nova linha. Para que a linha fique disponível para inclusão, o método deve retornar o valor **"true"**, caso contrário a inclusão não será permitida. |
+| saveAction | Function | Método executado antes de salvar uma linha incluida ou editada no Grid. Este método recebe como parâmetro o item que foi incluído/editado. Se o método retornar valor **"true"**, a inclusão/edição da linha é confirmada, caso contrário ela fica pendente, esperando a ação do usuário (realizar alguma alteração ou cancelar). |
+
+**Exemplo:** 
+```
+editActions: DtsEditAction;
+
+this.editActions = {
+	addAction: this.onAddAction.bind(this),
+	saveAction: this.onSaveAction.bind(this)
+};
+
+onAddAction(item: ICustomer) {
+	if (item) {
+		item.shortName = 'Novo';
+		item.name = 'Novo Cliente';
+	}
+	return true;
+}
+
+onSaveAction(item: ICustomer) {
+	if (item && item.shortName === '') {
+		this.poNotification.error({
+			message: this.literals['msgErroEdit']
+		});
+		return false;
+	}
+	return true;
+}
+```

@@ -1,6 +1,7 @@
 <!-- [filterable]="filterable ? 'menu' : ''"-->
 
 <kendo-grid
+  [id]="idGrid"
   [filter]="state.filter"
   [filterable]="filterable ? 'menu' : ''"
   scrollable="none"
@@ -15,11 +16,7 @@
   (selectionChange)="onSelectionChange($event)"
   (sortChange)="sortChange($event)"
   (add)="addHandler($event)"
-  (cancel)="cancelHandler($event)"
   (cellClick)="editClickHandler($event)"
-  (edit)="editHandler($event)"
-  (remove)="removeHandler($event)"
-  (save)="saveHandler($event)"
   [rowSelected]="isRowSelected"
   [reorderable]="reorderable">
 
@@ -54,8 +51,9 @@
     [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse">
   </kendo-grid-messages>
 
-  <ng-template kendoGridToolbarTemplate *ngIf="addButton || exportButtons" >
+  <ng-template kendoGridToolbarTemplate *ngIf="isShowToolbarGrid()" >
     <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add || localLiterals.add }}</button>
+    <button *ngIf="cancelButton" class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
     <button type="button" kendoGridExcelCommand *ngIf="exportButtons" ><span class="k-icon k-i-file-excel"></span></button>
     <button kendoGridPDFCommand *ngIf="exportButtons"><span class='k-icon k-i-file-pdf'></span></button>
   </ng-template>
