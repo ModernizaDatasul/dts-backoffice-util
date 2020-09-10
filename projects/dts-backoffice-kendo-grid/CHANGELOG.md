@@ -1,6 +1,6 @@
 # Changelog
 
-**2.1.00 (10-09-2020):**
+**2.1.0 (10-09-2020):**
 
 Correções:
 - Edição no Grid - Não era possível acessar diretamente uma célula ao clicar, somente era possível com TAB;
