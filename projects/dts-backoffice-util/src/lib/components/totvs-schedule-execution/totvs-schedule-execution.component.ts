@@ -21,7 +21,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     @Output() endExecution = new EventEmitter();
 
     constructor(
-        public thfI18nService: PoI18nService,
+        public poI18nService: PoI18nService,
         public rpwService: RpwService,
         public poNotification: PoNotificationService) {
     }
@@ -39,8 +39,8 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     ngOnInit() {
         /* VERIFICAR COMO FICARÁ A TRADUÇÃO
         forkJoin(
-              this.thfI18nService.getLiterals(),
-              this.thfI18nService.getLiterals({ context: 'generalRpw' })
+              this.poI18nService.getLiterals(),
+              this.poI18nService.getLiterals({ context: 'generalRpw' })
           ).subscribe(literals => {
               literals.map(item => Object.assign(this.literals, item) );
               this.setupComponents();

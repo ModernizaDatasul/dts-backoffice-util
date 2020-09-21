@@ -164,7 +164,7 @@
 
     <ng-content select="[p-popup-header-template]"></ng-content>
 
-    <div class="po-popup-arrow po-arrow-top-right"></div>
+    <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
 
     <div class="po-popup-item-default"
          *ngFor="let action of actions; let actionIndex = index"

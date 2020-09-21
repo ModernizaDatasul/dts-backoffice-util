@@ -26,7 +26,6 @@ import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
 })
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit {
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
-    @ViewChild('popupRef') popupRef: any;
     @ViewChild('gridCustom') gridCustom: ElementRef;
 
     currentRow: any;
@@ -41,14 +40,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     gridView: GridDataResult;
 
-    left = 0;
-
     selectableSettings = {
         checkboxOnly: true,
         mode: 'multiple'
     };
-
-    showPopup = false;
 
     sortableObject: any;
 
@@ -56,10 +51,15 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     target: any;
 
-    top = 0;
-
     idGrid = `idGrid${this.create_UUID(true)}`;
+
     idPopup = this.create_UUID();
+    showPopup = true;
+    arrowDirection = 'top-right';
+    popupSize = {
+        height: 0,
+        width: 0
+    };
 
     state: State = {};
 
@@ -126,6 +126,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                     this.selectedAll = true;
                 }
             });
+
+        this.calcPopupSize();
     }
 
     ngOnInit() {
@@ -316,6 +318,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     refreshGrid() {
+        if (!this.data) { this.data = []; }
         this.gridView = process(this.data, this.state);
     }
 
@@ -626,7 +629,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return;
         }
 
-        if (event === 'Escape') {
+        if (event === 'Escape' || event === 'Esc') {
             this.onChooseBtCancel();
         }
     }
@@ -646,7 +649,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     // popup controllers
-    onClickActions($event: Event, row: any) {
+    onClickActions($event: MouseEvent, row: any) {
         this.currentRow = { ...row };
         this.showPopup = true;
 
@@ -659,23 +662,58 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         });
     }
 
+    calcPopupSize() {
+        if (!this.actions || this.actions.length < 2) { return; }
+
+        this.popupSize.height = this.actions.length * 44;
+        this.popupSize.width = 35;
+
+        const popupRef = document.getElementById(`popupRef${this.idPopup}`);
+        if (!popupRef || !popupRef.getBoundingClientRect()) { return; }
+
+        this.popupSize.height = popupRef.getBoundingClientRect().height;
+        this.popupSize.width = popupRef.getBoundingClientRect().width;
+
+        popupRef.style.top = `-200px`;
+        popupRef.style.left = `-200px`;
+    }
+
     setPopupPosition(target: any) {
-        const popupRef: any = document.querySelector(`#popupRef${this.idPopup}`);
-        const divOffset = this.offset(this.target);
+        const popupRef = document.getElementById(`popupRef${this.idPopup}`);
+        const divOffset = this.offset(target);
 
-        this.left = divOffset.left;
-        this.top = divOffset.top;
+        /* Em Baixo (seta na direita) */
+        this.arrowDirection = 'top-right';
+        let top = divOffset.top + 20;
+        let left = divOffset.left - this.popupSize.width + 8;
 
-        popupRef.style.top = `${this.top + 20}px`;
-        popupRef.style.left = `${this.left - 35}px`;
+        /* Lado Esquerdo (seta no meio) */
+        if (!this.isCanShowPopup(top, left)) {
+            this.arrowDirection = 'right';
+            top = divOffset.top - (this.popupSize.height / 2) + 8;
+            left = divOffset.left - this.popupSize.width - 22;
+        }
+
+        /* Lado Esquerdo (seta em baixo) */
+        if (!this.isCanShowPopup(top, left)) {
+            this.arrowDirection = 'right-bottom';
+            top = divOffset.top - this.popupSize.height + 20;
+            left = divOffset.left - this.popupSize.width - 22;
+        }
+
+        popupRef.style.top = `${top}px`;
+        popupRef.style.left = `${left}px`;
+    }
+
+    isCanShowPopup(top: number, left: number): boolean {
+        if ((top + this.popupSize.height) > window.innerHeight) { return false; }
+        if ((left + this.popupSize.width) > window.innerWidth) { return false; }
+        return true;
     }
 
     offset(el: any) {
         const element = el.getBoundingClientRect();
-        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        return { top: element.top + scrollTop, left: element.left + scrollLeft }
+        return { top: element.top, left: element.right };
     }
 
     elementContains(element: HTMLElement, className: string) {
@@ -689,17 +727,12 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return !containsItemDisabled;
     }
 
-    clickedOutHeaderTemplate(event) {
-        const popupHeaderTemplate = this.popupRef && this.popupRef.nativeElement.querySelector('[p-popup-header-template]');
-        return !(popupHeaderTemplate && popupHeaderTemplate.contains(event.target));
-    }
-
     clickedOutTarget(event) {
         return this.target && !this.target.contains(event.target);
     }
 
     closePopupOnClickout(event: MouseEvent) {
-        if (this.clickedOutTarget(event) && this.clickedOutDisabledItem(event) && this.clickedOutHeaderTemplate(event)) {
+        if (this.clickedOutTarget(event) && this.clickedOutDisabledItem(event)) {
             this.showPopup = false;
         }
     }

@@ -38,7 +38,7 @@ export class RpwService implements PoComboFilter {
 
     getObjectByValue(value): Observable<PoComboOption> {
         return this.http.get(`${this.apiUrl}/${value}`)
-            .pipe(map(item => this.convertToThfComboOption(item, 'codServidExec', 'desServidExec')));
+            .pipe(map(item => this.convertToPoComboOption(item, 'codServidExec', 'desServidExec')));
     }
 
     createRpw(parameters: Object): Observable<any> {
@@ -52,13 +52,13 @@ export class RpwService implements PoComboFilter {
     /* COMBO */
     convertToArrayComboOption(items: Array<any>, key: string, value: string): Array<PoComboOption> {
         if (items && items.length > 0) {
-            return items.map(item => this.convertToThfComboOption(item, key, value));
+            return items.map(item => this.convertToPoComboOption(item, key, value));
         }
 
         return [];
     }
 
-    convertToThfComboOption(item: any, key: string, value: string): PoComboOption {
+    convertToPoComboOption(item: any, key: string, value: string): PoComboOption {
         item = item || {};
         return {
             value: item[key] || undefined,

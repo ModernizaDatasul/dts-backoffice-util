@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.1.0 (10-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.1.1 (21-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -11,6 +11,28 @@ Componente que encapsula o [Kendo Grid](https://www.telerik.com/kendo-angular-ui
 <br>
 
 ## Pré-Requisitos
+
+**Dependências:**
+
+É necessário incluir no package do projeto as Dependências do **Kendo Grid**.
+Segue abaixo as dependência utilizas e as respectivas **versões homologadas** para o componente:
+
+```
+    "@progress/kendo-angular-buttons": "^5.5.1",
+    "@progress/kendo-angular-common": "^1.2.3",
+    "@progress/kendo-angular-dateinputs": "^4.3.1",
+    "@progress/kendo-angular-dropdowns": "^4.3.2",
+    "@progress/kendo-angular-excel-export": "^3.1.2",
+    "@progress/kendo-angular-grid": "^4.7.4",
+    "@progress/kendo-angular-inputs": "^6.6.1",
+    "@progress/kendo-angular-intl": "^2.0.3",
+    "@progress/kendo-angular-l10n": "^2.0.2",
+    "@progress/kendo-angular-pdf-export": "^2.0.4",
+    "@progress/kendo-angular-popup": "^3.0.6",
+    "@progress/kendo-data-query": "^1.5.2",
+	"@progress/kendo-drawing": "^1.9.1",
+	"@progress/kendo-theme-default": "^2.63.0",
+```
 
 **Importar o módulo:**
 
@@ -215,7 +237,7 @@ this.statesSubtitleList = [
 	{ value: 'PR', label: literals['prTag'], color: 'color-09', tooltip: literals['prDesc'] },
 	{ value: 'SP', label: literals['spTag'], color: 'color-12', tooltip: literals['spDesc'] },
 	{ value: 'RJ', label: literals['rjTag'], color: 'color-08', tooltip: literals['rjDesc'] },
-	{ value: 'BH', label: literals['bhTag'], color: 'color-03', tooltip: literals['hbDesc'] }
+	{ value: 'BH', label: literals['bhTag'], color: 'color-03', tooltip: literals['bhDesc'] }
 ];
 
 this.columns = [
@@ -233,7 +255,7 @@ this.columns = [
 | Propriedade | Tipo | Descrição |
 |--|--|--|
 | addAction | Function | Método executado antes de adicionar uma nova linha ao Grid. Ele recebe como parâmetro o modelo do objeto que está sendo incluído, dessa forma é possível informar alguns valores para a nova linha. Para que a linha fique disponível para inclusão, o método deve retornar o valor **"true"**, caso contrário a inclusão não será permitida. |
-| saveAction | Function | Método executado antes de salvar uma linha incluida ou editada no Grid. Este método recebe como parâmetro o item que foi incluído/editado. Se o método retornar valor **"true"**, a inclusão/edição da linha é confirmada, caso contrário ela fica pendente, esperando a ação do usuário (realizar alguma alteração ou cancelar). |
+| saveAction | Function | Método executado antes de salvar uma linha incluida ou editada no Grid. Este método recebe como parâmetro o item que foi incluído/editado. Se o método retornar o valor **"true"**, a inclusão/edição da linha é confirmada, caso contrário ela fica pendente, esperando a ação do usuário (realizar alguma alteração ou cancelar). |
 
 **Exemplo:** 
 ```

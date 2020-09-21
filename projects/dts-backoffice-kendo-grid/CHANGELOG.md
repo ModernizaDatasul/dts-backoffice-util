@@ -1,5 +1,14 @@
 # Changelog
 
+**2.1.1 (21-09-2020):**
+
+Correções:
+- Ações da Table - Dependendo da posição e a quantidade de ações da table, o menu-popup aparecia fora da tela, assim não era possível clicar em alguns itens. Agora, o Menu de Ações irá vericar a sua posição e se ajustar automaticamente na tela, para que todos os itens estejam visíveis.
+
+Refatoração:
+- Dependência - Retirada a dependência ao pacote "@totvs/thf-kendo", antigo THF Kendo Grid.
+- Versões Kendo Grid - Atualizada as versões dos pacotes Kendo Grid. Ver na documentação, no tópico "Pré-Requisitos -> Dependências" as atuais versões homologadas.
+
 **2.1.0 (10-09-2020):**
 
 Correções:
