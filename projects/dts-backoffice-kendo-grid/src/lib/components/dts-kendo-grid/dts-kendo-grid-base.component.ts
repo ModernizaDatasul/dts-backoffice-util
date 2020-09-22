@@ -230,7 +230,7 @@ export abstract class DtsKendoGridBaseComponent {
             },
             currency: column => {
                 column.type = 'currency';
-                column.currency = column.currency ? column.currency : 'BRL';
+                column.currency = column.currency ? column.currency : '$';
                 column.symbol = column.symbol ? column.symbol : '1.2-2';
             },
             date: column => {

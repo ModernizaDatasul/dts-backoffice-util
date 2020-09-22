@@ -87,7 +87,9 @@
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">
-            {{ data[col.column] | currency : col.currency : 'symbol' : col.symbol }}
+            <div style="text-align: right;">
+                {{ data[col.column] | currency : col.currency : 'symbol' : col.symbol }}
+            </div>
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-type *ngIf="col.type === 'label'">

@@ -1,9 +1,14 @@
 # Changelog
 
+**2.1.2 (22-09-2020):**
+
+Correções:
+- Coluna do tipo "currency" - Para colunas deste tipo, o valor será alinhado direita e, caso não seja informado a moeda, será considerado o símbolo "$" como padrão.
+
 **2.1.1 (21-09-2020):**
 
 Correções:
-- Ações da Table - Dependendo da posição e a quantidade de ações da table, o menu-popup aparecia fora da tela, assim não era possível clicar em alguns itens. Agora, o Menu de Ações irá vericar a sua posição e se ajustar automaticamente na tela, para que todos os itens estejam visíveis.
+- Ações da Table - Dependendo da posição e a quantidade de ações da table, o menu-popup aparecia fora da tela, assim não era possível clicar em alguns itens. Agora, o Menu de Ações irá verificar a sua posição e se ajustar automaticamente na tela, para que todos os itens estejam visíveis.
 - Dados da Table - Em alguns caso, quando a variável dos itens do grid era "nula", ocorria um erro e não era apresentado o Grid.
 
 Refatoração:

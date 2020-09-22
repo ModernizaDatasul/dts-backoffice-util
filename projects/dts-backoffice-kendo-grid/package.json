@@ -1,6 +1,6 @@
 {
   "name": "dts-backoffice-kendo-grid",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "peerDependencies": {
     "@progress/kendo-angular-buttons": "^5.5.1",
     "@progress/kendo-angular-common": "^1.2.3",

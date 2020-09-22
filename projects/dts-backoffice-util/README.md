@@ -1,6 +1,24 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.0.4 (02-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.0.5 (22-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+
+<br> 
+
+# TranslateService 
+
+**Objetivo:** Realizar o controle do idioma corrente, considerando o que estiver parametrizado no Cadastro de Usuários do Datasul, e caso não esteja informado, será considerado o idioma informado no Browse.
+
+Importação:
+```
+import { TranslateService } from 'dts-backoffice-util';
+```
+
+Métodos:
+
+| Nome  | Retorno | Descrição |
+| -| - | - |
+| getCurrentLanguage | string | Retorna o idioma corrente. Será considerando no primeiro momento a chave "user.language" do localStorage. Caso ela não exista ou seja inválida, será considerando o idioma parametrizado no Browse. Além disto, o idioma deve estar disponível na lista de suportados, conforme métodos "getSuportLanguage". |
+| getSuportLanguage | array(string) | Retornar uma lista com os atuais idiomas suportados. |
 
 <br>
 
