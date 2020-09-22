@@ -9,6 +9,7 @@ export * from './lib/services/report.service';
 export * from './lib/services/breadcrumb-control.service';
 export * from './lib/services/menu-datasul.service';
 export * from './lib/services/cache-params.service';
+export * from './lib/services/translate.service';
 // Services
 
 // Utils
