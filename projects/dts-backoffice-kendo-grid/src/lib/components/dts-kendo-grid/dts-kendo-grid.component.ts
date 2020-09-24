@@ -754,17 +754,4 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         return listLabels.some((list) => list === rowValue);
     }
-
-    getFilterType(type: string) {
-        switch (type) {
-            case 'date':
-                return 'date';
-            case 'numeric':
-                return 'numeric';
-            case 'checkbox':
-                return 'boolean';
-            default:
-                return 'text';
-        }
-    }
 }

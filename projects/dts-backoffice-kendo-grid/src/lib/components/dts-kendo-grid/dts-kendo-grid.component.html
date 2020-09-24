@@ -64,26 +64,27 @@
   </kendo-grid-checkbox-column>
   
     <kendo-grid-column *ngFor="let col of columns; let i = index"
-        (click)="onClickColumn(col)"
+        [headerClass]="{'d-number-header': col.editType === 'numeric', 'd-column-header': true}"
         [field]="col.column"
         [title]="col.label"
         [width]="col.width"
-        [filter]="getFilterType(col.type)"
-        [editor]="col.type"
-        [headerClass]="{'d-number-header': col.type === 'numeric', 'd-column-header': true}">
+        [filter]="col.filterType"
+        [editor]="col.editType"
+        [format]="col.editFormat"
+        (click)="onClickColumn(col)">
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
             {{ data[col.column] | date : col.format }}
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'checkbox'">
+            <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'numeric'">
             <div style="text-align: right;">
               {{ col.format ? (data[col.column] | number : col.format) : (data[col.column]) }}
             </div>
-        </ng-template>
-
-        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'checkbox'">
-            <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">
@@ -103,10 +104,6 @@
         <ng-template kendoGridCellTemplate let-type *ngIf="col.type === 'subtitle'">
             <div class="d-subtitle" >
                 <div *ngFor="let label of col.labels">
-                    <!-- <span *ngIf="isValidSubtitle(label.value, type[col.column])"
-                           [p-tooltip]="label.tooltip"
-                          class="po-mr-1 po-table-subtitle-circle po-{{ label.color }}">{{label.label}}
-                    </span> -->
                     <span *ngIf="isValidSubtitle(label.value, type[col.column])"
                            [p-tooltip]="label.tooltip"
                            class="po-mr-1 po-table-column-label po-{{ label.color }}">{{label.label}}

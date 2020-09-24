@@ -226,29 +226,44 @@ export abstract class DtsKendoGridBaseComponent {
         const lookupTableType = {
             number: column => {
                 column.type = 'numeric';
+                column.filterType = 'numeric';
+                column.editType = 'numeric';
                 column.format = column.format ? column.format : '';
+                column.editFormat = this.getEditFormat(column.format);
             },
             currency: column => {
                 column.type = 'currency';
+                column.filterType = 'numeric';
+                column.editType = 'numeric';
                 column.currency = column.currency ? column.currency : '$';
                 column.symbol = column.symbol ? column.symbol : '1.2-2';
+                column.editFormat = this.getEditFormat(column.symbol);
             },
             date: column => {
                 column.type = 'date';
+                column.filterType = 'date';
+                column.editType = 'date';
                 column.format = column.format && column.format.trim().length > 0 ? `${column.format}` : 'dd/MM/yyyy';
             },
             string: column => {
                 column.type = 'text';
-                column.format = undefined;
+                column.filterType = 'text';
+                column.editType = 'text';
             },
             label: column => {
                 column.type = 'label';
+                column.filterType = 'text';
+                column.editType = 'text';
             },
             subtitle: column => {
                 column.type = 'subtitle';
+                column.filterType = 'text';
+                column.editType = 'text';
             },
             checkbox: column => {
                 column.type = 'checkbox';
+                column.filterType = 'boolean';
+                column.editType = 'boolean';
             }
         };
 
@@ -259,5 +274,17 @@ export abstract class DtsKendoGridBaseComponent {
                 column.type = 'text';
             }
         });
+    }
+
+    private getEditFormat(decimalPipe: string): string {
+        if (!decimalPipe) { return 'n0'; }
+
+        let part = decimalPipe.split('.');
+        if (part.length < 2) { return 'n0'; }
+
+        part = part[1].split('-');
+        if (part.length < 2) { return 'n0'; }
+
+        return `n${part[1]}`;
     }
 }
