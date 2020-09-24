@@ -1,16 +1,11 @@
 # Changelog
 
-**2.1.3 (24-09-2020):**
+**2.1.2 / 2.1.3 (24-09-2020):**
 
 Correções:
 - Edição de campo do tipo Numérico - Não estava respeitando o locale de formato (Americano x Europeu). E, quando entrava no modo de edição, os valores estavam sendo arredondados sempre para 2 decimais, mesmo que tenha sido parametrizado mais decimais no formato. Agora, ele irá respeitar a quantidade de decimais parametrizados no formato.
-- Edição de campo do tipo Currency - Estava ocorrendo erro ao informar decimais neste tipo de campo.
+- Edição de campo do tipo Currency - Estava ocorrendo erro ao informar decimais neste tipo de campo. O valor estava alinhado a esquerda, e estava apresentando o símbolo "R$" como padrão. Agora o símbolo padrão, quando não informado, será "$".
 - Edição de campo do tipo Lógico - Ao editar o campo, ele pedia o valor no formato de string (sim/não) e não atualizar o Grid após a edição. Agora, na edição, ele será um check-box.
-
-**2.1.2 (22-09-2020):**
-
-Correções:
-- Coluna do tipo "currency" - Para colunas deste tipo, o valor será alinhado direita e, caso não seja informado a moeda, será considerado o símbolo "$" como padrão.
 
 **2.1.1 (21-09-2020):**
 
