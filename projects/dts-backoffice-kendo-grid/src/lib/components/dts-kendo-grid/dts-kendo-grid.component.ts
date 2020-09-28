@@ -26,7 +26,6 @@ import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
 })
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit {
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
-    @ViewChild('gridCustom') gridCustom: ElementRef;
 
     currentRow: any;
 
@@ -71,8 +70,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     language = localStorage.getItem('user.language') || navigator.language;
 
-    selectedAll = false;
-
     private dataArrayOrdered: Array<any>;
     private differ: any;
 
@@ -98,35 +95,15 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return (this.EditedRow || this.isNewRow);
     }
 
+    isGroup(): boolean {
+        return (this.groups && this.groups.length > 0);
+    }
+
     isRowSelected = (row: RowArgs) => {
         return row.dataItem.$selected;
     }
 
     ngAfterViewInit() {
-        // Escuta todos os eventos de clique que ocorrem dentro do componente
-        this.renderer.listen(
-            this.el.nativeElement,
-            'click',
-            ({ target }) => {
-                // Foi clicado no checkbox da tabela, todas as linhas serão marcadas
-                const isSelectAll = target.getAttribute('class') &&
-                    target.getAttribute('class').indexOf('k-checkbox-label') > -1 &&
-                    target.outerHTML.indexOf('-select-all') > -1;
-
-                // Foi clicado no checkbox da linha
-                const isSelectOne = target.getAttribute('class') &&
-                    target.getAttribute('class').indexOf('k-checkbox-label') > -1 &&
-                    target.outerHTML.indexOf('-select-all') === -1;
-
-                if (isSelectOne) {
-                    const index = +target.getAttribute('for').split('-')[2].replace('checkbox', '');
-                    this.selectRow(index);
-                } else if (isSelectAll) {
-                    this.selectRows(target.getAttribute('for'));
-                    this.selectedAll = true;
-                }
-            });
-
         this.calcPopupSize();
     }
 
@@ -263,44 +240,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const change = this.differ.diff(this.data);
         if (change) {
             this.initializeData();
-        }
-    }
-
-    selectRows(selector) {
-        const element: any = document.querySelector(`#${selector}`);
-        const isChecked = !element.checked;
-
-        // Os registros estão espalhados dentro dos agrupadores
-        if (this.gridView.data[0].items) {
-            this.gridView.data.forEach((data) => {
-                data.items.forEach((item) => {
-                    item.$selected = isChecked;
-                });
-            });
-        } else {
-            this.gridView.data.forEach((item, i) => {
-                // Alterar o valor do $selected de todos os registros para ficar igual ao checkbox da tabela
-                this.gridView.data[i].$selected = isChecked;
-            });
-        }
-    }
-
-    selectRow(index) {
-        // Inverte o valor do $selected da linha
-        let count = 0;
-
-        // Os registros estão espalhados dentro dos agrupadores
-        if (this.gridView.data[0].items) {
-            this.gridView.data.forEach((data) => {
-                data.items.forEach((item) => {
-                    if (count === index) {
-                        item.$selected = !item.$selected;
-                    }
-                    count++;
-                });
-            });
-        } else {
-            this.gridView.data[index].$selected = !this.gridView.data[index].$selected;
         }
     }
 
@@ -471,27 +410,30 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         };
     }
 
-    // changeValueCheckbox(event, index, data, column) {
-    //     if (!this.isEditGrid()) {
-    //         event.target.checked = !event.target.checked;
-    //         return;
-    //     }
-    //     data[column] = event.target.checked;
-    //     this.data[index] = Object.assign(data);
-    //     this.saveValue.emit({ data: this.data[index] });
-    // }
-
     onSelectionChange(event) {
-        const itemSelected = event && event.selectedRows[0] && event.selectedRows[0].dataItem ?
-            event.selectedRows[0].dataItem : event.deselectedRows[0].dataItem;
+        if (!event) { return; }
 
-        if (this.selectedAll) {
-            this.selectionChange.emit({ data: this.gridView.data });
-        } else {
-            this.selectionChange.emit({ data: itemSelected });
+        if (event.selectedRows && event.selectedRows.length > 0) {
+            event.selectedRows.forEach(item => {
+                if (item.dataItem) { item.dataItem.$selected = true; }
+            });
         }
 
-        this.selectedAll = false;
+        if (event.deselectedRows && event.deselectedRows.length > 0) {
+            event.deselectedRows.forEach(item => {
+                if (item.dataItem) { item.dataItem.$selected = false; }
+            });
+        }
+
+        let itemSelected: any;
+        if (event.shiftKey) {
+            itemSelected = 'ALL';
+        } else {
+            itemSelected = event.selectedRows[0] && event.selectedRows[0].dataItem ?
+                event.selectedRows[0].dataItem : event.deselectedRows[0].dataItem;
+        }
+
+        this.selectionChange.emit({ data: itemSelected });
     }
 
     onShowMore() {
@@ -662,25 +604,29 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         });
     }
 
-    calcPopupSize() {
+    calcPopupSize(popupRef = null) {
         if (!this.actions || this.actions.length < 2) { return; }
 
-        this.popupSize.height = this.actions.length * 44;
-        this.popupSize.width = 35;
+        this.popupSize.height = 0;
+        this.popupSize.width = 0;
 
-        const popupRef = document.getElementById(`popupRef${this.idPopup}`);
+        if (!popupRef) {
+            popupRef = document.getElementById(`popupRef${this.idPopup}`);
+        }
+
         if (!popupRef || !popupRef.getBoundingClientRect()) { return; }
 
         this.popupSize.height = popupRef.getBoundingClientRect().height;
         this.popupSize.width = popupRef.getBoundingClientRect().width;
-
-        popupRef.style.top = `-200px`;
-        popupRef.style.left = `-200px`;
     }
 
     setPopupPosition(target: any) {
         const popupRef = document.getElementById(`popupRef${this.idPopup}`);
         const divOffset = this.offset(target);
+
+        if (this.popupSize.height === 0 || this.popupSize.width === 0) {
+            this.calcPopupSize(popupRef);
+        }
 
         /* Em Baixo (seta na direita) */
         this.arrowDirection = 'top-right';

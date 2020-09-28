@@ -1,5 +1,11 @@
 # Changelog
 
+**2.1.4 (28-09-2020):**
+
+Correções:
+- Agrupador + Seleção de Linha - Quando era realizado o agrupamento de mais de um campo, não era possível selecionar a linha. 
+- Ações da Tabela - Quando o Grid está em um Modal e usa ações, ao abrir a Modal, o menu aparecia "perdido". Além disto, quando o usuário clicava nas ações "...", o menu aparecia em uma posição errada.
+
 **2.1.2 / 2.1.3 (24-09-2020):**
 
 Correções:

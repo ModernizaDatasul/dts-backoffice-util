@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.1.3 (24-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.1.4 (28-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -118,7 +118,7 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 | **d-show-more-disabled** | boolean | Habilitar ou desabilitar o botão "Carregar Mais Resultados". |
 | **d-literals** | Object | Objeto com as literais que serão utilizadas dentro do componente, caso não seja enviado será utilizado os valores de tradução que o componente já possui em português, inglês e espanhol. Ver abaixo o tópico **Literais do Componente** para verificar as literais disponíveis. |
 | **d-edit-actions** | Object | Objeto com as funções que serão disparadas durante a Edição de uma Linha no Grid, para por exemplo, trazer valores padrões em uma inclusão, ou validar uma alteração. O Objeto deve utilizar a interface **DtsEditAction**. |
-| **(d-selection-change)** | EventEmitter | Evento disparado quando a linha é selecionada. Este evento é utilizado em conjunto com o parâmetro "d-selectable". |
+| **(d-selection-change)** | EventEmitter | Evento disparado quando a linha é selecionada. Este evento é utilizado em conjunto com o parâmetro "d-selectable". Ele recebe como parâmetro um objeto, contendo o atributo "data", que contêm o objeto da linha que foi selecionado. Caso o usuário clique na opção de selecionar todos (checkbox no topo da coluna de seleção), será enviado no atributo "data" a string fixa "ALL". |
 | **(d-save-value)** | EventEmitter | Evento disparado ao salvar dados do modo de edição da linha, recebendo o modelo que foi alterado. |
 | **(d-group-change)** | EventEmitter | Evento disparador quando ocorrer o agrupamento das colunas. |
 | **(d-show-more)** | EventEmitter | Função que deve ser executado ao clicar no botão "showMore" (Carregar mais resultados). |

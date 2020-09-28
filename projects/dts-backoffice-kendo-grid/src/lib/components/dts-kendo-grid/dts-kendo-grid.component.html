@@ -1,24 +1,22 @@
-<!-- [filterable]="filterable ? 'menu' : ''"-->
-
 <kendo-grid
   [id]="idGrid"
-  [filter]="state.filter"
-  [filterable]="filterable ? 'menu' : ''"
-  scrollable="none"
   [data]="gridView"
+  scrollable="none"
+  [filterable]="filterable ? 'menu' : ''"
+  [filter]="state.filter"
   [sortable]="sortableObject"
   [sort]="sort"
   [groupable]="groupable"
   [group]="groups"
   [selectable]="selectableSettings"
+  [rowSelected]="isRowSelected"
+  [reorderable]="reorderable"
   (dataStateChange)="dataStateChange($event)"
   (groupChange)="groupChange($event)"
   (selectionChange)="onSelectionChange($event)"
   (sortChange)="sortChange($event)"
   (add)="addHandler($event)"
-  (cellClick)="editClickHandler($event)"
-  [rowSelected]="isRowSelected"
-  [reorderable]="reorderable">
+  (cellClick)="editClickHandler($event)">
 
   <!-- https://www.telerik.com/kendo-angular-ui/components/grid/api/CustomMessagesComponent/ -->
 
@@ -54,7 +52,7 @@
   <ng-template kendoGridToolbarTemplate *ngIf="isShowToolbarGrid()" >
     <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add || localLiterals.add }}</button>
     <button *ngIf="cancelButton" class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
-    <button type="button" kendoGridExcelCommand *ngIf="exportButtons" ><span class="k-icon k-i-file-excel"></span></button>
+    <button type="button" kendoGridExcelCommand *ngIf="exportButtons"><span class="k-icon k-i-file-excel"></span></button>
     <button kendoGridPDFCommand *ngIf="exportButtons"><span class='k-icon k-i-file-pdf'></span></button>
   </ng-template>
 
@@ -149,7 +147,6 @@
 <div class="k-grid-show-more po-offset-xl-4 po-offset-lg-4 po-offset-md-3 po-lg-4 po-md-6"
      *ngIf="showMore.observers.length > 0">
   <div style="text-align: center;">
-
     <button class="k-grid-show-more-button po-button po-text-ellipsis"
             (click)="onShowMore()"
             [disabled]="showMoreDisabled">{{ literals.showMore || localLiterals.showMore}}
@@ -158,6 +155,7 @@
 </div>
 
 <div id="popupRef{{idPopup}}"
+     style="top: -200px; left: -200px;"
      class="po-popup"
      [hidden]="!showPopup">
 
