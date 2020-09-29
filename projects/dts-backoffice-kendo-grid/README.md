@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.1.4 (28-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.1.5 (29-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -166,6 +166,8 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 | **add** | Adicionar |
 | **cancel** | Cancelar |
 | **showMore** | Carregar mais resultados |
+| **yes** | Sim |
+| **no** | Não |
 
 <br>
 
@@ -179,12 +181,12 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 
 | Propriedade | Tipo | Descrição |
 |--|--|--| 
-| **column** | string | Nome do atributo do JSON passado no atributo "d-data" do componente. |
+| **column** | string | Nome do atributo do JSON passado no atributo **"d-data"** do componente. |
 | **label** | string | Nome da coluna a ser exibido na tabela. |
 | **width** | number | Tamanho da coluna em pixels. |
-| **groupHeader** | boolean | Informa se a coluna está agrupada. |
-| **editable** | boolean | Se for passado o valor "true" é habilitado o campo de edição no modo edição habilitado. |
-| **required** | boolean | Se for passado o valor "true" o campo se torna obrigatório no modo edição habilitado. |
+| **groupHeader** | boolean | Indica se a coluna deve ser agrupada na inicialização.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-groupable"** do Grid deve ser igual a **"true"**. |
+| **editable** | boolean | Indica se o campo deve ser hablitado para edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-editable"** do Grid deve ser igual a **"true"**. |
+| **required** | boolean | Indica se o campo é obrigatório na edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"editable"** da coluna o parâmetro **"d-editable"** do Grid devem ser igual a **"true"**. |
 | **type** | string | Define o tipo da coluna. Valores válidos: string, number, date, currency, checkbox, label e subtitle. |
 | **format** | string | Formata os dados da coluna de acordo com o tipo. |
 | **labels** | Array | Lista de valores que poderão ser exibidos quando o "type" é label ou subtitle. O objeto da lista deve utilizar a interface **DtsLabel**. |

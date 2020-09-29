@@ -1,66 +1,66 @@
 <kendo-grid
-  [id]="idGrid"
-  [data]="gridView"
-  scrollable="none"
-  [filterable]="filterable ? 'menu' : ''"
-  [filter]="state.filter"
-  [sortable]="sortableObject"
-  [sort]="sort"
-  [groupable]="groupable"
-  [group]="groups"
-  [selectable]="selectableSettings"
-  [rowSelected]="isRowSelected"
-  [reorderable]="reorderable"
-  (dataStateChange)="dataStateChange($event)"
-  (groupChange)="groupChange($event)"
-  (selectionChange)="onSelectionChange($event)"
-  (sortChange)="sortChange($event)"
-  (add)="addHandler($event)"
-  (cellClick)="editClickHandler($event)">
+    [id]="idGrid"
+    [data]="gridView"
+    scrollable="none"
+    [filterable]="filterable ? 'menu' : ''"
+    [filter]="state.filter"
+    [sortable]="sortableSettings"
+    [sort]="sort"
+    [groupable]="groupable"
+    [group]="groups"
+    [selectable]="selectableSettings"
+    [rowSelected]="isRowSelected"
+    [reorderable]="reorderable"
+    (dataStateChange)="dataStateChange($event)"
+    (groupChange)="groupChange($event)"
+    (selectionChange)="onSelectionChange($event)"
+    (sortChange)="sortChange($event)"
+    (add)="addHandler($event)"
+    (cellClick)="editClickHandler($event)">
 
-  <!-- https://www.telerik.com/kendo-angular-ui/components/grid/api/CustomMessagesComponent/ -->
+    <!-- https://www.telerik.com/kendo-angular-ui/components/grid/api/CustomMessagesComponent/ -->
 
-  <kendo-grid-messages
-    [noRecords]="literals.noRecords || localLiterals.noRecords"
-    [groupPanelEmpty]="literals.groupPanelEmpty || localLiterals.groupPanelEmpty"
-    [filterContainsOperator]="literals.filterContainsOperator || localLiterals.filterContainsOperator"
-    [filterAndLogic]="literals.filterAndLogic || localLiterals.filterAndLogic"
-    [filterOrLogic]="literals.filterOrLogic || localLiterals.filterOrLogic"
-    [filterEqOperator]="literals.filterEqOperator || localLiterals.filterEqOperator"
-    [filterNotEqOperator]="literals.filterNotEqOperator || localLiterals.filterNotEqOperator"
-    [filterNotContainsOperator]="literals.filterNotContainsOperator || localLiterals.filterNotContainsOperator"
-    [filterStartsWithOperator]="literals.filterStartsWithOperator || localLiterals.filterStartsWithOperator"
-    [filterEndsWithOperator]="literals.filterEndsWithOperator || localLiterals.filterEndsWithOperator"
-    [filterIsNullOperator]="literals.filterIsNullOperator || localLiterals.filterIsNullOperator"
-    [filterIsNotNullOperator]="literals.filterIsNotNullOperator || localLiterals.filterIsNotNullOperator"
-    [filterIsEmptyOperator]="literals.filterIsEmptyOperator || localLiterals.filterIsEmptyOperator"
-    [filterIsNotEmptyOperator]="literals.filterIsNotEmptyOperator || localLiterals.filterIsNotEmptyOperator"
-    [filterClearButton]="literals.filterClearButton || localLiterals.filterClearButton"
-    [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton"
-    [filterGteOperator]="literals.filterGteOperator || localLiterals.filterGteOperator"
-    [filterGtOperator]="literals.filterGtOperator || localLiterals.filterGtOperator"
-    [filterLtOperator]="literals.filterLtOperator || localLiterals.filterLtOperator"
-    [filterLteOperator]="literals.filterLteOperator || localLiterals.filterLteOperator"
-    [filterAfterOrEqualOperator]="literals.filterAfterOrEqualOperator || localLiterals.filterAfterOrEqualOperator"
-    [filterAfterOperator]="literals.filterAfterOperator || localLiterals.filterAfterOperator"
-    [filterBeforeOrEqualOperator]="literals.filterBeforeOrEqualOperator || localLiterals.filterBeforeOrEqualOperator"
-    [filterBeforeOperator]="literals.filterBeforeOperator || localLiterals.filterBeforeOperator"
-    [filterIsTrue]="literals.filterIsTrue || localLiterals.filterIsTrue"
-    [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse">
-  </kendo-grid-messages>
+    <kendo-grid-messages
+        [noRecords]="literals.noRecords || localLiterals.noRecords"
+        [groupPanelEmpty]="literals.groupPanelEmpty || localLiterals.groupPanelEmpty"
+        [filterContainsOperator]="literals.filterContainsOperator || localLiterals.filterContainsOperator"
+        [filterAndLogic]="literals.filterAndLogic || localLiterals.filterAndLogic"
+        [filterOrLogic]="literals.filterOrLogic || localLiterals.filterOrLogic"
+        [filterEqOperator]="literals.filterEqOperator || localLiterals.filterEqOperator"
+        [filterNotEqOperator]="literals.filterNotEqOperator || localLiterals.filterNotEqOperator"
+        [filterNotContainsOperator]="literals.filterNotContainsOperator || localLiterals.filterNotContainsOperator"
+        [filterStartsWithOperator]="literals.filterStartsWithOperator || localLiterals.filterStartsWithOperator"
+        [filterEndsWithOperator]="literals.filterEndsWithOperator || localLiterals.filterEndsWithOperator"
+        [filterIsNullOperator]="literals.filterIsNullOperator || localLiterals.filterIsNullOperator"
+        [filterIsNotNullOperator]="literals.filterIsNotNullOperator || localLiterals.filterIsNotNullOperator"
+        [filterIsEmptyOperator]="literals.filterIsEmptyOperator || localLiterals.filterIsEmptyOperator"
+        [filterIsNotEmptyOperator]="literals.filterIsNotEmptyOperator || localLiterals.filterIsNotEmptyOperator"
+        [filterClearButton]="literals.filterClearButton || localLiterals.filterClearButton"
+        [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton"
+        [filterGteOperator]="literals.filterGteOperator || localLiterals.filterGteOperator"
+        [filterGtOperator]="literals.filterGtOperator || localLiterals.filterGtOperator"
+        [filterLtOperator]="literals.filterLtOperator || localLiterals.filterLtOperator"
+        [filterLteOperator]="literals.filterLteOperator || localLiterals.filterLteOperator"
+        [filterAfterOrEqualOperator]="literals.filterAfterOrEqualOperator || localLiterals.filterAfterOrEqualOperator"
+        [filterAfterOperator]="literals.filterAfterOperator || localLiterals.filterAfterOperator"
+        [filterBeforeOrEqualOperator]="literals.filterBeforeOrEqualOperator || localLiterals.filterBeforeOrEqualOperator"
+        [filterBeforeOperator]="literals.filterBeforeOperator || localLiterals.filterBeforeOperator"
+        [filterIsTrue]="literals.filterIsTrue || localLiterals.filterIsTrue"
+        [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse">
+    </kendo-grid-messages>
 
-  <ng-template kendoGridToolbarTemplate *ngIf="isShowToolbarGrid()" >
-    <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add || localLiterals.add }}</button>
-    <button *ngIf="cancelButton" class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
-    <button type="button" kendoGridExcelCommand *ngIf="exportButtons"><span class="k-icon k-i-file-excel"></span></button>
-    <button kendoGridPDFCommand *ngIf="exportButtons"><span class='k-icon k-i-file-pdf'></span></button>
-  </ng-template>
+    <ng-template kendoGridToolbarTemplate *ngIf="isShowToolbarGrid()" >
+        <button kendoGridAddCommand *ngIf="addButton" class="k-primary">{{ literals.add || localLiterals.add }}</button>
+        <button *ngIf="cancelButton" class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
+        <button type="button" kendoGridExcelCommand *ngIf="exportButtons"><span class="k-icon k-i-file-excel"></span></button>
+        <button kendoGridPDFCommand *ngIf="exportButtons"><span class='k-icon k-i-file-pdf'></span></button>
+    </ng-template>
 
-  <kendo-grid-checkbox-column *ngIf="selectable"
-      [width]="30"
-      [showSelectAll]="true">
-  </kendo-grid-checkbox-column>
-  
+    <kendo-grid-checkbox-column *ngIf="selectable"
+        [width]="30"
+        [showSelectAll]="true">
+    </kendo-grid-checkbox-column>
+
     <kendo-grid-column *ngFor="let col of columns; let i = index"
         [headerClass]="{'d-number-header': col.editType === 'numeric', 'd-column-header': true}"
         [field]="col.column"
@@ -71,18 +71,18 @@
         [format]="col.editFormat"
         (click)="onClickColumn(col)">
 
-        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
-            {{ data[col.column] | date : col.format }}
-        </ng-template>
-
-        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'checkbox'">
-            <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
+        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'numeric'">
+            {{ col.label }}: {{ col.format ? (value | number : col.format) : (value) }}
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'numeric'">
             <div style="text-align: right;">
-              {{ col.format ? (data[col.column] | number : col.format) : (data[col.column]) }}
+                {{ col.format ? (data[col.column] | number : col.format) : (data[col.column]) }}
             </div>
+        </ng-template>
+
+        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'currency'">
+            {{ col.label }}: {{ value | currency : col.currency : 'symbol' : col.symbol }}
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'currency'">
@@ -91,72 +91,94 @@
             </div>
         </ng-template>
 
+        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'checkbox'">
+            {{ col.label }}: {{ value ? (literals.yes || localLiterals.yes) : (literals.no || localLiterals.no) }}
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'checkbox'">
+            <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
+        </ng-template>
+
+        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'date'">
+            {{ col.label }}: {{ value | date : col.format }}
+        </ng-template>
+
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'date'">
+            {{ data[col.column] | date : col.format }}
+        </ng-template>
+
+        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'label'">
+            <div *ngFor="let label of col.labels">
+                <span *ngIf="label.value === value">
+                    {{ col.label }}: {{ label.label }}
+                </span>
+            </div>
+        </ng-template>
+
         <ng-template kendoGridCellTemplate let-type *ngIf="col.type === 'label'">
             <div *ngFor="let label of col.labels">
                 <span *ngIf="label.value === type[col.column]"
-                      class="po-table-column-label po-{{ label.color }}">{{label.label}}
+                      class="po-table-column-label po-{{ label.color }}">
+                    {{ label.label }}
                 </span>
             </div>
         </ng-template>
 
         <ng-template kendoGridCellTemplate let-type *ngIf="col.type === 'subtitle'">
-            <div class="d-subtitle" >
+            <div class="d-subtitle">
                 <div *ngFor="let label of col.labels">
                     <span *ngIf="isValidSubtitle(label.value, type[col.column])"
-                           [p-tooltip]="label.tooltip"
-                           class="po-mr-1 po-table-column-label po-{{ label.color }}">{{label.label}}
+                          [p-tooltip]="label.tooltip"
+                          class="po-mr-1 po-table-column-label po-{{ label.color }}">
+                        {{ label.label }}
                     </span>
                 </div>
             </div>
         </ng-template>
-
-        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="col.groupHeader">
-            {{value}}
-        </ng-template>
-
     </kendo-grid-column>
 
-  <kendo-grid-command-column title="" width="80" locked="true" *ngIf="isCommandColumnVisible()">
-    <ng-template kendoGridCellTemplate let-data>
+    <kendo-grid-command-column title="" width="80" locked="true" *ngIf="isCommandColumnVisible()">
+        <ng-template kendoGridCellTemplate let-data>
 
-        <div *ngIf="actions.length > 1">
-            <span class="d-actions po-icon po-icon-more po-clickable"
-                  #target
-                  (click)="onClickActions($event, data)">
-            </span>
-        </div>
+            <div *ngIf="actions.length > 1">
+                <span class="d-actions po-icon po-icon-more po-clickable"
+                      #target
+                      (click)="onClickActions($event, data)">
+                </span>
+            </div>
 
-        <div *ngIf="actions.length === 1">
-            <span class="d-action-span po-icon {{actions[0].icon}} po-clickable"></span>
-            <span class="d-action po-clickable"
-                  (click)="onClickAction(data, actions[0])">{{ actions[0].label }}
-            </span>
-        </div>
+            <div *ngIf="actions.length === 1">
+                <span class="d-action-span po-icon {{actions[0].icon}} po-clickable"></span>
+                <span class="d-action po-clickable"
+                      (click)="onClickAction(data, actions[0])">
+                    {{ actions[0].label }}
+                </span>
+            </div>
 
-    </ng-template>
-  </kendo-grid-command-column>
+        </ng-template>
+    </kendo-grid-command-column>
 
-  <kendo-grid-excel fileName="spreadsheet.xlsx" [fetchData]="allData"></kendo-grid-excel>
+    <kendo-grid-excel fileName="spreadsheet.xlsx" [fetchData]="allData"></kendo-grid-excel>
 
-  <kendo-grid-pdf fileName="grid.pdf" [allPages]="true">
-    <kendo-grid-pdf-margin top="1cm" left="1cm" right="1cm" bottom="1cm"></kendo-grid-pdf-margin>
-  </kendo-grid-pdf>
-
+    <kendo-grid-pdf fileName="grid.pdf" [allPages]="true">
+        <kendo-grid-pdf-margin top="1cm" left="1cm" right="1cm" bottom="1cm"></kendo-grid-pdf-margin>
+    </kendo-grid-pdf>
 </kendo-grid>
 
 <div class="k-grid-show-more po-offset-xl-4 po-offset-lg-4 po-offset-md-3 po-lg-4 po-md-6"
      *ngIf="showMore.observers.length > 0">
-  <div style="text-align: center;">
-    <button class="k-grid-show-more-button po-button po-text-ellipsis"
+    <div style="text-align: center;">
+        <button class="k-grid-show-more-button po-button po-text-ellipsis"
             (click)="onShowMore()"
-            [disabled]="showMoreDisabled">{{ literals.showMore || localLiterals.showMore}}
-    </button>
-  </div>
+            [disabled]="showMoreDisabled">
+            {{ literals.showMore || localLiterals.showMore }}
+        </button>
+    </div>
 </div>
 
 <div id="popupRef{{idPopup}}"
+     class="po-popup"     
      style="top: -200px; left: -200px;"
-     class="po-popup"
      [hidden]="!showPopup">
 
     <ng-content select="[p-popup-header-template]"></ng-content>
@@ -169,7 +191,7 @@
 
         <div *ngIf="action.visible !== false">
             <span *ngIf="action.icon"
-                class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
+                  class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
 
             <span class="d-action po-clickable">{{ action.label }}</span>
         </div>

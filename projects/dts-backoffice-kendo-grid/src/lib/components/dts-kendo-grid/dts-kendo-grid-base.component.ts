@@ -224,6 +224,11 @@ export abstract class DtsKendoGridBaseComponent {
     private defineColumnType() {
 
         const lookupTableType = {
+            string: column => {
+                column.type = 'text';
+                column.filterType = 'text';
+                column.editType = 'text';
+            },
             number: column => {
                 column.type = 'numeric';
                 column.filterType = 'numeric';
@@ -239,16 +244,16 @@ export abstract class DtsKendoGridBaseComponent {
                 column.symbol = column.symbol ? column.symbol : '1.2-2';
                 column.editFormat = this.getEditFormat(column.symbol);
             },
+            checkbox: column => {
+                column.type = 'checkbox';
+                column.filterType = 'boolean';
+                column.editType = 'boolean';
+            },
             date: column => {
                 column.type = 'date';
                 column.filterType = 'date';
                 column.editType = 'date';
                 column.format = column.format && column.format.trim().length > 0 ? `${column.format}` : 'dd/MM/yyyy';
-            },
-            string: column => {
-                column.type = 'text';
-                column.filterType = 'text';
-                column.editType = 'text';
             },
             label: column => {
                 column.type = 'label';
@@ -259,11 +264,6 @@ export abstract class DtsKendoGridBaseComponent {
                 column.type = 'subtitle';
                 column.filterType = 'text';
                 column.editType = 'text';
-            },
-            checkbox: column => {
-                column.type = 'checkbox';
-                column.filterType = 'boolean';
-                column.editType = 'boolean';
             }
         };
 

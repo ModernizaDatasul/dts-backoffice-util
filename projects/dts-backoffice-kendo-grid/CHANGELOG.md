@@ -1,5 +1,12 @@
 # Changelog
 
+**2.1.5 (29-09-2020):**
+
+Correções:
+- Agrupamento x Tipos de Campo - Ao realizar um agrupamento, o valor apresentado para o Grupo sempre era o valor interno, desta forma, para as colunas do tipo: date, label, boolean, number e currency, a informação não vinha formatada ou não apresentada o label.
+- Atributo da Coluna: groupHeader - O atributo não estava funcionando corretamente, e em alguns casos, trazia a coluna agrupada em duplicidade.
+- Literais - Caso a linguagem parametrizada não fosse válida ou não suportada, ocorria um erro e o Grid não era apresentado. Caso ela seja inválida ou não suportada, será utilizada como padrão o valor "en-US". 
+
 **2.1.4 (28-09-2020):**
 
 Correções:

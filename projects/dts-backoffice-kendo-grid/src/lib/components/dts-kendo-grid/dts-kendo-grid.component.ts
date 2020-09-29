@@ -6,6 +6,7 @@ import { ExcelExportData } from '@progress/kendo-angular-excel-export';
 import { GroupDescriptor, process, State, SortDescriptor } from '@progress/kendo-data-query';
 import { DtsKendoGridBaseComponent } from './dts-kendo-grid-base.component';
 import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
+import { TranslateService } from './services/translate.service';
 
 /**
  * @docsExtends DtsKendoGridBaseComponent
@@ -35,8 +36,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     formGroup: FormGroup;
     cancelButton = false;
 
-    groups: Array<GroupDescriptor> = [];
-
     gridView: GridDataResult;
 
     selectableSettings = {
@@ -44,8 +43,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         mode: 'multiple'
     };
 
-    sortableObject: any;
+    groups: Array<GroupDescriptor> = [];
 
+    sortableSettings: any;
     sort: Array<SortDescriptor> = [];
 
     target: any;
@@ -60,15 +60,13 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         width: 0
     };
 
-    state: State = {};
+    state: State = { sort: this.sort, group: this.groups };
 
     columnFilter = {
         filter: false
     };
 
     localLiterals: any;
-
-    language = localStorage.getItem('user.language') || navigator.language;
 
     private dataArrayOrdered: Array<any>;
     private differ: any;
@@ -108,6 +106,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     ngOnInit() {
+        this.setLocalLiterals();
+
         this.renderer.listen(
             'document',
             'click',
@@ -121,11 +121,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                 this.validateSaveEventInDocument(target, key);
             });
 
-        // this.initializeColumns();
         this.initializeSorter();
+        this.initializeGroups();
         this.initializeData();
-
-        this.setLocalLiterals();
     }
 
     setLocalLiterals() {
@@ -158,7 +156,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsFalse: 'Não',
             add: 'Adicionar',
             cancel: 'Cancelar',
-            showMore: 'Carregar mais resultados'
+            showMore: 'Carregar mais resultados',
+            yes: 'Sim',
+            no: 'Não'
         };
 
         const en = {
@@ -190,7 +190,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsFalse: 'No',
             add: 'Add',
             cancel: 'Cancel',
-            showMore: 'Load more data'
+            showMore: 'Load more data',
+            yes: 'Yes',
+            no: 'No'
         };
 
         const es = {
@@ -222,7 +224,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             filterIsFalse: 'No',
             add: 'Agregar',
             cancel: 'Cancelar',
-            showMore: 'Cargar más datos'
+            showMore: 'Cargar más datos',
+            yes: 'Sí',
+            no: 'No'
         };
 
         const allLiterals = {
@@ -233,7 +237,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             'en-US': { ...en }
         };
 
-        this.localLiterals = allLiterals[this.language] || allLiterals['pt-br'];
+        this.localLiterals = allLiterals[TranslateService.getCurrentLanguage()] || allLiterals['pt-BR'];
     }
 
     ngDoCheck() {
@@ -343,7 +347,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return;
         }
 
-        this.sortableObject = null;
+        this.sortableSettings = null;
         this.EditedRow = dataItem;
         this.tableEditIndex = rowIndex;
         this.cancelButton = true;
@@ -516,10 +520,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     private initializeData(): void {
         if (!this.data) { this.data = []; }
 
-        if (this.groupable) {
-            this.initializeGroups();
-        }
-
         this.gridView = {
             data: this.data,
             total: this.data.length
@@ -530,7 +530,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     private initializeSorter(): void {
         if (this.sortable) {
-            this.sortableObject = {
+            this.sortableSettings = {
                 allowUnsort: this.sortable,
                 mode: 'single'
             };
@@ -538,13 +538,13 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     private initializeGroups(): void {
-        const arraySize = this.columns.length;
-        for (let count = 0; count < arraySize; count++) {
-            const columnTemp = this.columns[count];
-            if (this.groups.length < 2 && columnTemp.groupHeader) {
-                this.groups.push({ field: columnTemp.column });
+        if (!this.groupable) { return; }
+
+        this.columns.map(column => {
+            if (column.groupHeader) {
+                this.groups.push({ field: column.column });
             }
-        }
+        });
     }
 
     matches(el, selector) {
