@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.0.8 (02-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.0.9 (02-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br> 
 
@@ -15,8 +15,8 @@ import { TranslateService } from 'dts-backoffice-util';
 
 Métodos:
 
-| Nome  | Descrição |
-| -| - |
+| Nome | Descrição |
+|-|-|
 | getCurrentLanguage | Retorna o idioma corrente. Será considerando no primeiro momento a chave "user.language" do localStorage. Caso ela não exista ou seja inválida, será considerando o idioma parametrizado no Browse. Além disto, o idioma deve estar disponível na lista de suportados, conforme métodos "getSuportLanguage".<br>**Parâmetros:** Não há.<br>**Retorno:** string |
 | getSuportLanguage | Retornar uma lista com os atuais idiomas suportados.<br>**Parâmetros:** Não há.<br>**Retorno:** Array(string) |
 ---
@@ -70,7 +70,7 @@ constructor(public menuDatasulService: MenuDatasulService) {
 Métodos:
 
 | Nome | Descrição |
-| - | - |
+|-|-|
 | callProgress | Executa uma tela Progress que esteja cadastrada no menu.<br>**Parâmetros:**<br>- program (object): Objeto com os seguintes atributos:<br>prg (string): Nome do programa no menu.<br>params (array(object)): Array de Objetos de Parâmetros. O objeto possui dois atributos: "type" com o tipo de dado (character, integer, logical, etc...). E "value" com o conteúdo.<br>**Retorno:** Não há. |
 | openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Parâmetros:**<br>- programName (string): Nome interno do Programa, no cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navagador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
 | sendNotification | Apresenta uma notificação ao usuário.<br>**Parâmetros:**<br>- notification (object): Objeto com os seguintes atributos:<br>type (string): Tipo de notificação (success, warning, error).<br>title (string): Titulo da Notificação.<br>detail (string): Descrição da Notificação.<br>**Retorno:** Não há. |
@@ -154,7 +154,7 @@ DEFINE TEMP-TABLE tt-param NO-UNDO
 Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
-| - | - | - | - |
+|-|-|-|-|
 | programName | string | Sim | Nome da API |
 | externalName | string | Sim | Nome da API completo, pasta + nome |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5 |
@@ -180,7 +180,7 @@ constructor(public preferenceService: ProfileService) {
 Métodos:
 
 | Nome | Descrição |
-| - | - |
+|-|-|
 | setProfile | Salva informações no profile do usuário.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário e as informações serem salvas.<br>**Retorno:**<br>- response (Observable(any)): Retorno do BackEnd. |
 | getProfileAsString | Retorna os valores salvos no formato de uma string.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(string)): Informações salvas. |
 | getProfileAsJSON | Retorna os valores salvos no formato de um JSON.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(object)): Informações salvas. |
@@ -190,7 +190,7 @@ Interfaces:
 
 IProfile
 | Nome | Tipo | Obrigatório | Descrição |
-| ------------ | -------- | ------------ | --- |
+|-|-|-|-|
 | pageId | string | Sim | Um ID para identificar a Tela que está salvando os parâmetros. |
 | userCode | string | Sim | Código do usuário (login). |
 | dataCode | string | Sim | Um ID para identificar o parâmetro. | 
@@ -231,9 +231,9 @@ constructor( public sessionService: UserLoginService) {
 
 Métodos:
 
-| Nome  | Descrição |
-| - | - | - |
-| getUserLogin |Retorna o login do usuário.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- response (Observable(string)) |
+| Nome | Descrição |
+|-|-|
+| getUserLogin | Retorna o login do usuário.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- response (Observable(string)) |
 ---
 
 Exemplo de Uso:
@@ -265,7 +265,7 @@ constructor(public reportService: ReportService) {
 Métodos:
 
 | Nome | Descrição |
-| - | - |
+|-|-|
 | generate | Retorna o arquivo binário gerado pelo datasul-report e faz o download do arquivo.<br>**Parâmetros:**<br>- params (IReportServiceParams): Parâmetros para execução do relatório.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(Blob)) |
 ---
 
@@ -273,8 +273,8 @@ Interfaces:
 
 IReportServiceParams
 
-| Nome  |  Tipo  | Obrigatório| Descrição |
-| - |- | - | - |
+| Nome | Tipo | Obrigatório | Descrição |
+|-|-|-|-|
 | reportName | string | Sim | Nome do arquivo .rptDesign |
 | programName | string | Sim | Nome do programa progress. | 
 | properties | Array | Sim | Lista de parâmetros que serão enviados ao progress. O objeto do Array deve implementar a interface **IProperty**. |
@@ -286,8 +286,8 @@ IReportServiceParams
 
 IProperty
 
-| Nome  |  Tipo  | Obrigatório | Descrição |
-| ------------ |--------| ------------ |--- |
+| Nome | Tipo | Obrigatório | Descrição |
+|-|-|-|-|
 | name | string | Sim | Nome do parâmetro |
 | value | string | Sim | Vaor do parâmetro |
 ---
@@ -344,7 +344,7 @@ import { BreadcrumbControlService } from 'dts-backoffice-util';
 Métodos:
 
 | Nome | Descrição |
-| - | - |- |
+|-|-|
 | newBreadcrumb | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb de ser reiniciado.<br>**Parâmetros:** Não há.<br>**Retorno:** Não há. |
 | addBreadcrumb | Adiciona um item ao breadcrumb, considerando a URL atual da tela.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- activatedRoute (ActivatedRoute): ActivedRoute da tela.<br>**Retorno:** Não há. |
 | addBreadcrumbURL | Adiciona um item ao breadcrumb, informando uma URL específica.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- url (string): URL específica.<br>**Retorno:** Não há. |
@@ -369,7 +369,7 @@ import { DateUtil } from 'dts-backoffice-util';
 Métodos:
 
 | Nome | Descrição |
-| - | - |
+|-|-|
 | dateToQueryParam | Transforma uma data para o padrão YYYY-MM-DD.<br>**Parâmetros:**<br>- date (Date): Data.<br>**Retorno:**<br>- date (string) |
 | queryParamToDate | Transforma uma data no padrão YYYY-MM-DD para objeto Date.<br>**Parâmetros:**<br>- date (string): Data.<br>**Retorno:**<br>- date (Date) |
 | isValidDate | Verifica se a data é válida.<br>**Parâmetros:**<br>- date (Date): Data.<br>**Retorno:**<br>- valid (boolean) |
