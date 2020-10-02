@@ -141,7 +141,6 @@ this.parametersRpw = [
     { chave: 'usuario', valor: 'FERNANDO', tipo: 'character' },
     { chave: 'perfil', valor: 880, tipo: 'integer' }
 ];
-
 ```
 **Definição no Progress:**
 ```
@@ -348,7 +347,7 @@ Métodos:
 | newBreadcrumb | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb de ser reiniciado.<br>**Parâmetros:** Não há.<br>**Retorno:** Não há. |
 | addBreadcrumb | Adiciona um item ao breadcrumb, considerando a URL atual da tela.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- activatedRoute (ActivatedRoute): ActivedRoute da tela.<br>**Retorno:** Não há. |
 | addBreadcrumbURL | Adiciona um item ao breadcrumb, informando uma URL específica.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- url (string): URL específica.<br>**Retorno:** Não há. |
-| updBreadcrumbURL | Altera uma informação qualquer contida na URL do item informado.<br>**Parâmetros:**<br>- literal (string): Nome da tela que está no breadcrumb.<br>- valueOld (string): valor a ser substituído.<br>- valueNew (string): Novo valor.<br>**Retorno:** Não há. |
+| updBreadcrumbURL | Altera uma informação qualquer contida na URL do item informado.<br>**Parâmetros:**<br>- literal (string): Nome da tela que está no breadcrumb.<br>- valueOld (string): Valor a ser substituído.<br>- valueNew (string): Novo valor.<br>**Retorno:** Não há. |
 | getBreadcrumb | Retorna o breadcrumb atual completo.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- breadcrumb (PoBreadcrumb) |
 | getCurrentRouter | Retorna a URL do breadcrumb do item corrente.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- url (string) |
 | getPrevRouter | Retorna a URL do breadcrumb do item anterior.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- url (string) |
