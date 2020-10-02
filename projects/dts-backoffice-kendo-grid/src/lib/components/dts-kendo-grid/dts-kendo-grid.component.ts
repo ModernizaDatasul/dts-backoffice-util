@@ -395,7 +395,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         event.stopPropagation();
     }
 
-    private onChooseBtCancel() {
+    public onChooseBtCancel() {
         this.cancelHandler({ sender: this.grid });
     }
 
