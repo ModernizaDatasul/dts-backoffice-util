@@ -109,6 +109,7 @@ export abstract class DtsKendoGridBaseComponent {
 
     private _groupable: boolean;
 
+    public columnsOrig: Array<DtsKendoGridColumn>;
     public columns: Array<DtsKendoGridColumn>;
 
     /** Lista de objeto a serem exibidos. Este atributo aceita um array de objetos JSON. */
@@ -118,7 +119,8 @@ export abstract class DtsKendoGridBaseComponent {
     //   @Input('d-columns') _columns: Array<DtsKendoGridColumn>;
 
     @Input('d-columns') set dColumns(columns: Array<DtsKendoGridColumn>) {
-        this.columns = columns ? JSON.parse(JSON.stringify(columns)) : [];
+        this.columnsOrig = columns ? columns : [];
+        this.columns = JSON.parse(JSON.stringify(this.columnsOrig));
         this.initializeColumns();
     }
 
@@ -192,12 +194,12 @@ export abstract class DtsKendoGridBaseComponent {
 
     protected clickoutListener: () => void;
 
-    abstract onShowMore(): void;
+    protected abstract onShowMore(): void;
 
-    abstract onSelectionChange(event: any): void;
+    protected abstract onSelectionChange(event: any): void;
 
     // Limpa os dados do grupo quando o mesmo for desmarcado.
-    abstract cleanGroups(): void;
+    protected abstract cleanGroups(): void;
 
     protected convertToBoolean(val: any): boolean {
         if (typeof val === 'string') {
@@ -217,10 +219,11 @@ export abstract class DtsKendoGridBaseComponent {
             this.columns = [];
         } else {
             this.defineColumnType();
+            this.defineColumnVisible();
         }
     }
 
-    // // Define a configuração da coluna em modo edição de acordo com o tipo informado.
+    // Define a configuração da coluna em modo edição de acordo com o tipo informado.
     private defineColumnType() {
 
         const lookupTableType = {
@@ -244,8 +247,8 @@ export abstract class DtsKendoGridBaseComponent {
                 column.symbol = column.symbol ? column.symbol : '1.2-2';
                 column.editFormat = this.getEditFormat(column.symbol);
             },
-            checkbox: column => {
-                column.type = 'checkbox';
+            boolean: column => {
+                column.type = 'boolean';
                 column.filterType = 'boolean';
                 column.editType = 'boolean';
             },
@@ -286,5 +289,11 @@ export abstract class DtsKendoGridBaseComponent {
         if (part.length < 2) { return 'n0'; }
 
         return `n${part[1]}`;
+    }
+
+    private defineColumnVisible() {
+        this.columns.forEach(column => {
+            if (column.visible === undefined || column.visible === null) { column.visible = true; }
+        });
     }
 }

@@ -1,5 +1,5 @@
 import { Component, DoCheck, IterableDiffers, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { ViewEncapsulation, AfterViewInit, ElementRef } from '@angular/core';
+import { ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataStateChangeEvent, GridComponent, GridDataResult, SelectAllCheckboxState, RowArgs, CommandColumnComponent } from '@progress/kendo-angular-grid';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
@@ -28,84 +28,83 @@ import { TranslateService } from './services/translate.service';
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit {
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
 
-    currentRow: any;
+    private currentRow: any;
 
-    isNewRow = false;
-    EditedRow: any = null;
-    tableEditIndex = -1;
-    formGroup: FormGroup;
-    cancelButton = false;
+    private isNewRow = false;
+    private EditedRow: any = null;
+    private tableEditIndex = -1;
+    private formGroup: FormGroup;
+    public cancelButton = false;
 
-    gridView: GridDataResult;
+    public gridView: GridDataResult;
 
-    selectableSettings = {
+    public selectableSettings = {
         checkboxOnly: true,
         mode: 'multiple'
     };
 
-    groups: Array<GroupDescriptor> = [];
+    public groups: Array<GroupDescriptor> = [];
 
-    sortableSettings: any;
-    sort: Array<SortDescriptor> = [];
+    public sortableSettings: any;
+    public sort: Array<SortDescriptor> = [];
 
-    target: any;
+    private target: any;
 
-    idGrid = `idGrid${this.create_UUID(true)}`;
+    public idGrid = `idGrid${this.create_UUID(true)}`;
 
-    idPopup = this.create_UUID();
-    showPopup = true;
-    arrowDirection = 'top-right';
-    popupSize = {
+    public idPopup = this.create_UUID();
+    public showPopup = true;
+    public arrowDirection = 'top-right';
+    private popupSize = {
         height: 0,
         width: 0
     };
 
-    state: State = { sort: this.sort, group: this.groups };
+    public state: State = { sort: this.sort, group: this.groups };
 
-    columnFilter = {
+    public columnFilter = {
         filter: false
     };
 
-    localLiterals: any;
+    public localLiterals: any;
 
     private dataArrayOrdered: Array<any>;
     private differ: any;
 
     constructor(
         differs: IterableDiffers,
-        private renderer: Renderer2,
-        private el: ElementRef) {
+        private renderer: Renderer2) {
         super();
 
         this.allData = this.allData.bind(this);
         this.differ = differs.find([]).create(null);
     }
 
-    isShowToolbarGrid(): boolean {
+    public isShowToolbarGrid(): boolean {
         return (this.addButton || this.exportButtons);
     }
 
-    isEditGrid(): boolean {
+    private isEditGrid(): boolean {
         return (this.editable || this.addButton);
     }
 
-    isInEditionGrid(): boolean {
+    private isInEditionGrid(): boolean {
         return (this.EditedRow || this.isNewRow);
     }
 
-    isGroup(): boolean {
+    public isGroup(): boolean {
         return (this.groups && this.groups.length > 0);
     }
 
-    isRowSelected = (row: RowArgs) => {
+    public isRowSelected = (row: RowArgs) => {
         return row.dataItem.$selected;
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit() {
         this.calcPopupSize();
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.setLocalLiterals();
 
         this.renderer.listen(
@@ -126,7 +125,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.initializeData();
     }
 
-    setLocalLiterals() {
+    private setLocalLiterals() {
         const pt = {
             noRecords: 'Nenhum registro encontrado',
             groupPanelEmpty: 'Arraste o cabeçalho da coluna e solte aqui para agrupar os dados por essa coluna',
@@ -240,32 +239,32 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.localLiterals = allLiterals[TranslateService.getCurrentLanguage()] || allLiterals['pt-BR'];
     }
 
-    ngDoCheck() {
+    public ngDoCheck() {
         const change = this.differ.diff(this.data);
         if (change) {
             this.initializeData();
         }
     }
 
-    sortChange(sort: Array<SortDescriptor>) {
+    public sortChange(sort: Array<SortDescriptor>) {
         this.sort = sort;
     }
 
-    isGroupingBy(field) {
+    public isGroupingBy(field) {
         return this.groups.some(obj => obj.field === field);
     }
 
-    dataStateChange(state: DataStateChangeEvent) {
+    public dataStateChange(state: DataStateChangeEvent) {
         this.state = state;
         this.refreshGrid();
     }
 
-    refreshGrid() {
+    private refreshGrid() {
         if (!this.data) { this.data = []; }
         this.gridView = process(this.data, this.state);
     }
 
-    addHandler({ sender }) {
+    public addHandler({ sender }) {
         if (this.isInEditionGrid()) {
             if (!this.saveClick()) {
                 return;
@@ -288,7 +287,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         sender.addRow(this.formGroup);
     }
 
-    saveLine() {
+    private saveLine() {
         if (!this.isEditGrid()) {
             return;
         }
@@ -317,7 +316,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.initializeSorter();
     }
 
-    editClickHandler(event) {
+    public editClickHandler(event) {
         if (!this.isEditGrid()) {
             return;
         }
@@ -342,7 +341,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         });
     }
 
-    editHandler({ sender, rowIndex, dataItem }) {
+    private editHandler({ sender, rowIndex, dataItem }) {
         if (!this.isEditGrid()) {
             return;
         }
@@ -367,7 +366,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         sender.editRow(rowIndex, this.formGroup);
     }
 
-    saveClick(): boolean {
+    private saveClick(): boolean {
         if (!this.validateSaveClick()) {
             return false;
         }
@@ -379,7 +378,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return true;
     }
 
-    closeEditor(grid) {
+    private closeEditor(grid) {
         if (grid) {
             grid.closeRow(this.tableEditIndex);
         }
@@ -392,29 +391,29 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     // Cancela a propagação de eventos no botão "Cancelar" da edição por linhas.
-    cancelPropagation(event) {
+    public cancelPropagation(event) {
         event.stopPropagation();
     }
 
-    onChooseBtCancel() {
+    private onChooseBtCancel() {
         this.cancelHandler({ sender: this.grid });
     }
 
-    cancelHandler({ sender }) {
+    private cancelHandler({ sender }) {
         this.closeEditor(sender);
     }
 
-    isValidForm() {
+    private isValidForm() {
         return (this.formGroup && this.formGroup.valid);
     }
 
-    allData(): ExcelExportData {
+    public allData(): ExcelExportData {
         return {
             data: process(this.data, {}).data
         };
     }
 
-    onSelectionChange(event) {
+    public onSelectionChange(event) {
         if (!event) { return; }
 
         if (event.selectedRows && event.selectedRows.length > 0) {
@@ -440,11 +439,11 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.selectionChange.emit({ data: itemSelected });
     }
 
-    onShowMore() {
+    public onShowMore() {
         this.showMore.emit(null);
     }
 
-    groupChange(groups: Array<GroupDescriptor>) {
+    public groupChange(groups: Array<GroupDescriptor>) {
         if (this.isInEditionGrid()) {
             if (!this.saveClick()) {
                 return;
@@ -455,22 +454,20 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.dtsGroupChange.emit(this.groups);
     }
 
-    cleanGroups(): void {
+    public cleanGroups(): void {
         this.groups.splice(0, this.groups.length);
         this.refreshGrid();
     }
 
     // Define se a coluna de ações será visível.
-    isCommandColumnVisible(): boolean {
-        return true; // this.showRemoveButton || this.isEditGrid();
+    public isCommandColumnVisible(): boolean {
+        return !this.isInEditionGrid();
     }
 
     private createFormGroup() {
         const group: any = {};
-        this.columns.forEach(columnTemp => {
-            if (!columnTemp.checkbox) {
-                group[columnTemp.column] = columnTemp.required ? new FormControl('', Validators.required) : new FormControl('');
-            }
+        this.columns.forEach(column => {
+            group[column.column] = column.required ? new FormControl('', Validators.required) : new FormControl('');
         });
         this.formGroup = new FormGroup(group);
     }
@@ -547,7 +544,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         });
     }
 
-    matches(el, selector) {
+    private matches(el, selector) {
         return (el.matches || el.msMatchesSelector).call(el, selector);
     }
 
@@ -576,22 +573,22 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
     }
 
-    onClickColumn($event) {
+    public onClickColumn($event) {
     }
 
-    onClickAction(row: any, action: any) {
+    public onClickAction(row: any, action: any) {
         action.action(row);
     }
 
-    executeAction(action: any) {
+    public executeAction(action: any) {
         action.action(this.currentRow);
     }
 
-    onSelectAllChange(checkedState: SelectAllCheckboxState) {
+    public onSelectAllChange(checkedState: SelectAllCheckboxState) {
     }
 
     // popup controllers
-    onClickActions($event: MouseEvent, row: any) {
+    public onClickActions($event: MouseEvent, row: any) {
         this.currentRow = { ...row };
         this.showPopup = true;
 
@@ -604,7 +601,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         });
     }
 
-    calcPopupSize(popupRef = null) {
+    private calcPopupSize(popupRef = null) {
         if (!this.actions || this.actions.length < 2) { return; }
 
         this.popupSize.height = 0;
@@ -620,7 +617,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.popupSize.width = popupRef.getBoundingClientRect().width;
     }
 
-    setPopupPosition(target: any) {
+    private setPopupPosition(target: any) {
         const popupRef = document.getElementById(`popupRef${this.idPopup}`);
         const divOffset = this.offset(target);
 
@@ -651,39 +648,39 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         popupRef.style.left = `${left}px`;
     }
 
-    isCanShowPopup(top: number, left: number): boolean {
+    private isCanShowPopup(top: number, left: number): boolean {
         if ((top + this.popupSize.height) > window.innerHeight) { return false; }
         if ((left + this.popupSize.width) > window.innerWidth) { return false; }
         return true;
     }
 
-    offset(el: any) {
+    private offset(el: any) {
         const element = el.getBoundingClientRect();
         return { top: element.top, left: element.right };
     }
 
-    elementContains(element: HTMLElement, className: string) {
+    private elementContains(element: HTMLElement, className: string) {
         return element && element.classList.contains(className);
     }
 
-    clickedOutDisabledItem(event) {
+    private clickedOutDisabledItem(event) {
         const containsItemDisabled = this.elementContains(event.target, 'po-popup-item-disabled') ||
             this.elementContains(event.target.parentElement, 'po-popup-item-disabled');
 
         return !containsItemDisabled;
     }
 
-    clickedOutTarget(event) {
+    private clickedOutTarget(event) {
         return this.target && !this.target.contains(event.target);
     }
 
-    closePopupOnClickout(event: MouseEvent) {
+    private closePopupOnClickout(event: MouseEvent) {
         if (this.clickedOutTarget(event) && this.clickedOutDisabledItem(event)) {
             this.showPopup = false;
         }
     }
 
-    create_UUID(firstpart = false) {
+    private create_UUID(firstpart = false) {
         let dt = new Date().getTime();
         let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             const r = (dt + Math.random() * 16) % 16 | 0;
@@ -695,9 +692,17 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return uuid;
     }
 
-    isValidSubtitle(rowValue: any, labels: string) {
+    public isValidSubtitle(rowValue: any, labels: string) {
         const listLabels = labels ? labels.split(',') : [];
 
         return listLabels.some((list) => list === rowValue);
+    }
+
+    public changeVisibleColumn(column: string, visible: boolean): void {
+        const columnFind = this.columns.find(col => col.column === column);
+        if (columnFind) { columnFind.visible = visible; }
+
+        const columnOrig = this.columnsOrig.find(col => col.column === column);
+        if (columnOrig) { columnOrig.visible = visible; }
     }
 }

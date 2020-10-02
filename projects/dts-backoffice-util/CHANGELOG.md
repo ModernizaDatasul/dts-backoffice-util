@@ -1,5 +1,9 @@
 # Changelog
 
+**2.0.8 (02-10-2020):**
+
+Atualiação de Documentação.
+
 **2.0.5 / 2.0.6 / 2.0.7 (29-09-2020):**
 
 Criação do serviço **TranslateService**, para realização o controle do idioma.

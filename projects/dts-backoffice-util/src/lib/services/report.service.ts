@@ -31,7 +31,6 @@ export class ReportService {
   public readonly URL = window.location.href.indexOf('totvs-menu') > 0 ? '/totvs-menu/rest/report/run/'
                         : '/dts/datasul-report/resources/run/';
 
-
   constructor(public httpClient: HttpClient) { }
 
   generate(params: IReportServiceParams, showLoading: boolean = true): Observable<Blob> {

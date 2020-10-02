@@ -69,6 +69,7 @@
         [filter]="col.filterType"
         [editor]="col.editType"
         [format]="col.editFormat"
+        [hidden]="!col.visible"
         (click)="onClickColumn(col)">
 
         <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'numeric'">
@@ -91,12 +92,15 @@
             </div>
         </ng-template>
 
-        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'checkbox'">
+        <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'boolean'">
             {{ col.label }}: {{ value ? (literals.yes || localLiterals.yes) : (literals.no || localLiterals.no) }}
         </ng-template>
 
-        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'checkbox'">
-            <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
+        <ng-template kendoGridCellTemplate let-data *ngIf="col.type === 'boolean'">
+            <input *ngIf="col.checkbox" type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
+            <div *ngIf="!col.checkbox">
+                {{ data[col.column] ? (literals.yes || localLiterals.yes) : (literals.no || localLiterals.no) }}
+            </div>
         </ng-template>
 
         <ng-template kendoGridGroupHeaderTemplate let-value="value" *ngIf="groupable && col.type === 'date'">

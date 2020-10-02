@@ -1,5 +1,12 @@
 # Changelog
 
+**2.2.0 (02-10-2020):**
+
+Melhorias:
+- Edição x Ações - Ao entrar no modo de edição (inclusão/alteração), o menu de Ações (TableActions) será oculto. Quando o usuário sair do modo de edição, o menu irá reaparecer.
+- Colunas do Grid - Incluída propriedade "checkbox" (yes/no) para indicar se a coluna do tipo "boolean" deve ser apresentada como um Check-Box ou um texto (Sim/Não).
+- Colunas do Grid - Incluída propriedade "visible" (yes/no) para indicar se a coluna deve ser apresentada ou não.
+
 **2.1.5 (29-09-2020):**
 
 Correções:

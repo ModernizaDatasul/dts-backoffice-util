@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.1.5 (29-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.2.0 (02-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -103,7 +103,7 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 ## Parâmetros
 
 | Parâmetro | Tipo | Descrição |
-|--|--|--|
+|-|-|-|
 | **d-sortable** | boolean | Habilita a ordenação da coluna ao clicar no cabeçalho. |
 |**d-selectable**| boolean | Cria uma coluna no início do Grid para permitir a seleção de uma ou mais linhas. |
 | **d-groupable** | boolean | Habilita a opção para agrupamento de colunas. |
@@ -123,6 +123,36 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 | **(d-group-change)** | EventEmitter | Evento disparador quando ocorrer o agrupamento das colunas. |
 | **(d-show-more)** | EventEmitter | Função que deve ser executado ao clicar no botão "showMore" (Carregar mais resultados). |
 |________________________|||
+
+<br>
+
+## Métodos
+
+| Método | Descrição |
+|-|-|
+|changeVisibleColumn|Utilizado para alterar a propriedade **"visible"** da coluna. Fazendo com que ela apareça ou seja ocultada no Grid.<br>**Parâmetros:**<br>- column (string): Nome interno da Coluna.<br>- visible (boolean): **"true"** para apresentar e **"false"** para ocultar.<br>**Retorno:** Não há.|
+---
+
+**Exemplo:**
+
+Para utilizar os métodos do Grid, é necessário pegar a referência dele no TS. Para isto, ele deve ser **"nomeado"** no HTML utilizando **"#"**.
+Abaixo segue o exemplo de como pegar a referência e fazer a chamada dos métodos.
+
+```
+- HTML -
+<dts-kendo-grid #gridCustomer
+
+	...
+
+</dts-kendo-grid>
+
+- TS -
+@ViewChild('gridCustomer', { static: true }) gridCustomer: DtsKendoGridComponent;
+
+...
+
+this.gridCustomer.changeVisibleColumn('name', false);
+```
 
 <br>
 
@@ -168,6 +198,7 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 | **showMore** | Carregar mais resultados |
 | **yes** | Sim |
 | **no** | Não |
+---
 
 <br>
 
@@ -183,15 +214,18 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 |--|--|--| 
 | **column** | string | Nome do atributo do JSON passado no atributo **"d-data"** do componente. |
 | **label** | string | Nome da coluna a ser exibido na tabela. |
-| **width** | number | Tamanho da coluna em pixels. |
-| **groupHeader** | boolean | Indica se a coluna deve ser agrupada na inicialização.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-groupable"** do Grid deve ser igual a **"true"**. |
-| **editable** | boolean | Indica se o campo deve ser hablitado para edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-editable"** do Grid deve ser igual a **"true"**. |
-| **required** | boolean | Indica se o campo é obrigatório na edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"editable"** da coluna o parâmetro **"d-editable"** do Grid devem ser igual a **"true"**. |
-| **type** | string | Define o tipo da coluna. Valores válidos: string, number, date, currency, checkbox, label e subtitle. |
+| **type** | string | Define o tipo da coluna. Os Tipos válidos são:<br>**"string" (padrão)**: Campo do tipo texto.<br>**"number"**: Campo do tipo numérico.<br>**"currency"**: Campo do tipo monetário.<br>**"boolean"**: Campo do tipo lógico.<br>**"date"**: Campo do tipo data.<br>**"label"**: Campo do tipo label (apresenta uma TAG).<br>**"subtitle"**: Campo do tipo label (apresenta uma lista de TAG's).|
 | **format** | string | Formata os dados da coluna de acordo com o tipo. |
-| **labels** | Array | Lista de valores que poderão ser exibidos quando o "type" é label ou subtitle. O objeto da lista deve utilizar a interface **DtsLabel**. |
+| **width** | number | Tamanho da coluna em pixels. |
+| **checkbox** | boolean | Indica se a coluna do tipo "boolean" deve ser apresentada como um Check-Box ou um texto (Sim/Não). |
 | **currency** | string | Moeda utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
 | **symbol** | string | Formato utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
+| **labels** | Array | Lista de valores que poderão ser exibidos quando o "type" é label ou subtitle. O objeto da lista deve utilizar a interface **DtsLabel**. |
+| **editable** | boolean | Indica se o campo deve ser hablitado para edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-editable"** do Grid deve ser igual a **"true"**. |
+| **required** | boolean | Indica se o campo é obrigatório na edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"editable"** da coluna o parâmetro **"d-editable"** do Grid devem ser igual a **"true"**. |
+| **groupHeader** | boolean | Indica se a coluna deve ser agrupada na inicialização.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-groupable"** do Grid deve ser igual a **"true"**. |
+| **visible** | boolean | Indica se a coluna deve ser apresentada ou não.<br>**Obs:** Para manipular esta opção em tempo de execução, utilize o método **"changeVisibleColumn"**. |
+---
 
 **Exemplo:** 
 ```
@@ -200,9 +234,9 @@ columns: Array<DtsKendoGridColumn>;
 this.columns = [
 	{ column: 'code', required: true, label: this.literals['code'], editable: true, type: 'number' },
 	{ column: 'shortName', required: true, label: this.literals['shortName'], editable: true, type: 'string' },
-	{ column: 'name', label: this.literals['name'], editable: true, type: 'string' },
+	{ column: 'name', label: this.literals['name'], editable: true, type: 'string', visible: false },
 	{ column: 'country', label: this.literals['country'], editable: true, type: 'string' },
-	{ column: 'tax', label: this.literals['tax'], editable: true, type: 'checkbox' },
+	{ column: 'tax', label: this.literals['tax'], editable: true, type: 'boolean', checkbox: true },
 	{ column: 'taxValue', label: this.literals['taxValue'], editable: true, type: 'currency', currency: 'BRL', symbol: '1.2-9' },
 	{ column: 'admissDate', label: this.literals['admissDate'], type: 'date', format: this.literals['dateFormat'] }
 ];
@@ -220,6 +254,7 @@ this.columns = [
 | **label** | string | Texto que será exibido dentro. |
 | **color** | string | Cor que será exibido, deve ser utilizada cores disponíveis no PO-UI. |
 | **tooltip** | string | Texto que será exibido ao passar o mouse por cima, se aplica apenas para o tipo subtitle. |
+---
 
 **Exemplo:**<br>
 ```
@@ -258,6 +293,7 @@ this.columns = [
 |--|--|--|
 | addAction | Function | Método executado antes de adicionar uma nova linha ao Grid. Ele recebe como parâmetro o modelo do objeto que está sendo incluído, dessa forma é possível informar alguns valores para a nova linha. Para que a linha fique disponível para inclusão, o método deve retornar o valor **"true"**, caso contrário a inclusão não será permitida. |
 | saveAction | Function | Método executado antes de salvar uma linha incluida ou editada no Grid. Este método recebe como parâmetro o item que foi incluído/editado. Se o método retornar o valor **"true"**, a inclusão/edição da linha é confirmada, caso contrário ela fica pendente, esperando a ação do usuário (realizar alguma alteração ou cancelar). |
+---
 
 **Exemplo:** 
 ```

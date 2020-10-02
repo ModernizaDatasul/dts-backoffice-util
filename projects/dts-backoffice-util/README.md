@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.0.7 (29-09-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.0.8 (02-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br> 
 
@@ -15,10 +15,11 @@ import { TranslateService } from 'dts-backoffice-util';
 
 Métodos:
 
-| Nome  | Retorno | Descrição |
-| -| - | - |
-| getCurrentLanguage | string | Retorna o idioma corrente. Será considerando no primeiro momento a chave "user.language" do localStorage. Caso ela não exista ou seja inválida, será considerando o idioma parametrizado no Browse. Além disto, o idioma deve estar disponível na lista de suportados, conforme métodos "getSuportLanguage". |
-| getSuportLanguage | array(string) | Retornar uma lista com os atuais idiomas suportados. |
+| Nome  | Descrição |
+| -| - |
+| getCurrentLanguage | Retorna o idioma corrente. Será considerando no primeiro momento a chave "user.language" do localStorage. Caso ela não exista ou seja inválida, será considerando o idioma parametrizado no Browse. Além disto, o idioma deve estar disponível na lista de suportados, conforme métodos "getSuportLanguage".<br>**Parâmetros:** Não há.<br>**Retorno:** string |
+| getSuportLanguage | Retornar uma lista com os atuais idiomas suportados.<br>**Parâmetros:** Não há.<br>**Retorno:** Array(string) |
+---
 
 <br>
 
@@ -44,22 +45,19 @@ Métodos:
 Exemplo de uso:
 ```
 <po-info p-label="Data"
-        [p-value]="date | dtsDateFormat : 'dd/MM/yyyy'">
+    [p-value]="date | dtsDateFormat : 'dd/MM/yyyy'">
 </po-info>
 
 <po-info p-label="Data"
-         [p-value]="date | dtsDateFormat : 'MM/dd/yyyy'">
+    [p-value]="date | dtsDateFormat : 'MM/dd/yyyy'">
 </po-info>
 ```
 
 <br>
 
-# openPath 
+# MenuDatasulService 
 
-**Objetivo:** Função openPath criada para abrir telas em nova aba do Datasul.
-| Nome | Parâmetros | Descrição |
-| ------------ | -------------- |--- |
-| openPath  | programName Parameters OpenParent | Abre a tela em uma nova aba do Datasul |
+**Objetivo:** Interagir com o Menu do Datasul.
 
 Importação:
 ```
@@ -69,10 +67,34 @@ constructor(public menuDatasulService: MenuDatasulService) {
 }
 ```
 
+Métodos:
+
+| Nome | Descrição |
+| - | - |
+| callProgress | Executa uma tela Progress que esteja cadastrada no menu.<br>**Parâmetros:**<br>- program (object): Objeto com os seguintes atributos:<br>prg (string): Nome do programa no menu.<br>params (array(object)): Array de Objetos de Parâmetros. O objeto possui dois atributos: "type" com o tipo de dado (character, integer, logical, etc...). E "value" com o conteúdo.<br>**Retorno:** Não há. |
+| openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Parâmetros:**<br>- programName (string): Nome interno do Programa, no cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navagador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
+| sendNotification | Apresenta uma notificação ao usuário.<br>**Parâmetros:**<br>- notification (object): Objeto com os seguintes atributos:<br>type (string): Tipo de notificação (success, warning, error).<br>title (string): Titulo da Notificação.<br>detail (string): Descrição da Notificação.<br>**Retorno:** Não há. |
+---
+
 Exemplo de uso:
 ```
-this.menuDatasulService
-    .openPath('html.inquiryItem', '1509;10;1', true);
+program = { 
+  prg: 'bas_lote_liquidac_acr',
+  params: [
+    { type: 'character', value: 'ABC' },
+    { type: 'integer', value: '345' }
+  ]
+};
+this.menuDatasulService.callProgress(program);
+
+this.menuDatasulService.openPath('html.inquiryItem', '1509;10;1', true);
+
+notification = { 
+  type: 'success',
+  title: 'Operação foi executada com Sucesso.',
+  detail: 'A Operação 4343 foi executada conforme parametrizado e finalizou.'
+};
+this.menuDatasulService.sendNotification(notification);
 ```
 
 <br>
@@ -139,12 +161,13 @@ Parâmetros:
 | programVersion | string | Não | Versão do programa progress |
 | parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress |
 | endExecution | EventEmitter | Não | Evento que será emitido ao finalizar o agendamento |
+---
 
 <br>
 
 # Profile Service
 
-**Objetivo:** Salvar preferências do usuáro.
+**Objetivo:** Salvar preferências do usuário.
 
 Importação:
 ```
@@ -154,38 +177,43 @@ constructor(public preferenceService: ProfileService) {
 }
 ```
 
+Métodos:
+
+| Nome | Descrição |
+| - | - |
+| setProfile | Salva informações no profile do usuário.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário e as informações serem salvas.<br>**Retorno:**<br>- response (Observable(any)): Retorno do BackEnd. |
+| getProfileAsString | Retorna os valores salvos no formato de uma string.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(string)): Informações salvas. |
+| getProfileAsJSON | Retorna os valores salvos no formato de um JSON.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(object)): Informações salvas. |
+---
+
+Interfaces:
+
+IProfile
+| Nome | Tipo | Obrigatório | Descrição |
+| ------------ | -------- | ------------ | --- |
+| pageId | string | Sim | Um ID para identificar a Tela que está salvando os parâmetros. |
+| userCode | string | Sim | Código do usuário (login). |
+| dataCode | string | Sim | Um ID para identificar o parâmetro. | 
+| dataValue | string | Não | Valor a ser salvo, nos GET's é opcional. |
+---
+
 Exemplo de Uso:
 ```
 const profile: IProfile = {
-	dataCode: 'preference',
-	pageId: 'about-component',
-	dataValue: this.preference,
-	userCode: 'super'
+  pageId: 'about-component',
+  userCode: 'super',
+  dataCode: 'preference',
+  dataValue: this.preference
 };
 
-this.preferenceService.setProfile(profile)
-                      .subscribe((response) => {
-	this.notification.success('Preferência salva com sucesso!');
+this.preferenceService
+  .setProfile(profile)
+  .subscribe((response) => {
+  this.notification.success('Preferência salva com sucesso!');
 }, (error) => {
-	this.notification.error('Não foi possível salvar a preferência');
+  this.notification.error('Não foi possível salvar a preferência');
 });
 ```
-
-Métodos:
-
-| Nome | Parâmetros | Descrição |
-| ------------ | ------------ |--- |
-| setProfile | IProfile | Nenhum resultado, erros devem ser tratados |
-| getProfileAsString | IProfile <br/> showLoading | Retorna o valor salvo como uma string  |
-| getProfileAsJSON | IProfile <br/> showLoading | Retorna o valor salvo como um objeto (JSON) |
-
-Interface
-| Nome | Tipo | Obrigatório | Descrição |
-| ------------ | -------- | ------------ | --- |
-| pageId | string | Sim | Código da página |
-| dataCode | string | Sim | Código do parâmetro | 
-| userCode | string | Sim | Código do usuário (login) |
-| dataValue | string | Não | Valor a ser salvo, nos GET's é opcional |
 
 <br>
 
@@ -200,17 +228,22 @@ import { UserLoginService } from 'dts-backoffice-util';
 constructor( public sessionService: UserLoginService) {
 }
 ```
-Exemplo de Uso:
-```
-this.sessionService.getUserLogin().subscribe((user) => {
-	this.notification.success(`O usuário logado é ${user}`);
-});
-```
+
 Métodos:
 
-| Nome  |  Parâmetros  | Descrição |
-| ------------ | ------------ |--- |
-| getUserLogin |  | Retorna um Observable<String> com o login do usuário |
+| Nome  | Descrição |
+| - | - | - |
+| getUserLogin |Retorna o login do usuário.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- response (Observable(string)) |
+---
+
+Exemplo de Uso:
+```
+this.sessionService
+  .getUserLogin()
+  .subscribe((user) => {
+  this.notification.success(`O usuário logado é ${user}`);
+});
+```
 
 <br>
 
@@ -229,51 +262,27 @@ import {
 constructor(public reportService: ReportService) {
 }
 ```
-Exemplo de Uso:
-```
-const properties: Array<IProperty> = [
-  { name: 'custom.quick_search', 
-    value: '186' 
-  }
-];
-
-const params: IReportServiceParams = {
-	reportName: 'crm/rel_campaign_export',
-	programName: '/report/crm/crm0010',
-	properties,
-	dialect: 'pt',
-	download: true,
-	downloadName: '2020-1-10_13-51-53_CRM_CAMPANHAS',
-	format: ReportFormats.XLSX
-};
-
-this.reportService.generate(params).subscribe(() => {
-	this.notification.error("Arquivo baixado com sucesso!");
-}, () => {
-	this.notification.error("Não foi possível baixar o arquivo");
-});
-```
 Métodos:
 
-| Nome  |  Parâmetros  | Resultado |
-| ------------ | ------------ |--- |
-| generate  | IReportServiceParams, showLoading (opcional): boolean | Retorna o arquivo binário gerado pelo datasul-report e faz o download do arquivo |
-
+| Nome | Descrição |
+| - | - |
+| generate | Retorna o arquivo binário gerado pelo datasul-report e faz o download do arquivo.<br>**Parâmetros:**<br>- params (IReportServiceParams): Parâmetros para execução do relatório.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(Blob)) |
 ---
 
-Interfaces
+Interfaces:
 
-ReportServiceParams
+IReportServiceParams
 
 | Nome  |  Tipo  | Obrigatório| Descrição |
-| ------------ |--------| ------------ |--- |
+| - |- | - | - |
 | reportName | string | Sim | Nome do arquivo .rptDesign |
-| programName | string | Sim | Nome do programa progress | 
-| properties | Array<IProperty> | Sim | Lista de parâmetros que serão enviados ao progress |
-| dialect | string | Sim | Idioma do usuário |
-| downloadName | string | Sim | Nome que será dado ao arquivo de download |
+| programName | string | Sim | Nome do programa progress. | 
+| properties | Array | Sim | Lista de parâmetros que serão enviados ao progress. O objeto do Array deve implementar a interface **IProperty**. |
+| dialect | string | Sim | Idioma do usuário. |
+| downloadName | string | Sim | Nome que será dado ao arquivo de download. |
 | download | boolean | Sim | O download deve ser efetuado |
-| format | ENum - ReportFormats | Sim | Formato do Arquivo (XLSX, PDF, DOCX ou HTML) |
+| format | enum | Sim | Formato do Arquivo (XLSX, PDF, DOCX ou HTML). Enum: **ReportFormats**. |
+---
 
 IProperty
 
@@ -281,6 +290,7 @@ IProperty
 | ------------ |--------| ------------ |--- |
 | name | string | Sim | Nome do parâmetro |
 | value | string | Sim | Vaor do parâmetro |
+---
 
 Enums
 ```
@@ -290,6 +300,34 @@ declare enum ReportFormats {
     DOCX = "docx",
     HTML = "html"
 }
+```
+
+Exemplo de Uso:
+```
+const properties: Array<IProperty> = [
+  { 
+    name: 'custom.quick_search', 
+    value: '186'
+  }
+];
+
+const params: IReportServiceParams = {
+  reportName: 'crm/rel_campaign_export',
+  programName: '/report/crm/crm0010',
+  properties,
+  dialect: 'pt',
+  download: true,
+  downloadName: '2020-1-10_13-51-53_CRM_CAMPANHAS',
+  format: ReportFormats.XLSX
+};
+
+this.reportService
+  .generate(params)
+  .subscribe(() => {
+  this.notification.error("Arquivo baixado com sucesso!");
+}, () => {
+  this.notification.error("Não foi possível baixar o arquivo");
+});
 ```
 
 <br>
@@ -305,16 +343,17 @@ import { BreadcrumbControlService } from 'dts-backoffice-util';
 
 Métodos:
 
-| Nome  |  Parâmetros  | Descrição |
-| ------------ | ------------ |--- |
-| newBreadcrumb | | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb de ser reiniciado. |
-| addBreadcrumb | INPUT: literal (string) <br> INPUT: activatedRoute (ActivatedRoute) | Adiciona um item ao breadcrumb, considerando a URL atual da tela. |
-| addBreadcrumbURL | INPUT: literal (string) <br> INPUT: url (string) | Adiciona um item ao breadcrumb, informando uma URL específica. |
-| updBreadcrumbURL | INPUT: literal (string) <br> INPUT: valueOld (string) <br> INPUT: valueNew (string) | Altera uma informação qualquer, contida na URL do item informado. |
-| getBreadcrumb | OUTPUT: breadcrumb (PoBreadcrumb) | Retorna o breadcrumb atual completo. |
-| getCurrentRouter | OUTPUT: url (string) | Retorna a URL do breadcrumb do item corrente. |
-| getPrevRouter | OUTPUT: url (string) | Retorna a URL do breadcrumb do item anterior. |
-| hasPreviousRouter | OUTPUT: exist (boolean) | Indica se existe um item de breadcrumb anterior. |
+| Nome | Descrição |
+| - | - |- |
+| newBreadcrumb | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb de ser reiniciado.<br>**Parâmetros:** Não há.<br>**Retorno:** Não há. |
+| addBreadcrumb | Adiciona um item ao breadcrumb, considerando a URL atual da tela.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- activatedRoute (ActivatedRoute): ActivedRoute da tela.<br>**Retorno:** Não há. |
+| addBreadcrumbURL | Adiciona um item ao breadcrumb, informando uma URL específica.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- url (string): URL específica.<br>**Retorno:** Não há. |
+| updBreadcrumbURL | Altera uma informação qualquer contida na URL do item informado.<br>**Parâmetros:**<br>- literal (string): Nome da tela que está no breadcrumb.<br>- valueOld (string): valor a ser substituído.<br>- valueNew (string): Novo valor.<br>**Retorno:** Não há. |
+| getBreadcrumb | Retorna o breadcrumb atual completo.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- breadcrumb (PoBreadcrumb) |
+| getCurrentRouter | Retorna a URL do breadcrumb do item corrente.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- url (string) |
+| getPrevRouter | Retorna a URL do breadcrumb do item anterior.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- url (string) |
+| hasPreviousRouter | Indica se existe um item de breadcrumb anterior.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- exist (boolean) |
+---
 
 <br> 
 
@@ -324,19 +363,20 @@ Métodos:
 
 Importação:
 ```
-  import { DateUtil } from 'dts-backoffice-util';
+import { DateUtil } from 'dts-backoffice-util';
 ```
 
 Métodos:
 
-| Nome  |  Parâmetros  | Descrição |
-| ------------ | ------------ |--- |
-| dateToQueryParam | date: Date | Transforma data para o padrão YYYY-MM-DD |
-| queryParamToDate | param: string | Transforma data no padrão YYYY-MM-DD para DATE |
-| isValidDate | date: Date | Valida se foi informado uma data válida |
-| ajustDate | param: any | Ajusta a data retornando o padrão DATE |
-| ajustDateToModel | values: Object <br/> fieldName: string | Ajusta a data para o padrão DATE - utilizada nos construtores dos modelos |
-| pad | number: Number |  Adicona zero a esquerda do número |
+| Nome | Descrição |
+| - | - |
+| dateToQueryParam | Transforma uma data para o padrão YYYY-MM-DD.<br>**Parâmetros:**<br>- date (Date): Data.<br>**Retorno:**<br>- date (string) |
+| queryParamToDate | Transforma uma data no padrão YYYY-MM-DD para objeto Date.<br>**Parâmetros:**<br>- date (string): Data.<br>**Retorno:**<br>- date (Date) |
+| isValidDate | Verifica se a data é válida.<br>**Parâmetros:**<br>- date (Date): Data.<br>**Retorno:**<br>- valid (boolean) |
+| ajustDate | Ajusta a data retornando no padrão do objeto Date.<br>**Parâmetros:**<br>- param (any): Data.<br>**Retorno:**<br>- date (date) |
+| ajustDateToModel | Ajusta a data para o padrão do objeto Date. Utilizado nos construtores dos modelos.<br>**Parâmetros:**<br>- object (object): Objeto que possui atributos do tipo data.<br>- fieldName (string): Nome do Atributo que possui a data.<br>**Retorno:**<br>- date (date) |
+| pad | Adicona zero a esquerda do número.<br>**Parâmetros:**<br>- number (number): Número.<br>**Retorno:**<br>- number (string) |
+---
 
 <br> 
 
