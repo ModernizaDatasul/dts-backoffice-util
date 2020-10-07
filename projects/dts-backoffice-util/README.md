@@ -164,7 +164,7 @@ Parâmetros:
 
 <br>
 
-# Profile Service
+# ProfileService
 
 **Objetivo:** Salvar preferências do usuário.
 

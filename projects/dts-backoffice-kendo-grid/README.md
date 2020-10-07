@@ -163,7 +163,7 @@ this.gridCustomer.changeVisibleColumnList([
 
 ## Salvando a configuração do Gerenciador de Colunas
 
-Quando o Gerenciador de Colunas estiver disponível (parâmetro **d-show-column-manager**) é possível disponibilizar um botão, para que o usuário salve a configuração (parâmetro **d-save-column-manager**). Esta configuração pode ser salva no localStorage do Browse, ou mesmo no Banco de Dados. Segue abaixo um exemplo da implementação, para salvar e recuperar ao inicializar a tela considerando o localStorage. Para salvar nas preferências do Datasul, verifique o serviço **Profile Service** da biblioteca [dtsBackOfficeUtil](https://github.com/ModernizaDatasul/dts-backoffice-util/tree/master/projects/dts-backoffice-util).
+Quando o Gerenciador de Colunas estiver disponível (parâmetro **d-show-column-manager**) é possível disponibilizar um botão, para que o usuário salve a configuração (parâmetro **d-save-column-manager**). Esta configuração pode ser salva no localStorage do Browse, ou mesmo no Banco de Dados. Segue abaixo um exemplo da implementação, para salvar e recuperar ao inicializar a tela considerando o localStorage. Para salvar nas preferências do Datasul, verifique o serviço **ProfileService** da biblioteca [dtsBackOfficeUtil](https://github.com/ModernizaDatasul/dts-backoffice-util/tree/master/projects/dts-backoffice-util).
 ```
 - HTML -
 <dts-kendo-grid #gridCustomer
