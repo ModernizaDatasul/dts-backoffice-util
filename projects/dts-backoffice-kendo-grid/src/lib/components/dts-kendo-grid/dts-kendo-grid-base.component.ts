@@ -1,6 +1,7 @@
 // tslint:disable: variable-name
 // tslint:disable: no-input-rename
 // tslint:disable: no-output-rename
+// tslint:disable: directive-class-suffix
 import { Input, EventEmitter, Output, Directive } from '@angular/core';
 import { DtsKendoGridColumn, DtsEditAction } from './dts-kendo-grid-column.interface';
 
@@ -66,7 +67,23 @@ import { DtsKendoGridColumn, DtsEditAction } from './dts-kendo-grid-column.inter
 @Directive()
 export abstract class DtsKendoGridBaseComponent {
 
-    /** Habilita a opção de ordenação dos dados nas colunas. */
+    /** Objetos com as informações das colunas a serem exibidas. */
+    public columnsOrig: Array<DtsKendoGridColumn>;
+    public columns: Array<DtsKendoGridColumn>;
+    @Input('d-columns') set dColumns(columns: Array<DtsKendoGridColumn>) {
+        this.columnsOrig = columns ? columns : [];
+        this.columns = JSON.parse(JSON.stringify(this.columnsOrig));
+        this.initializeColumns();
+    }
+
+    /** Informações que serão apresentadas no Grid. */
+    @Input('d-data') data: Array<any>;
+
+    /** Habilitar ou desabilitar o botão "Carregar Mais Resultados". */
+    @Input('d-show-more-disabled') showMoreDisabled = 'false';
+
+    /** Habilita a ordenação da coluna ao clicar no cabeçalho. */
+    private _sortable: boolean;
     @Input('d-sortable') set sortable(sortable: boolean) {
         this._sortable = sortable != null && sortable.toString() === '' ? true : this.convertToBoolean(sortable);
     }
@@ -74,23 +91,11 @@ export abstract class DtsKendoGridBaseComponent {
         return this._sortable;
     }
 
-    /** Habilita a opção de selecionar uma linha do dts-kendo-grid. */
-    @Input('d-selectable') set selectable(selectable: boolean) {
-        this._selectable = selectable != null && selectable.toString() === '' ? true : this.convertToBoolean(selectable);
-    }
-    get selectable() {
-        return this._selectable;
-    }
+    /** Habilita a opção de filtro nas colunas do Grid. */
+    @Input('d-filterable') filterable = false;
 
-    /** Habilita o botão para edição da linha. */
-    @Input('d-editable') set editable(editable: boolean) {
-        this._editable = editable != null && editable.toString() === '' ? true : this.convertToBoolean(editable);
-    }
-    get editable() {
-        return this._editable;
-    }
-
-    /** Habilita a opção para agrupamento, permitindo agrupar no máximo dois níveis. */
+    /** Habilita a opção para agrupamento de colunas. */
+    private _groupable: boolean;
     @Input('d-groupable') set groupable(groupable: boolean) {
         this._groupable = groupable != null && groupable.toString() === '' ? true : this.convertToBoolean(groupable);
         if (!this._groupable) {
@@ -101,96 +106,62 @@ export abstract class DtsKendoGridBaseComponent {
         return this._groupable;
     }
 
-    private _sortable: boolean;
-
-    private _selectable: boolean;
-
-    private _editable: boolean;
-
-    private _groupable: boolean;
-
-    public columnsOrig: Array<DtsKendoGridColumn>;
-    public columns: Array<DtsKendoGridColumn>;
-
-    /** Lista de objeto a serem exibidos. Este atributo aceita um array de objetos JSON. */
-    @Input('d-data') data: Array<any>;
-
-    /** Objeto com as informações das colunas a serem exibidas. */
-    //   @Input('d-columns') _columns: Array<DtsKendoGridColumn>;
-
-    @Input('d-columns') set dColumns(columns: Array<DtsKendoGridColumn>) {
-        this.columnsOrig = columns ? columns : [];
-        this.columns = JSON.parse(JSON.stringify(this.columnsOrig));
-        this.initializeColumns();
-    }
-
-    @Input('d-groups') groups: any;
-
-    /** Recebe valores "true" ou "false" para habilitar ou desabilitar o botão "Carregar Mais Resultados". */
-    @Input('d-show-more-disabled') showMoreDisabled = 'false';
-
-    /** Habilita o botão para adicionar linhas. */
-    @Input('d-show-add-button') addButton = false;
-
-    /**
-     * Objeto com as Funções que serão disparadas Antes da Inclusão e Antes de Salvar a linha na editada.
-     * Estes funções receberão como parâmetro o atributo "event",
-     * para acessar o objeto selecionado no dts-kendo-grid utilizando o "event.data".
-     * Se o método retornar o valor booleano "true", a edição da linha é confirmada,
-     * caso contrário as informações alteradas serão canceladas.
-     */
-    @Input('d-edit-actions') editActions?: DtsEditAction;
-
-    /**
-     * Objeto com as literais que serão utilizadas para as mensagens de:
-     * noRecords: Nenhum registro encontrado
-     * groupPanelEmpty: Arraste a coluna até o cabeçalho e solte para agrupar por esta coluna
-     * add: Adicionar
-     * remove: Remover
-     * showMore: Carregar mais resultados
-     * cancel: Cancelar
-     * undo: Descartar
-     *
-     */
-    @Input('d-literals') literals: any = {};
-
-    @Input('d-filterable') filterable = false;
-
-    /**
-     * @optional
-     *
-     * @description
-     *
-     * Recebe um método para carregar mais resultados e habilita o botão desta opção.
-     */
-    @Input('d-actions') actions = [];
-
+    /** Habilita a mudança da ordem das colunas, através do arrastar e soltar no cabeçalho da coluna. */
     @Input('d-reorderable') reorderable = false;
 
-    /** Habilita a opção para exportação dos dados. */
+    /** Cria uma coluna no início do Grid para permitir a seleção de uma ou mais linhas. */
+    private _selectable: boolean;
+    @Input('d-selectable') set selectable(selectable: boolean) {
+        this._selectable = selectable != null && selectable.toString() === '' ? true : this.convertToBoolean(selectable);
+    }
+    get selectable() {
+        return this._selectable;
+    }
+
+    /** Habilita a edição de linha no Grid. */
+    private _editable: boolean;
+    @Input('d-editable') set editable(editable: boolean) {
+        this._editable = editable != null && editable.toString() === '' ? true : this.convertToBoolean(editable);
+    }
+    get editable() {
+        return this._editable;
+    }
+
+    /** Objeto com as literais que serão utilizadas dentro do componente. */
+    @Input('d-literals') literals: any = {};
+
+    /** Lista de ações que devem ser apresentadas nas linhas do Grid. */
+    @Input('d-actions') actions = [];
+
+    /** Objeto com as funções que serão disparadas durante a Edição de uma Linha no Grid. */
+    @Input('d-edit-actions') editActions?: DtsEditAction;
+
+    /** Disponibiliza o botão de Gerencimento de Colunas. */
+    @Input('d-show-column-manager') columnManagerButton = false;
+
+    /** Disponibiliza o botão "Adicionar" no Toolbar do Grid, utilizado para inclusão de novas linhas. */
+    @Input('d-show-add-button') addButton = false;
+
+    /** Disponibiliza os botões de Exportação do Grid: Excel e PDF. */
     @Input('d-show-export-buttons') exportButtons = false;
 
+    /** Função que deve ser executado ao clicar no botão "showMore" (Carregar mais resultados). */
     @Output('d-show-more') showMore = new EventEmitter<any>();
 
-    /**
-     * @optional
-     *
-     * @description
-     *
-     * Evento de seleção de linha que chama um método do componente. Este atributo é utilizado em conjunto com o atributo "d-selectable".
-     */
+    /** Evento disparador quando ocorrer o agrupamento das colunas. */
+    @Output('d-group-change') dtsGroupChange = new EventEmitter<any>();
+
+    /** Evento disparado quando a linha é selecionada. */
     @Output('d-selection-change') selectionChange = new EventEmitter<any>();
 
-    /**
-     * @optional
-     *
-     * @description
-     *
-     * Evento disparado ao salvar dados do modo de edição inline, recebendo o modelo que foi alterado.
-     */
+    /** Evento disparado ao clicar no 'salvar' do Gerenciador de Colunas. */
+    @Output('d-save-column-manager') saveColumnManager = new EventEmitter<any>();
+
+    /** Evento disparado ao salvar dados do modo de edição da linha, recebendo o modelo que foi alterado. */
     @Output('d-save-value') saveValue = new EventEmitter<any>();
 
-    @Output('d-group-change') dtsGroupChange = new EventEmitter<any>();
+    protected initColumnVisible: Array<{ column: string, visible: boolean }> = [];
+    protected defaultColumnVisible: Array<{ column: string, visible: boolean }> = [];
 
     protected clickoutListener: () => void;
 
@@ -198,7 +169,6 @@ export abstract class DtsKendoGridBaseComponent {
 
     protected abstract onSelectionChange(event: any): void;
 
-    // Limpa os dados do grupo quando o mesmo for desmarcado.
     protected abstract cleanGroups(): void;
 
     protected convertToBoolean(val: any): boolean {
@@ -294,6 +264,29 @@ export abstract class DtsKendoGridBaseComponent {
     private defineColumnVisible() {
         this.columns.forEach(column => {
             if (column.visible === undefined || column.visible === null) { column.visible = true; }
+            this.defaultColumnVisible.push({ column: column.column, visible: column.visible });
         });
+
+        if (this.initColumnVisible.length > 0) {
+            this.changeVisibleColumnList(this.initColumnVisible);
+        }
+    }
+
+    public changeVisibleColumn(column: string, visible: boolean): void {
+        if (!this.columns) {
+            this.initColumnVisible.push({ column: column, visible: visible });
+            return;
+        }
+
+        const columnFind = this.columns.find(col => col.column === column);
+        if (columnFind) { columnFind.visible = visible; }
+
+        const columnOrig = this.columnsOrig.find(col => col.column === column);
+        if (columnOrig) { columnOrig.visible = visible; }
+    }
+
+    public changeVisibleColumnList(columnList: Array<{ column: string, visible: boolean }>): void {
+        if (!columnList) { return; }
+        columnList.map(col => this.changeVisibleColumn(col.column, col.visible));
     }
 }

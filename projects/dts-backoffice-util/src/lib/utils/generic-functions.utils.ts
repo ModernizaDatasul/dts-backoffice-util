@@ -223,4 +223,10 @@ export class GenericFunctionsUtils {
         }
         return number;
     }
+
+    public focusInternalInput(idField: string) {
+        const fieldComponent = document.getElementById(idField);
+        const fieldInput = (<HTMLScriptElement[]><any>fieldComponent.getElementsByClassName('po-input'))[0];
+        fieldInput.focus();
+    }
 }

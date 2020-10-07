@@ -157,8 +157,14 @@
     </kendo-grid-column>
 
     <kendo-grid-command-column title="" width="80" locked="true" *ngIf="isCommandColumnVisible()">
-        <ng-template kendoGridCellTemplate let-data>
+        <ng-template kendoGridHeaderTemplate *ngIf="columnManagerButton">
+            <button class="d-column-manager-button po-icon po-icon-settings po-clickable"
+                    (click)="onClickColumnManager($event)"
+                    #columnManagerTarget>
+            </button>
+        </ng-template>
 
+        <ng-template kendoGridCellTemplate let-data>
             <div *ngIf="actions.length > 1">
                 <span class="d-actions po-icon po-icon-more po-clickable"
                       #target
@@ -173,7 +179,6 @@
                     {{ actions[0].label }}
                 </span>
             </div>
-
         </ng-template>
     </kendo-grid-command-column>
 
@@ -195,10 +200,10 @@
     </div>
 </div>
 
-<div id="popupRef{{idPopup}}"
+<div [id]="kgPopupAct.id"
      class="po-popup"     
-     style="top: -200px; left: -200px;"
-     [hidden]="!showPopup">
+     style="top: -300px; left: -300px;"
+     [hidden]="!kgPopupAct.showHtml">
 
     <ng-content select="[p-popup-header-template]"></ng-content>
 
@@ -213,6 +218,65 @@
                   class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
 
             <span class="d-action po-clickable">{{ action.label }}</span>
+        </div>
+    </div>
+</div>
+
+<div [id]="kgPopupColMng.id"
+     class="po-popup"     
+     style="top: -300px; left: -300px; max-width: 240px;"
+     [hidden]="!kgPopupColMng.showHtml">
+
+    <ng-content select="[p-popup-header-template]"></ng-content>
+
+    <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
+
+    <div class="po-table-column-manager-header">
+        <div class="po-table-column-manager-header-title">
+            {{ literals.columnsManager || localLiterals.columnsManager }}
+        </div>
+    
+        <div class="po-table-column-manager-header-close">
+            <button
+                class="po-table-column-manager-header-close-button po-clickable po-icon po-icon-close"
+                (click)="hidePopup(kgPopupColMng)">
+            </button>
+        </div>
+    </div>
+
+    <div class="d-column-manager-container po-row po-pt-1 po-pb-1">
+        <div *ngFor="let column of columns"
+             class="po-checkbox-group-item po-md-12 po-ml-2">
+
+            <input [id]="column.column"
+                   class="po-input po-checkbox-group-input"
+                   type="checkbox"
+                   [class.po-checkbox-group-input-checked]="column.visible"
+                   [checked]="column.visible"
+                   [value]="column.visible"/>
+
+            <label [for]="column.column"
+                   class="po-checkbox-group-label d-column-manager-label"
+                   (click)="onClickVisibleColumnManager(column.column, column.visible)">
+                {{ column.label }}
+            </label>
+        </div>
+    </div>
+
+    <div class="po-table-column-manager-footer">
+        <div class="d-column-manager-action">
+            <span class="po-font-text-bold po-text-center po-clickable"
+                  (click)="onClickRestoreDefault()">
+                {{ literals.restoreDefault || localLiterals.restoreDefault }}
+            </span>
+
+            <span *ngIf="saveColumnManager.observers.length > 0" class="d-divider-vertical">|</span>
+
+            <span *ngIf="saveColumnManager.observers.length > 0"
+                  class="po-font-text-bold po-text-center po-clickable"
+                  (click)="onClickSaveColumnManager()">
+                {{ literals.save || localLiterals.save }}
+            </span>
         </div>
     </div>
 </div>

@@ -18383,3 +18383,43 @@ li.k-item.k-drag-clue {
     padding-right: 15px !important;
 }
 
+.d-column-manager-button {
+    float: right !important;
+    color: var(--color-table-color-header);
+    font-size: 16px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+}
+
+.d-column-manager-container {
+    border-top-width: 0px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.d-column-manager-container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.d-column-manager-container::-webkit-scrollbar-thumb {
+    background-color: #0c9abe;
+    border-radius: 2px;
+}  
+
+.d-column-manager-action {
+    letter-spacing: normal;
+    padding: 10px 16px;
+    color: #0c9abe;
+    font-family: var(--font-family-bold), sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;  
+}
+
+.d-divider-vertical {
+    padding: 10px 8px;
+    text-align: center;
+    color: #eceeee;
+    cursor: default;
+}
