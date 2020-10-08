@@ -145,6 +145,11 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return this.actions && this.actions.length > numAct;
     }
 
+    public getBooleanDescription(value: boolean): string {
+        if (value === null || value === undefined) { return ''; }
+        return value ? (this.literals['yes'] || this.localLiterals['yes']) : (this.literals['no'] || this.localLiterals['no']);
+    }
+
     private setLocalLiterals() {
         const pt = {
             noRecords: 'Nenhum registro encontrado',

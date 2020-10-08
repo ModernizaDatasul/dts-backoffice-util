@@ -1,5 +1,10 @@
 # Changelog
 
+**2.3.1 (08-10-2020):**
+
+Correções:
+- **Colunas do Grid** - Para colunas do tipo "boolean", quando o valor era inválido, está sendo considerando/apresentado como "Não". Agora será considerado como inválido e apresentado "branco" no Grid.
+
 **2.3.0 (07-10-2020):**
 
 Correções:
