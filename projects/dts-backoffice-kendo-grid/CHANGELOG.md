@@ -1,5 +1,13 @@
 # Changelog
 
+**2.3.2 (13-10-2020):**
+
+Correções:
+- **Edição no Grid**
+<br>- O método saveAction (Interface: DtsEditAction) recebe o item que está sendo editado. Se este item fosse alterado dentro do método, a alteração não estava sendo repassada para a tela.
+<br>- Quando o Grid está em Modal, e existe algum controle de erro no método "saveAction", o método continuava executando (e apresentando o erro), mesmo após a modal ser fechada.
+<br>- O evento de "Esc" somente estava funcionando se o foco estivesse na linha em edição. Agora, ao clicar no "Esc" a edição será cancelada, mesmo que o foco não esteja na linha.
+
 **2.3.1 (08-10-2020):**
 
 Correções:

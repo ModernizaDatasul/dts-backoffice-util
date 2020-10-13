@@ -5,7 +5,6 @@ import { DataStateChangeEvent, GridComponent, GridDataResult, SelectAllCheckboxS
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
 import { GroupDescriptor, process, State, SortDescriptor } from '@progress/kendo-data-query';
 import { DtsKendoGridBaseComponent } from './dts-kendo-grid-base.component';
-import { DtsKendoGridColumn } from './dts-kendo-grid-column.interface';
 import { TranslateService } from './services/translate.service';
 import { KgPopup } from './model/kg-popup.model';
 
@@ -30,7 +29,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
     @ViewChild('columnManagerTarget') private btColManager: ElementRef;
 
-    private currentRow: any;
+    private currentRow: any = null;
 
     private isNewRow = false;
     private EditedRow: any = null;
@@ -143,6 +142,18 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     public isHasActions(numAct = 0) {
         return this.actions && this.actions.length > numAct;
+    }
+
+    public isVisible(elem: Element) {
+        if (!(elem instanceof Element)) { return false; }
+
+        const style = getComputedStyle(elem);
+        if (style) {
+            if (style.display === 'none') { return false; }
+            if (style.visibility !== 'visible') { return false; }
+        }
+
+        return true;
     }
 
     public getBooleanDescription(value: boolean): string {
@@ -306,19 +317,46 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
 
         this.isNewRow = true;
+        this.sortableSettings = null;
+        this.currentRow = null;
+        this.EditedRow = this.addNewItem();
         this.cancelButton = true;
 
-        this.createFormGroup();
+        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
+
+        this.createFormGroup(true, this.EditedRow);
 
         if (this.editActions && this.editActions.addAction) {
-            if (this.executeFunctionValidation(this.editActions.addAction, this.formGroup.value)) {
-                this.formGroup.setValue(this.formGroup.value);
+            if (this.executeFunctionValidation(this.editActions.addAction, this.EditedRow)) {
+                this.updateFormGroup(this.EditedRow);
             } else {
                 return;
             }
         }
 
         sender.addRow(this.formGroup);
+    }
+
+    private addNewItem(): any {
+        const newItem = {};
+
+        this.columns.forEach(column => {
+            let value;
+
+            if (column.type === 'text' ||
+                column.type === 'label' ||
+                column.type === 'subtitle' ||
+                column.type === 'date') { value = ''; }
+
+            if (column.type === 'numeric' ||
+                column.type === 'currency') { value = 0; }
+
+            if (column.type === 'boolean') { value = false; }
+
+            newItem[column.column] = value;
+        });
+
+        return newItem;
     }
 
     private saveLine() {
@@ -330,22 +368,20 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return;
         }
 
-        if (this.formGroup) {
-            let newRowValue;
-            let oldRowValue;
+        let newRowValue;
+        let oldRowValue;
 
-            if (this.isNewRow) {
-                oldRowValue = {};
-                newRowValue = this.formGroup.value;
-                this.data.push(newRowValue);
-            } else {
-                oldRowValue = Object.assign({}, this.EditedRow);
-                Object.assign(this.EditedRow, this.formGroup.value);
-                newRowValue = this.EditedRow;
-            }
-
-            this.saveValue.emit({ data: newRowValue, oldData: oldRowValue });
+        if (this.isNewRow) {
+            oldRowValue = {};
+            newRowValue = Object.assign({}, this.EditedRow);
+            this.data.push(newRowValue);
+        } else {
+            oldRowValue = Object.assign({}, this.currentRow);
+            newRowValue = Object.assign({}, this.EditedRow);
+            Object.assign(this.currentRow, this.EditedRow);
         }
+
+        this.saveValue.emit({ data: newRowValue, oldData: oldRowValue });
 
         this.initializeSorter();
     }
@@ -380,30 +416,27 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return;
         }
 
+        this.isNewRow = false;
         this.sortableSettings = null;
-        this.EditedRow = dataItem;
+        this.currentRow = dataItem;
+        this.EditedRow = Object.assign({}, dataItem);
         this.tableEditIndex = rowIndex;
         this.cancelButton = true;
 
         if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
 
-        this.formGroup = new FormGroup({});
-        const keys = Object.keys(dataItem);
-        for (let count = 0; count <= keys.length; count++) {
-            const key = keys[count];
-            const columnTemp = this.getColumn(key);
-
-            if (columnTemp && columnTemp.editable) {
-                const control = columnTemp.required ? new FormControl(dataItem[key], Validators.required) : new FormControl(dataItem[key]);
-                this.formGroup.addControl(key, control);
-            }
-        }
+        this.createFormGroup(false, this.EditedRow);
 
         sender.editRow(rowIndex, this.formGroup);
     }
 
     private saveClick(): boolean {
+        if (this.formGroup) { Object.assign(this.EditedRow, this.formGroup.value); }
+
         if (!this.validateSaveClick()) {
+            if (!this.isVisible(document.getElementById(this.idGrid))) {
+                this.closeEditor(this.grid);
+            }
             return false;
         }
 
@@ -432,10 +465,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     public onChooseBtCancel() {
-        this.cancelHandler({ sender: this.grid });
+        this.closeEditor(this.grid);
     }
 
-    private cancelHandler({ sender }) {
+    public cancelHandler({ sender }) {
         this.closeEditor(sender);
     }
 
@@ -495,7 +528,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.refreshGrid();
     }
 
-    // Define se a coluna de ações será visível.
+    // Define se a coluna de ações será visível
     public isCommandColumnVisible(): boolean {
         if (this.isInEditionGrid()) { return false; }
         if (this.isHasActions()) { return true; }
@@ -503,12 +536,22 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return false;
     }
 
-    private createFormGroup() {
-        const group: any = {};
+    private createFormGroup(newRow: boolean, dataItem: any) {
+        this.formGroup = new FormGroup({});
+
         this.columns.forEach(column => {
-            group[column.column] = column.required ? new FormControl('', Validators.required) : new FormControl('');
+            if (column.visible && (newRow || column.editable)) {
+                const value = (dataItem) ? dataItem[column.column] : '';
+                const control = column.required ? new FormControl(value, Validators.required) : new FormControl(value);
+                this.formGroup.addControl(column.column, control);
+            }
         });
-        this.formGroup = new FormGroup(group);
+    }
+
+    private updateFormGroup(dataItem: any) {
+        Object.keys(this.formGroup.controls).forEach(key => {
+            this.formGroup.controls[key].setValue(dataItem[key]);
+        });
     }
 
     // Se for passada uma função para validação e ela retornar True
@@ -518,16 +561,11 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     private validateSaveClick(): boolean {
         if (this.editActions && this.editActions.saveAction && this.formGroup) {
-            let editLine;
+            const isOk = this.executeFunctionValidation(this.editActions.saveAction, this.EditedRow);
 
-            if (this.isNewRow) {
-                editLine = this.formGroup.value;
-            } else {
-                editLine = Object.assign({}, this.EditedRow);
-                editLine = Object.assign(editLine, this.formGroup.value);
-            }
+            this.updateFormGroup(this.EditedRow);
 
-            if (editLine && !this.executeFunctionValidation(this.editActions.saveAction, editLine)) {
+            if (!isOk) {
                 return false;
             }
         }
@@ -537,10 +575,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
 
         return true;
-    }
-
-    private getColumn(key): DtsKendoGridColumn {
-        return this.columns.find(element => element.column === key);
     }
 
     private getObjects(data: Array<any>) {
@@ -596,6 +630,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return;
         }
 
+        if (event === 'Escape' || event === 'Esc') {
+            this.onChooseBtCancel();
+        }
+
         if (event === 'Enter' ||
             !this.matches(target, `#${this.idGrid} tbody *, #${this.idGrid} .k-grid-toolbar .k-button`)) {
 
@@ -605,10 +643,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
             this.saveClick();
             return;
-        }
-
-        if (event === 'Escape' || event === 'Esc') {
-            this.onChooseBtCancel();
         }
     }
 
@@ -620,7 +654,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     public executeAction(action: any) {
-        action.action(this.currentRow);
+        action.action(Object.assign({}, this.currentRow));
     }
 
     public onSelectAllChange(checkedState: SelectAllCheckboxState) {
@@ -632,7 +666,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             return;
         }
 
-        this.currentRow = { ...row };
+        this.currentRow = row;
 
         this.kgPopupAct.showHtml = true;
         this.kgPopupAct.showUser = true;
