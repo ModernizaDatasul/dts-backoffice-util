@@ -63,10 +63,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     public state: State = { sort: this.sort, group: this.groups };
 
-    public columnFilter = {
-        filter: false
-    };
-
     public localLiterals: any;
 
     private dataArrayOrdered: Array<any>;
@@ -377,8 +373,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             this.data.push(newRowValue);
         } else {
             oldRowValue = Object.assign({}, this.currentRow);
-            newRowValue = Object.assign({}, this.EditedRow);
             Object.assign(this.currentRow, this.EditedRow);
+            newRowValue = this.currentRow;
         }
 
         this.saveValue.emit({ data: newRowValue, oldData: oldRowValue });

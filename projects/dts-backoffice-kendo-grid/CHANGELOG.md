@@ -1,5 +1,10 @@
 # Changelog
 
+**2.3.3 (15-10-2020):**
+
+Correções:
+- **Edição no Grid** - O parâmetro enviado para o método "d-save-value", referente a linha após a alteração (event.data) era apenas uma cópia. Agora será enviada a linha original, já com as alterações. Portanto, se for realizada alguma alteração neste objeto dentro do método, ele será repassado automaticamente para linha original.  
+
 **2.3.2 (13-10-2020):**
 
 Correções:
