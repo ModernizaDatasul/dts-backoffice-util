@@ -4,7 +4,7 @@
 
 Correções:
 - **Filtro + campo Data**
-<br>- O filtro não estava funcionando, para qualquer data informada o Grid sempre ficava vazio.
+<br>- O filtro não estava funcionando, para qualquer data informada no Grid sempre ficava vazio.
 <br>- Não estava respeitando a formatação de data conforme o idioma do usuário.
 
 Melhorias:
