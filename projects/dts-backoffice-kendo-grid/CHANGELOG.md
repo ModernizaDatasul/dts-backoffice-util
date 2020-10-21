@@ -1,5 +1,15 @@
 # Changelog
 
+**2.4.0 (21-10-2020):**
+
+Correções:
+- **Filtro + campo Data**
+<br>- O filtro não estava funcionando, para qualquer data informada o Grid sempre ficava vazio.
+<br>- Não estava respeitando a formatação de data conforme o idioma do usuário.
+
+Melhorias:
+- **Filtro + campo Data** - Customizado o filtro, para apresentar o calendário no mesmo formato existente no PO-UI.
+
 **2.3.3 (15-10-2020):**
 
 Correções:
@@ -87,7 +97,7 @@ Refatoração:
 **2.0.0 (02-09-2020):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v2** E **ANGULAR 9**
+- ATUALIZAÇÃO: **ANGULAR 9**
 - Documentação.
 
 **0.0.24 (02-04-2020):**

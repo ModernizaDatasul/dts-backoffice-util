@@ -132,6 +132,10 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         return (this.groups && this.groups.length > 0);
     }
 
+    public isGroupingBy(field) {
+        return this.groups.some(obj => obj.field === field);
+    }
+
     public isRowSelected = (row: RowArgs) => {
         return row.dataItem.$selected;
     }
@@ -192,7 +196,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             restoreDefault: 'Restaurar Padrão',
             save: 'Salvar',
             yes: 'Sim',
-            no: 'Não'
+            no: 'Não',
+            dateFormat: 'dd/MM/yyyy',
+            dateFormatDesc: 'dia/mês/ano'
         };
 
         const en = {
@@ -229,7 +235,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             restoreDefault: 'Restore Default',
             save: 'Save',
             yes: 'Yes',
-            no: 'No'
+            no: 'No',
+            dateFormat: 'MM/dd/yyyy',
+            dateFormatDesc: 'month/day/year'
         };
 
         const es = {
@@ -266,7 +274,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             restoreDefault: 'Restore Estandár',
             save: 'Guardar',
             yes: 'Sí',
-            no: 'No'
+            no: 'No',
+            dateFormat: 'dd/MM/yyyy',
+            dateFormatDesc: 'día/mes/año'
         };
 
         const allLiterals = {
@@ -289,10 +299,6 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     public sortChange(sort: Array<SortDescriptor>) {
         this.sort = sort;
-    }
-
-    public isGroupingBy(field) {
-        return this.groups.some(obj => obj.field === field);
     }
 
     public dataStateChange(state: DataStateChangeEvent) {

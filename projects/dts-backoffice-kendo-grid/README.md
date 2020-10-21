@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.3.3 (15-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.4.0 (21-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -237,10 +237,12 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 | **filterIsFalse** | Não |
 | **add** | Adicionar |
 | **cancel** | Cancelar |
+| **save** | Salvar |
 | **showMore** | Carregar mais resultados |
 | **columnsManager** | Gerenciar Colunas |
 | **restoreDefault** | Restaurar Padrão |
-| **save** | Salvar |
+| **dateFormat** | dd/MM/yyyy |
+| **dateFormatDesc** | dia/mês/ano |
 | **yes** | Sim |
 | **no** | Não |
 ---

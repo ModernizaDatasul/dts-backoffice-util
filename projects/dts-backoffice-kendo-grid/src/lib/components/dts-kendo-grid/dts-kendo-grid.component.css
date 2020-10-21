@@ -18423,3 +18423,10 @@ li.k-item.k-drag-clue {
     color: #eceeee;
     cursor: default;
 }
+
+.d-field-container-content {
+    padding: 0px 0;
+    position: relative;
+    width: 100%;
+}
+

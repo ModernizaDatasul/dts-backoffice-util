@@ -1,0 +1,43 @@
+<kendo-dropdownlist
+    class="k-widget k-dropdown k-header"
+    [data]="operators"
+    textField="text"
+    valueField="value"
+    [valuePrimitive]="true"
+    [(value)]="firstOperator"
+    (valueChange)="changeFilter($event)">
+</kendo-dropdownlist>
+
+<e-po-datepicker
+    [p-format]="dateFormat"
+    [p-placeholder]="dateFormatDesc"
+    [(ngModel)]="firstValue"
+    (p-blur)="changeFilter($event)">
+</e-po-datepicker>
+
+<kendo-dropdownlist
+    class="k-filter-and k-widget k-dropdown k-header"
+    [data]="logicOperators"
+    textField="text"
+    valueField="value"
+    [valuePrimitive]="true"
+    [(value)]="logicOperator"
+    (valueChange)="changeFilter($event)">
+</kendo-dropdownlist>
+
+<kendo-dropdownlist
+    class="k-widget k-dropdown k-header"
+    [data]="operators"
+    textField="text"
+    valueField="value"
+    [valuePrimitive]="true"
+    [(value)]="secondOperator"
+    (valueChange)="changeFilter($event)">
+</kendo-dropdownlist>
+
+<e-po-datepicker
+    [p-format]="dateFormat"
+    [p-placeholder]="dateFormatDesc"
+    [(ngModel)]="secondValue"
+    (p-blur)="changeFilter($event)">
+</e-po-datepicker>

@@ -1,9 +1,15 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExcelModule, GridModule, PDFModule } from '@progress/kendo-angular-grid';
-import { DtsKendoGridComponent } from './components/dts-kendo-grid/dts-kendo-grid.component';
 import { FormsModule } from '@angular/forms';
-import { PoTooltipModule } from './components/dts-kendo-grid/directives/po-tooltip/po-tooltip.module';
+
+import { ExcelModule, GridModule, PDFModule } from '@progress/kendo-angular-grid';
+import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+
+import { DtsKendoGridComponent } from './components/dts-kendo-grid/dts-kendo-grid.component';
+import { EpoTooltipModule } from './components/dts-kendo-grid/external/e-po-tooltip/e-po-tooltip.module';
+import { CustomDateFilterModule } from './components/dts-kendo-grid/custom/custom-date-filter/custom-date-filter.module';
+import { EpoDatePickerModule } from './components/dts-kendo-grid/external/e-po-datepicker/e-po-datepicker.module';
+import { EpoCalendarModule } from './components/dts-kendo-grid/external/e-po-calendar/e-po-calendar.module';
 
 @NgModule({
   declarations: [
@@ -12,10 +18,14 @@ import { PoTooltipModule } from './components/dts-kendo-grid/directives/po-toolt
   imports: [
     CommonModule,
     FormsModule,
-    PoTooltipModule,
+    EpoTooltipModule,
     GridModule,
+    DropDownListModule,
     ExcelModule,
-    PDFModule
+    PDFModule,
+    CustomDateFilterModule,
+    EpoDatePickerModule,
+    EpoCalendarModule
   ],
   exports: [
     DtsKendoGridComponent

@@ -1,0 +1,37 @@
+<div class="d-field-container-content k-grid-ignore-click">
+    <input
+        #inp
+        class="po-input po-datepicker"
+        [ngClass]="clean && inp.value ? 'po-input-double-icon-right' : 'po-input-icon-right'"
+        type="text"
+        [attr.name]="name"
+        [autocomplete]="autocomplete"
+        [disabled]="disabled"
+        [placeholder]="placeholder"
+        [readonly]="readonly"
+        [required]="required"
+        (blur)="eventOnBlur($event)"
+        (click)="eventOnClick($event)"/>
+
+    <div class="po-field-icon-container-right">
+        <span
+            #iconDatepicker
+            class="po-icon po-field-icon po-icon-calendar"
+            [class.po-field-icon]="!disabled && !readonly"
+            [class.po-field-icon-disabled]="disabled || readonly"
+            (click)="togglePicker()">
+        </span>
+    </div>
+</div>
+
+<div #dialogPicker class="k-grid-ignore-click" [class.po-datepicker-popup-calendar]="!verifyMobile()">
+    <e-po-calendar
+        #calendar
+        [p-date-end]="maxDate"
+        [p-date-start]="minDate"
+        [p-locale]="locale"
+        [p-date-input]="inputEl"
+        [(p-selected-date)]="date"
+        (p-submit)="dateSelected()">
+    </e-po-calendar>
+</div>
