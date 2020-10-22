@@ -18430,6 +18430,18 @@ li.k-item.k-drag-clue {
     width: 100%;
 }
 
+.po-calendar-content .d-calendar-today {
+    font-family: NunitoSans-Bold,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #0c9abe;
+    text-align: right;
+    left: 74%;
+    top: 87%;
+    width: 50px;
+    position: absolute;
+}
+
 .d-calendar {
     white-space: normal;
 }

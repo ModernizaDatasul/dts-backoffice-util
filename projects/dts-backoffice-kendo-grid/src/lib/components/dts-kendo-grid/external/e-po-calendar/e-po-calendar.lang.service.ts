@@ -115,6 +115,12 @@ export class EpoCalendarLangService {
         es: 'Año'
     };
 
+    wordToday = {
+        pt: 'Hoje',
+        en: 'Today',
+        es: 'Hoy'
+    };
+
     lang = 'pt';
 
     constructor() { }
@@ -132,6 +138,10 @@ export class EpoCalendarLangService {
 
     getWordYear() {
         return this.wordYear[this.lang];
+    }
+
+    getWordToday() {
+        return this.wordToday[this.lang];
     }
 
     getMonth(month: number) {

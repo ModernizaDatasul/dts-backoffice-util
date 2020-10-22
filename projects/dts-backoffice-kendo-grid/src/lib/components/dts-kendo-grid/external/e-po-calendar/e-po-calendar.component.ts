@@ -204,6 +204,10 @@ export class EpoCalendarComponent {
         return this.ePoCalendarLangService.getWordYear();
     }
 
+    getWordToday() {
+        return this.ePoCalendarLangService.getWordToday();
+    }
+
     init() {
         this.selectedDate ? this.updateDate(this.selectedDate) : this.updateDate(this.today);
 
@@ -290,6 +294,10 @@ export class EpoCalendarComponent {
         this.dayVisible = false;
         this.monthVisible = false;
         this.yearVisible = true;
+    }
+
+    selectToday() {
+        this.onSelectDate(new Date());
     }
 
     setMobileVisualization() {

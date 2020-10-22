@@ -1,6 +1,6 @@
 # Changelog
 
-**2.4.0 / 2.4.1 (22-10-2020):**
+**2.4.0 / 2.4.1 / 2.4.2 (22-10-2020):**
 
 Correções:
 - **Campo Data + Filtro e Edição**
@@ -8,7 +8,9 @@ Correções:
 <br>- Não estava respeitando a formatação de data conforme o idioma do usuário.
 
 Melhorias:
-- **Campo Data + Filtro e Edição** - Customizado o Filtro e a Edição, para apresentar o calendário no mesmo formato existente no PO-UI.
+- **Campo Data + Filtro e Edição**
+<br>- Customizado o Filtro e a Edição, para apresentar o calendário no mesmo formato existente no PO-UI.
+<br>- Incluída a opção "Hoje" no calendário.
 
 **2.3.3 (15-10-2020):**
 
