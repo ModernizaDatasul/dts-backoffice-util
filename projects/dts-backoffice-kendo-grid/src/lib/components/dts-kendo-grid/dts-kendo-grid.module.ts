@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ExcelModule, GridModule, PDFModule } from '@progress/kendo-angular-grid';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
@@ -19,6 +19,7 @@ import { EpoCalendarModule } from '../../components/dts-kendo-grid/external/e-po
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     GridModule,
     DropDownListModule,
     ExcelModule,

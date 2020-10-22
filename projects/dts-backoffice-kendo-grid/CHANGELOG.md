@@ -1,14 +1,14 @@
 # Changelog
 
-**2.4.0 (21-10-2020):**
+**2.4.0 / 2.4.1 (22-10-2020):**
 
 Correções:
-- **Filtro + campo Data**
-<br>- O filtro não estava funcionando, para qualquer data informada no Grid sempre ficava vazio.
+- **Campo Data + Filtro e Edição**
+<br>- O Filtro e a Edição não estavam funcionando, ocorria um erro e não apresentava/atualizava nada.
 <br>- Não estava respeitando a formatação de data conforme o idioma do usuário.
 
 Melhorias:
-- **Filtro + campo Data** - Customizado o filtro, para apresentar o calendário no mesmo formato existente no PO-UI.
+- **Campo Data + Filtro e Edição** - Customizado o Filtro e a Edição, para apresentar o calendário no mesmo formato existente no PO-UI.
 
 **2.3.3 (15-10-2020):**
 

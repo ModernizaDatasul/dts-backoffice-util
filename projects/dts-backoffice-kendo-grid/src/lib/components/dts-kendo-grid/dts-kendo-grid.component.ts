@@ -639,9 +639,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (event === 'Enter' ||
             !this.matches(target, `#${this.idGrid} tbody *, #${this.idGrid} .k-grid-toolbar .k-button`)) {
 
-            if (this.matches(target, '.po-toaster, .po-toaster-message, .po-icon-close')) {
-                return;
-            }
+            if (this.matches(target, '.d-no-close-edit')) { return; }
+            if (this.matches(target, '.po-toaster, .po-toaster-message, .po-icon-close')) { return; }
 
             this.saveClick();
             return;

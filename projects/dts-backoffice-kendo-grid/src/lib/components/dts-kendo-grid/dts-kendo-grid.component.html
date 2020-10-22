@@ -121,13 +121,14 @@
             </custom-date-filter>
         </ng-template>
 
-<!--        <ng-template *ngIf="editable && col.editable === true && col.type === 'date'"
+        <ng-template *ngIf="editable && col.editable === true && col.type === 'date'"
                      kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
             <e-po-datepicker
                 [p-format]="literals.dateFormat || localLiterals.dateFormat"
-                [p-placeholder]="literals.dateFormatDesc || localLiterals.dateFormatDesc">
+                [p-placeholder]="literals.dateFormatDesc || localLiterals.dateFormatDesc"
+                [formControl]="formGroup.get(column.field)">
             </e-po-datepicker>
-        </ng-template>-->
+        </ng-template>
 
         <ng-template *ngIf="groupable && col.type === 'date'"
                      kendoGridGroupHeaderTemplate let-value="value">

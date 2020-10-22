@@ -293,7 +293,7 @@ export class EpoCalendarComponent {
     }
 
     setMobileVisualization() {
-        return this.isMobile() ? 'po-calendar po-calendar-mobile' : 'po-calendar';
+        return this.isMobile() ? 'po-calendar d-calendar po-calendar-mobile' : 'po-calendar d-calendar';
     }
 
     updateYear(value: number) {
