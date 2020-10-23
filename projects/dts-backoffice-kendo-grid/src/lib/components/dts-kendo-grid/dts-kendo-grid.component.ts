@@ -7,6 +7,7 @@ import { GroupDescriptor, process, State, SortDescriptor } from '@progress/kendo
 import { DtsKendoGridBaseComponent } from './dts-kendo-grid-base.component';
 import { TranslateService } from './services/translate.service';
 import { KgPopup } from './model/kg-popup.model';
+import { DtsColumnConfigView } from './dts-kendo-grid-column.interface';
 
 /**
  * @docsExtends DtsKendoGridBaseComponent
@@ -698,15 +699,15 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     public onClickVisibleColumnManager(column: string, visible: boolean) {
-        this.changeVisibleColumn(column, !visible);
+        this.changeColumnConfigView({ column: column, visible: !visible });
     }
 
     public onClickRestoreDefault() {
-        this.changeVisibleColumnList(this.defaultColumnVisible);
+        this.changeColumnConfigViewList(this.defaultColumnVisible);
     }
 
     public onClickSaveColumnManager() {
-        const colList: Array<{ column: string, visible: boolean }> = [];
+        const colList: Array<DtsColumnConfigView> = [];
 
         this.columns.map(col => {
             colList.push({ column: col.column, visible: col.visible });

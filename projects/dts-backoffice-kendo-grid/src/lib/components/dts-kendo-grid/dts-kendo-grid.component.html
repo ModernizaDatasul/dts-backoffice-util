@@ -279,21 +279,21 @@
     </div>
 
     <div class="d-column-manager-container po-row po-pt-1 po-pb-1">
-        <div *ngFor="let column of columns"
-             class="po-checkbox-group-item po-md-12 po-ml-2">
+        <div *ngFor="let column of columns" class="po-lg-12 po-md-12">
+            <div *ngIf="!column.locked" class="po-checkbox-group-item po-ml-1">
+                <input [id]="column.column"
+                    class="po-input po-checkbox-group-input"
+                    type="checkbox"
+                    [class.po-checkbox-group-input-checked]="column.visible"
+                    [checked]="column.visible"
+                    [value]="column.visible"/>
 
-            <input [id]="column.column"
-                   class="po-input po-checkbox-group-input"
-                   type="checkbox"
-                   [class.po-checkbox-group-input-checked]="column.visible"
-                   [checked]="column.visible"
-                   [value]="column.visible"/>
-
-            <label [for]="column.column"
-                   class="po-checkbox-group-label d-column-manager-label"
-                   (click)="onClickVisibleColumnManager(column.column, column.visible)">
-                {{ column.label }}
-            </label>
+                <label [for]="column.column"
+                    class="po-checkbox-group-label d-column-manager-label"
+                    (click)="onClickVisibleColumnManager(column.column, column.visible)">
+                    {{ column.label }}
+                </label>
+            </div>
         </div>
     </div>
 

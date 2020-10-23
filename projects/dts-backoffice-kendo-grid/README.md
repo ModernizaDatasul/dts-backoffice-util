@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.4.2 (22-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.5.0 (23-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -132,8 +132,8 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 
 | Método | Descrição |
 |-|-|
-| changeVisibleColumn | Utilizado para alterar a propriedade **"visible"** da coluna. Fazendo com que ela apareça ou seja ocultada no Grid.<br>**Parâmetros:**<br>- column (string): Nome interno da Coluna.<br>- visible (boolean): **"true"** para apresentar e **"false"** para ocultar.<br>**Retorno:** Não há. |
-| changeVisibleColumnList | Utilizado para alterar a propriedade **"visible"** de várias colunas. Fazendo com que elas apareçam ou sejam ocultadas no Grid.<br>**Parâmetros:**<br>- columnsList (array(object)): Lista de Colunas. Deve ser um Array do Objeto com as propriedades: column (string): Nome interno da Coluna. E visible (boolean): **"true"** para apresentar e **"false"** para ocultar.<br>**Retorno:** Não há. |
+| changeColumnConfigView | Utilizado para alterar as propriedades de visualização da coluna. Para por exemplo, fazer com que a coluna seja ocultada no Grid.<br>**Parâmetro:**<br>- cfgView (DtsColumnConfigView): Objeto com as propriedades que devem ser alteradas. Ver interface: **DtsColumnConfigView**.<br>**Retorno:** Não há. |
+| changeColumnConfigViewList | Utilizado para alterar as propriedades de visualização de várias colunas.<br>**Parâmetro:**<br>- cfgViewList (array(DtsColumnConfigView)): Lista de Objetos com as propriedades a serem alteradas. Deve ser um Array da interface **DtsColumnConfigView**.<br>**Retorno:** Não há. |
 ---
 
 **Exemplo:**
@@ -150,12 +150,15 @@ Abaixo segue o exemplo de como pegar a referência e fazer a chamada dos método
 - TS -
 @ViewChild('gridCustomer', { static: true }) gridCustomer: DtsKendoGridComponent;
 ...
-this.gridCustomer.changeVisibleColumn('name', false);
+this.gridCustomer.changeColumnConfigView({ column: 'country', visible: true });
 
-this.gridCustomer.changeVisibleColumnList([
-	{ column: 'code', visible: true },
-	{ column: 'shotName', visible: false },
-	{ column: 'country', visible: true }
+this.gridCustomer.changeColumnConfigView({ column: 'internalId', visible: false, locked: true });
+
+this.gridCustomer.changeColumnConfigViewList([
+	{ column: 'code', visible: true, locked: true },
+	{ column: 'shotName', visible: false, locked: false },
+	{ column: 'country', visible: true },
+	{ column: 'internalId', locked: false }
 ]);
 ```
 
@@ -177,7 +180,7 @@ Quando o Gerenciador de Colunas estiver disponível (parâmetro **d-show-column-
 ...
 ngOnInit(): void {
 	...
-	this.gridCustomer.changeVisibleColumnList(this.loadLocalStorage('columnList'));
+	this.gridCustomer.changeColumnConfigViewList(this.loadLocalStorage('columnList'));
 	...
 }
 
@@ -257,21 +260,22 @@ Elas podem ser customizadas enviando um objeto com as literais que se deseja alt
 
 **Objetivo:** Definir as colunas do Grid.
 
-| Propriedade | Tipo | Descrição |
-|--|--|--| 
-| **column** | string | Nome do atributo do JSON passado no atributo **"d-data"** do componente. |
-| **label** | string | Nome da coluna a ser exibido na tabela. |
-| **type** | string | Define o tipo da coluna. Os Tipos válidos são:<br>**"string" (padrão)**: Campo do tipo texto.<br>**"number"**: Campo do tipo numérico.<br>**"currency"**: Campo do tipo monetário.<br>**"boolean"**: Campo do tipo lógico.<br>**"date"**: Campo do tipo data.<br>**"label"**: Campo do tipo label (apresenta uma TAG).<br>**"subtitle"**: Campo do tipo label (apresenta uma lista de TAG's).|
-| **format** | string | Formata os dados da coluna de acordo com o tipo. |
-| **width** | number | Tamanho da coluna em pixels. |
-| **checkbox** | boolean | Indica se a coluna do tipo "boolean" deve ser apresentada como um Check-Box ou um texto (Sim/Não). |
-| **currency** | string | Moeda utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
-| **symbol** | string | Formato utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
-| **labels** | Array | Lista de valores que poderão ser exibidos quando o "type" é label ou subtitle. O objeto da lista deve utilizar a interface **DtsLabel**. |
-| **editable** | boolean | Indica se o campo deve ser habilitado para edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-editable"** do Grid deve ser igual a **"true"**. |
-| **required** | boolean | Indica se o campo é obrigatório na edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"editable"** da coluna o parâmetro **"d-editable"** do Grid devem ser igual a **"true"**. |
-| **groupHeader** | boolean | Indica se a coluna deve ser agrupada na inicialização.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-groupable"** do Grid deve ser igual a **"true"**. |
-| **visible** | boolean | Indica se a coluna deve ser apresentada ou não.<br>**Obs:** Para manipular esta opção em tempo de execução, utilize o método **"changeVisibleColumn"**. |
+| Propriedade | Obrig? | Tipo | Descrição |
+|--|--|--|--| 
+| **column** | Sim |  string | Nome do atributo do JSON passado no atributo **"d-data"** do componente. |
+| **label** | Sim | string | Nome da coluna a ser exibido na tabela. |
+| **type** | Não | string | Define o tipo da coluna. Os Tipos válidos são:<br>**"string" (padrão)**: Campo do tipo texto.<br>**"number"**: Campo do tipo numérico.<br>**"currency"**: Campo do tipo monetário.<br>**"boolean"**: Campo do tipo lógico.<br>**"date"**: Campo do tipo data.<br>**"label"**: Campo do tipo label (apresenta uma TAG).<br>**"subtitle"**: Campo do tipo label (apresenta uma lista de TAG's).|
+| **format** | Não | string | Formata os dados da coluna de acordo com o tipo. |
+| **width** | Não | number | Tamanho da coluna em pixels. |
+| **checkbox** | Não | boolean | Indica se a coluna do tipo "boolean" deve ser apresentada como um Check-Box ou um texto (Sim/Não). |
+| **currency** | Não | string | Moeda utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
+| **symbol** | Não | string | Formato utilizada para formatar campos do tipo 'currency' usando o [Currency PIPE](https://angular.io/api/common/CurrencyPipe). |
+| **labels** | Não | Array | Lista de valores que poderão ser exibidos quando o "type" é label ou subtitle. O objeto da lista deve utilizar a interface **DtsLabel**. |
+| **editable** | Não | boolean | Indica se o campo deve ser habilitado para edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-editable"** do Grid deve ser igual a **"true"**. |
+| **required** | Não | boolean | Indica se o campo é obrigatório na edição.<br>**Obs:** Para que isto seja feito, o parâmetro **"editable"** da coluna o parâmetro **"d-editable"** do Grid devem ser igual a **"true"**. |
+| **groupHeader** | Não | boolean | Indica se a coluna deve ser agrupada na inicialização.<br>**Obs:** Para que isto seja feito, o parâmetro **"d-groupable"** do Grid deve ser igual a **"true"**. |
+| **visible** | Não | boolean | Indica se a coluna deve ser apresentada ou não.<br>**Obs:** Para manipular esta opção em tempo de execução, utilize o método **"changeColumnConfigView"**. |
+| **locked** | Não | boolean | Indica se a coluna pode ou não ser escondida pelo usuário. Portanto, for igual a **"true"**, a coluna não será apresentada no Gerenciador de Colunas.<br>**Obs:** Para manipular esta opção em tempo de execução, utilize o método **"changeColumnConfigView"**. |
 ---
 
 **Exemplo:** 
@@ -285,7 +289,8 @@ this.columns = [
 	{ column: 'country', label: this.literals['country'], editable: true, type: 'string' },
 	{ column: 'tax', label: this.literals['tax'], editable: true, type: 'boolean', checkbox: true },
 	{ column: 'taxValue', label: this.literals['taxValue'], editable: true, type: 'currency', currency: 'BRL', symbol: '1.2-9' },
-	{ column: 'admissDate', label: this.literals['admissDate'], type: 'date', format: this.literals['dateFormat'] }
+	{ column: 'admissDate', label: this.literals['admissDate'], type: 'date', format: this.literals['dateFormat'] },
+	{ column: 'internalId', label: this.literals['internalId'], editable: false, type: 'number', visible: false, locked: true }
 ];
 ```
 
@@ -295,12 +300,12 @@ this.columns = [
 
 **Objetivo:** Apresentar os valores em formato de **Tags** coloridas. Utilizado nos campos do tipo label e subtitle. 
 
-| Propriedade | Tipo | Descrição |
-|--|--|--| 
-| **value** | string | Valor do campo. |
-| **label** | string | Texto que será exibido dentro. |
-| **color** | string | Cor que será exibido, deve ser utilizada cores disponíveis no PO-UI. |
-| **tooltip** | string | Texto que será exibido ao passar o mouse por cima, se aplica apenas para o tipo subtitle. |
+| Propriedade | Obrig? | Tipo | Descrição |
+|--|--|--|--| 
+| **value** | Sim | string | Valor do campo. |
+| **label** | Sim | string | Texto que será exibido dentro. |
+| **color** | Sim | string | Cor que será exibido, deve ser utilizada cores disponíveis no PO-UI. |
+| **tooltip** | Não | string | Texto que será exibido ao passar o mouse por cima, se aplica apenas para o tipo subtitle. |
 ---
 
 **Exemplo:**<br>
@@ -336,10 +341,10 @@ this.columns = [
 
 **Objetivo:** Definir as funções que serão disparadas durante a edição de uma linha no Grid. 
 
-| Propriedade | Tipo | Descrição |
-|--|--|--|
-| addAction | Function | Método executado antes de adicionar uma nova linha ao Grid. Ele recebe como parâmetro o modelo do objeto que está sendo incluído, dessa forma é possível informar alguns valores para a nova linha. Para que a linha fique disponível para inclusão, o método deve retornar o valor **"true"**, caso contrário a inclusão não será permitida. |
-| saveAction | Function | Método executado antes de salvar uma linha incluida ou alterado no Grid. Este método recebe como parâmetro o item que está sendo incluído/alterado. Se o método retornar o valor **"true"**, a inclusão/alteração da linha é confirmada, caso contrário ela fica pendente, esperando a ação do usuário (realizar alguma alteração ou cancelar). Se dentro do método, for realizada alguma alteração no item recebido, esta alteração será repassado para a tela, e se for confirmada a inclusão/alteração, será gravada na linha original. |
+| Propriedade | Obrig? | Tipo | Descrição |
+|--|--|--|--|
+| addAction | Não | Function | Método executado antes de adicionar uma nova linha ao Grid. Ele recebe como parâmetro o modelo do objeto que está sendo incluído, dessa forma é possível informar alguns valores para a nova linha. Para que a linha fique disponível para inclusão, o método deve retornar o valor **"true"**, caso contrário a inclusão não será permitida. |
+| saveAction | Não | Function | Método executado antes de salvar uma linha incluida ou alterado no Grid. Este método recebe como parâmetro o item que está sendo incluído/alterado. Se o método retornar o valor **"true"**, a inclusão/alteração da linha é confirmada, caso contrário ela fica pendente, esperando a ação do usuário (realizar alguma alteração ou cancelar). Se dentro do método, for realizada alguma alteração no item recebido, esta alteração será repassado para a tela, e se for confirmada a inclusão/alteração, será gravada na linha original. |
 ---
 
 **Exemplo:** 
@@ -375,4 +380,30 @@ onSaveAction(item: ICustomer) {
 	}
 	return true;
 }
+```
+
+<br>
+
+**DtsColumnConfigView**
+
+**Objetivo:** Alterar as configurações de Visualização das Colunas do Grid. 
+
+| Propriedade | Obrig? | Tipo | Descrição |
+|--|--|--|--| 
+| **column** | Sim | string | Nome da Coluna. |
+| **visible** | Não | boolean | Indica se a coluna deve ser apresentada (**true**) ou escondida (**false**) no Grid. |
+| **locked** | Não | boolean | Indica se o usuário pode ou não alterar a visualização da coluna. Quando for igual a **"true"**, a coluna não será apresentada no Gerenciador de Colunas. |
+---
+
+**Exemplo:**<br>
+```
+cfgView: DtsColumnConfigView;
+
+cfgView = { 
+	column: 'country', 
+	visible: true,
+	locked: false
+}
+
+this.gridCustomer.changeColumnConfigView(cfgView);
 ```

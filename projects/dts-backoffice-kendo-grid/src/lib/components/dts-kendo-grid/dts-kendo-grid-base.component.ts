@@ -3,7 +3,7 @@
 // tslint:disable: no-output-rename
 // tslint:disable: directive-class-suffix
 import { Input, EventEmitter, Output, Directive } from '@angular/core';
-import { DtsKendoGridColumn, DtsEditAction } from './dts-kendo-grid-column.interface';
+import { DtsKendoGridColumn, DtsEditAction, DtsColumnConfigView } from './dts-kendo-grid-column.interface';
 
 /**
  * @description
@@ -160,8 +160,8 @@ export abstract class DtsKendoGridBaseComponent {
     /** Evento disparado ao salvar dados do modo de edição da linha, recebendo o modelo que foi alterado. */
     @Output('d-save-value') saveValue = new EventEmitter<any>();
 
-    protected initColumnVisible: Array<{ column: string, visible: boolean }> = [];
-    protected defaultColumnVisible: Array<{ column: string, visible: boolean }> = [];
+    protected initColumnVisible: Array<DtsColumnConfigView> = [];
+    protected defaultColumnVisible: Array<DtsColumnConfigView> = [];
 
     protected clickoutListener: () => void;
 
@@ -264,29 +264,45 @@ export abstract class DtsKendoGridBaseComponent {
     private defineColumnVisible() {
         this.columns.forEach(column => {
             if (column.visible === undefined || column.visible === null) { column.visible = true; }
+            if (column.locked === undefined || column.locked === null) { column.locked = false; }
+
             this.defaultColumnVisible.push({ column: column.column, visible: column.visible });
         });
 
         if (this.initColumnVisible.length > 0) {
-            this.changeVisibleColumnList(this.initColumnVisible);
+            this.changeColumnConfigViewList(this.initColumnVisible);
         }
     }
 
-    public changeVisibleColumn(column: string, visible: boolean): void {
+    public changeColumnConfigView(configView: DtsColumnConfigView): void {
+        if (!configView) { return; }
+
         if (!this.columns) {
-            this.initColumnVisible.push({ column: column, visible: visible });
+            this.initColumnVisible.push(configView);
             return;
         }
 
-        const columnFind = this.columns.find(col => col.column === column);
-        if (columnFind) { columnFind.visible = visible; }
+        const columnFind = this.columns.find(col => col.column === configView.column);
+        this.atzColumnByConfigView(columnFind, configView);
 
-        const columnOrig = this.columnsOrig.find(col => col.column === column);
-        if (columnOrig) { columnOrig.visible = visible; }
+        const columnOrig = this.columnsOrig.find(col => col.column === configView.column);
+        this.atzColumnByConfigView(columnOrig, configView);
     }
 
-    public changeVisibleColumnList(columnList: Array<{ column: string, visible: boolean }>): void {
+    private atzColumnByConfigView(column: DtsKendoGridColumn, configView: DtsColumnConfigView) {
+        if (!column) { return; }
+
+        if (configView.visible !== undefined && configView.visible !== null) {
+            column.visible = configView.visible;
+        }
+
+        if (configView.locked !== undefined && configView.locked !== null) {
+            column.locked = configView.locked;
+        }
+    }
+
+    public changeColumnConfigViewList(columnList: Array<DtsColumnConfigView>): void {
         if (!columnList) { return; }
-        columnList.map(col => this.changeVisibleColumn(col.column, col.visible));
+        columnList.map(cfgView => this.changeColumnConfigView(cfgView));
     }
 }

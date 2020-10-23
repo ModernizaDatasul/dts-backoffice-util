@@ -1,5 +1,17 @@
 # Changelog
 
+**2.5.0 (23-10-2020):**
+
+Melhorias:
+- **Colunas do Grid**
+<br>- Incluído a propriedade **"locked"** para indicar se o usuário pode alterar a visualização da coluna.
+<br>- Criada a Interface **"DtsColumnConfigView"**, para alterar as configurações de visualização das colunas.
+
+Breaking Changes:
+- Métodos
+<br>- **changeVisibleColumn** - Alterado o nome para **changeColumnConfigView** e seus parâmetros.
+<br>- **changeVisibleColumnList** - Alterado o nome para **changeColumnConfigViewList** e seus parâmetros.
+
 **2.4.0 / 2.4.1 / 2.4.2 (22-10-2020):**
 
 Correções:

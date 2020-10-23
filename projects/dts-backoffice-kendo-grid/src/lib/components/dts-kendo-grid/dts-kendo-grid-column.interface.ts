@@ -6,13 +6,6 @@
  * Interface para definição das colunas do dts-kendo-grid.
  */
 
- export interface DtsLabel {
-    value: string | number;
-    label: string;
-    color: string;
-    tooltip?: string;
-}
-
 export interface DtsKendoGridColumn {
     /** Nome do atributo do JSON passado no atributo "d-data" do componente. */
     column: string;
@@ -61,9 +54,25 @@ export interface DtsKendoGridColumn {
 
     /** Indica se a coluna está visível ou não */
     visible?: boolean;
+
+    /** Indica se a coluna pode ser escondida ou mostrada */
+    locked?: boolean;
+}
+
+export interface DtsLabel {
+    value: string | number;
+    label: string;
+    color: string;
+    tooltip?: string;
 }
 
 export interface DtsEditAction {
     addAction?: Function;
     saveAction?: Function;
+}
+
+export interface DtsColumnConfigView {
+    column: string;
+    visible?: boolean;
+    locked?: boolean;
 }
