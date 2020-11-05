@@ -1,5 +1,10 @@
 # Changelog
 
+**2.6.0 (05-11-2020):**
+
+Melhorias:
+- **Maximização** - Incluída a propriedade **d-show-maximize**, que permite ao usuário "Maximizar" o Grid, sendo possível configurar para que ele ocupe toda a tela.
+
 **2.5.0 (23-10-2020):**
 
 Melhorias:

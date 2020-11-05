@@ -136,6 +136,9 @@ export abstract class DtsKendoGridBaseComponent {
     /** Objeto com as funções que serão disparadas durante a Edição de uma Linha no Grid. */
     @Input('d-edit-actions') editActions?: DtsEditAction;
 
+    /** Disponibiliza o botão de Maximizar o Grid. */
+    @Input('d-show-maximize') maximizeButton = null;
+
     /** Disponibiliza o botão de Gerencimento de Colunas. */
     @Input('d-show-column-manager') columnManagerButton = false;
 

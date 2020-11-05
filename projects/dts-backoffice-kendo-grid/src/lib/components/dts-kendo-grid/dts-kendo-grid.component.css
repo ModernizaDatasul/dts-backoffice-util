@@ -18387,7 +18387,7 @@ li.k-item.k-drag-clue {
     float: right !important;
     color: var(--color-table-color-header);
     font-size: 16px;
-    padding: 0px;
+    padding: 0px 0px 0px 5px;
     background-color: transparent;
     border: none;
 }
@@ -18444,4 +18444,17 @@ li.k-item.k-drag-clue {
 
 .d-calendar {
     white-space: normal;
+}
+
+.d-maximize-button {
+    float: right !important;
+    color: var(--color-table-color-header);
+    font-size: 16px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+}
+
+.d-dts-kendo-grid {
+    background-color: white;
 }

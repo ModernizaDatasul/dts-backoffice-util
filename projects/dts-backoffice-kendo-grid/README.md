@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.5.0 (23-10-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.6.0 (05-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -116,6 +116,7 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 | **d-literals** | Object | Objeto com as literais que serão utilizadas dentro do componente, caso não seja enviado será utilizado os valores de tradução que o componente já possui em português, inglês e espanhol. Ver abaixo o tópico **Literais do Componente** para verificar as literais disponíveis. |
 | **d-actions** | Array | Lista de ações que devem ser apresentadas nas linhas do Grid, funciona semelhante a p-actions do PO-UI. |
 | **d-edit-actions** | Object | Objeto com as funções que serão disparadas durante a Edição de uma Linha no Grid, para por exemplo, trazer valores padrões em uma inclusão, ou validar uma alteração. O Objeto deve utilizar a interface **DtsEditAction**. |
+| **d-show-maximize** | string | Disponibiliza o botão **"Maximizar"** do Grid (ícone **"zoom"** no canto superior direito). Os valores possíveis para este parâmetro são:<br>- **normal**: O Grid irá ocupar toda a área do container "pai", ficando "por cima" dos demais objetos que estiverem dentro do mesmo container. **Exemplo:** Dentro de uma div existem: dois botões, o Grid e um input. Ao ser maximizado, o Grid irá ocupar todo o espaço da div, desta forma, os botões e o input não estarão visíveis.<br>- **full**: A ser maximizado, o Grid irá ocupar todo espaço disponível na aba do navegador.|
 | **d-show-column-manager** | boolean | Disponibiliza o Gerenciador de Colunas no Grid (ícone **"configuração"** no canto superior direito), que permite ao usuário escolher quais colunas estarão visíveis ou não. Ele irá apresentar todas as colunas do Grid configuradas no parâmetro **d-columns**.<br>O Gerenciador disponibiliza dois botões:<br>- **Restaurar Padrão**: Retorna a visualização das colunas (true/false) conforme configurado inicialmente no objeto do parâmetro **d-columns** (propriedade **"visible"**). Caso a propriedade não tenha sido informada, será considerado como **"true"**.<br>- **Salvar**: Executa o método informado no parâmetro **d-save-column-manager** (Obs: o botão somente será apresentado se este parâmetro for informado). |
 | **d-show-add-button** | boolean | Disponibiliza o botão "Adicionar" no Toolbar do Grid, utilizado para inclusão de novas linhas. |
 | **d-show-export-buttons** | boolean | Disponibiliza os botões de Exportação do Grid: Excel e PDF. | 
@@ -403,7 +404,7 @@ cfgView = {
 	column: 'country', 
 	visible: true,
 	locked: false
-}
+};
 
 this.gridCustomer.changeColumnConfigView(cfgView);
 ```

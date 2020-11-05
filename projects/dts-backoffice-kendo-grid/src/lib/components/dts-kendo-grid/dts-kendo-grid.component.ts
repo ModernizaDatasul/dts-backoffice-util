@@ -38,12 +38,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     private formGroup: FormGroup;
     public cancelButton = false;
 
+    public isMaximize = false;
+
     public gridView: GridDataResult;
 
     public selectableSettings = {
         checkboxOnly: true,
         mode: 'multiple'
     };
+
+    public scrollable = 'none';
 
     public groups: Array<GroupDescriptor> = [];
 
@@ -52,6 +56,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     private target: any;
 
+    public idDsGrid = `idDsGrid${this.create_UUID(true)}`;
     public idGrid = `idGrid${this.create_UUID(true)}`;
 
     public arrowDirection = 'top-right';
@@ -298,6 +303,42 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         }
     }
 
+    public onChooseBtMaximize($event: MouseEvent) {
+        const elDsGrid = document.getElementById(this.idDsGrid);
+        if (!elDsGrid) { return; }
+
+        const elGrid = document.getElementById(this.idGrid);
+        if (!elGrid) { return; }
+
+        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
+
+        this.isMaximize = !this.isMaximize;
+
+        if (this.isMaximize) {
+            this.scrollable = this.maximizeButton === 'full' ? 'scrollable' : 'none';
+
+            elDsGrid.style.top = '0px';
+            elDsGrid.style.left = '0px';
+            elDsGrid.style.position = this.maximizeButton === 'full' ? 'fixed' : 'absolute';
+            elDsGrid.style.zIndex = '100';
+            elDsGrid.style.width = '100%';
+            elDsGrid.style.height = this.maximizeButton === 'full' ? '100%' : '';
+
+            elGrid.style.height = this.showMore.observers.length > 0 ? '90%' : '100%';
+        } else {
+            this.scrollable = 'none';
+
+            elDsGrid.style.top = '';
+            elDsGrid.style.left = '';
+            elDsGrid.style.position = 'relative';
+            elDsGrid.style.zIndex = '';
+            elDsGrid.style.width = '';
+            elDsGrid.style.height = '';
+
+            elGrid.style.height = '';
+        }
+    }
+
     public sortChange(sort: Array<SortDescriptor>) {
         this.sort = sort;
     }
@@ -535,6 +576,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     public isCommandColumnVisible(): boolean {
         if (this.isInEditionGrid()) { return false; }
         if (this.isHasActions()) { return true; }
+        if (this.maximizeButton) { return true; }
         if (this.columnManagerButton) { return true; }
         return false;
     }
