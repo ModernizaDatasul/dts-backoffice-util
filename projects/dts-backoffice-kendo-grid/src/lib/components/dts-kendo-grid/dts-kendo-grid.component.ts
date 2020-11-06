@@ -315,14 +315,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.isMaximize = !this.isMaximize;
 
         if (this.isMaximize) {
-            this.scrollable = this.maximizeButton === 'full' ? 'scrollable' : 'none';
+            const lFixed = (this.maximizeButton === 'full' || this.maximizeButton === 'fixed');
+
+            this.scrollable = lFixed ? 'scrollable' : 'none';
 
             elDsGrid.style.top = '0px';
             elDsGrid.style.left = '0px';
             elDsGrid.style.position = this.maximizeButton === 'full' ? 'fixed' : 'absolute';
             elDsGrid.style.zIndex = '100';
             elDsGrid.style.width = '100%';
-            elDsGrid.style.height = this.maximizeButton === 'full' ? '100%' : '';
+            elDsGrid.style.height = lFixed ? '100%' : '';
 
             elGrid.style.height = this.showMore.observers.length > 0 ? '90%' : '100%';
         } else {
@@ -337,6 +339,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
             elGrid.style.height = '';
         }
+
+        this.maximizeChange.emit(this.isMaximize);
     }
 
     public sortChange(sort: Array<SortDescriptor>) {

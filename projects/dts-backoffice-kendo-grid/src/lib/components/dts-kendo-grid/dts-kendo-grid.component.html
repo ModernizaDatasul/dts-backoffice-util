@@ -193,12 +193,13 @@
         <kendo-grid-command-column *ngIf="isCommandColumnVisible()" title="" width="80" locked="true">
             <ng-template *ngIf="maximizeButton || columnManagerButton"
                          kendoGridHeaderTemplate>
+
                 <button *ngIf="columnManagerButton"
                          class="d-column-manager-button po-icon po-icon-settings po-clickable"
                          (click)="onClickColumnManager($event)"
                          #columnManagerTarget>
                 </button>
- 
+
                 <button *ngIf="maximizeButton && !isMaximize"
                         class="d-maximize-button po-icon po-icon-zoom-in po-clickable"
                         (click)="onChooseBtMaximize($event)">

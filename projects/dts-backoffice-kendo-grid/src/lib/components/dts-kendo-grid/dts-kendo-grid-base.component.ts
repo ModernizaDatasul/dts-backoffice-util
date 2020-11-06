@@ -157,6 +157,9 @@ export abstract class DtsKendoGridBaseComponent {
     /** Evento disparado quando a linha é selecionada. */
     @Output('d-selection-change') selectionChange = new EventEmitter<any>();
 
+    /** Evento disparado ao clicar no 'maximizar' do Grid. */
+    @Output('d-maximize-change') maximizeChange = new EventEmitter<any>();
+
     /** Evento disparado ao clicar no 'salvar' do Gerenciador de Colunas. */
     @Output('d-save-column-manager') saveColumnManager = new EventEmitter<any>();
 
