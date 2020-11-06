@@ -25,7 +25,7 @@ export class MenuDatasulService {
     }
 
     public openPath(programName: string, params: any, parent = true): void {
-        const datasulPath = window.location.href.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
+        const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
         const baseUrl = `/${datasulPath}/#/${datasulPath}/program-html/${programName}/#`;
 
         if (parent) {
