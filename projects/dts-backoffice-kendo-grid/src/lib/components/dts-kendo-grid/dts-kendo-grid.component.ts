@@ -38,6 +38,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     private formGroup: FormGroup;
     public cancelButton = false;
 
+    public viewColumnVisible = true;
     public isMaximize = false;
 
     public gridView: GridDataResult;
@@ -165,6 +166,12 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     public getBooleanDescription(value: boolean): string {
         if (value === null || value === undefined) { return ''; }
         return value ? (this.literals['yes'] || this.localLiterals['yes']) : (this.literals['no'] || this.localLiterals['no']);
+    }
+
+    private qtdVisibleColumns(): number {
+        const visibleColumns = this.columns.filter(col => col.visible === true);
+        if (visibleColumns) { return visibleColumns.length; }
+        return 0;
     }
 
     private setLocalLiterals() {
@@ -314,6 +321,8 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         this.isMaximize = !this.isMaximize;
 
+        this.viewColumnVisible = this.qtdVisibleColumns() < 11;
+
         if (this.isMaximize) {
             const lFixed = (this.maximizeButton === 'full' || this.maximizeButton === 'fixed');
 
@@ -326,6 +335,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             elDsGrid.style.width = '100%';
             elDsGrid.style.height = lFixed ? '100%' : '';
 
+            elGrid.style.width = '100%';
             elGrid.style.height = this.showMore.observers.length > 0 ? '90%' : '100%';
         } else {
             this.scrollable = 'none';
@@ -337,7 +347,16 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             elDsGrid.style.width = '';
             elDsGrid.style.height = '';
 
+            elGrid.style.width = '';
             elGrid.style.height = '';
+        }
+
+        if (!this.viewColumnVisible) {
+            if (this.grid) {
+                setTimeout(() => { this.grid.autoFitColumns(); }, 200);
+                setTimeout(() => { this.refreshGrid(); }, 300);
+            }
+            setTimeout(() => { this.viewColumnVisible = true; }, 300);
         }
 
         this.maximizeChange.emit(this.isMaximize);
@@ -496,9 +515,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     private closeEditor(grid) {
-        if (grid) {
-            grid.closeRow(this.tableEditIndex);
-        }
+        if (grid) { grid.closeRow(this.tableEditIndex); }
 
         this.isNewRow = false;
         this.EditedRow = null;

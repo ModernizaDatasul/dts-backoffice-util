@@ -109,6 +109,9 @@ export abstract class DtsKendoGridBaseComponent {
     /** Habilita a mudança da ordem das colunas, através do arrastar e soltar no cabeçalho da coluna. */
     @Input('d-reorderable') reorderable = false;
 
+    /** Habilita a mudança do tamanho da colunas. */
+    @Input('d-resizable') resizable = false;
+
     /** Cria uma coluna no início do Grid para permitir a seleção de uma ou mais linhas. */
     private _selectable: boolean;
     @Input('d-selectable') set selectable(selectable: boolean) {

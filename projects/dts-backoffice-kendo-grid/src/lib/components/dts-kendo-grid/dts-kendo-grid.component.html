@@ -1,4 +1,5 @@
 <div [id]="idDsGrid" class="d-dts-kendo-grid">
+
     <kendo-grid
         [id]="idGrid"
         [data]="gridView"
@@ -12,6 +13,7 @@
         [selectable]="selectableSettings"
         [rowSelected]="isRowSelected"
         [reorderable]="reorderable"
+        [resizable]="resizable || isMaximize"
         (dataStateChange)="dataStateChange($event)"
         (groupChange)="groupChange($event)"
         (selectionChange)="onSelectionChange($event)"
@@ -190,10 +192,9 @@
             </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-command-column *ngIf="isCommandColumnVisible()" title="" width="80" locked="true">
+        <kendo-grid-command-column *ngIf="isCommandColumnVisible() && viewColumnVisible" title="" width="80" locked="true">
             <ng-template *ngIf="maximizeButton || columnManagerButton"
                          kendoGridHeaderTemplate>
-
                 <button *ngIf="columnManagerButton"
                          class="d-column-manager-button po-icon po-icon-settings po-clickable"
                          (click)="onClickColumnManager($event)"

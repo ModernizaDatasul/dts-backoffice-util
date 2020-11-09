@@ -1,11 +1,13 @@
 # Changelog
 
-**2.6.0 / 2.6.1 (06-11-2020):**
+**2.6.0 / 2.6.1 / 2.6.2 (09-11-2020):**
 
 Melhorias:
 - **Maximização**
 <br>- Incluída a propriedade **d-show-maximize**, que permite ao usuário "Maximizar" o Grid, sendo possível configurar para que ele ocupe toda a tela.
 <br>- Incluído o evento **d-maximize-change**, que é disparado quando o usuário Maximiza ou Minimiza o Grid.
+- **Resize de Coluna**
+<br>- Incluída a propriedade **d-resizable**, que indica se o usuário poderá alterar o tamanho das colunas.
 
 **2.5.0 (23-10-2020):**
 

@@ -6852,6 +6852,16 @@ div.k-grid-footer {
     margin: 0 .16em;
 }
 
+.k-grid-content::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+    background: #fff;
+}
+
+.k-grid-content::-webkit-scrollbar-thumb {
+    background-color: #0c9abe;
+}
+
 .k-virtual-scrollable-wrap {
     height: 100%;
     overflow-y: hidden;
@@ -18327,7 +18337,7 @@ li.k-item.k-drag-clue {
 }
 
 .k-grid-aria-root::-webkit-scrollbar {
-    height: 5px;
+    height: 7px;
     background: #fff;
 }
 

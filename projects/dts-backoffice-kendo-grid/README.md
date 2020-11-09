@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.6.1 (06-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.6.2 (09-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -110,7 +110,8 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 | **d-sortable** | boolean | Habilita a ordenação da coluna ao clicar no cabeçalho. |
 | **d-filterable** | boolean | Habilita a opção de filtro nas colunas do Grid. | 
 | **d-groupable** | boolean | Habilita a opção para agrupamento de colunas. |
-| **d-reorderable** | boolean | Habilita a mudança da ordem das colunas, através do arrastar e soltar no cabeçalho da coluna. |
+| **d-reorderable** | boolean | Habilita a mudança da ordem das colunas, através do clicar, arrastar e soltar o cabeçalho da coluna. |
+| **d-resizable** | boolean | Habilita a mudança de tamanho das colunas, através do clicar e arrastar o cabeçalho da coluna (final da coluna). |
 | **d-selectable** | boolean | Cria uma coluna no início do Grid para permitir a seleção de uma ou mais linhas. |
 | **d-editable** | boolean | Habilita a edição de linha no Grid.<br>Quando habilitado e o usuário estiver incluindo ou alterando uma linha, ao clicar em qualquer lugar fora desta linha, a inclusão/alteração será confirmar. É possível utilizar a teclas **"Enter"** para confirmar a inclusão/alteração, ou **"Esc"** para cancelar. Se a Toolbar do Grid estiver visível, também será apresentado o botão **"Cancelar"**, que tem a mesma ação do tecla **"Esc"**.<br>**Importante:** Se o Grid estiver em uma **po-modal**, informe o parâmetro **p-hide-close** na modal. Isto é necessário para que o evento de **"Esc"** funcione corretamente na edição da linha, se este parâmetro não for informado, o "Esc" irá fechar a modal. |
 | **d-literals** | Object | Objeto com as literais que serão utilizadas dentro do componente, caso não seja enviado será utilizado os valores de tradução que o componente já possui em português, inglês e espanhol. Ver abaixo o tópico **Literais do Componente** para verificar as literais disponíveis. |
