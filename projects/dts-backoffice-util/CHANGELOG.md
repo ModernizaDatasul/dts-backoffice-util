@@ -1,6 +1,6 @@
 # Changelog
 
-**2.1.1 (06-11-2020):**
+**2.1.1 / 2.1.2 (09-11-2020):**
 
 Correção:
 - **openPath** - Corrigido para abrir as telas PO-UI corretamente no Novo FrameWork (Tomcat). 

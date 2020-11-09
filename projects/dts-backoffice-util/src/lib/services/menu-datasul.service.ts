@@ -26,12 +26,16 @@ export class MenuDatasulService {
 
     public openPath(programName: string, params: any, parent = true): void {
         const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
-        const baseUrl = `/${datasulPath}/#/${datasulPath}/program-html/${programName}/#`;
+        let baseUrl = `/${datasulPath}/#/${datasulPath}/program-html/${programName}/#`;
+
+        if (params) {
+            baseUrl = `${baseUrl}/${params}`;
+        }
 
         if (parent) {
-            window.open(`${baseUrl}/${params}`, '_parent');
+            window.open(baseUrl, '_parent');
         } else {
-            window.open(`${baseUrl}/${params}`);
+            window.open(baseUrl);
         }
     }
 }
