@@ -1,5 +1,10 @@
 # Changelog
 
+**2.2.0 (10-11-2020):**
+
+Melhorias:
+- **FileUtil** - Nova biblioteca para controle de Arquivo, onde foi disponibilizado o método **downladFile** para realizar o download de Arquivos provenientes do BackEnd.
+
 **2.1.1 / 2.1.2 (09-11-2020):**
 
 Correção:

@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.1.2 (09-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.2.0 (10-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br> 
 
@@ -376,6 +376,54 @@ Métodos:
 | ajustDateToModel | Ajusta a data para o padrão do objeto Date. Utilizado nos construtores dos modelos.<br>**Parâmetros:**<br>- object (object): Objeto que possui atributos do tipo data.<br>- fieldName (string): Nome do Atributo que possui a data.<br>**Retorno:**<br>- date (date) |
 | pad | Adicona zero a esquerda do número.<br>**Parâmetros:**<br>- number (number): Número.<br>**Retorno:**<br>- number (string) |
 ---
+
+<br> 
+
+# FileUtil
+
+**Objetivo:** Auxílio na manipulação de Arquivos.
+
+Importação:
+```
+import { FileUtil } from 'dts-backoffice-util';
+```
+
+Métodos:
+
+| Nome | Descrição |
+|-|-|
+| downladFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- fileContent (any): Conteúdo do Arquivo no formato Base64.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>**Retorno:** não há. |
+---
+
+Exemplo de Uso:
+```
+-- JavaScript --
+
+import { FileUtil } from 'dts-backoffice-util';
+
+this.servCustomer.getFile().subscribe((response: Object) => {
+
+  FileUtil.downladFile(response['content'], response['filename']);
+
+});
+
+-- Progress --
+
+DEFINE VARIABLE v_dir_arq AS CHARACTER NO-UNDO.
+DEFINE VARIABLE v_cod_arq AS CHARACTER NO-UNDO.
+DEFINE VARIABLE v_mtr_arq AS MEMPTR    NO-UNDO.
+DEFINE VARIABLE v_lch_arq AS LONGCHAR  NO-UNDO.
+
+ASSIGN v_dir_arq = "\\arpoador\Publico\"
+       v_cod_arq = "layout_pagfor Sistema DDA.pdf".
+
+COPY-LOB FROM FILE STRING(v_dir_arq + v_cod_arq) TO v_mtr_arq.
+ASSIGN v_lch_arq = BASE64-ENCODE(v_mtr_arq).
+
+oOutput = NEW JsonObject().
+oOutput:ADD("filename", v_cod_arq).
+oOutput:ADD("content",  v_lch_arq).
+```
 
 <br> 
 

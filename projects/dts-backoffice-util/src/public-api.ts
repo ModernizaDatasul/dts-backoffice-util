@@ -18,6 +18,7 @@ export * from './lib/utils/disclaimer.util';
 export * from './lib/utils/field-validation.util';
 export * from './lib/utils/filter-range.util';
 export * from './lib/utils/generic-functions.utils';
+export * from './lib/utils/file.util';
 // Utils
 
 // Interfaces
