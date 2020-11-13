@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.2.0 (10-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.2.1 (13-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br> 
 

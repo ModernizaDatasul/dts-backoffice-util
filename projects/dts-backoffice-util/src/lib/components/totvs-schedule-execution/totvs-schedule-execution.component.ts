@@ -160,7 +160,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
 
         // Executa hoje ou agendada
         this.rpwService.createRpw(this.jsonObject).subscribe(() => {
-            this.poNotification.success('Execução efetuada com sucesso !');
+            this.poNotification.success('Agendamento realizado com sucesso !');
         });
 
         if (this.model.repeatExecution) {

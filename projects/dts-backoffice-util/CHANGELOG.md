@@ -1,5 +1,10 @@
 # Changelog
 
+**2.2.1 (13-11-2020):**
+
+Correção:
+- **TotvsScheduleExecutionComponent** - Correção da mensagem de finalização do Agendamento, para: 'Agendamento realizado com sucesso !'.
+
 **2.2.0 (10-11-2020):**
 
 Melhorias:
