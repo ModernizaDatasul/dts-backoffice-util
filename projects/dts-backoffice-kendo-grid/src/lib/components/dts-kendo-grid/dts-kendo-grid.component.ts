@@ -29,6 +29,7 @@ import { DtsColumnConfigView } from './dts-kendo-grid-column.interface';
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy {
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
     @ViewChild('columnManagerTarget') private btColManager: ElementRef;
+    @ViewChild('btToolsTarget') private btTools: ElementRef;
 
     private currentRow: any = null;
 
@@ -63,6 +64,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     public arrowDirection = 'top-right';
     public kgPopupAct = new KgPopup({
         id: `idPopAct${this.create_UUID()}`, showHtml: true, showUser: false, height: 0, width: 0
+    });
+    public kgPopupTools = new KgPopup({
+        id: `idPopTls${this.create_UUID()}`, showHtml: true, showUser: false, height: 0, width: 0
     });
     public kgPopupColMng = new KgPopup({
         id: `idPopCoM${this.create_UUID()}`, showHtml: true, showUser: false, height: 0, width: 0
@@ -109,6 +113,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         window.addEventListener('scroll', this.onWindowScroll.bind(this), true);
 
         if (this.isHasActions(1)) { this.calcPopupSize(this.kgPopupAct); }
+        if (this.showCommandTools('tools')) { this.calcPopupSize(this.kgPopupTools); }
         if (this.columnManagerButton) { this.calcPopupSize(this.kgPopupColMng); }
     }
 
@@ -118,13 +123,12 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     private onWindowScroll() {
         if (this.isHasActions(1)) { this.hidePopup(this.kgPopupAct); }
-        if (this.columnManagerButton && this.kgPopupColMng && this.kgPopupColMng.showUser) {
-            this.setPopupPosition(this.kgPopupColMng, this.btColManager.nativeElement);
-        }
+        this.setPopupPositionByName('tools', null);
+        this.setPopupPositionByName('colMng', null);
     }
 
     public isShowToolbarGrid(): boolean {
-        return (this.addButton || this.exportButtons);
+        return (this.addButton);
     }
 
     private isEditGrid(): boolean {
@@ -317,7 +321,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const elGrid = document.getElementById(this.idGrid);
         if (!elGrid) { return; }
 
-        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
+        this.hideAllPopup();
 
         this.isMaximize = !this.isMaximize;
 
@@ -389,7 +393,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.EditedRow = this.addNewItem();
         this.cancelButton = true;
 
-        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
+        this.hideAllPopup();
 
         this.createFormGroup(true, this.EditedRow);
 
@@ -490,7 +494,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         this.tableEditIndex = rowIndex;
         this.cancelButton = true;
 
-        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
+        this.hideAllPopup();
 
         this.createFormGroup(false, this.EditedRow);
 
@@ -599,6 +603,19 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (this.isHasActions()) { return true; }
         if (this.maximizeButton) { return true; }
         if (this.columnManagerButton) { return true; }
+        return false;
+    }
+
+    public showCommandTools(tool: string): boolean {
+        const totTools =
+            (this.columnManagerButton ? 1 : 0) +
+            (this.maximizeButton ? 1 : 0) +
+            (this.exportButtons ? 2 : 0);
+
+        if (tool === 'any') { return totTools > 0; }
+        if (tool === 'tools') { return totTools > 1; }
+        if (tool === 'one') { return totTools === 1; }
+
         return false;
     }
 
@@ -725,6 +742,20 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     public onSelectAllChange(checkedState: SelectAllCheckboxState) {
     }
 
+    public onChooseBtExportExcel($event: MouseEvent) {
+        if (this.grid) {
+            this.grid.saveAsExcel();
+        }
+        this.hideAllPopup();
+    }
+
+    public onChooseBtExportPDF($event: MouseEvent) {
+        if (this.grid) {
+            this.grid.saveAsPDF();
+        }
+        this.hideAllPopup();
+    }
+
     public onClickActions($event: MouseEvent, row: any) {
         if (this.kgPopupAct.showUser) {
             this.hidePopup(this.kgPopupAct);
@@ -733,32 +764,50 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         this.currentRow = row;
 
+        this.hideAllPopup();
+
         this.kgPopupAct.showHtml = true;
         this.kgPopupAct.showUser = true;
-        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
 
         this.target = $event.target;
 
-        this.setPopupPosition(this.kgPopupAct, this.target);
+        this.setPopupPositionByName('act', this.target);
 
         this.clickoutListener = this.renderer.listen('document', 'click', (event: MouseEvent) => {
             this.closePopupOnClickout(event);
         });
     }
 
-    public onClickColumnManager($event: MouseEvent) {
+    public onChooseBtTools($event: MouseEvent) {
+        if (this.kgPopupTools.showUser) {
+            this.hidePopup(this.kgPopupTools);
+            return;
+        }
+
+        this.hideAllPopup();
+
+        this.kgPopupTools.showHtml = true;
+        this.kgPopupTools.showUser = true;
+
+        this.target = $event.target;
+
+        this.setPopupPositionByName('tools', this.target);
+    }
+
+    public onChooseColumnManager($event: MouseEvent) {
         if (this.kgPopupColMng.showUser) {
             this.hidePopup(this.kgPopupColMng);
             return;
         }
 
+        this.hideAllPopup();
+
         this.kgPopupColMng.showHtml = true;
         this.kgPopupColMng.showUser = true;
-        if (this.isHasActions(1)) { this.hidePopup(this.kgPopupAct); }
 
         this.target = $event.target;
 
-        this.setPopupPosition(this.kgPopupColMng, this.target);
+        this.setPopupPositionByName('colMng', this.target);
     }
 
     public onClickVisibleColumnManager(column: string, visible: boolean) {
@@ -778,6 +827,12 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
         this.saveColumnManager.emit(colList);
         this.hidePopup(this.kgPopupColMng);
+    }
+
+    private hideAllPopup() {
+        if (this.isHasActions(1)) { this.hidePopup(this.kgPopupAct); }
+        if (this.showCommandTools('tools')) { this.hidePopup(this.kgPopupTools); }
+        if (this.columnManagerButton) { this.hidePopup(this.kgPopupColMng); }
     }
 
     public hidePopup(kgPopup: KgPopup) {
@@ -805,7 +860,31 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         kgPopup.width = popupRef.getBoundingClientRect().width;
     }
 
+    private setPopupPositionByName(kgPopupName: string, target: any) {
+        let targetDest = target;
+        if (kgPopupName === 'act' && this.isHasActions(1)) {
+            this.setPopupPosition(this.kgPopupAct, targetDest);
+            return;
+        }
+
+        if (kgPopupName === 'tools' && this.showCommandTools('tools')) {
+            if (this.btTools) { targetDest = this.btTools.nativeElement; }
+            this.setPopupPosition(this.kgPopupTools, targetDest);
+            return;
+        }
+
+        if (kgPopupName === 'colMng' && this.columnManagerButton) {
+            if (this.btColManager) { targetDest = this.btColManager.nativeElement; }
+            if (this.showCommandTools('tools') && this.btTools) { targetDest = this.btTools.nativeElement; }
+            this.setPopupPosition(this.kgPopupColMng, targetDest);
+            return;
+        }
+    }
+
     private setPopupPosition(kgPopup: KgPopup, target: any) {
+        if (!kgPopup) { return; }
+        if (!kgPopup.showUser) { return; }
+
         const popupRef = document.getElementById(kgPopup.id);
         if (!popupRef) { return; }
 

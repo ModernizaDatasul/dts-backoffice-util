@@ -18393,13 +18393,29 @@ li.k-item.k-drag-clue {
     padding-right: 15px !important;
 }
 
-.d-column-manager-button {
+.d-grid-tools-bar {
+    padding: 0px;
+    color: #0c9abe;
+}
+
+.d-grid-bt-tools {
     float: right !important;
     color: var(--color-table-color-header);
     font-size: 16px;
-    padding: 0px 0px 0px 5px;
+    padding: 0px;
     background-color: transparent;
     border: none;
+}
+
+.d-grid-bt-tools-bar {
+    float: right !important;
+    color: var(--color-table-color-header);
+    font-size: 20px;
+    padding: 7px 7px 7px 7px;
+    background-color: transparent;
+    border: none;
+    width: auto;
+    height: auto;
 }
 
 .d-column-manager-container {
@@ -18454,15 +18470,6 @@ li.k-item.k-drag-clue {
 
 .d-calendar {
     white-space: normal;
-}
-
-.d-maximize-button {
-    float: right !important;
-    color: var(--color-table-color-header);
-    font-size: 16px;
-    padding: 0px;
-    background-color: transparent;
-    border: none;
 }
 
 .d-dts-kendo-grid {

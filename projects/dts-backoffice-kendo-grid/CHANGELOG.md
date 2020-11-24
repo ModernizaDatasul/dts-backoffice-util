@@ -1,5 +1,10 @@
 # Changelog
 
+**2.7.0 (24-11-2020):**
+
+Melhorias:
+- **Barra de Ferramentas (Grid Tools)** - As opções de "Maximizar/Minimizar", "Gerenciador de Colunas" e "Exportar (Excel/PDF)", foram reunidas em uma "Barra de Ferramentas", que é acessada através do botão de "Configuração", disponível no canto superior direito. Mas, a Barra somente estará disponível se for habilitada mais de uma opção. Se por exemplo, for habilitada somente a opção de "Gerenciador de Colunas", o acesso dele estará disponível diretamente no Grid (no lugar do botão de "Configuração").
+
 **2.6.0 / 2.6.1 / 2.6.2 (09-11-2020):**
 
 Melhorias:

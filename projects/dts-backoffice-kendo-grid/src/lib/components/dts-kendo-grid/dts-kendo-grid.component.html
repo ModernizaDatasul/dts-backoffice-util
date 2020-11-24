@@ -56,8 +56,6 @@
                      kendoGridToolbarTemplate>
             <button *ngIf="addButton" kendoGridAddCommand class="k-primary">{{ literals.add || localLiterals.add }}</button>
             <button *ngIf="cancelButton" class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
-            <button *ngIf="exportButtons" type="button" kendoGridExcelCommand><span class="k-icon k-i-file-excel"></span></button>
-            <button *ngIf="exportButtons" kendoGridPDFCommand><span class='k-icon k-i-file-pdf'></span></button>
         </ng-template>
 
         <kendo-grid-checkbox-column *ngIf="selectable"
@@ -193,23 +191,43 @@
         </kendo-grid-column>
 
         <kendo-grid-command-column *ngIf="isCommandColumnVisible() && viewColumnVisible" title="" width="80" locked="true">
-            <ng-template *ngIf="maximizeButton || columnManagerButton"
+            <ng-template *ngIf="showCommandTools('any')"
                          kendoGridHeaderTemplate>
-                <button *ngIf="columnManagerButton"
-                         class="d-column-manager-button po-icon po-icon-settings po-clickable"
-                         (click)="onClickColumnManager($event)"
-                         #columnManagerTarget>
-                </button>
 
-                <button *ngIf="maximizeButton && !isMaximize"
-                        class="d-maximize-button po-icon po-icon-zoom-in po-clickable"
-                        (click)="onChooseBtMaximize($event)">
-                </button>
+                <div *ngIf="showCommandTools('tools')">
+                    <button class="d-grid-bt-tools po-icon po-icon-settings po-clickable"
+                            (click)="onChooseBtTools($event)"
+                            #btToolsTarget>
+                    </button>
+                </div>
 
-                <button *ngIf="maximizeButton && isMaximize"
-                        class="d-maximize-button po-icon po-icon-zoom-out po-clickable"
-                        (click)="onChooseBtMaximize($event)">
-                </button>
+                <div *ngIf="showCommandTools('one')">
+                    <button *ngIf="exportButtons"
+                            class="d-grid-bt-tools k-icon k-i-file-excel po-clickable"
+                            (click)="onChooseBtExportExcel($event)">
+                    </button>
+
+                    <button *ngIf="exportButtons"
+                            class="d-grid-bt-tools po-icon po-icon-pdf po-clickable"
+                            (click)="onChooseBtExportPDF($event)">
+                    </button>                
+
+                    <button *ngIf="columnManagerButton"
+                            class="d-grid-bt-tools po-icon po-icon-parameters po-clickable"
+                            (click)="onChooseColumnManager($event)"
+                            #columnManagerTarget>
+                    </button>
+
+                    <button *ngIf="maximizeButton && isMaximize"
+                            class="d-grid-bt-tools po-icon po-icon-zoom-out po-clickable"
+                            (click)="onChooseBtMaximize($event)">
+                    </button>
+
+                    <button *ngIf="maximizeButton && !isMaximize"
+                            class="d-grid-bt-tools po-icon po-icon-zoom-in po-clickable"
+                            (click)="onChooseBtMaximize($event)">
+                    </button>
+                </div>
             </ng-template>
 
             <ng-template kendoGridCellTemplate let-data>
@@ -327,5 +345,43 @@
                 {{ literals.save || localLiterals.save }}
             </span>
         </div>
+    </div>
+</div>
+
+<div [id]="kgPopupTools.id"
+     class="po-popup"     
+     style="top: -300px; left: -300px; z-index: 200;"
+     [hidden]="!kgPopupTools.showHtml">
+
+    <ng-content select="[p-popup-header-template]"></ng-content>
+
+    <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
+
+    <div class="d-grid-tools-bar">
+        <button *ngIf="exportButtons"
+            class="d-grid-bt-tools-bar po-icon po-icon-pdf po-clickable"
+            (click)="onChooseBtExportPDF($event)">
+        </button>
+
+        <button *ngIf="exportButtons"
+            class="d-grid-bt-tools-bar k-icon k-i-file-excel po-clickable"
+            (click)="onChooseBtExportExcel($event)">
+        </button>
+
+        <button *ngIf="columnManagerButton"
+            class="d-grid-bt-tools-bar po-icon po-icon-parameters po-clickable"
+            (click)="onChooseColumnManager($event)"
+            #columnManagerTarget>
+        </button>
+
+        <button *ngIf="maximizeButton && isMaximize"
+            class="d-grid-bt-tools-bar po-icon po-icon-zoom-out po-clickable"
+            (click)="onChooseBtMaximize($event)">
+        </button>
+
+        <button *ngIf="maximizeButton && !isMaximize"
+            class="d-grid-bt-tools-bar po-icon po-icon-zoom-in po-clickable"
+            (click)="onChooseBtMaximize($event)">
+        </button>
     </div>
 </div>
