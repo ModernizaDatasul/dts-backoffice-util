@@ -603,6 +603,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         if (this.isHasActions()) { return true; }
         if (this.maximizeButton) { return true; }
         if (this.columnManagerButton) { return true; }
+        if (this.exportButtons) { return true; }
         return false;
     }
 
