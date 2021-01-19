@@ -1,5 +1,10 @@
 # Changelog
 
+**2.7.2 (19-01-2021):**
+
+Correção:
+- **Gerenciador de Colunas** - Ao disparar o evento **d-save-column-manager**, a lista passada será somente das colunas que estão disponíveis para manutenção (**locked = false**). Antes, passava todas as colunas.
+
 **2.7.0 / 2.7.1 (25-11-2020):**
 
 Melhorias:

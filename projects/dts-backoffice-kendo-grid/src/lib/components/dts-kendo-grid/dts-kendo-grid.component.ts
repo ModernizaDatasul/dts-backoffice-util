@@ -823,7 +823,9 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         const colList: Array<DtsColumnConfigView> = [];
 
         this.columns.map(col => {
-            colList.push({ column: col.column, visible: col.visible });
+            if (col.locked === undefined || col.locked === null || col.locked === false) {
+                colList.push({ column: col.column, visible: col.visible });
+            }
         });
 
         this.saveColumnManager.emit(colList);

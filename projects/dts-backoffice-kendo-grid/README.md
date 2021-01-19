@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.7.1 (25-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.7.2 (19-01-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -125,7 +125,7 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 | **(d-group-change)** | EventEmitter | Método disparador quando ocorrer o agrupamento das colunas. |
 | **(d-selection-change)** | EventEmitter | Método disparado quando a linha é selecionada. Este Método é utilizado em conjunto com o parâmetro "d-selectable". Ele recebe como parâmetro um objeto, contendo o atributo "data", que contêm o objeto da linha que foi selecionado. Caso o usuário clique na opção de selecionar todos (checkbox no topo da coluna de seleção), será enviado no atributo "data" a string fixa "ALL". |
 | **(d-maximize-change)** | EventEmitter | Método disparado quando o usuário clica no botão **"Maximizar"** do Grid (ver parâmetro **d-show-maximize**). Ele irá receber como parâmetro um **boolean**, indicando se o Grid foi "Maximizado" ou "Minimizado". |
-| **(d-save-column-manager)** | EventEmitter | Método disparado quando o usuário clica no botão **"Salvar"** do Gerenciador de Colunas. Este método deve ser utilizado para salvar a configuração de visualização das colunas. O método irá receber a lista de colunas, que é um Array do Objeto com as propriedades: **column (string)** e **visible (boolean)**. Veja um exemplo da implementação no tópico **Salvando a configuração do Gerenciador de Colunas**. |
+| **(d-save-column-manager)** | EventEmitter | Método disparado quando o usuário clica no botão **"Salvar"** do Gerenciador de Colunas. Este método deve ser utilizado para salvar a configuração de visualização das colunas. Ele recebe a lista de colunas disponíveis para manuteção (**locked = false**), que é um Array do Objeto com as propriedades: **column (string)** e **visible (boolean)**. Veja um exemplo da implementação no tópico **Salvando a configuração do Gerenciador de Colunas**. |
 | **(d-save-value)** | EventEmitter | Método disparado ao salvar dados do modo de edição da linha, recebendo o modelo que foi alterado. |
 |________________________|||
 
