@@ -1,5 +1,10 @@
 # Changelog
 
+**2.8.0 (28-01-2021):**
+
+Melhorias:
+- **Seleção de Linha** - Incluída propriedade **d-single-select**: Quando a seleção de linha está habilitada (**d-selectable = true**), indica que somente é possí­vel selecionar uma linha.
+
 **2.7.2 (19-01-2021):**
 
 Correção:

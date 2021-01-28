@@ -121,6 +121,15 @@ export abstract class DtsKendoGridBaseComponent {
         return this._selectable;
     }
 
+    /** Quando a seleção está habilitada, indica que somente é possível selecionar uma linha. */
+    private _singleSelect: boolean;
+    @Input('d-single-select') set singleSelect(singleSelect: boolean) {
+        this._singleSelect = singleSelect != null && singleSelect.toString() === '' ? true : this.convertToBoolean(singleSelect);
+    }
+    get singleSelect() {
+        return this._singleSelect;
+    }
+
     /** Habilita a edição de linha no Grid. */
     private _editable: boolean;
     @Input('d-editable') set editable(editable: boolean) {

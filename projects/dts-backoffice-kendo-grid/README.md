@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **2.7.2 (19-01-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.8.0 (28-01-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
@@ -113,6 +113,7 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 | **d-reorderable** | boolean | Habilita a mudança da ordem das colunas, através do clicar, arrastar e soltar o cabeçalho da coluna. |
 | **d-resizable** | boolean | Habilita a mudança de tamanho das colunas, através do clicar e arrastar o cabeçalho da coluna (final da coluna). |
 | **d-selectable** | boolean | Cria uma coluna no início do Grid para permitir a seleção de uma ou mais linhas. |
+| **d-single-select** | boolean | Quando a seleção de linha está habilitada (**d-selectable = true**), indica que somente é possí­vel selecionar uma linha. |
 | **d-editable** | boolean | Habilita a edição de linha no Grid.<br>Quando habilitado e o usuário estiver incluindo ou alterando uma linha, ao clicar em qualquer lugar fora desta linha, a inclusão/alteração será confirmar. É possível utilizar a teclas **"Enter"** para confirmar a inclusão/alteração, ou **"Esc"** para cancelar. Se a Toolbar do Grid estiver visível, também será apresentado o botão **"Cancelar"**, que tem a mesma ação do tecla **"Esc"**.<br>**Importante:** Se o Grid estiver em uma **po-modal**, informe o parâmetro **p-hide-close** na modal. Isto é necessário para que o evento de **"Esc"** funcione corretamente na edição da linha, se este parâmetro não for informado, o "Esc" irá fechar a modal. |
 | **d-literals** | Object | Objeto com as literais que serão utilizadas dentro do componente, caso não seja enviado será utilizado os valores de tradução que o componente já possui em português, inglês e espanhol. Ver abaixo o tópico **Literais do Componente** para verificar as literais disponíveis. |
 | **d-actions** | Array | Lista de ações que devem ser apresentadas nas linhas do Grid, funciona semelhante a p-actions do PO-UI. |

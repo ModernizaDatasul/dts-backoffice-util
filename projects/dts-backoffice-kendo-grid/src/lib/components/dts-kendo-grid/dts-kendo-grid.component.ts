@@ -44,10 +44,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
 
     public gridView: GridDataResult;
 
-    public selectableSettings = {
-        checkboxOnly: true,
-        mode: 'multiple'
-    };
+    public selectableSettings: any;
 
     public scrollable = 'none';
 
@@ -104,6 +101,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
                 this.validateSaveEventInDocument(target, key);
             });
 
+        this.initializeSelectable();
         this.initializeSorter();
         this.initializeGroups();
         this.initializeData();
@@ -680,6 +678,15 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
         };
 
         this.refreshGrid();
+    }
+
+    private initializeSelectable(): void {
+        if (this.selectable) {
+            this.selectableSettings = {
+                checkboxOnly: true,
+                mode: this.singleSelect ? 'single' : 'multiple'
+            };
+        }
     }
 
     private initializeSorter(): void {

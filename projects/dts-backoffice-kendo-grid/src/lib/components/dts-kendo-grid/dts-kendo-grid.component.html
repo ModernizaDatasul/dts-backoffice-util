@@ -60,7 +60,7 @@
 
         <kendo-grid-checkbox-column *ngIf="selectable"
             [width]="30"
-            [showSelectAll]="true">
+            [showSelectAll]="!singleSelect">
         </kendo-grid-checkbox-column>
 
         <kendo-grid-column *ngFor="let col of columns; let i = index"
