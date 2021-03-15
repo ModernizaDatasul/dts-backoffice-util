@@ -34,6 +34,12 @@ Segue abaixo as dependência utilizadas e as respectivas **versões homologadas*
 	"@progress/kendo-theme-default": "^2.63.0",
 ```
 
+**Instalação do Pacote:**
+
+```
+npm install dts-backoffice-kendo-grid
+```
+
 **Importar o módulo:**
 
 ```
@@ -63,7 +69,6 @@ Para que o Kendo Grid utilize o tema da TOTVS, deve deve ser importado o CSS no 
 "styles": [
   "node_modules/@totvs/po-theme/css/po-theme-default.min.css",
   "node_modules/@progress/kendo-theme-default/dist/all.css",
-  "node_modules/dts-backoffice-util/lib/css/kendo.min.css",
   "src/styles.css"
 ],
 ```

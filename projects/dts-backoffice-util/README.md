@@ -2,7 +2,27 @@
 
 ÚLTIMA VERSÃO: **2.2.1 (13-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
+<br>
+
+## Objetivo
+
+Biblioteca que engloba diversos componentes e serviços utilizados no desenvolvimento HTML/Angular com PO-UI.
+
+<br>
+
+## Pré-Requisitos
+
+**Instalação do Pacote:**
+
+```
+npm install dts-backoffice-util
+```
+
 <br> 
+
+# Componentes e Serviços Disponíveis
+
+<br>
 
 # TranslateService 
 
@@ -155,7 +175,7 @@ Parâmetros:
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
 | programName | string | Sim | Nome da API |
-| externalName | string | Sim | Nome da API completo, pasta + nome |
+| externalName | string | Sim | Nome da API completo, pasta + nome.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5 |
 | programVersion | string | Não | Versão do programa progress |
 | parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress |
