@@ -4,6 +4,7 @@
             class="po-sm-12 po-md-12 po-lg-12 po-xl-12"
             name="executionType"
             p-label="Data de Execução"
+            [p-disabled]="disabledParams"
             [(ngModel)]="model.executionType"
             [p-options]="executionTypeOptions"
             (p-change)="changeExecutionType()">
@@ -13,6 +14,7 @@
             class="po-sm-6 po-md-6 po-lg-6 po-xl-6"
             name="model.execAppointDate"
             p-label="Agendar para"
+            [p-disabled]="disabledParams"
             [(ngModel)]="model.execAppointDate">
         </po-datepicker>
 
@@ -24,6 +26,7 @@
             p-mask-format-model="true"
             p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
             p-error-pattern="Hora inválida"
+            [p-disabled]="disabledParams"
             [(ngModel)]="model.execAppointHour">
         </po-input>
     </div>
@@ -32,10 +35,11 @@
         <po-combo
             class="po-sm-12 po-md-12 po-lg-12 po-xl-12"
             name="executionServer"
-            p-field-label="des_servid_exec"
-            p-field-value="cod_servid_exec"
+            p-field-label="name"
+            p-field-value="code"
             p-label="Servidor de Execução"
-            p-placeholder="Servidor de Execucão"
+            p-placeholder="Servidor de Execução"
+            [p-disabled]="disabledParams"
             [(ngModel)]="model.executionServer"
             [p-filter-service]="rpwService">
         </po-combo>
@@ -49,13 +53,20 @@
             p-label-off="Não"
             p-label-on="Sim"
             [(ngModel)]="model.repeatExecution"
+            [p-disabled]="disabledParams"
             (click)="changeRepeatExecution()">
         </po-switch>
     </div>
 
     <div class="po-row" *ngIf="isRepeatExecution()">
+     
         <po-tabs>
-            <po-tab p-label="Diária" p-active (p-click)="setActiveTab(1)">
+
+            <po-tab 
+                p-label="Diária" 
+                [p-active]="getActiveTab(1)" 
+                (p-click)="setActiveTab(1)">
+
                 <div class="po-sm-6 po-md-6 po-lg-6 po-xl-6">
                     <po-radio-group 
                         class="po-sm-12 po-md-12 po-lg-12 po-xl-12"
@@ -63,11 +74,12 @@
                         p-label="Frequência"
                         p-columns=1
                         [(ngModel)]="model.frequency"
+                        [p-disabled]="disabledParams"
                         [p-options]="frequencyOptions"
                         (p-change)="changeTypeFrequency()">
                     </po-radio-group>
                 </div>
-
+        
                 <div class="po-sm-6 po-md-6 po-lg-6 po-xl-6">    
                     <po-input
                         class="po-sm-6 po-md-6 po-lg-6 po-xl-6"
@@ -77,9 +89,10 @@
                         p-mask-format-model="true"
                         p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                         p-error-pattern="Hora inválida"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.execAppointHourInit">
                     </po-input>
-
+        
                     <po-input *ngIf="isFrenquency()"
                         class="po-sm-6 po-md-6 po-lg-6 po-xl-6"
                         name="execAppointHourFinalDaily"
@@ -88,9 +101,10 @@
                         p-mask-format-model="true"
                         p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                         p-error-pattern="Hora inválida"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.execAppointHourFinal">
                     </po-input>
-
+        
                     <po-number *ngIf="isFrenquency()"
                         class="po-sm-5 po-md-5 po-lg-5 po-xl-5"
                         name="frequencyValueDaily"
@@ -99,26 +113,33 @@
                         p-maxlength="3"
                         p-min="0"
                         p-max="999"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.frequencyValue">
                     </po-number>
-
+        
                     <po-select *ngIf="isFrenquency()"
                         class="po-mt-3 po-sm-7 po-md-7 po-lg-7 po-xl-7"
                         name="frequencyTypeDaily"
                         p-label=""
                         [p-options]="frequencyTypeOptions"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.frequencyType">
                     </po-select>
                 </div>
             </po-tab>
 
-            <po-tab p-label="Semanal" (p-click)="setActiveTab(2)">
+            <po-tab 
+                p-label="Semanal"
+                [p-active]="getActiveTab(2)"
+                (p-click)="setActiveTab(2)">
+
                 <div class="po-row po-sm-12 po-md-12 po-lg-12 po-xl-12">
                     <po-multiselect
                         class="po-sm-12 po-md-12 po-lg-12 po-xl-12"
                         name="selectWeeklys"
                         p-label="Dias da Semana"
                         p-placeholder="Escolha os dias da semana"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.selectWeeklys"
                         [p-options]="weeklyOptions">
                     </po-multiselect>
@@ -131,6 +152,7 @@
                         p-label="Frequência"
                         p-columns=1
                         [(ngModel)]="model.frequency"
+                        [p-disabled]="disabledParams"
                         [p-options]="frequencyOptions"
                         (p-change)="changeTypeFrequency()">
                     </po-radio-group>
@@ -145,6 +167,7 @@
                         p-mask-format-model="true"
                         p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                         p-error-pattern="Hora inválida"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.execAppointHourInit">
                     </po-input>
 
@@ -156,6 +179,7 @@
                         p-mask-format-model="true"
                         p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                         p-error-pattern="Hora inválida"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.execAppointHourFinal">
                     </po-input>
 
@@ -167,6 +191,7 @@
                         p-maxlength="3"
                         p-min="0"
                         p-max="999"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.frequencyValue">
                     </po-number>
 
@@ -175,12 +200,17 @@
                         name="frequencyTypeWeekly"
                         p-label=""
                         [p-options]="frequencyTypeOptions"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.frequencyType">
                     </po-select>
                 </div>
             </po-tab>
 
-            <po-tab p-label="Mensal" (p-click)="setActiveTab(3)">
+            <po-tab 
+                p-label="Mensal" 
+                [p-active]="getActiveTab(3)" 
+                (p-click)="setActiveTab(3)">
+
                 <div class="po-row po-sm-12 po-md-12 po-lg-12 po-xl-12">
                     <po-number
                         class="po-sm-3 po-md-3 po-lg-3 po-xl-3"
@@ -190,6 +220,7 @@
                         p-maxlength="2"
                         p-min="0"
                         p-max="31"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.dayOfMonth">
                     </po-number>
                 </div>
@@ -201,6 +232,7 @@
                         p-label="Frequência"
                         p-columns=1
                         [(ngModel)]="model.frequency"
+                        [p-disabled]="disabledParams"
                         [p-options]="frequencyOptions"
                         (p-change)="changeTypeFrequency()">
                     </po-radio-group>
@@ -215,6 +247,7 @@
                         p-mask-format-model="true"
                         p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                         p-error-pattern="Hora inválida"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.execAppointHourInit">
                     </po-input>
 
@@ -226,6 +259,7 @@
                         p-mask-format-model="true"
                         p-pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                         p-error-pattern="Hora inválida"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.execAppointHourFinal">
                     </po-input>
 
@@ -237,6 +271,7 @@
                         p-maxlength="3"
                         p-min="0"
                         p-max="999"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.frequencyValue">
                     </po-number>
 
@@ -245,6 +280,7 @@
                         name="frequencyTypeWeekly"
                         p-label=""
                         [p-options]="frequencyTypeOptions"
+                        [p-disabled]="disabledParams"
                         [(ngModel)]="model.frequencyType">
                     </po-select>
                 </div>
@@ -256,6 +292,7 @@
         <po-button
             style="float: right;"
             p-label="Gerar Agendamento RPW"
+            [p-disabled]="disabledParams"
             (click)="executeSchedule()">
         </po-button>
     </div>

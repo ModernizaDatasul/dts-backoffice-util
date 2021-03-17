@@ -8,37 +8,27 @@ import { PoComboOption, PoComboFilter } from '@po-ui/ng-components';
 
 export class RpwService implements PoComboFilter {
 
-    private apiUrl = '/dts/datasul-rest/resources/prg/cdp/v1/genericsZoom';
+    private apiUrl = '/dts/datasul-rest/resources/prg/btb/v1/servidoresExecucao';
     private urlJobScheduler = '/dts/datasul-rest/resources/prg/framework/v1/jobScheduler';
     // private apiUrl = '/genericsZoom';
     // private urlJobScheduler = '/jobScheduler';
 
     constructor(public http: HttpClient) { }
 
-    public readonly filterRpw = {
-         fields: 'cod_servid_exec,des_servid_exec',
-         filter: 'cod_servid_exec',
-         filterZoom: 'cod_servid_exec',
-         order: 'cod_servid_exec',
-         table: 'servid_exec'
-    };
+    getFilteredData(params: any, filterParams?: any): Observable<Array<PoComboOption>> {
+        let url = this.apiUrl;
 
-    getFilteredData(param: any, appId: number): Observable<Array<PoComboOption>> {
-        const localParams = Object.assign({}, this.filterRpw);
-        let url  = `${this.apiUrl}?pageSize=10&page=1&table=${localParams.table}`;
-            url += `&fields=${localParams.fields}&order=${localParams.order}`;
-
-        if (param.value) {
-            url += `&${localParams.filterZoom}=*${param.value}*`;
+        if (params && params.value) {
+            url = `${url}?quickSearch=${params.value}`;
         }
 
-        return this.http.get(url, { })
-            .pipe(map((response: any) => this.convertToArrayComboOption(response.items, 'codServidExec', 'desServidExec')));
+        return this.http.get(`${url}`, { })
+            .pipe(map((response: any) => this.convertToArrayComboOption(response.items, 'code', 'name')));
     }
 
     getObjectByValue(value): Observable<PoComboOption> {
         return this.http.get(`${this.apiUrl}/${value}`)
-            .pipe(map(item => this.convertToPoComboOption(item, 'codServidExec', 'desServidExec')));
+            .pipe(map(item => this.convertToPoComboOption(item, 'code', 'name')));
     }
 
     createRpw(parameters: Object): Observable<any> {
@@ -66,5 +56,4 @@ export class RpwService implements PoComboFilter {
         };
     }
     /* COMBO */
-
 }

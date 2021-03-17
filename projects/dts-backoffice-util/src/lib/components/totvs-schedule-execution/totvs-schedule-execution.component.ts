@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { PoRadioGroupOption, PoLookupColumn, PoI18nService, PoNotificationService } from '@po-ui/ng-components';
-import { ParametersRpw } from './totvs-schedule-execution.model';
+import { ScheduleParameters } from './totvs-schedule-execution.model';
 import { NgForm } from '@angular/forms';
 import { RpwService } from './totvs-schedule-execution.service';
 
@@ -18,6 +18,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     @Input() programEMS5 = false;
     @Input() programVersion = '';
     @Input() parameters: [];
+    @Input() disabledParams = false;
     @Output() endExecution = new EventEmitter();
 
     constructor(
@@ -30,8 +31,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     frequencyOptions: Array<PoRadioGroupOption>;
     frequencyTypeOptions: Array<PoRadioGroupOption>;
     weeklyOptions: Array<PoRadioGroupOption>;
-    model: ParametersRpw;
-    columns: Array<PoLookupColumn>;
+    model: ScheduleParameters;
     private jsonObject: any = {};
 
     literals: any = {};
@@ -75,15 +75,15 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             { label: 'Sábado', value: 'Saturday' }
         ];
 
-        this.columns = [
-            { property: 'cod_servid_exec', label: 'Código' },
-            { property: 'des_servid_exec', label: 'Descrição' }
-        ];
-
-        this.model = new ParametersRpw();
+        this.model = new ScheduleParameters();
         this.model.executionType = 1;
-        this.model.activeTab = 1;
+        this.model.repeatType = 1;
         this.model.repeatExecution = false;
+    }
+
+    public setScheduleParameters(schParam: ScheduleParameters) {
+        if (!schParam) { return; }
+        this.model = schParam;
     }
 
     isExecutionSchedule(): boolean {
@@ -120,8 +120,12 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     changeTypeFrequency() {
     }
 
-    setActiveTab(codTab) {
-        this.model.activeTab = codTab;
+    getActiveTab(codTab: number) {
+        return (this.model.repeatType === codTab);
+    }
+
+    setActiveTab(codTab: number) {
+        this.model.repeatType = codTab;
     }
 
     addZero(i) {
@@ -132,7 +136,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     }
 
     executeSchedule() {
-
+        if (this.disabledParams) { return; }
         if (!this.validate()) { return; }
 
         this.jsonObject = {};
@@ -164,14 +168,14 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         });
 
         if (this.model.repeatExecution) {
-            if (this.model.activeTab === 1) {
+            if (this.model.repeatType === 1) {
                 this.jsonObject.daily = {
                     hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
                     minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm')
                 };
             }
 
-            if (this.model.activeTab === 2) {
+            if (this.model.repeatType === 2) {
                 this.jsonObject.weekly = {
                     hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
                     minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
@@ -179,7 +183,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
                 };
             }
 
-            if (this.model.activeTab === 3) {
+            if (this.model.repeatType === 3) {
                 this.jsonObject.monthly = {
                     hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
                     minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
@@ -205,7 +209,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             });
         }
 
-        this.endExecution.emit('endExecution');
+        this.endExecution.emit(this.model);
     }
 
     getHourOrMinute(value: string, type: string): number {
@@ -243,12 +247,12 @@ export class TotvsScheduleExecutionComponent implements OnInit {
                 return false;
             }
 
-            if (this.model.activeTab === 2 && (this.model.selectWeeklys.length === 0)) {
+            if (this.model.repeatType === 2 && (this.model.selectWeeklys.length === 0)) {
                 this.poNotification.error('Informar os dias da semana para a execução.');
                 return false;
             }
 
-            if (this.model.activeTab === 3 && (!this.model.dayOfMonth)) {
+            if (this.model.repeatType === 3 && (!this.model.dayOfMonth)) {
                 this.poNotification.error('Informar o dia para a execução.');
                 return false;
             }

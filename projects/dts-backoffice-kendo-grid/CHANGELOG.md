@@ -1,5 +1,10 @@
 # Changelog
 
+**2.8.1 (17-03-2021):**
+
+Documentação:
+- Atualização pré-requisitos. 
+
 **2.8.0 (28-01-2021):**
 
 Melhorias:

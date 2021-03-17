@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.2.1 (13-11-2020)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.3.0 (17-03-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -37,7 +37,7 @@ Métodos:
 
 | Nome | Descrição |
 |-|-|
-| getCurrentLanguage | Retorna o idioma corrente. Será considerando no primeiro momento a chave "user.language" do localStorage. Caso ela não exista ou seja inválida, será considerando o idioma parametrizado no Browse. Além disto, o idioma deve estar disponível na lista de suportados, conforme métodos "getSuportLanguage".<br>**Parâmetros:** Não há.<br>**Retorno:** string |
+| getCurrentLanguage | Retorna o idioma corrente. Será considerado no primeiro momento a chave "user.language" do localStorage. Caso ela não exista ou seja inválida, será considerado o idioma parametrizado no Browse. Além disso, o idioma deve estar disponível na lista de suportados, conforme métodos "getSuportLanguage".<br>**Parâmetros:** Não há.<br>**Retorno:** string |
 | getSuportLanguage | Retornar uma lista com os atuais idiomas suportados.<br>**Parâmetros:** Não há.<br>**Retorno:** Array(string) |
 ---
 
@@ -92,8 +92,8 @@ Métodos:
 | Nome | Descrição |
 |-|-|
 | callProgress | Executa uma tela Progress que esteja cadastrada no menu.<br>**Parâmetros:**<br>- program (object): Objeto com os seguintes atributos:<br>prg (string): Nome do programa no menu.<br>params (array(object)): Array de Objetos de Parâmetros. O objeto possui dois atributos: "type" com o tipo de dado (character, integer, logical, etc...). E "value" com o conteúdo.<br>**Retorno:** Não há. |
-| openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Parâmetros:**<br>- programName (string): Nome interno do Programa, no cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navagador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
-| sendNotification | Apresenta uma notificação ao usuário.<br>**Parâmetros:**<br>- notification (object): Objeto com os seguintes atributos:<br>type (string): Tipo de notificação (success, warning, error).<br>title (string): Titulo da Notificação.<br>detail (string): Descrição da Notificação.<br>**Retorno:** Não há. |
+| openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Parâmetros:**<br>- programName (string): Nome interno do Programa, no cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navegador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
+| sendNotification | Apresenta uma notificação ao usuário.<br>**Parâmetros:**<br>- notification (object): Objeto com os seguintes atributos:<br>type (string): Tipo de notificação (success, warning, error).<br>title (string): Título da Notificação.<br>detail (string): Descrição da Notificação.<br>**Retorno:** Não há. |
 ---
 
 Exemplo de uso:
@@ -123,7 +123,7 @@ this.menuDatasulService.sendNotification(notification);
 
 **Objetivo:** Componente para realização de agendamentos RPW.
 
-**Dependências:** Para usar esse componente deve ser instalado no projeto o pacote rxjs-compat. <br/>
+**Dependências:** Para usar esse componente deve ser instalado no projeto o pacote rxjs-compat.<br/>
 - **npm i rxjs-compat --save**
 
 **Importação:** No módulo da aplicação importar o módulo abaixo:
@@ -174,12 +174,78 @@ Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
-| programName | string | Sim | Nome da API |
+| programName | string | Sim | Nome da API. |
 | externalName | string | Sim | Nome da API completo, pasta + nome.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
-| programEMS5 | boolean | Não | Indica se o programa progress é do EMS5 |
-| programVersion | string | Não | Versão do programa progress |
-| parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress |
-| endExecution | EventEmitter | Não | Evento que será emitido ao finalizar o agendamento |
+| programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
+| programVersion | string | Não | Versão do programa progress. |
+| parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
+| disabledParams | boolean | Não | Quando for igual a **"Sim"**, irá desabilitar todos os campos do Agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
+| endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **ScheduleParameters**, contendo os parâmetros informados pelo usuário. |
+
+Métodos:
+
+| Nome | Descrição |
+|-|-|
+| setScheduleParameters | Atualiza as informações de agendamento com base no objeto que foi enviado como parâmetro.<br>**Parâmetros:**<br>- schParam (**ScheduleParameters**): Objeto com as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...).<br>**Retorno:** Não há. |
+
+Exemplo de Uso:
+
+Em conjunto com o parâmetro **endExecution** o método **setScheduleParameters** pode ser utilizado para salvar e recuperar as informações de agendamento informadas pelo usuário.
+
+```
+- HTML -
+<app-totvs-schedule-execution #schParam
+  ...
+  (endExecution)="endExecutionSchedule($event)">
+</app-totvs-schedule-execution>
+
+- TS -
+@ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
+...
+scheduleParams: ScheduleParameters;
+...
+ngOnInit(): void {
+  ...
+  this.loadLocalStorage();
+  this.schParam.setScheduleParameters(this.scheduleParms);
+  ...
+}
+
+endExecutionSchedule(event): void {
+  this.scheduleParams = event;
+  this.saveLocalStorage();
+}
+
+private saveLocalStorage(): void {
+  if (typeof (Storage) === 'undefined') { return; }
+  localStorage.setItem('param-maint.schParam', JSON.stringify(this.scheduleParams));
+}
+
+private loadLocalStorage(): void {
+  if (typeof (Storage) === 'undefined') { return; }
+  this.scheduleParams = JSON.parse(localStorage.getItem('param-maint.schParam'));
+}
+```
+
+Interfaces:
+
+ScheduleParameters
+| Nome | Tipo | Descrição | Valor - Label Valor |
+|-|-|-|-|
+| executionType | number | Tipo Execução | 1 - Executar Hoje<br>2 - Agendar Execução |
+| execAppointDate | date | Data Agendada | |
+| execAppointHour | string | Hora Agendada | |
+| executionServer | string | Servidor RPW | |
+| repeatExecution | boolean | Repetir Ocorrência | |
+| repeatType | number | Tipo Repetição | 1 - Diária<br>2 - Semanal<br>3 - Mensal |
+| frequency | string | Frequência | "no" - Uma vez no dia<br>"yes" - Várias vezes no dia |
+| frequencyValue | number | Quantidade da Frequência | |
+| frequencyType | string | Tipo Frequência | "hour" - Hora(s)<br>"minute" - Minuto(s) |
+| execAppointHourInit | string | Hora Inicial Frequência | |
+| execAppointHourFinal | string | Hora Final Frequência | |
+| selectWeeklys | Array | Dia da Semana<br>Frequência Semanal | Sunday - Domingo<br>Monday - Segunda<br>Tuesday - Terça<br>Wednesday - Quarta<br>Thursday - Quinta<br>Friday - Sexta<br>Saturday - Sábado |
+| dayOfMonth | number | Dia do Mês<br>Frequência Mensal | |
+
 ---
 
 <br>
@@ -308,7 +374,7 @@ IProperty
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
 | name | string | Sim | Nome do parâmetro |
-| value | string | Sim | Vaor do parâmetro |
+| value | string | Sim | Valor do parâmetro |
 ---
 
 Enums
@@ -364,7 +430,7 @@ Métodos:
 
 | Nome | Descrição |
 |-|-|
-| newBreadcrumb | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb de ser reiniciado.<br>**Parâmetros:** Não há.<br>**Retorno:** Não há. |
+| newBreadcrumb | "Reinicia" o breadcrumb quando necessário. Ex: Telas que possuem menu lateral, ao passar de um menu para outro, o breadcrumb deve ser reiniciado.<br>**Parâmetros:** Não há.<br>**Retorno:** Não há. |
 | addBreadcrumb | Adiciona um item ao breadcrumb, considerando a URL atual da tela.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- activatedRoute (ActivatedRoute): ActivedRoute da tela.<br>**Retorno:** Não há. |
 | addBreadcrumbURL | Adiciona um item ao breadcrumb, informando uma URL específica.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- url (string): URL específica.<br>**Retorno:** Não há. |
 | updBreadcrumbURL | Altera uma informação qualquer contida na URL do item informado.<br>**Parâmetros:**<br>- literal (string): Nome da tela que está no breadcrumb.<br>- valueOld (string): Valor a ser substituído.<br>- valueNew (string): Novo valor.<br>**Retorno:** Não há. |
@@ -394,7 +460,7 @@ Métodos:
 | isValidDate | Verifica se a data é válida.<br>**Parâmetros:**<br>- date (Date): Data.<br>**Retorno:**<br>- valid (boolean) |
 | ajustDate | Ajusta a data retornando no padrão do objeto Date.<br>**Parâmetros:**<br>- param (any): Data.<br>**Retorno:**<br>- date (date) |
 | ajustDateToModel | Ajusta a data para o padrão do objeto Date. Utilizado nos construtores dos modelos.<br>**Parâmetros:**<br>- object (object): Objeto que possui atributos do tipo data.<br>- fieldName (string): Nome do Atributo que possui a data.<br>**Retorno:**<br>- date (date) |
-| pad | Adicona zero a esquerda do número.<br>**Parâmetros:**<br>- number (number): Número.<br>**Retorno:**<br>- number (string) |
+| pad | Adiciona zero à esquerda do número.<br>**Parâmetros:**<br>- number (number): Número.<br>**Retorno:**<br>- number (string) |
 ---
 
 <br> 
