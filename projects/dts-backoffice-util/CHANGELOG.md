@@ -1,9 +1,9 @@
 # Changelog
 
-**2.3.0 (17-03-2021):**
+**2.3.0 / 2.3.1 (17-03-2021):**
 
 Melhorias:
-- **TotvsScheduleExecutionComponent**<br>- Para busca do Servidor RPW, passa a utilizar o endPoint oficial do framework (/dts/datasul-rest/resources/prg/btb/v1/servidoresExecucao).<br>- Novo parâmetro: **"disabledParams"**, utilizado para habilitar/desabilitar as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...).<br>- Novo método: **"setScheduleParameters"**, utilizado para enviar as informações do agendamento, que serão apresentadas na tela. Isto para, por exemplo, apresentar a última configuração realizada pelo usuário.<br>- Alterado o parâmetro **"endExecution"**, para enviar as informações do agendamento quando for disparado o método informado nele. Isto para, por exemplo, salvar as informações digitadas pelo usuário.<br>- Nova interface: **"ScheduleParameters"**, que descreve as informações recebidas no método **"setScheduleParameters"** e enviadas no método informado no parâmetro **"endExecution"**.
+- **TotvsScheduleExecutionComponent**<br>- Para busca do Servidor RPW, passa a utilizar o endPoint oficial do framework (/dts/datasul-rest/resources/prg/btb/v1/servidoresExecucao).<br>- Novo parâmetro: **"disabledParams"**, utilizado para habilitar/desabilitar as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...).<br>- Novo método: **"setScheduleParameters"**, utilizado para enviar as informações do agendamento, que serão apresentadas na tela. Isto para, por exemplo, apresentar a última configuração realizada pelo usuário.<br>- Alterado o parâmetro **"endExecution"**, para enviar as informações do agendamento quando for disparado o método informado nele. Isto para, por exemplo, salvar as informações digitadas pelo usuário.<br>- Nova interface: **"IScheduleParameters"**, que descreve as informações recebidas no método **"setScheduleParameters"** e enviadas no método informado no parâmetro **"endExecution"**.
 
 **2.2.1 (13-11-2020):**
 

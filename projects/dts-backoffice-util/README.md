@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.3.0 (17-03-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.3.1 (17-03-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -180,13 +180,13 @@ Parâmetros:
 | programVersion | string | Não | Versão do programa progress. |
 | parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
 | disabledParams | boolean | Não | Quando for igual a **"Sim"**, irá desabilitar todos os campos do Agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
-| endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **ScheduleParameters**, contendo os parâmetros informados pelo usuário. |
+| endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **IScheduleParameters**, contendo os parâmetros informados pelo usuário. |
 
 Métodos:
 
 | Nome | Descrição |
 |-|-|
-| setScheduleParameters | Atualiza as informações de agendamento com base no objeto que foi enviado como parâmetro.<br>**Parâmetros:**<br>- schParam (**ScheduleParameters**): Objeto com as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...).<br>**Retorno:** Não há. |
+| setScheduleParameters | Atualiza as informações de agendamento com base no objeto que foi enviado como parâmetro.<br>**Parâmetros:**<br>- schParam (**IScheduleParameters**): Objeto com as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...).<br>**Retorno:** Não há. |
 
 Exemplo de Uso:
 
@@ -202,7 +202,7 @@ Em conjunto com o parâmetro **endExecution** o método **setScheduleParameters*
 - TS -
 @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
 ...
-scheduleParams: ScheduleParameters;
+scheduleParams: IScheduleParameters;
 ...
 ngOnInit(): void {
   ...
@@ -229,7 +229,7 @@ private loadLocalStorage(): void {
 
 Interfaces:
 
-ScheduleParameters
+IScheduleParameters
 | Nome | Tipo | Descrição | Valor - Label Valor |
 |-|-|-|-|
 | executionType | number | Tipo Execução | 1 - Executar Hoje<br>2 - Agendar Execução |

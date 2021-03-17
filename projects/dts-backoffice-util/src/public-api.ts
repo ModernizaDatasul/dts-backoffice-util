@@ -28,6 +28,7 @@ export * from './lib/interfaces/filter-range.interface';
 
 // Schedule Execution
 export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.component';
+export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.model';
 export * from './lib/dts-backoffice-util.module';
 // Schedule Execution
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { PoRadioGroupOption, PoLookupColumn, PoI18nService, PoNotificationService } from '@po-ui/ng-components';
-import { ScheduleParameters } from './totvs-schedule-execution.model';
+import { PoRadioGroupOption, PoI18nService, PoNotificationService } from '@po-ui/ng-components';
+import { IScheduleParameters, ScheduleParameters } from './totvs-schedule-execution.model';
 import { NgForm } from '@angular/forms';
 import { RpwService } from './totvs-schedule-execution.service';
 
@@ -81,7 +81,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         this.model.repeatExecution = false;
     }
 
-    public setScheduleParameters(schParam: ScheduleParameters) {
+    public setScheduleParameters(schParam: IScheduleParameters) {
         if (!schParam) { return; }
         this.model = schParam;
     }
