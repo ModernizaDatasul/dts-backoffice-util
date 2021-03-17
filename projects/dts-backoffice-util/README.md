@@ -207,7 +207,7 @@ scheduleParams: ScheduleParameters;
 ngOnInit(): void {
   ...
   this.loadLocalStorage();
-  this.schParam.setScheduleParameters(this.scheduleParms);
+  this.schParam.setScheduleParameters(this.scheduleParams);
   ...
 }
 
