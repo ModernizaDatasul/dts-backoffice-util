@@ -1,5 +1,10 @@
 # Changelog
 
+**2.4.0 (25-03-2021):**
+
+Melhorias:
+- **DisclaimerUtil** - Incluído o método **makeDisclaimerFromMultiSelectNumber**, para geração de Disclaimer a partir de um Multi-Select, onde o Label é uma String, mas o valor é um número. Desta forma, quando incluído no Filtro, irá apresentar os Labels, mas internamente irá guardar os valores numéricos.
+
 **2.3.0 / 2.3.1 (17-03-2021):**
 
 Melhorias:

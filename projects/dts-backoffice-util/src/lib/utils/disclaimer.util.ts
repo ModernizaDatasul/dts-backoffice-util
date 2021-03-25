@@ -113,6 +113,38 @@ export class DisclaimerUtil {
         };
     }
 
+    public makeDisclaimerFromMultiSelectNumber(property: string, value: Array<any>, options: Array<any>,
+        length = 0, hideClose = false): PoDisclaimer {
+        let lstLabels = '';
+        let lstValues = '';
+        let opt = null;
+
+        if (!value || !options) {
+            return { label: '', property: '', value: '' };
+        }
+
+        if (value.length === 0 || (length > 0 && value.length === length)) {
+            lstLabels = this.literals['all'];
+            lstValues = 'all';
+        } else {
+            value.map(item => {
+                if (lstLabels !== '') { lstLabels = `${lstLabels}, `; }
+                if (lstValues !== '') { lstValues = `${lstValues},`; }
+
+                opt = options.find(itOpt => itOpt.value === item);
+                lstLabels = `${lstLabels}${opt ? opt.label : item}`;
+                lstValues = `${lstValues}${item}`;
+            });
+        }
+
+        return {
+            hideClose,
+            label: `${this.literals[property]}: ${lstLabels}`,
+            property: `${property}`,
+            value: `${lstValues}`
+        };
+    }
+
     public makeDisclaimerFromCheckboxGroup(property: string, value: Array<string>, length = 0, hideClose = false): PoDisclaimer {
         let lstLabels = '';
         let lstValues = '';
