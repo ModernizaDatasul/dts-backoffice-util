@@ -19,6 +19,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     @Input() programVersion = '';
     @Input() parameters: [];
     @Input() disabledParams = false;
+    @Input() loading = false;
     @Output() endExecution = new EventEmitter();
 
     constructor(
@@ -163,7 +164,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         this.jsonObject.executionParameter.parametros[4].parametros_negocio = this.parameters;
 
         // Executa hoje ou agendada
-        this.rpwService.createRpw(this.jsonObject).subscribe(() => {
+        this.rpwService.createRpw(this.jsonObject, this.loading).subscribe(() => {
             this.poNotification.success('Agendamento realizado com sucesso !');
         });
 
@@ -205,7 +206,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             }
 
             // Executa a diária, semanal ou mensal
-            this.rpwService.createRpw(this.jsonObject).subscribe(() => {
+            this.rpwService.createRpw(this.jsonObject, this.loading).subscribe(() => {
             });
         }
 

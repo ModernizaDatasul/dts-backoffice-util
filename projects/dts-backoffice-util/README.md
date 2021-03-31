@@ -180,6 +180,7 @@ Parâmetros:
 | programVersion | string | Não | Versão do programa progress. |
 | parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
 | disabledParams | boolean | Não | Quando for igual a **"Sim"**, irá desabilitar todos os campos do Agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
+| loading | boolean | Não | Quando for igual a **"Sim"**, irá apresentar a tela de "loading" no momento da criação da agenda até o retorno do serviço. |
 | endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **IScheduleParameters**, contendo os parâmetros informados pelo usuário. |
 
 Métodos:

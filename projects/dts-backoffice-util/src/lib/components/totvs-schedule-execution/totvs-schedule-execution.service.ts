@@ -8,6 +8,8 @@ import { PoComboOption, PoComboFilter } from '@po-ui/ng-components';
 
 export class RpwService implements PoComboFilter {
 
+    private headers = { headers: { 'X-PO-Screen-Lock': 'true' } };
+
     private apiUrl = '/dts/datasul-rest/resources/prg/btb/v1/servidoresExecucao';
     private urlJobScheduler = '/dts/datasul-rest/resources/prg/framework/v1/jobScheduler';
     // private apiUrl = '/genericsZoom';
@@ -31,12 +33,14 @@ export class RpwService implements PoComboFilter {
             .pipe(map(item => this.convertToPoComboOption(item, 'code', 'name')));
     }
 
-    createRpw(parameters: Object): Observable<any> {
+    createRpw(parameters: Object, loading: boolean): Observable<any> {
         const params = JSON.parse(JSON.stringify(parameters).replace(/\\\\/g, '*|'));
 
-        return this.http.post(
-            `${this.urlJobScheduler}`, params
-        );
+        if (loading) {
+            return this.http.post(`${this.urlJobScheduler}`, params, this.headers);
+        } else {
+            return this.http.post(`${this.urlJobScheduler}`, params);
+        }
     }
 
     /* COMBO */
