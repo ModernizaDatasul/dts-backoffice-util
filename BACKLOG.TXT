@@ -1,0 +1,55 @@
+Tratar nesta versão:
+- X
+
+Tratar nas próximas verões:
+
+-----
+GERAL
+-----
+Melhoria: Migrar ModernizaDatasul para Git/npm da TOTVS.
+
+--------
+DTS-UTIL
+--------
+
+ERROS:
+- profileService: Testar no v11 em build - dá erro (Anthony).
+- Disclaimer: Label Date - Format conforme usuário.
+- TotvsSchedule: Não trata Tradução.
+
+MELHORIAS:
+- openPath: Abrir na mesma aba do menu.
+- dtsUtils: Verificar msg de Warning na Compilação Produção.
+
+REESTRUTURAÇÃO:
+- Disclaimer: Ter as próprias literais.
+
+--------------
+DTS-KENDO-GRID
+--------------
+
+ERROS:
+- Exportação PDF: Problemas em acentos (Lediel).
+- Exportação Excel: Não formata conforme o tipo (Lediel).
+- d-editable + campo tipa "boolean": No Angular 11, a edição não está funcionando
+- grid + modal: Filtro não funciona, não é possível clicar no input para digitar algo (Lediel).
+- d-editable + campo tipo "number": Não respeita o formato do campo, permitindo vários caracteres.
+- d-editable + campo tipo "label": Não mostra o valor depois da edição.
+- d-editable + campo tipa "boolean": Se clicar bem em cima do check-box, não entra na edição linha.
+- filtro + campo tipo "date": Quando esta na resolução "celular", o Calendário aparece como um modal. Escolher uma data, ele fecha o filtro.
+
+MELHORIAS:
+- d-editable + d-selectable: Na edição, se tiver "seleção", esconder o check-box.
+- grid: Rever scroll lateral, não é usual (tem que ir para o último registro).
+- grid: Mesmo com valor fixo, alguns parâmetros obriga passar como "[". Exemplo: d-filterable="false", ele mostra o filtro.
+- d-editable: No tab da última coluna editável, disparar o "enter" para salvar a linha (Lediel).
+- d-editable + campo tipo "number": Na edição ter uma propriedade "step" para indicar de quando aumenta as setinhas na edição de linha (Lediel).
+- grid: Coluna do tipo "Link".
+- grid: Mudar cor do conteúdo.
+- grid: Detalhe da Linha (dropdown).
+- d-sortable: Não funciona dinâmico (precisa funcionar ?).
+- d-editable + campo tipo "label": Deveria ser um combo-box.
+
+REESTRUTURAÇÃO:
+- d-actions - Substituir o "PoTableAction" por um próprio dtsKendo - Atualizar documentação.
+

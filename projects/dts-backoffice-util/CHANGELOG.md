@@ -3,7 +3,7 @@
 **2.4.1 (31-03-2021):**
 
 Melhorias:
-- **TotvsScheduleExecutionComponent**<br>- Incluído um novo parâmetro chamado **loading** para indicar que, ao executar a criação da agenda, a tela seja travada até o retorno do serviço.
+- **TotvsScheduleExecutionComponent** - Incluído um novo parâmetro chamado **loading** para indicar que, ao executar a criação da agenda, a tela seja travada até o retorno do serviço.
 
 **2.4.0 (25-03-2021):**
 
