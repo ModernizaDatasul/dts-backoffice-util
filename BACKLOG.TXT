@@ -1,7 +1,7 @@
 Tratar nesta versão:
 - X
 
-Tratar nas próximas verões:
+Tratar nas próximas versões:
 
 -----
 GERAL
@@ -41,11 +41,11 @@ ERROS:
 MELHORIAS:
 - d-editable + d-selectable: Na edição, se tiver "seleção", esconder o check-box.
 - grid: Rever scroll lateral, não é usual (tem que ir para o último registro).
-- grid: Mesmo com valor fixo, alguns parâmetros obriga passar como "[". Exemplo: d-filterable="false", ele mostra o filtro.
+- grid: Mesmo com valor fixo, alguns parâmetros obrigam passar como "[". Exemplo: d-filterable="false", ele mostra o filtro.
 - d-editable: No tab da última coluna editável, disparar o "enter" para salvar a linha (Lediel).
 - d-editable + campo tipo "number": Na edição ter uma propriedade "step" para indicar de quando aumenta as setinhas na edição de linha (Lediel).
 - grid: Coluna do tipo "Link".
-- grid: Mudar cor do conteúdo.
+- grid: Mudar a cor do conteúdo.
 - grid: Detalhe da Linha (dropdown).
 - d-sortable: Não funciona dinâmico (precisa funcionar ?).
 - d-editable + campo tipo "label": Deveria ser um combo-box.
