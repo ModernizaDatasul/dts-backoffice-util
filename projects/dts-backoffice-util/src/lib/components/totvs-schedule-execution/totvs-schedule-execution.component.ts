@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { PoRadioGroupOption, PoI18nService, PoNotificationService } from '@po-ui/ng-components';
+import { PoRadioGroupOption, PoI18nService, PoNotificationService, PoLookupColumn } from '@po-ui/ng-components';
 import { IScheduleParameters, ScheduleParameters } from './totvs-schedule-execution.model';
 import { NgForm } from '@angular/forms';
 import { RpwService } from './totvs-schedule-execution.service';
@@ -32,6 +32,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     frequencyOptions: Array<PoRadioGroupOption>;
     frequencyTypeOptions: Array<PoRadioGroupOption>;
     weeklyOptions: Array<PoRadioGroupOption>;
+    zoomRpwServiceColumns: Array<PoLookupColumn>;
     model: ScheduleParameters;
     private jsonObject: any = {};
 
@@ -76,6 +77,11 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             { label: 'Sábado', value: 'Saturday' }
         ];
 
+        this.zoomRpwServiceColumns = [
+            { property: 'code', label: 'Servidor', type: 'string', width: '20%' },
+            { property: 'name', label: 'Descrição', type: 'string', width: '80%' }
+        ];
+
         this.model = new ScheduleParameters();
         this.model.executionType = 1;
         this.model.repeatType = 1;
@@ -85,6 +91,10 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     public setScheduleParameters(schParam: IScheduleParameters) {
         if (!schParam) { return; }
         this.model = schParam;
+    }
+
+    fieldRpwServiceFormat(value) {
+        return `${value.code} - ${value.name}`;
     }
 
     isExecutionSchedule(): boolean {

@@ -32,17 +32,19 @@
     </div>
 
     <div class="po-row po-sm-12 po-md-12 po-lg-12 po-xl-12">
-        <po-combo
+        <po-lookup
             class="po-sm-12 po-md-12 po-lg-12 po-xl-12"
             name="executionServer"
-            p-field-label="name"
-            p-field-value="code"
             p-label="Servidor de Execução"
             p-placeholder="Servidor de Execução"
+            [p-columns]="zoomRpwServiceColumns"
+            [p-field-format]="fieldRpwServiceFormat"
+            [p-filter-service]="rpwService"
+            p-field-label="name"
+            p-field-value="code"
             [p-disabled]="disabledParams"
-            [(ngModel)]="model.executionServer"
-            [p-filter-service]="rpwService">
-        </po-combo>
+            [(ngModel)]="model.executionServer">
+        </po-lookup>
     </div>
 
     <div class="po-row po-sm-12 po-md-12 po-lg-12 po-xl-12">

@@ -1,5 +1,10 @@
 # Changelog
 
+**2.5.0 (19-08-2021):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** - O campo "Servidor de Execução" utilizava o componente de "combo" para selecionar o servidor. Ele foi alterado para utilizar o componente de "lookup", desta forma, passa a ter um "Zoom" onde o usuário pode visualizar/filtrar/selecionar o servidor desejado. 
+
 **2.4.1 (31-03-2021):**
 
 Melhorias:

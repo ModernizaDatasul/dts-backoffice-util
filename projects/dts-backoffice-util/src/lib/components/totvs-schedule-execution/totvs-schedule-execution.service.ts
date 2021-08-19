@@ -1,12 +1,10 @@
-import { map } from 'rxjs/internal/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PoComboOption, PoComboFilter } from '@po-ui/ng-components';
+import { PoLookupFilteredItemsParams } from '@po-ui/ng-components';
 
 @Injectable()
-
-export class RpwService implements PoComboFilter {
+export class RpwService {
 
     private headers = { headers: { 'X-PO-Screen-Lock': 'true' } };
 
@@ -17,20 +15,21 @@ export class RpwService implements PoComboFilter {
 
     constructor(public http: HttpClient) { }
 
-    getFilteredData(params: any, filterParams?: any): Observable<Array<PoComboOption>> {
-        let url = this.apiUrl;
+    getFilteredItems(params: PoLookupFilteredItemsParams): Observable<any> {
+        const urlParams = new Array<string>();
 
-        if (params && params.value) {
-            url = `${url}?quickSearch=${params.value}`;
+        urlParams.push(`pageSize=${params.pageSize.toString()}`);
+        urlParams.push(`page=${params.page.toString()}`);
+
+        if (params.filter && params.filter.length > 0) {
+            urlParams.push(`quickSearch=${params.filter}`);
         }
 
-        return this.http.get(`${url}`, { })
-            .pipe(map((response: any) => this.convertToArrayComboOption(response.items, 'code', 'name')));
+        return this.http.get(`${this.apiUrl}?${urlParams.join('&')}`);
     }
 
-    getObjectByValue(value): Observable<PoComboOption> {
-        return this.http.get(`${this.apiUrl}/${value}`)
-            .pipe(map(item => this.convertToPoComboOption(item, 'code', 'name')));
+    getObjectByValue(id: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/${id}`, this.headers);
     }
 
     createRpw(parameters: Object, loading: boolean): Observable<any> {
@@ -42,22 +41,4 @@ export class RpwService implements PoComboFilter {
             return this.http.post(`${this.urlJobScheduler}`, params);
         }
     }
-
-    /* COMBO */
-    convertToArrayComboOption(items: Array<any>, key: string, value: string): Array<PoComboOption> {
-        if (items && items.length > 0) {
-            return items.map(item => this.convertToPoComboOption(item, key, value));
-        }
-
-        return [];
-    }
-
-    convertToPoComboOption(item: any, key: string, value: string): PoComboOption {
-        item = item || {};
-        return {
-            value: item[key] || undefined,
-            label: item[value] || undefined
-        };
-    }
-    /* COMBO */
 }
