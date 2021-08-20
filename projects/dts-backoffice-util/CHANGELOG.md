@@ -1,6 +1,9 @@
 # Changelog
 
-**2.5.0 (19-08-2021):**
+**2.5.0 / 2.5.1 (20-08-2021):**
+
+Correção:
+- **TotvsScheduleExecutionComponent** - Em algumas momentos, ao selecionar a opção "Repetir ocorrência?", quando o campo "Hora Início" era apresentado, o conteúdo ficava "piscando" e não era possível editar o valor.
 
 Melhorias:
 - **TotvsScheduleExecutionComponent** - O campo "Servidor de Execução" utilizava o componente de "combo" para selecionar o servidor. Ele foi alterado para utilizar o componente de "lookup", desta forma, passa a ter um "Zoom" onde o usuário pode visualizar/filtrar/selecionar o servidor desejado. 

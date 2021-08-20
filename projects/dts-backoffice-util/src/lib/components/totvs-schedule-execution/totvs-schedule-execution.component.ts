@@ -112,8 +112,8 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     changeRepeatExecution() {
         const date = new Date();
 
-        this.model.execAppointHourInit = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
-        this.model.execAppointHourFinal = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
+        if (!this.model.execAppointHourInit) { this.model.execAppointHourInit = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`; }
+        if (!this.model.execAppointHourFinal) { this.model.execAppointHourFinal = `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`; }
         this.model.selectWeeklys = [];
         this.model.dayOfMonth = 0;
         this.model.frequency = 'no';
