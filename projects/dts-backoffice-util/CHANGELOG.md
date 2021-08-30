@@ -1,5 +1,10 @@
 # Changelog
 
+**2.6.0 (30-08-2021):**
+
+Melhorias:
+- **TotvsScheduleExecutionService** - Novo serviço que possibilita criar, de forma simplificada, agendamentos que serão executados "agora" no RPW, via código (sem tela). E também um método que permite "monitorar" a execução do agendamento, verificando o status da execução, até que ele seja finalizado.
+
 **2.5.0 / 2.5.1 (20-08-2021):**
 
 Correção:

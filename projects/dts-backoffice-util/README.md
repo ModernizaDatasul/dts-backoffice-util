@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.5.1 (20-08-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.6.0 (30-08-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -174,8 +174,8 @@ Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
-| programName | string | Sim | Nome da API. |
-| externalName | string | Sim | Nome da API completo, pasta + nome.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
+| programName | string | Sim | Nome do Programa (nome no menu). |
+| externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
 | parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
@@ -246,6 +246,109 @@ IScheduleParameters
 | execAppointHourFinal | string | Hora Final Frequência | |
 | selectWeeklys | Array | Dia da Semana<br>Frequência Semanal | Sunday - Domingo<br>Monday - Segunda<br>Tuesday - Terça<br>Wednesday - Quarta<br>Thursday - Quinta<br>Friday - Sexta<br>Saturday - Sábado |
 | dayOfMonth | number | Dia do Mês<br>Frequência Mensal | |
+
+<br>
+
+# TotvsScheduleExecutionService
+
+**Objetivo:** Serviço que disponibiliza métodos para geração de agendamento e acompanhamento do RPW.
+
+Métodos:
+
+| Nome | Descrição |
+|-|-|
+| createExecutionForNow | Cria de forma simplificada (poucos parâmetros) um agendamento no RPW, para ser executado "agora" e sem repetição.<br>**Parâmetros:**<br>- executionParams (**IExecutionParameters**): Objeto com as informações necessárias para execução do agendamento (Servidor RPW, Programa a ser Executado, etc...).<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar a criação do agendamento.<br>**Retorno:** Objeto com as informações do Agendamento (Data de Criação, Número do Agendamento (**jobScheduleID**), etc...). |
+| followUpExecution | Utilizado para acompanhar a execução do agendamento realizado no RPW, verificando o status da execução, até que ele seja finalizado.<br>**Parâmetros:**<br>- jobScheduleID (string): ID do Agendamento que se deseja acompanhar.<br>- intervalNum (number): Tempo em milisegundos para verificação do status do agendamento. Por exemplo, se for informado **5000**, será verificado o status do agendamento em 5 e 5 segundos até a executação terminar.<br>- fncCallBack (Function): Método que será executado após a tela receber o status da execução do agendamento. Ele será executado várias vezes até a execução terminar, no intervalo de tempo determinado no parâmetro **intervalNum**. Este método irá receber um objeto da interface **IExecutionStatus** com o status da execução. O método deverá retornar um valor **boolean** indicando se o processo deve continuar sendo monitorado ou não. Se for retornado "false", o agendamento não será mais monitorado. Observação: Isto não afeta a execução do agendamento no RPW, ele continuará executando normalmente.<br>**Retorno:** Não há. |
+
+Exemplo de Uso:
+
+Segue abaixo um exemplo da geração de um agendamento e acompanhamento da execução dele.
+
+```
+private schedExecSubscription$: Subscription;
+
+constructor(
+  ...
+  private scheduleExecution: TotvsScheduleExecutionService
+}
+
+createSchedule(): void {
+  // Criar um Agendamento para ser Executado "agora"
+  const execParam = new ExecutionParameters();
+  execParam.executionServer = this.executionServer;
+  execParam.programName = 'api_executa_carga_dados_carol';
+  execParam.externalName = 'api_executa_carga_dados_carol';
+  execParam.programEMS5 = true;
+  execParam.programVersion = '1.00.00.001';
+  execParam.businessParams = [
+    { chave: 'cTipoCarga', valor: 'register', tipo: 'character' },
+    { chave: 'lCargaTotal', valor: false, tipo: 'logical' },
+    { chave: 'dDataCorte', valor: null, tipo: 'date' }
+  ];
+
+  this.schedExecSubscription$ = this.scheduleExecution
+    .createExecutionForNow(execParam, true)
+    .subscribe((response: any) => {
+
+      // Guarda o ID do Agendamento para fazer o acompanhamento
+      this.jobScheduleID = response.jobScheduleID;
+
+      this.followUp();
+    });
+}
+
+followUp(): void {
+  // Inicia o Acompanhamento
+  this.scheduleExecution.followUpExecution(this.jobScheduleID, 5000, this.followUpCallBack.bind(this));
+}
+
+followUpCallBack(execStatus: IExecutionStatus): boolean {
+  // Verifica o Status do Agendamento
+  switch (execStatus.status) {
+    case 'PENDING': // Ainda não iniciou
+
+      console.log('Esta esperando para executar...');
+      break;
+
+    case 'RUNNING': // Em execução
+
+      console.log('Esta rodando...');
+      break;
+
+    case 'SUCCESS': // Terminou OK
+
+      console.log('Terminou OK...');
+      break;
+
+    case 'FAILURE': // Terminou com Erro
+
+      console.log('Terminou com o erro:', execStatus.error);
+      break;
+  }
+
+  return true; // Continua monitorando - retornar "false" para parar o monitoramento
+}
+```
+
+Interfaces:
+
+IExecutionParameters
+| Nome | Tipo | Obrigatório | Descrição |
+|-|-|-|-|
+| executionServer | string | Sim | Código do Servidor RPW. |
+| programName | string | Sim | Nome do Programa (nome no menu). |
+| externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
+| programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
+| programVersion | string | Não | Versão do programa progress. |
+| businessParams | array | Não | Objeto representando a Temp-Table que será enviada ao progress. Ver exemplo do objeto **parametersRpw** no **TotvsScheduleExecutionComponent**. |
+
+IExecutionStatus
+| Nome | Tipo | Descrição |
+|-|-|-|
+| startedDate | Date | Data e hora em que o agendamento iniciou a execução no RPW. |
+| executionID | string | Código do Pedido de Execução. Pode ser utilizado para, por exemplo, apresentar ao usuário, assim ele pode realizar a consulta dos detalhes da execução através do Monitor de Pedido de Execução (programa padrão do Foundation). |
+| error | string | Quando o status for igual a **'FAILURE'**, esta propriedade terá a descrição do erro. |
+| status | string | Status da execução, podendo ser:<br>- PENDING: O agendamento está enfileirado, aguardando o início da execução.<br>- RUNNING: O agendamento está em execução.<br>- SUCCESS: O agendamento terminou corretamente, sem erros.<br>- FAILURE: O agendamento terminou com erro. A descrição do erro estará disponível na propriedade **error**. Observação: Caso não exista uma agendamento com o **jobScheduleID** informado, também será retornar este status de erro. |
 
 ---
 

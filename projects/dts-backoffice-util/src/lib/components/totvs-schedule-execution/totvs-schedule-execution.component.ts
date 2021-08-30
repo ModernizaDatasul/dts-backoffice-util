@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { PoRadioGroupOption, PoI18nService, PoNotificationService, PoLookupColumn } from '@po-ui/ng-components';
 import { IScheduleParameters, ScheduleParameters } from './totvs-schedule-execution.model';
 import { NgForm } from '@angular/forms';
-import { RpwService } from './totvs-schedule-execution.service';
+import { TotvsScheduleExecutionService } from './totvs-schedule-execution.service';
 
 @Component({
     selector: 'app-totvs-schedule-execution',
@@ -24,7 +24,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
 
     constructor(
         public poI18nService: PoI18nService,
-        public rpwService: RpwService,
+        public rpwService: TotvsScheduleExecutionService,
         public poNotification: PoNotificationService) {
     }
 
@@ -139,11 +139,10 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         this.model.repeatType = codTab;
     }
 
-    addZero(i) {
-        if (i < 10) {
-            i = '0' + i;
-        }
-        return i;
+    addZero(num: number): string {
+        let str = `${num}`;
+        if (num < 10) { str = `0${num}`; }
+        return str;
     }
 
     executeSchedule() {
@@ -174,7 +173,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         this.jsonObject.executionParameter.parametros[4].parametros_negocio = this.parameters;
 
         // Executa hoje ou agendada
-        this.rpwService.createRpw(this.jsonObject, this.loading).subscribe(() => {
+        this.rpwService.createExecution(this.jsonObject, this.loading).subscribe(() => {
             this.poNotification.success('Agendamento realizado com sucesso !');
         });
 
@@ -216,7 +215,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             }
 
             // Executa a diária, semanal ou mensal
-            this.rpwService.createRpw(this.jsonObject, this.loading).subscribe(() => {
+            this.rpwService.createExecution(this.jsonObject, this.loading).subscribe(() => {
             });
         }
 
