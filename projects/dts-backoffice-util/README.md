@@ -275,7 +275,7 @@ constructor(
 createSchedule(): void {
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
-  execParam.executionServer = this.executionServer;
+  execParam.executionServer = 'rpwFinanc';
   execParam.programName = 'api_executa_carga_dados_carol';
   execParam.externalName = 'api_executa_carga_dados_carol';
   execParam.programEMS5 = true;
