@@ -1,5 +1,10 @@
 # Changelog
 
+**2.7.0 (06-09-2021):**
+
+Melhorias:
+- **FileUtil** - Novo método **downloadData** que realiza a criação e o download de um arquivo CSV gerado a partir de um listagem de dados (criada diretamente no FrontEnd ou retornada do BackEnd). Este método pode ser utilizado para, por exemplo, exportar os dados de um Grid.
+
 **2.6.0 (30-08-2021):**
 
 Melhorias:
@@ -36,7 +41,7 @@ Correção:
 **2.2.0 (10-11-2020):**
 
 Melhorias:
-- **FileUtil** - Nova biblioteca para controle de Arquivo, onde foi disponibilizado o método **downladFile** para realizar o download de Arquivos provenientes do BackEnd.
+- **FileUtil** - Nova biblioteca para controle de Arquivo, onde foi disponibilizado o método **downloadFile** para realizar o download de Arquivos provenientes do BackEnd.
 
 **2.1.1 / 2.1.2 (09-11-2020):**
 

@@ -3,9 +3,23 @@ export class FileUtil {
     constructor(
     ) { }
 
-    static downladFile(datab64: any, fileName: string, contentType?: string): void {
+    static downloadFile(datab64: any, fileName: string, contentType?: string): void {
         const dataBlob = this.b64toBlob(datab64, contentType);
         this.download(dataBlob, fileName);
+    }
+
+    static downloadData(data: Array<any>, dwldDataParam: IDownloadDataParams = null): void {
+        if (!data) { return; }
+
+        if (!dwldDataParam) { dwldDataParam = new DownloadDataParams(); }
+        if (!dwldDataParam.fileName) { dwldDataParam.fileName = 'data.csv'; }
+        if (!dwldDataParam.literals) { dwldDataParam.literals = {}; }
+        if (!dwldDataParam.columnDelimiter) { dwldDataParam.columnDelimiter = ';'; }
+        if (!dwldDataParam.columnList) { dwldDataParam.columnList = []; }
+        if (!dwldDataParam.columnExclude) { dwldDataParam.columnExclude = []; }
+
+        const datab64 = btoa(this.jsonToString(data, dwldDataParam));
+        this.downloadFile(datab64, dwldDataParam.fileName, 'text/csv');
     }
 
     private static download(file: Blob, fileName: string): void {
@@ -48,4 +62,77 @@ export class FileUtil {
         const blob = new Blob(byteArrays, { type: contentType });
         return blob;
     }
+
+    private static jsonToString(jsonData: Array<any>, dwldDataParam: IDownloadDataParams): string {
+        if (!jsonData || jsonData.length === 0) { return ''; }
+
+        const lineDelimiter = '\n';
+
+        let columnHeader = null;
+        const keys = [];
+        let includeKey: boolean;
+        Object.keys(jsonData[0]).forEach(key => {
+            includeKey = true;
+
+            if (dwldDataParam.columnList.length > 0 && dwldDataParam.columnList.indexOf(key) === -1) {
+                includeKey = false;
+            }
+            if (dwldDataParam.columnExclude.length > 0 && dwldDataParam.columnExclude.indexOf(key) !== -1) {
+                includeKey = false;
+            }
+
+            if (includeKey) {
+                keys.push(key);
+                columnHeader = (!columnHeader) ? '' : columnHeader + dwldDataParam.columnDelimiter;
+                columnHeader += (dwldDataParam.literals[key]) ? dwldDataParam.literals[key] : key;
+            }
+        });
+
+        const lineStr = jsonData.reduce((accLineStr, currentItem) => {
+            let first = true;
+            let columnValue = null;
+
+            keys.forEach(key => {
+                if (!first) { accLineStr += dwldDataParam.columnDelimiter; }
+
+                columnValue = currentItem[key];
+                if (columnValue === null || columnValue === undefined) { columnValue = ''; }
+                switch (typeof (columnValue)) {
+                    case 'number':
+                        columnValue = columnValue.toLocaleString();
+                        break;
+                    case 'boolean':
+                        columnValue = (dwldDataParam.literals[`${columnValue}`]) ?
+                            dwldDataParam.literals[`${columnValue}`] : columnValue;
+                        break;
+                    case 'object':
+                        columnValue = JSON.stringify(columnValue);
+                }
+                accLineStr += columnValue;
+
+                first = false;
+            });
+
+            return accLineStr + lineDelimiter;
+
+        }, columnHeader + lineDelimiter);
+
+        return lineStr;
+    }
+}
+
+export interface IDownloadDataParams {
+    fileName: string;
+    literals: any;
+    columnDelimiter: string;
+    columnList: Array<string>;
+    columnExclude: Array<string>;
+}
+
+export class DownloadDataParams implements IDownloadDataParams {
+    fileName: string;
+    literals: any;
+    columnDelimiter: string;
+    columnList: Array<string>;
+    columnExclude: Array<string>;
 }

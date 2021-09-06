@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.6.0 (30-08-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.7.0 (06-09-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -91,7 +91,7 @@ Métodos:
 
 | Nome | Descrição |
 |-|-|
-| callProgress | Executa uma tela Progress que esteja cadastrada no menu.<br>**Parâmetros:**<br>- program (object): Objeto com os seguintes atributos:<br>prg (string): Nome do programa no menu.<br>params (array(object)): Array de Objetos de Parâmetros. O objeto possui dois atributos: "type" com o tipo de dado (character, integer, logical, etc...). E "value" com o conteúdo.<br>**Retorno:** Não há. |
+| callProgress | Executa uma tela Progress que esteja cadastrada no menu.<br>**Parâmetros:**<br>- program (object): Objeto com os seguintes atributos:<br>prg (string): Nome do programa no menu.<br>params (Array(object)): Array de Objetos de Parâmetros. O objeto possui dois atributos: "type" com o tipo de dado (character, integer, logical, etc...). E "value" com o conteúdo.<br>**Retorno:** Não há. |
 | openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Parâmetros:**<br>- programName (string): Nome interno do Programa, no cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navegador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
 | sendNotification | Apresenta uma notificação ao usuário.<br>**Parâmetros:**<br>- notification (object): Objeto com os seguintes atributos:<br>type (string): Tipo de notificação (success, warning, error).<br>title (string): Título da Notificação.<br>detail (string): Descrição da Notificação.<br>**Retorno:** Não há. |
 ---
@@ -178,7 +178,7 @@ Parâmetros:
 | externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
-| parameters | array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
+| parameters | Array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
 | disabledParams | boolean | Não | Quando for igual a **"Sim"**, irá desabilitar todos os campos do Agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
 | loading | boolean | Não | Quando for igual a **"Sim"**, irá apresentar a tela de "loading" no momento da criação da agenda até o retorno do serviço. |
 | endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **IScheduleParameters**, contendo os parâmetros informados pelo usuário. |
@@ -340,7 +340,7 @@ IExecutionParameters
 | externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
-| businessParams | array | Não | Objeto representando a Temp-Table que será enviada ao progress. Ver exemplo do objeto **parametersRpw** no **TotvsScheduleExecutionComponent**. |
+| businessParams | Array | Não | Objeto representando a Temp-Table que será enviada ao progress. Ver exemplo do objeto **parametersRpw** no **TotvsScheduleExecutionComponent**. |
 
 IExecutionStatus
 | Nome | Tipo | Descrição |
@@ -582,7 +582,8 @@ Métodos:
 
 | Nome | Descrição |
 |-|-|
-| downladFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- fileContent (any): Conteúdo do Arquivo no formato Base64.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>**Retorno:** não há. |
+| downloadFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- fileContent (any): Conteúdo do Arquivo no formato Base64.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>**Retorno:** não há. |
+| downloadData | Realiza a criação e o download de um arquivo CSV gerado a partir de um listagem de dados (criada diretamente no FrontEnd ou retornada do BackEnd). Este método pode ser utilizado para, por exemplo, exportar os dados de um Grid.<br>**Parâmetros:**<br>- data (Array): Um Array com a listagem de dados, por exemplo, uma lista de clientes.<br>- dwldDataParam (IDownloadDataParams): Parâmetros de configuração do arquivo. Este parâmetro é opcional, caso ele não seja informado, serão assumidos valores padrões de configuração, conforme descrito na inteface **IDownloadDataParams**.<br>**Retorno:** não há. |
 ---
 
 Exemplo de Uso:
@@ -591,14 +592,35 @@ Exemplo de Uso:
 
 import { FileUtil } from 'dts-backoffice-util';
 
-this.servCustomer.getFile().subscribe((response: Object) => {
+downloadFile() {
+  this.servCustomerSubscription$ = this.servCustomer
+    .getFile()  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
+    .subscribe((response: Object) => {
 
-  FileUtil.downladFile(response['content'], response['filename']);
+      FileUtil.downloadFile(response['content'], response['filename']);
 
-});
+    });
+}
+
+downloadList() {
+  this.servCustomerSubscription$ = this.servCustomer
+    .query([], [], 1, 999) // Método padrão de Query do Serviço de Cliente
+    .subscribe((response: TotvsResponse<ICustomer>) => {
+
+      const dwldDataParam = new DownloadDataParams();
+      dwldDataParam.fileName = 'clientes.csv';
+      dwldDataParam.columnDelimiter = ';';
+      dwldDataParam.literals = this.literals;
+      dwldDataParam.columnList = ['shortName', 'name', 'country', 'status', 'tax'];
+
+      FileUtil.downloadData(response.items, dwldDataParam);
+
+    });
+}
 
 -- Progress --
 
+// Conteúdo do Método que BackEnd que retorna o Arquivo
 DEFINE VARIABLE v_dir_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_cod_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_mtr_arq AS MEMPTR    NO-UNDO.
@@ -614,6 +636,18 @@ oOutput = NEW JsonObject().
 oOutput:ADD("filename", v_cod_arq).
 oOutput:ADD("content",  v_lch_arq).
 ```
+
+Interfaces:
+
+IDownloadDataParams
+
+| Nome | Tipo | Obrigatório | Descrição |
+|-|-|-|-|
+| fileName | string | Não | Nome do Arquivo. Caso não seja informado será usado o nome **"data.csv"**. |
+| literals | any | Não | Objeto de Literais que será utilizado para tradução do Cabeçalho e do conteúdo dos campos do tipo Lógico. Nele, deverão existir literais que sejam iguais as propriedades da listagem. Por exemplo, se for uma listagem de Clientes, que possua uma propriedade chamada shortName, deverá existir uma literal com este nome. Também, deve existir as literais **"true"** e **"false"** para tradução dos campos lógicos. Caso não seja informado, o cabeçalho será gerado com os nomes das propriedades. |
+| columnDelimiter | string | Não | Caracter utilizado para separação das colunas. Caso não seja informado, será utilizado o caracter **";"**. |
+| columnList | Array(string) | Não | Lista das colunas que devem ser exportadas para o arquivo. Caso não seja informada, serão exportadas todas as colunas da listagem. |
+| columnExclude | Array(string) | Não | Lista das colunas que não devem ser exportadas para o arquivo. Caso não seja informada, serão exportadas todas as colunas da listagem. |
 
 <br> 
 
