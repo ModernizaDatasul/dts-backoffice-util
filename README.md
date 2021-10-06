@@ -2,6 +2,8 @@
 
 [**Documentação do Dts Kendo GRID**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/README.md)
 
+[**Projeto para Testes das Bibliotecas**](https://github.com/ModernizaDatasul/dts-backoffice-util-test)
+
 **Guia de contribuição**
 - Os componentes e utils dessa biblioteca são utilizados em várias squads, tenha responsabilidade na alteração
 

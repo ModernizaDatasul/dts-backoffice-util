@@ -46,7 +46,7 @@ MELHORIAS:
 - d-editable + campo tipo "number": Na edição ter uma propriedade "step" para indicar de quando aumenta as setinhas na edição de linha (Lediel).
 - grid: Coluna do tipo "Link".
 - grid: Mudar a cor do conteúdo.
-- grid: Detalhe da Linha (dropdown).
+- grid: Detalhe da Linha (dropdown) - https://www.telerik.com/kendo-angular-ui/components/grid/master-detail/
 - d-sortable: Não funciona dinâmico (precisa funcionar ?).
 - d-editable + campo tipo "label": Deveria ser um combo-box.
 
