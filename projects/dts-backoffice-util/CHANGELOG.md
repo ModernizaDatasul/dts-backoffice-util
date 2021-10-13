@@ -1,5 +1,13 @@
 # Changelog
 
+**2.8.0 (13-10-2021):**
+
+Melhorias:
+- **TotvsScheduleExecutionService**<br>- Novos métodos para consulta do status atual da agenda: Pelo jobScheduleID - Id Interno (**getExecutionByJobScheduleID**) ou executionID - Número da Agenda (**getExecutionByExecutionID**).<br>- O método para acompanhamento de execução (**followUpExecution**) foi substituído por dois novos métodos, onde é possível indicar, a partir de que código deve ser feito o acompanhamento: Pelo jobScheduleID - Id Interno (**followUpExcByJobScheduleID**) ou executionID - Número da Agenda (**followUpExcByExecutionID**).
+
+Breaking Changes:
+- Método **followUpExecution** - Renomeado para **followUpExcByJobScheduleID**. Os parâmetros e o comportamento do método, continuam os mesmos.
+
 **2.7.0 (06-09-2021):**
 
 Melhorias:

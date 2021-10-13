@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.7.0 (06-09-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.8.0 (13-10-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -257,15 +257,22 @@ Métodos:
 
 | Nome | Descrição |
 |-|-|
-| createExecutionForNow | Cria de forma simplificada (poucos parâmetros) um agendamento no RPW, para ser executado "agora" e sem repetição.<br>**Parâmetros:**<br>- executionParams (**IExecutionParameters**): Objeto com as informações necessárias para execução do agendamento (Servidor RPW, Programa a ser Executado, etc...).<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar a criação do agendamento.<br>**Retorno:** Objeto com as informações do Agendamento (Data de Criação, Número do Agendamento (**jobScheduleID**), etc...). |
-| followUpExecution | Utilizado para acompanhar a execução do agendamento realizado no RPW, verificando o status da execução, até que ele seja finalizado.<br>**Parâmetros:**<br>- jobScheduleID (string): ID do Agendamento que se deseja acompanhar.<br>- intervalNum (number): Tempo em milisegundos para verificação do status do agendamento. Por exemplo, se for informado **5000**, será verificado o status do agendamento em 5 e 5 segundos até a executação terminar.<br>- fncCallBack (Function): Método que será executado após a tela receber o status da execução do agendamento. Ele será executado várias vezes até a execução terminar, no intervalo de tempo determinado no parâmetro **intervalNum**. Este método irá receber um objeto da interface **IExecutionStatus** com o status da execução. O método deverá retornar um valor **boolean** indicando se o processo deve continuar sendo monitorado ou não. Se for retornado "false", o agendamento não será mais monitorado. Observação: Isto não afeta a execução do agendamento no RPW, ele continuará executando normalmente.<br>**Retorno:** Não há. |
+| createExecutionForNow | Cria de forma simplificada (poucos parâmetros) um agendamento no RPW, para ser executado "agora" e sem repetição.<br>**Parâmetros:**<br>- executionParams (**IExecutionParameters**): Objeto com as informações necessárias para execução do agendamento (Servidor RPW, Programa a ser Executado, etc...).<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar a criação do agendamento.<br>**Retorno:** Objeto com as informações do Agendamento (Data de Criação, ID interno do Agendamento (**jobScheduleID**), etc...). |
+| getExecutionByJobScheduleID | Retorna os dados e status de um agendamento com base no seu código interno: **JobScheduleID**.<br>**Parâmetros:**<br>- jobScheduleID (string): Código interno da agenda.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar a busca do agendamento.<br>**Retorno:** response (Observable(IExecutionStatus)): Objeto com as informações do Agendamento (Data de Criação, ID interno do Agendamento (**jobScheduleID**), Número da Agenda (**executionID**) etc...).| 
+| getExecutionByExecutionID | Retorna os dados e status de um agendamento com base no número da agenda: **executionID**.<br>**Parâmetros:**<br>- executionID (string): Número da agenda.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar a busca do agendamento.<br>**Retorno:** response (Observable(IExecutionStatus)): Objeto com as informações do Agendamento (Data de Criação, ID interno do Agendamento (**jobScheduleID**), Número da Agenda (**executionID**) etc...).|
+| followUpExcByJobScheduleID | Utilizado para acompanhar a execução do agendamento realizado no RPW, verificando o status da execução, até que ele seja finalizado.<br>**Parâmetros:**<br>- jobScheduleID (string): ID interno do Agendamento que se deseja acompanhar.<br>- intervalNum (number): Tempo em milisegundos para verificação do status do agendamento. Por exemplo, se for informado **5000**, será verificado o status do agendamento em 5 e 5 segundos até a execução terminar.<br>- fncCallBack (Function): Método que será executado após a tela receber o status da execução do agendamento. Ele será executado várias vezes até a execução terminar, no intervalo de tempo determinado no parâmetro **intervalNum**. Este método irá receber um objeto da interface **IExecutionStatus** com o status da execução. O método deverá retornar um valor **boolean** indicando se o processo deve continuar sendo monitorado ou não. Se for retornado "false", o agendamento não será mais monitorado. **Observação**: Isto não afeta a execução do agendamento no RPW, ele continuará executando normalmente.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar o acompanhamento do agendamento.<br>**Retorno:** Não há. |
+| followUpExcByExecutionID | Utilizado para acompanhar a execução do agendamento realizado no RPW, verificando o status da execução, até que ele seja finalizado.<br>**Parâmetros:**<br>- executionID (string): Número do Agendamento que se deseja acompanhar.<br>- intervalNum (number): Tempo em milisegundos para verificação do status do agendamento. Por exemplo, se for informado **5000**, será verificado o status do agendamento em 5 e 5 segundos até a execução terminar.<br>- fncCallBack (Function): Método que será executado após a tela receber o status da execução do agendamento. Ele será executado várias vezes até a execução terminar, no intervalo de tempo determinado no parâmetro **intervalNum**. Este método irá receber um objeto da interface **IExecutionStatus** com o status da execução. O método deverá retornar um valor **boolean** indicando se o processo deve continuar sendo monitorado ou não. Se for retornado "false", o agendamento não será mais monitorado. **Observação**: Isto não afeta a execução do agendamento no RPW, ele continuará executando normalmente.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar o acompanhamento do agendamento.<br>**Retorno:** Não há. |
 
 Exemplo de Uso:
 
-Segue abaixo um exemplo da geração de um agendamento e acompanhamento da execução dele.
+Segue abaixo exemplos da geração de agendamento, busca e acompanhamento da execução.
 
 ```
 private schedExecSubscription$: Subscription;
+
+jobScheduleID: string;
+executionID: string;
+execStatus: string;
 
 constructor(
   ...
@@ -273,6 +280,7 @@ constructor(
 }
 
 createSchedule(): void {
+
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
   execParam.executionServer = 'rpwFinanc';
@@ -292,14 +300,55 @@ createSchedule(): void {
 
       // Guarda o ID do Agendamento para fazer o acompanhamento
       this.jobScheduleID = response.jobScheduleID;
-
-      this.followUp();
     });
 }
 
-followUp(): void {
-  // Inicia o Acompanhamento
-  this.scheduleExecution.followUpExecution(this.jobScheduleID, 5000, this.followUpCallBack.bind(this));
+getExecution(type: string): void {
+
+  if (type === 'jobScheduleID') {
+    this.schedExecSubscription$ = this.scheduleExecution
+      .getExecutionByJobScheduleID(this.jobScheduleID, true)
+      .subscribe((response: IExecutionStatus) => {
+
+        if (response) {
+          // Guarda o Número do Agendamento e o Status
+          this.executionID = response.executionID;
+          this.execStatus = response.status;
+        } else {
+          this.executionID = 'Não Encontrado !';
+          this.execStatus = '';
+        }
+      });
+  }
+
+  if (type === 'executionID') {
+    this.schedExecSubscription$ = this.scheduleExecution
+      .getExecutionByExecutionID(this.executionID, true)
+      .subscribe((response: IExecutionStatus) => {
+
+        if (response) {
+          // Guarda o ID interno do Agendamento e o Status
+          this.jobScheduleID = response.jobScheduleID;
+          this.execStatus = response.status;          
+        } else {
+          this.jobScheduleID = 'Não Encontrado !';
+          this.execStatus = '';
+        }
+      });
+  }
+}
+
+followUp(type: string): void {
+
+  if (type === 'jobScheduleID') {
+    // Inicia o Acompanhamento
+    this.scheduleExecution.followUpExcByJobScheduleID(this.jobScheduleID, 5000, this.followUpCallBack.bind(this));
+  }
+
+  if (type === 'executionID') {
+    // Inicia o Acompanhamento
+    this.scheduleExecution.followUpExcByExecutionID(this.executionID, 5000, this.followUpCallBack.bind(this));
+  }
 }
 
 followUpCallBack(execStatus: IExecutionStatus): boolean {
@@ -345,10 +394,11 @@ IExecutionParameters
 IExecutionStatus
 | Nome | Tipo | Descrição |
 |-|-|-|
+| jobScheduleID | string | ID Interno do Agendamento. |
+| executionID | string | Número da Agenda (código da execução). Pode ser utilizado para, por exemplo, apresentar ao usuário, assim ele pode realizar a consulta dos detalhes da execução através do Monitor de Pedido de Execução (programa padrão do Foundation). |
 | startedDate | Date | Data e hora em que o agendamento iniciou a execução no RPW. |
-| executionID | string | Código do Pedido de Execução. Pode ser utilizado para, por exemplo, apresentar ao usuário, assim ele pode realizar a consulta dos detalhes da execução através do Monitor de Pedido de Execução (programa padrão do Foundation). |
 | error | string | Quando o status for igual a **'FAILURE'**, esta propriedade terá a descrição do erro. |
-| status | string | Status da execução, podendo ser:<br>- PENDING: O agendamento está enfileirado, aguardando o início da execução.<br>- RUNNING: O agendamento está em execução.<br>- SUCCESS: O agendamento terminou corretamente, sem erros.<br>- FAILURE: O agendamento terminou com erro. A descrição do erro estará disponível na propriedade **error**. Observação: Caso não exista uma agendamento com o **jobScheduleID** informado, também será retornar este status de erro. |
+| status | string | Status da execução, podendo ser:<br>- PENDING: O agendamento está enfileirado, aguardando o início da execução.<br>- RUNNING: O agendamento está em execução.<br>- SUCCESS: O agendamento terminou corretamente, sem erros.<br>- FAILURE: O agendamento terminou com erro. A descrição do erro estará disponível na propriedade **error**. Observação: Caso não exista um agendamento com o ID informado, também será retornar este status de erro. |
 
 ---
 

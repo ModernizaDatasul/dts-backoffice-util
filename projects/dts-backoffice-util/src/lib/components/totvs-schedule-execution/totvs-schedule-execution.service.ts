@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { PoLookupFilteredItemsParams } from '@po-ui/ng-components';
-import { ExecutionStatus, IExecutionParameters } from './totvs-schedule-execution.model';
+import { ExecutionStatus, IExecutionParameters, IExecutionStatus } from './totvs-schedule-execution.model';
 
 @Injectable()
 export class TotvsScheduleExecutionService {
@@ -79,9 +80,21 @@ export class TotvsScheduleExecutionService {
         }
     }
 
-    getExecutionByJobScheduleID(jobScheduleID: string, loading: boolean): Observable<any> {
+    getExecutionByJobScheduleID(jobScheduleID: string, loading = false): Observable<IExecutionStatus> {
         const url = `${this.urlJobExecution}?jobScheduleID=${jobScheduleID}`;
+        return this.getExecution(url, loading).pipe(
+            map((response) => this.transformExecution('jobScheduleID', response))
+        );
+    }
 
+    getExecutionByExecutionID(executionID: string, loading = false): Observable<IExecutionStatus> {
+        const url = `${this.urlJobExecution}/${executionID}`;
+        return this.getExecution(url, loading).pipe(
+            map((response) => this.transformExecution('executionID', response))
+        );
+    }
+
+    private getExecution(url: string, loading: boolean): Observable<any> {
         if (loading) {
             return this.http.get(url, this.headers);
         } else {
@@ -89,60 +102,105 @@ export class TotvsScheduleExecutionService {
         }
     }
 
-    followUpExecution(jobScheduleID: string, intervalNum: number, fncCallBack: Function): void {
+    private transformExecution(type: string, response: any): IExecutionStatus {
+        if (!response || !response.items || response.items.length === 0) { return; }
+        response = response.items[0];
+
+        const execStatus = new ExecutionStatus();
+        execStatus.jobScheduleID = response.jobScheduleID;
+        execStatus.executionID = response.executionID;
+        execStatus.startedDate = response.startedDate;
+        execStatus.error = response.error;
+        execStatus.status = response.status;
+
+        return execStatus;
+    }
+
+    followUpExcByJobScheduleID(jobScheduleID: string, intervalNum: number, fncCallBack: Function, loading = false): void {
+        this.followUpExecution('jobScheduleID', jobScheduleID, intervalNum, fncCallBack, loading);
+    }
+
+    followUpExcByExecutionID(executionID: string, intervalNum: number, fncCallBack: Function, loading = false): void {
+        this.followUpExecution('executionID', executionID, intervalNum, fncCallBack, loading);
+    }
+
+    private followUpExecution(type: string, execID: string,
+        intervalNum: number, fncCallBack: Function, loading: boolean): void {
+
         this.jobExecutionSubscription$ = null;
 
         const intervalID = setInterval(() => {
             const execStatus = new ExecutionStatus();
+            execStatus.jobScheduleID = (type === 'jobScheduleID') ? execID : '';
+            execStatus.executionID = (type === 'executionID') ? execID : '';
             execStatus.startedDate = null;
-            execStatus.executionID = '';
             execStatus.error = '';
             execStatus.status = 'PENDING'; // PENDING, RUNNING, SUCCESS, FAILURE
 
             if (this.jobExecutionSubscription$) { return; }
 
-            this.jobExecutionSubscription$ = this.getExecutionByJobScheduleID(jobScheduleID, false)
-                .subscribe((response: any) => {
+            if (type === 'jobScheduleID') {
+                this.jobExecutionSubscription$ = this.getExecutionByJobScheduleID(execID, loading)
+                    .subscribe((response: IExecutionStatus) => {
+                        this.followUpExecReturnOk(execID, execStatus, response, intervalID, fncCallBack);
+                    }, (error) => {
+                        this.followUpExecReturnError(error, execStatus, intervalID, fncCallBack);
+                    });
+            }
 
-                    if (response && response.items && response.items.length > 0) {
-                        execStatus.startedDate = response.items[0].startedDate;
-                        execStatus.executionID = response.items[0].executionID;
-                        execStatus.error = response.items[0].error;
-                        execStatus.status = response.items[0].status;
-                    } else {
-                        execStatus.error = `Agendamento não encontrado com jobScheduleID: ${jobScheduleID}`;
-                        execStatus.status = 'FAILURE';
-                    }
+            if (type === 'executionID') {
+                this.jobExecutionSubscription$ = this.getExecutionByExecutionID(execID, loading)
+                    .subscribe((response: IExecutionStatus) => {
+                        this.followUpExecReturnOk(execID, execStatus, response, intervalID, fncCallBack);
+                    }, (error) => {
+                        this.followUpExecReturnError(error, execStatus, intervalID, fncCallBack);
+                    });
+            }
 
-                    if (!fncCallBack(execStatus) ||
-                        execStatus.status === 'SUCCESS' ||
-                        execStatus.status === 'FAILURE') {
-                        clearInterval(intervalID);
-                    }
-
-                    this.jobExecutionSubscription$ = null;
-                }, (error) => {
-                    let erroDesc = '';
-
-                    if (error instanceof HttpErrorResponse) {
-                        erroDesc = error.message;
-                        if (error.error) {
-                            erroDesc = '';
-                            if (error.error.code) { erroDesc = error.error.code; }
-                            if (error.error.message) { erroDesc = `${erroDesc} - ${error.error.message}`; }
-                            if (error.error.detailedMessage) { erroDesc = `${erroDesc} - ${error.error.detailedMessage}`; }
-                        }
-                    } else {
-                        erroDesc = error;
-                    }
-
-                    execStatus.error = erroDesc;
-                    execStatus.status = 'FAILURE';
-                    fncCallBack(execStatus);
-                    clearInterval(intervalID);
-                    this.jobExecutionSubscription$ = null;
-                });
         }, intervalNum);
+    }
+
+    private followUpExecReturnOk(execID: string, execStatus: IExecutionStatus, response: IExecutionStatus,
+        intervalID: any, fncCallBack: Function): void {
+
+        if (response) {
+            execStatus = response;
+        } else {
+            execStatus.error = `Agendamento não encontrado com ID: ${execID}`;
+            execStatus.status = 'FAILURE';
+        }
+
+        if (!fncCallBack(execStatus) ||
+            execStatus.status === 'SUCCESS' ||
+            execStatus.status === 'FAILURE') {
+            clearInterval(intervalID);
+        }
+
+        this.jobExecutionSubscription$ = null;
+    }
+
+    private followUpExecReturnError(error: any, execStatus: IExecutionStatus,
+        intervalID: any, fncCallBack: Function): void {
+
+        let erroDesc = '';
+
+        if (error instanceof HttpErrorResponse) {
+            erroDesc = error.message;
+            if (error.error) {
+                erroDesc = '';
+                if (error.error.code) { erroDesc = error.error.code; }
+                if (error.error.message) { erroDesc = `${erroDesc} - ${error.error.message}`; }
+                if (error.error.detailedMessage) { erroDesc = `${erroDesc} - ${error.error.detailedMessage}`; }
+            }
+        } else {
+            erroDesc = error;
+        }
+
+        execStatus.error = erroDesc;
+        execStatus.status = 'FAILURE';
+        fncCallBack(execStatus);
+        clearInterval(intervalID);
+        this.jobExecutionSubscription$ = null;
     }
 
     private addZero(num: number): string {

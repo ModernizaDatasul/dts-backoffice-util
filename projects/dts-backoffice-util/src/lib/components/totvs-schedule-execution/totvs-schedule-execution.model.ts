@@ -31,15 +31,17 @@ export class ScheduleParameters implements IScheduleParameters {
 }
 
 export interface IExecutionStatus {
-    startedDate: Date;
+    jobScheduleID: string;
     executionID: string;
+    startedDate: Date;
     error: string;
     status: string;
 }
 
 export class ExecutionStatus implements IExecutionStatus {
-    startedDate: Date;
+    jobScheduleID: string;
     executionID: string;
+    startedDate: Date;
     error: string;
     status: string;
 }
