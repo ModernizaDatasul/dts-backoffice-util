@@ -1,5 +1,10 @@
 # Changelog
 
+**2.8.1 (20-10-2021):**
+
+Melhorias:
+- **FileUtil** - No método **downloadData**, caso seja informado o parâmetro **IDownloadDataParams.columnList**, indicando as colunas a serem exportadas, o método irá respeitar a ordem informada dos campos, desta forma, as colunas estarão na mesma ordem no arquivo.
+
 **2.8.0 (13-10-2021):**
 
 Melhorias:

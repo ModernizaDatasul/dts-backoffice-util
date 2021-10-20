@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.8.0 (13-10-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.8.1 (20-10-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -696,7 +696,7 @@ IDownloadDataParams
 | fileName | string | Não | Nome do Arquivo. Caso não seja informado será usado o nome **"data.csv"**. |
 | literals | any | Não | Objeto de Literais que será utilizado para tradução do Cabeçalho e do conteúdo dos campos do tipo Lógico. Nele, deverão existir literais que sejam iguais as propriedades da listagem. Por exemplo, se for uma listagem de Clientes, que possua uma propriedade chamada shortName, deverá existir uma literal com este nome. Também, deve existir as literais **"true"** e **"false"** para tradução dos campos lógicos. Caso não seja informado, o cabeçalho será gerado com os nomes das propriedades. |
 | columnDelimiter | string | Não | Caracter utilizado para separação das colunas. Caso não seja informado, será utilizado o caracter **";"**. |
-| columnList | Array(string) | Não | Lista das colunas que devem ser exportadas para o arquivo. Caso não seja informada, serão exportadas todas as colunas da listagem. |
+| columnList | Array(string) | Não | Lista das colunas que devem ser exportadas para o arquivo. As colunas serão exportadas na mesma ordem informada neste parâmetro. Caso não seja informada, serão exportadas todas as colunas da listagem. |
 | columnExclude | Array(string) | Não | Lista das colunas que não devem ser exportadas para o arquivo. Caso não seja informada, serão exportadas todas as colunas da listagem. |
 
 <br> 

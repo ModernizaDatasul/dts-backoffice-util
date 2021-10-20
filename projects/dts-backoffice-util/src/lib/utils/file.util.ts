@@ -68,16 +68,24 @@ export class FileUtil {
 
         const lineDelimiter = '\n';
 
+        let columnOrig = null;
         let columnHeader = null;
         const keys = [];
         let includeKey: boolean;
-        Object.keys(jsonData[0]).forEach(key => {
+
+        if (dwldDataParam.columnList &&
+            dwldDataParam.columnList.length > 0) {
+            columnOrig = dwldDataParam.columnList;
+        } else {
+            columnOrig = Object.keys(jsonData[0]);
+        }
+
+        columnOrig.forEach(key => {
             includeKey = true;
 
-            if (dwldDataParam.columnList.length > 0 && dwldDataParam.columnList.indexOf(key) === -1) {
-                includeKey = false;
-            }
-            if (dwldDataParam.columnExclude.length > 0 && dwldDataParam.columnExclude.indexOf(key) !== -1) {
+            if (dwldDataParam.columnExclude &&
+                dwldDataParam.columnExclude.length > 0 &&
+                dwldDataParam.columnExclude.indexOf(key) !== -1) {
                 includeKey = false;
             }
 
