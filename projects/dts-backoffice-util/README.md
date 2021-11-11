@@ -262,28 +262,52 @@ Métodos:
 | getExecutionByExecutionID | Retorna os dados e status de um agendamento com base no número da agenda: **executionID**.<br>**Parâmetros:**<br>- executionID (string): Número da agenda.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar a busca do agendamento.<br>**Retorno:** response (Observable(IExecutionStatus)): Objeto com as informações do Agendamento (Data de Criação, ID interno do Agendamento (**jobScheduleID**), Número da Agenda (**executionID**) etc...).|
 | followUpExcByJobScheduleID | Utilizado para acompanhar a execução do agendamento realizado no RPW, verificando o status da execução, até que ele seja finalizado.<br>**Parâmetros:**<br>- jobScheduleID (string): ID interno do Agendamento que se deseja acompanhar.<br>- intervalNum (number): Tempo em milisegundos para verificação do status do agendamento. Por exemplo, se for informado **5000**, será verificado o status do agendamento em 5 e 5 segundos até a execução terminar.<br>- fncCallBack (Function): Método que será executado após a tela receber o status da execução do agendamento. Ele será executado várias vezes até a execução terminar, no intervalo de tempo determinado no parâmetro **intervalNum**. Este método irá receber um objeto da interface **IExecutionStatus** com o status da execução. O método deverá retornar um valor **boolean** indicando se o processo deve continuar sendo monitorado ou não. Se for retornado "false", o agendamento não será mais monitorado. **Observação**: Isto não afeta a execução do agendamento no RPW, ele continuará executando normalmente.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar o acompanhamento do agendamento.<br>**Retorno:** Não há. |
 | followUpExcByExecutionID | Utilizado para acompanhar a execução do agendamento realizado no RPW, verificando o status da execução, até que ele seja finalizado.<br>**Parâmetros:**<br>- executionID (string): Número do Agendamento que se deseja acompanhar.<br>- intervalNum (number): Tempo em milisegundos para verificação do status do agendamento. Por exemplo, se for informado **5000**, será verificado o status do agendamento em 5 e 5 segundos até a execução terminar.<br>- fncCallBack (Function): Método que será executado após a tela receber o status da execução do agendamento. Ele será executado várias vezes até a execução terminar, no intervalo de tempo determinado no parâmetro **intervalNum**. Este método irá receber um objeto da interface **IExecutionStatus** com o status da execução. O método deverá retornar um valor **boolean** indicando se o processo deve continuar sendo monitorado ou não. Se for retornado "false", o agendamento não será mais monitorado. **Observação**: Isto não afeta a execução do agendamento no RPW, ele continuará executando normalmente.<br>- loading (boolean): Quando for igual a **"Sim"**, irá apresentar a tela de "loading" até finalizar o acompanhamento do agendamento.<br>**Retorno:** Não há. |
+| getObjectByValue <br> getFilteredItems | Métodos utilizados pelo componente PO-LOOKUP. Desta forma, é possível utilizar o **TotvsScheduleExecutionService** para disponibilizar um lookup de Servidor de Execução RPW na tela. |
 
 Exemplo de Uso:
 
 Segue abaixo exemplos da geração de agendamento, busca e acompanhamento da execução.
 
 ```
-private schedExecSubscription$: Subscription;
+- HTML -
+<po-lookup
+  p-label="Servidor RPW"
+  p-placeholder="Servidor RPW"
+  [p-columns]="zoomRpwServiceColumns"
+  [p-field-format]="fieldRpwServiceFormat"
+  [p-filter-service]="scheduleExecution"
+  p-field-label="name"
+  p-field-value="code"
+  [(ngModel)]="executionServer">
+</po-lookup>
 
+- TS -
+executionServer: string;
 jobScheduleID: string;
 executionID: string;
 execStatus: string;
 
+zoomRpwServiceColumns: Array<PoLookupColumn> = [
+  { property: 'code', label: 'Servidor', type: 'string', width: '20%' },
+  { property: 'name', label: 'Descrição', type: 'string', width: '80%' }
+];
+
+private schedExecSubscription$: Subscription;
+
 constructor(
   ...
-  private scheduleExecution: TotvsScheduleExecutionService
+  public scheduleExecution: TotvsScheduleExecutionService
+}
+
+fieldRpwServiceFormat(value) {
+  return `${value.code} - ${value.name}`;
 }
 
 createSchedule(): void {
 
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
-  execParam.executionServer = 'rpwFinanc';
+  execParam.executionServer = executionServer;
   execParam.programName = 'api_executa_carga_dados_carol';
   execParam.externalName = 'api_executa_carga_dados_carol';
   execParam.programEMS5 = true;
