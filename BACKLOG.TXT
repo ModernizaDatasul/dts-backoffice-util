@@ -18,6 +18,7 @@ ERROS:
 - TotvsSchedule: Não trata Tradução.
 
 MELHORIAS:
+- FileUtil.downloadData: Definição do tipo da coluna.
 - openPath: Abrir na mesma aba do menu.
 - dtsUtils: Verificar msg de Warning na Compilação Produção.
 

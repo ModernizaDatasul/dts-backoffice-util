@@ -3,8 +3,9 @@ export class FileUtil {
     constructor(
     ) { }
 
-    static downloadFile(datab64: any, fileName: string, contentType?: string): void {
-        const dataBlob = this.b64toBlob(datab64, contentType);
+    static downloadFile(data: any, fileName: string, contentType?: string, base64?: boolean): void {
+        base64 = (base64 === false) ? false : true;
+        const dataBlob = base64 ? this.b64toBlob(data, contentType) : data;
         this.download(dataBlob, fileName);
     }
 

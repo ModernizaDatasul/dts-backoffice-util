@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **2.8.1 (20-10-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **2.8.2 (16-11-2021)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -656,7 +656,7 @@ Métodos:
 
 | Nome | Descrição |
 |-|-|
-| downloadFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- fileContent (any): Conteúdo do Arquivo no formato Base64.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>**Retorno:** não há. |
+| downloadFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- data (any): Conteúdo do Arquivo, podendo estar no formato Base64 ou Blob.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>- base64 (boolean): Indica se o conteúdo do arquivo está no formato Base64. Se o parâmetro não for informado ou for igual a **"true"**, será considerado como Base64. Se for informado **"false"**, será considerado o formato Blob.<br>**Retorno:** não há. |
 | downloadData | Realiza a criação e o download de um arquivo CSV gerado a partir de um listagem de dados (criada diretamente no FrontEnd ou retornada do BackEnd). Este método pode ser utilizado para, por exemplo, exportar os dados de um Grid.<br>**Parâmetros:**<br>- data (Array): Um Array com a listagem de dados, por exemplo, uma lista de clientes.<br>- dwldDataParam (IDownloadDataParams): Parâmetros de configuração do arquivo. Este parâmetro é opcional, caso ele não seja informado, serão assumidos valores padrões de configuração, conforme descrito na inteface **IDownloadDataParams**.<br>**Retorno:** não há. |
 ---
 
@@ -664,16 +664,25 @@ Exemplo de Uso:
 ```
 -- JavaScript --
 
+- TS da Tela -
 import { FileUtil } from 'dts-backoffice-util';
 
 downloadFile() {
   this.servCustomerSubscription$ = this.servCustomer
-    .getFile()  // Método do Serviço de Cliente que devolve do BackEnd um arquivo em base64
+    .getFile('1') // Código do cliente 1
     .subscribe((response: Object) => {
 
       FileUtil.downloadFile(response['content'], response['filename']);
-
     });
+}
+
+downloadQrCode() {
+  this.servCustomerSubscription$ = this.servCustomer
+    .getQrCode('00020126360014BR.GOV.BCB.PIX0114+554798402310452040000530398654071500.005802BR5916Robervaldo6009Joinville62070503Novo%20QR%20pix63047EF5') // Texto Exemplo para Geração do QrCode
+    .subscribe((response: Blob) => {
+
+      FileUtil.downloadFile(response, 'qrCode.png', '', false);
+  });
 }
 
 downloadList() {
@@ -688,13 +697,23 @@ downloadList() {
       dwldDataParam.columnList = ['shortName', 'name', 'country', 'status', 'tax'];
 
       FileUtil.downloadData(response.items, dwldDataParam);
+  });
+}
 
-    });
+- TS do Serviço -
+getFile(id: string): Observable<Object> {
+  const url = `/customer/${id}/file`;
+  return this.http.get(url);
+}
+
+getQrCode(text: string): Observable<Blob> {
+  const url = `/qrcode/download?text=${text}`;
+  return this.http.get(url, { responseType: 'blob' });
 }
 
 -- Progress --
 
-// Conteúdo do Método que BackEnd que retorna o Arquivo
+// Conteúdo do Método que BackEnd que retorna o Arquivo em Base64
 DEFINE VARIABLE v_dir_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_cod_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_mtr_arq AS MEMPTR    NO-UNDO.
