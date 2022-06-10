@@ -1,18 +1,21 @@
 {
-  "name": "dts-backoffice-kendo-grid",
-  "version": "3.0.0",
-  "peerDependencies": {
-    "@progress/kendo-angular-buttons": "^5.5.1",
-    "@progress/kendo-angular-common": "^1.2.3",
-    "@progress/kendo-angular-dateinputs": "^4.3.1",
-    "@progress/kendo-angular-dropdowns": "^4.3.2",
-    "@progress/kendo-angular-excel-export": "^3.1.2",
-    "@progress/kendo-angular-grid": "^4.7.4",
-    "@progress/kendo-angular-inputs": "^6.6.1",
-    "@progress/kendo-angular-intl": "^2.0.3",
-    "@progress/kendo-angular-l10n": "^2.0.2",
-    "@progress/kendo-angular-pdf-export": "^2.0.4",
-    "@progress/kendo-angular-popup": "^3.0.6",
-    "@progress/kendo-data-query": "^1.5.2"
-  }
+    "name": "dts-backoffice-kendo-grid",
+    "version": "3.0.0",
+    "dependencies": {
+        "tslib": "^2.0.0"
+    },
+    "peerDependencies": {
+        "@progress/kendo-angular-buttons": "^5.5.1",
+        "@progress/kendo-angular-common": "^1.2.3",
+        "@progress/kendo-angular-dateinputs": "^4.3.1",
+        "@progress/kendo-angular-dropdowns": "^4.3.2",
+        "@progress/kendo-angular-excel-export": "^3.1.2",
+        "@progress/kendo-angular-grid": "^4.7.4",
+        "@progress/kendo-angular-inputs": "^6.6.1",
+        "@progress/kendo-angular-intl": "^2.0.3",
+        "@progress/kendo-angular-l10n": "^2.0.2",
+        "@progress/kendo-angular-pdf-export": "^2.0.4",
+        "@progress/kendo-angular-popup": "^3.0.6",
+        "@progress/kendo-data-query": "^1.5.2"
+    }
 }
