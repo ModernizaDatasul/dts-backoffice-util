@@ -14,10 +14,12 @@ DTS-UTIL
 
 ERROS:
 - profileService: Testar no v11 em build - dá erro (Anthony).
+- Disclaimer: Quando é Faixa, se o valor Final é inválido, ele está montando o disclaimer com o label "Valor Inválido".
 - Disclaimer: Label Date - Format conforme usuário.
 - TotvsSchedule: Não trata Tradução.
 
 MELHORIAS:
+- TotvsSchedule: Rever a questão do "endExecute", hoje roda antes do retorno da requisição do JobSchedule. Ver o que retorna também.
 - FileUtil.downloadData: Definição do tipo da coluna.
 - openPath: Abrir na mesma aba do menu.
 - dtsUtils: Verificar msg de Warning na Compilação Produção.
