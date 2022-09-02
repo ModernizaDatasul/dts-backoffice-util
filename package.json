@@ -28,7 +28,7 @@
     "@angular/platform-browser": "~13.3.11",
     "@angular/platform-browser-dynamic": "~13.3.11",
     "@angular/router": "~13.3.11",
-    "@po-ui/ng-components": "^6.13.0",
+    "@po-ui/ng-components": "^14.3.1",
     "@progress/kendo-angular-buttons": "^5.5.1",
     "@progress/kendo-angular-common": "^1.2.3",
     "@progress/kendo-angular-dateinputs": "^4.3.1",

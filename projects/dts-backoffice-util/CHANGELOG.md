@@ -1,24 +1,29 @@
 # Changelog
 
+**14.0.0 (02-09-2022):**
+
+Melhorias:
+- ATUALIZAÇÃO: **PO-UI v14** E **ANGULAR v14**.
+
 **6.0.0 / 6.0.1 (13-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v6** E **ANGULAR 13**.
+- ATUALIZAÇÃO: **PO-UI v6** E **ANGULAR v13**.
 
 **5.0.0 (13-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR 12**.
+- ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR v12**.
 
 **4.0.0 (10-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v4** E **ANGULAR 11**.
+- ATUALIZAÇÃO: **PO-UI v4** E **ANGULAR v11**.
 
 **3.0.0 (10-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v3** E **ANGULAR 10**.
+- ATUALIZAÇÃO: **PO-UI v3** E **ANGULAR v10**.
 
 **2.8.1 / 2.8.2 (16-11-2021):**
 
@@ -114,7 +119,7 @@ Melhorias:
 **2.0.0 (12-04-2020):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v2** E **ANGULAR 9**.
+- ATUALIZAÇÃO: **PO-UI v2** E **ANGULAR v9**.
 
 **0.0.22 (01-04-2020):**
 

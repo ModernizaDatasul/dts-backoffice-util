@@ -1,6 +1,6 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **6.0.0 (13-06-2022)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **14.0.0 (02-09-2022)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
 
 <br>
 
