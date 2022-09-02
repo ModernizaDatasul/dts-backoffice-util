@@ -1,6 +1,6 @@
 import { Component, DoCheck, ElementRef, IterableDiffers, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { DataStateChangeEvent, GridComponent, GridDataResult, SelectAllCheckboxState, RowArgs, CommandColumnComponent } from '@progress/kendo-angular-grid';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export';
 import { GroupDescriptor, process, State, SortDescriptor } from '@progress/kendo-data-query';
@@ -36,7 +36,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     private isNewRow = false;
     private EditedRow: any = null;
     private tableEditIndex = -1;
-    private formGroup: FormGroup;
+    private formGroup: UntypedFormGroup;
     public cancelButton = false;
 
     public viewColumnVisible = true;
@@ -619,12 +619,12 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
     }
 
     private createFormGroup(newRow: boolean, dataItem: any) {
-        this.formGroup = new FormGroup({});
+        this.formGroup = new UntypedFormGroup({});
 
         this.columns.forEach(column => {
             if (column.visible && (newRow || column.editable)) {
                 const value = (dataItem) ? dataItem[column.column] : '';
-                const control = column.required ? new FormControl(value, Validators.required) : new FormControl(value);
+                const control = column.required ? new UntypedFormControl(value, Validators.required) : new UntypedFormControl(value);
                 this.formGroup.addControl(column.column, control);
             }
         });
