@@ -1,5 +1,10 @@
 # Changelog
 
+**14.1.0 (25-10-2022):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** - Incluído um novo método chamado **getScheduleParameters**, responsável por devolver os atuais parâmetros informados pelo usuário no agenda. 
+
 **14.0.0 (02-09-2022):**
 
 Melhorias:
