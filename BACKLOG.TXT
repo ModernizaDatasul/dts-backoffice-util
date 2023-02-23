@@ -32,6 +32,7 @@ DTS-KENDO-GRID
 --------------
 
 ERROS:
+- GridTools: Desposicionamento dos campos após migração do PO-UI (css).
 - Exportação PDF: Problemas em acentos (Lediel).
 - Exportação Excel: Não formata conforme o tipo (Lediel).
 - d-editable + campo tipa "boolean": No Angular 11, a edição não está funcionando

@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **14.1.0 (25-10-2022)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **14.2.0 (23-02-2023)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -659,6 +659,8 @@ Métodos:
 |-|-|
 | downloadFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- data (any): Conteúdo do Arquivo, podendo estar no formato Base64 ou Blob.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>- base64 (boolean): Indica se o conteúdo do arquivo está no formato Base64. Se o parâmetro não for informado ou for igual a **"true"**, será considerado como Base64. Se for informado **"false"**, será considerado o formato Blob.<br>**Retorno:** não há. |
 | downloadData | Realiza a criação e o download de um arquivo CSV gerado a partir de um listagem de dados (criada diretamente no FrontEnd ou retornada do BackEnd). Este método pode ser utilizado para, por exemplo, exportar os dados de um Grid.<br>**Parâmetros:**<br>- data (Array): Um Array com a listagem de dados, por exemplo, uma lista de clientes.<br>- dwldDataParam (IDownloadDataParams): Parâmetros de configuração do arquivo. Este parâmetro é opcional, caso ele não seja informado, serão assumidos valores padrões de configuração, conforme descrito na inteface **IDownloadDataParams**.<br>**Retorno:** não há. |
+| fileToB64 | Realiza a conversão de um arquivo para o formato Base64.<br>**Parâmetros:**<br>- file (File): Objeto do Tipo "File".<br>**Retorno:**<br>- content (string): Conteúdo do arquivo no formato Base64. |
+
 ---
 
 Exemplo de Uso:
@@ -667,6 +669,8 @@ Exemplo de Uso:
 
 - TS da Tela -
 import { FileUtil } from 'dts-backoffice-util';
+
+fileBase64: string;
 
 downloadFile() {
   this.servCustomerSubscription$ = this.servCustomer
@@ -699,6 +703,16 @@ downloadList() {
 
       FileUtil.downloadData(response.items, dwldDataParam);
   });
+}
+
+onConfirmUpload(): void {
+  // fileToSend: variável utilizada no ngModel do componente de Upload
+  if (!this.fileToSend) { return; }
+
+  // fileBase64: variável do programa para receber o conteúdo em Base64
+  this.fileToB64(this.fileToSend[0].rawFile).then(
+    (data: string) => this.fileBase64 = data
+  );
 }
 
 - TS do Serviço -
