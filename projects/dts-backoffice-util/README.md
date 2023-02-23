@@ -710,7 +710,7 @@ onConfirmUpload(): void {
   if (!this.fileToSend) { return; }
 
   // fileBase64: variável do programa para receber o conteúdo em Base64
-  this.fileToB64(this.fileToSend[0].rawFile).then(
+  FileUtil.fileToB64(this.fileToSend[0].rawFile).then(
     (data: string) => this.fileBase64 = data
   );
 }
