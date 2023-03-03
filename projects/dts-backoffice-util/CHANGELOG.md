@@ -1,9 +1,12 @@
 # Changelog
 
-**14.2.0 (23-02-2023):**
+**14.2.0 / 14.2.1 (23-02-2023):**
 
 Melhorias:
 - **FileUtil** - Incluído o novo método chamado **fileToB64**, que realiza a conversão de um arquivo para o formato Base64.
+
+Documentação:
+- **TotvsScheduleExecutionComponent / TotvsScheduleExecutionService** - Atualização Documentação. A propriedade **"programName"** passa a ser a Tela HTML e não mais o programa executado no RPW. Sem alteração para **"externalName"**.
 
 **14.1.0 (25-10-2022):**
 

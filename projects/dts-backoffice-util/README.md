@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **14.2.0 (23-02-2023)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **14.2.1 (23-02-2023)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -144,7 +144,7 @@ this.menuDatasulService.sendNotification(notification);
 No HTML usar da seguinte forma:
 ```
 <app-totvs-schedule-execution 
-  programName="pdapi701"
+  programName="mpd.html.approvalorder"
   externalName="pdp/pdapi701"
   programEMS5="false"
   programVersion=""
@@ -174,8 +174,8 @@ Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
-| programName | string | Sim | Nome do Programa (nome no menu). |
-| externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
+| programName | string | Sim | Nome do programa cadastrado no menu, que é utilizado para acessar a tela HTML que utiliza o componente. |
+| externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
 | parameters | Array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
@@ -309,7 +309,7 @@ createSchedule(): void {
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
   execParam.executionServer = executionServer;
-  execParam.programName = 'api_executa_carga_dados_carol';
+  execParam.programName = 'html.techfinMonitor';
   execParam.externalName = 'api_executa_carga_dados_carol';
   execParam.programEMS5 = true;
   execParam.programVersion = '1.00.00.001';
@@ -410,8 +410,8 @@ IExecutionParameters
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
 | executionServer | string | Sim | Código do Servidor RPW. |
-| programName | string | Sim | Nome do Programa (nome no menu). |
-| externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
+| programName | string | Sim | Nome do programa cadastrado no menu, que é utilizado para acessar a tela HTML que utiliza o serviço. |
+| externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
 | businessParams | Array | Não | Objeto representando a Temp-Table que será enviada ao progress. Ver exemplo do objeto **parametersRpw** no **TotvsScheduleExecutionComponent**. |
@@ -707,7 +707,7 @@ downloadList() {
 
 onConfirmUpload(): void {
   // fileToSend: variável utilizada no ngModel do componente de Upload
-  if (!this.fileToSend) { return; }
+  if (!this.fileToSend || this.fileToSend.length < 1) { return; }
 
   // fileBase64: variável do programa para receber o conteúdo em Base64
   FileUtil.fileToB64(this.fileToSend[0].rawFile).then(
