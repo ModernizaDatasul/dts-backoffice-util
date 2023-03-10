@@ -1,35 +1,5 @@
 # Changelog
 
-**14.0.0 (02-09-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v14** E **ANGULAR v14**.
-
-**6.0.0 (13-06-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v6** E **ANGULAR v13**.
-
-**5.0.1 (13-06-2022):**
-
-Correção:
-- **Edição de Campo Data** - Corrigido o cabeçalho para apresentar corretamente o mês/ano e as setas anterior/próximo.
-
-**5.0.0 (13-06-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR v12**.
-
-**4.0.0 (10-06-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v4** E **ANGULAR v11**.
-
-**3.0.0 (10-06-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v3** E **ANGULAR v10**.
-
 **2.8.1 (17-03-2021):**
 
 Documentação:
@@ -170,7 +140,7 @@ Refatoração:
 **2.0.0 (02-09-2020):**
 
 Melhorias:
-- ATUALIZAÇÃO: **ANGULAR v9**
+- ATUALIZAÇÃO: **ANGULAR 9**
 - Documentação.
 
 **0.0.24 (02-04-2020):**

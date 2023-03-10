@@ -93,10 +93,6 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         this.model = schParam;
     }
 
-    public getScheduleParameters(): IScheduleParameters {
-        return this.model;
-    }
-
     fieldRpwServiceFormat(value) {
         return `${value.code} - ${value.name}`;
     }
