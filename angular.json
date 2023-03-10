@@ -23,6 +23,18 @@
             "tsConfig": "projects/dts-backoffice-util/tsconfig.spec.json",
             "karmaConfig": "projects/dts-backoffice-util/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/dts-backoffice-util/tsconfig.lib.json",
+              "projects/dts-backoffice-util/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
         }
       }
     },
@@ -45,6 +57,18 @@
             "main": "projects/dts-backoffice-kendo-grid/src/test.ts",
             "tsConfig": "projects/dts-backoffice-kendo-grid/tsconfig.spec.json",
             "karmaConfig": "projects/dts-backoffice-kendo-grid/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/dts-backoffice-kendo-grid/tsconfig.lib.json",
+              "projects/dts-backoffice-kendo-grid/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

@@ -1,42 +1,19 @@
 # Changelog
 
-**14.2.0 / 14.2.1 (23-02-2023):**
-
-Melhorias:
-- **FileUtil** - Incluído o novo método chamado **fileToB64**, que realiza a conversão de um arquivo para o formato Base64.
-
-Documentação:
-- **TotvsScheduleExecutionComponent / TotvsScheduleExecutionService** - Atualização Documentação. A propriedade **"programName"** passa a ser a Tela HTML e não mais o programa executado no RPW. Sem alteração para **"externalName"**.
-
-**14.1.0 (25-10-2022):**
-
-Melhorias:
-- **TotvsScheduleExecutionComponent** - Incluído um novo método chamado **getScheduleParameters**, responsável por devolver os atuais parâmetros informados pelo usuário no agenda. 
-
-**14.0.0 (02-09-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v14** E **ANGULAR v14**.
-
-**6.0.0 / 6.0.1 (13-06-2022):**
-
-Melhorias:
-- ATUALIZAÇÃO: **PO-UI v6** E **ANGULAR v13**.
-
 **5.0.0 (13-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR v12**.
+- ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR 12**.
 
 **4.0.0 (10-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v4** E **ANGULAR v11**.
+- ATUALIZAÇÃO: **PO-UI v4** E **ANGULAR 11**.
 
 **3.0.0 (10-06-2022):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v3** E **ANGULAR v10**.
+- ATUALIZAÇÃO: **PO-UI v3** E **ANGULAR 10**.
 
 **2.8.1 / 2.8.2 (16-11-2021):**
 
@@ -132,7 +109,7 @@ Melhorias:
 **2.0.0 (12-04-2020):**
 
 Melhorias:
-- ATUALIZAÇÃO: **PO-UI v2** E **ANGULAR v9**.
+- ATUALIZAÇÃO: **PO-UI v2** E **ANGULAR 9**.
 
 **0.0.22 (01-04-2020):**
 
