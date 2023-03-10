@@ -1,5 +1,10 @@
 # Changelog
 
+**3.0.0 / 3.0.1 (10-06-2022):**
+
+Melhorias:
+- ATUALIZAÇÃO: PO-UI v3 E ANGULAR v10.
+
 **2.8.1 / 2.8.2 (16-11-2021):**
 
 Melhorias:
