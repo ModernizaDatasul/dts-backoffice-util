@@ -1,6 +1,6 @@
 # Changelog
 
-**14.0.0 (02-09-2022):**
+**14.0.0 / 14.0.1 (02-09-2022):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v14** E **ANGULAR v14**.
