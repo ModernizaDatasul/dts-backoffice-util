@@ -1,5 +1,11 @@
 # Changelog
 
+**4.0.0 / 4.0.1 (10-06-2022):**
+
+Melhorias:
+
+- ATUALIZAÇÃO: PO-UI v4 E ANGULAR v11.
+
 **2.8.1 (17-03-2021):**
 
 Documentação:
