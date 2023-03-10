@@ -28,7 +28,7 @@ export class FileUtil {
         const downloadLink = document.createElement('a');
         const urlDownload = window.URL.createObjectURL(new Blob(binaryData, { type: file.type }));
 
-        /* Verifica se é ie ou edge, pois o mesmo tem tratamento próprio para arquivos blob */
+        /**Verifica se é ie ou edge, pois o mesmo tem tratamento próprio para arquivos blob */
         const nav = (window.navigator as any);
         if (nav && nav.msSaveOrOpenBlob) {
             nav.msSaveOrOpenBlob(file, fileName);
@@ -128,32 +128,6 @@ export class FileUtil {
         }, columnHeader + lineDelimiter);
 
         return lineStr;
-    }
-
-    static fileToB64(file: File) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-
-            reader.onload = () => {
-                let cntFile: any;
-                cntFile = reader.result;
-                if (!cntFile) {
-                    reject('File not found or Empty');
-                    return;
-                }
-
-                const aCnt = cntFile.split(',');
-                if (aCnt && aCnt.length >= 2) {
-                    resolve(aCnt[1]);
-                } else {
-                    reject('File not found or Empty');
-                }
-
-            };
-
-            reader.onerror = error => reject(error);
-        });
     }
 }
 

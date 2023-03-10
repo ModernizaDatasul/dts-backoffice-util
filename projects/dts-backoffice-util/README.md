@@ -1,6 +1,6 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **14.2.1 (23-02-2023)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
+ÚLTIMA VERSÃO: **6.0.1 (13-06-2022)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
 
 <br>
 
@@ -144,7 +144,7 @@ this.menuDatasulService.sendNotification(notification);
 No HTML usar da seguinte forma:
 ```
 <app-totvs-schedule-execution 
-  programName="mpd.html.approvalorder"
+  programName="pdapi701"
   externalName="pdp/pdapi701"
   programEMS5="false"
   programVersion=""
@@ -174,8 +174,8 @@ Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
-| programName | string | Sim | Nome do programa cadastrado no menu, que é utilizado para acessar a tela HTML que utiliza o componente. |
-| externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
+| programName | string | Sim | Nome do Programa (nome no menu). |
+| externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
 | parameters | Array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
@@ -188,7 +188,6 @@ Métodos:
 | Nome | Descrição |
 |-|-|
 | setScheduleParameters | Atualiza as informações de agendamento com base no objeto que foi enviado como parâmetro.<br>**Parâmetros:**<br>- schParam (**IScheduleParameters**): Objeto com as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...).<br>**Retorno:** Não há. |
-| getScheduleParameters | Retorna um objeto da interface **IScheduleParameters**, contendo os atuais parâmetros informados pelo usuário na tela de agendamento.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- schParam (**IScheduleParameters**): Objeto com as informações do agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
 
 Exemplo de Uso:
 
@@ -309,7 +308,7 @@ createSchedule(): void {
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
   execParam.executionServer = executionServer;
-  execParam.programName = 'html.techfinMonitor';
+  execParam.programName = 'api_executa_carga_dados_carol';
   execParam.externalName = 'api_executa_carga_dados_carol';
   execParam.programEMS5 = true;
   execParam.programVersion = '1.00.00.001';
@@ -410,8 +409,8 @@ IExecutionParameters
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
 | executionServer | string | Sim | Código do Servidor RPW. |
-| programName | string | Sim | Nome do programa cadastrado no menu, que é utilizado para acessar a tela HTML que utiliza o serviço. |
-| externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
+| programName | string | Sim | Nome do Programa (nome no menu). |
+| externalName | string | Sim | Nome completo do Programa, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
 | businessParams | Array | Não | Objeto representando a Temp-Table que será enviada ao progress. Ver exemplo do objeto **parametersRpw** no **TotvsScheduleExecutionComponent**. |
@@ -659,8 +658,6 @@ Métodos:
 |-|-|
 | downloadFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- data (any): Conteúdo do Arquivo, podendo estar no formato Base64 ou Blob.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>- base64 (boolean): Indica se o conteúdo do arquivo está no formato Base64. Se o parâmetro não for informado ou for igual a **"true"**, será considerado como Base64. Se for informado **"false"**, será considerado o formato Blob.<br>**Retorno:** não há. |
 | downloadData | Realiza a criação e o download de um arquivo CSV gerado a partir de um listagem de dados (criada diretamente no FrontEnd ou retornada do BackEnd). Este método pode ser utilizado para, por exemplo, exportar os dados de um Grid.<br>**Parâmetros:**<br>- data (Array): Um Array com a listagem de dados, por exemplo, uma lista de clientes.<br>- dwldDataParam (IDownloadDataParams): Parâmetros de configuração do arquivo. Este parâmetro é opcional, caso ele não seja informado, serão assumidos valores padrões de configuração, conforme descrito na inteface **IDownloadDataParams**.<br>**Retorno:** não há. |
-| fileToB64 | Realiza a conversão de um arquivo para o formato Base64.<br>**Parâmetros:**<br>- file (File): Objeto do Tipo "File".<br>**Retorno:**<br>- content (string): Conteúdo do arquivo no formato Base64. |
-
 ---
 
 Exemplo de Uso:
@@ -669,8 +666,6 @@ Exemplo de Uso:
 
 - TS da Tela -
 import { FileUtil } from 'dts-backoffice-util';
-
-fileBase64: string;
 
 downloadFile() {
   this.servCustomerSubscription$ = this.servCustomer
@@ -703,16 +698,6 @@ downloadList() {
 
       FileUtil.downloadData(response.items, dwldDataParam);
   });
-}
-
-onConfirmUpload(): void {
-  // fileToSend: variável utilizada no ngModel do componente de Upload
-  if (!this.fileToSend || this.fileToSend.length < 1) { return; }
-
-  // fileBase64: variável do programa para receber o conteúdo em Base64
-  FileUtil.fileToB64(this.fileToSend[0].rawFile).then(
-    (data: string) => this.fileBase64 = data
-  );
 }
 
 - TS do Serviço -
