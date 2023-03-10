@@ -1,12 +1,12 @@
 {
     "name": "dts-backoffice-util",
-    "version": "14.2.1",
+    "version": "3.0.0",
     "dependencies": {
         "tslib": "^2.0.0"
     },
     "peerDependencies": {
-        "@angular/common": "^14.2.0",
-        "@angular/core": "^14.2.0",
-        "@angular/forms": "^14.2.0"
+        "@angular/common": "~10.2.5",
+        "@angular/core": "~10.2.5",
+        "@angular/forms": "~10.2.5"
     }
 }
