@@ -1,6 +1,6 @@
 # Changelog
 
-**5.0.0 (13-06-2022):**
+**5.0.0 / 5.0.1 (13-06-2022):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR 12**.

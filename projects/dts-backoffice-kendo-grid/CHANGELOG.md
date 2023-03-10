@@ -1,6 +1,6 @@
 # Changelog
 
-**5.0.1 (13-06-2022):**
+**5.0.1 / 5.0.2 (13-06-2022):**
 
 Correção:
 - **Edição de Campo Data** - Corrigido o cabeçalho para apresentar corretamente o mês/ano e as setas anterior/próximo.
