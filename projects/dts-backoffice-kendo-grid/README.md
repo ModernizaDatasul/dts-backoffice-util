@@ -8,7 +8,7 @@ Componente que encapsula o [Kendo Grid](https://www.telerik.com/kendo-angular-ui
 
 ## Versões
 
-Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e Angular correspondentes. Detalhes das alterações: **[**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md)**.
+Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e Angular correspondentes.<br>Detalhes das alterações: **[**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md)**.
 
 | PO-UI | Angular | Versão dtsKendoGrid |
 |-|-| -|
