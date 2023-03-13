@@ -1,12 +1,23 @@
 # Documentação dos Componentes e Utils
 
-ÚLTIMA VERSÃO: **14.2.1 (23-02-2023)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md))**
-
-<br>
-
 ## Objetivo
 
 Biblioteca que engloba diversos componentes e serviços utilizados no desenvolvimento HTML/Angular com PO-UI.
+
+<br>
+
+## Versões
+
+Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e Angular correspondentes. Detalhes das alterações: **[**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md)**.
+
+| PO-UI | Angular | Versão dtsBackofficeUtil |
+|-|-| -|
+| v14 | v14 | 14.2.3 |
+| v6 | v13 | 6.0.2 |
+| v5 | v12 | 5.0.1 |
+| v4 | v11 | 4.0.1 |
+| v3 | v10 | 3.0.1 |
+| v2 | v9 | 2.8.4 |
 
 <br>
 

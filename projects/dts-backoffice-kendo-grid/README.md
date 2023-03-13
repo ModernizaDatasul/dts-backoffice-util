@@ -1,12 +1,23 @@
 # Documentação do Dts Kendo GRID
 
-ÚLTIMA VERSÃO: **14.0.0 (02-09-2022)** **([**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md))**
-
-<br>
-
 ## Objetivo
 
 Componente que encapsula o [Kendo Grid](https://www.telerik.com/kendo-angular-ui/components/grid/), facilitando o desenvolvimento (similar ao **PO-UI**) e agregando novas funcionalidades.
+
+<br>
+
+## Versões
+
+Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e Angular correspondentes. Detalhes das alterações: **[**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md)**.
+
+| PO-UI | Angular | Versão dtsKendoGrid |
+|-|-| -|
+| v14 | v14 | 14.0.2 |
+| v6 | v13 | 6.0.1 |
+| v5 | v12 | 5.0.2 |
+| v4 | v11 | 4.0.1 |
+| v3 | v10 | 3.0.1 |
+| v2 | v9 | 2.8.2 |
 
 <br>
 

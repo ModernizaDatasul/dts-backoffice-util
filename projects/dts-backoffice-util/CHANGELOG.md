@@ -1,6 +1,6 @@
 # Changelog
 
-**14.2.0 / 14.2.1 / 14.2.2 (23-02-2023):**
+**14.2.0 / 14.2.1 / 14.2.2 / 14.2.3 (23-02-2023):**
 
 Melhorias:
 - **FileUtil** - Incluído o novo método chamado **fileToB64**, que realiza a conversão de um arquivo para o formato Base64.
@@ -18,27 +18,27 @@ Melhorias:
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v14** E **ANGULAR v14**.
 
-**6.0.0 / 6.0.1 (13-06-2022):**
+**6.0.0 / 6.0.1 / 6.0.2 (13-06-2022):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v6** E **ANGULAR v13**.
 
-**5.0.0 (13-06-2022):**
+**5.0.0 / 5.0.1 (13-06-2022):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v5** E **ANGULAR v12**.
 
-**4.0.0 (10-06-2022):**
+**4.0.0 / 4.0.1 (10-06-2022):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v4** E **ANGULAR v11**.
 
-**3.0.0 (10-06-2022):**
+**3.0.0 / 3.0.1 (10-06-2022):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v3** E **ANGULAR v10**.
 
-**2.8.1 / 2.8.2 (16-11-2021):**
+**2.8.1 / 2.8.2 / 2.8.3 / 2.8.4 (16-11-2021):**
 
 Melhorias:
 - **FileUtil**<br>- No método **downloadFile** foi incluído o parâmetro "base64" (boolean) para indicar se o conteúdo recebido do backEnd está no formato base64 ou Blob.<br>- No método **downloadData**, caso seja informado o parâmetro **IDownloadDataParams.columnList**, indicando as colunas a serem exportadas, o método irá respeitar a ordem informada dos campos, desta forma, as colunas estarão na mesma ordem no arquivo.
