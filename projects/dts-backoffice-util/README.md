@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-| -|
-| v14 | v14 | 14.2.3 |
+| v14 | v14 | 14.3.0 |
 | v6 | v13 | 6.0.2 |
 | v5 | v12 | 5.0.1 |
 | v4 | v11 | 4.0.1 |
@@ -624,6 +624,7 @@ Métodos:
 | addBreadcrumb | Adiciona um item ao breadcrumb, considerando a URL atual da tela.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- activatedRoute (ActivatedRoute): ActivedRoute da tela.<br>**Retorno:** Não há. |
 | addBreadcrumbURL | Adiciona um item ao breadcrumb, informando uma URL específica.<br>**Parâmetros:**<br>- literal (string): Nome da tela que será apresentado no breadcrumb.<br>- url (string): URL específica.<br>**Retorno:** Não há. |
 | updBreadcrumbURL | Altera uma informação qualquer contida na URL do item informado.<br>**Parâmetros:**<br>- literal (string): Nome da tela que está no breadcrumb.<br>- valueOld (string): Valor a ser substituído.<br>- valueNew (string): Novo valor.<br>**Retorno:** Não há. |
+| delBreadcrumb | Exclui um item do breadcrumb.<br>**Parâmetros:**<br>- literal (string): Nome do item (nome da tela), que deve ser excluído do breadcrumb.<br>**Retorno:** Não há. |
 | getBreadcrumb | Retorna o breadcrumb atual completo.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- breadcrumb (PoBreadcrumb) |
 | getCurrentRouter | Retorna a URL do breadcrumb do item corrente.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- url (string) |
 | getPrevRouter | Retorna a URL do breadcrumb do item anterior.<br>**Parâmetros:** Não há.<br>**Retorno:**<br>- url (string) |

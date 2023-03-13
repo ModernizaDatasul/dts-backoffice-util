@@ -1,5 +1,10 @@
 # Changelog
 
+**14.3.0 (13-03-2023):**
+
+Melhorias:
+- **BreadcrumbControlService** - Novo mótodo: **"delBreadcrumb"**, que permite excluir um item do Breadcrumb.
+
 **14.2.0 / 14.2.1 / 14.2.2 / 14.2.3 (23-02-2023):**
 
 Melhorias:

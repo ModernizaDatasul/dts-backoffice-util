@@ -1,5 +1,5 @@
 /*
-Versão: 1.003
+Versão: 1.004
 Data Criação: 06/08/2018
 */
 
@@ -27,8 +27,7 @@ export class BreadcrumbControlService {
 
         const breadcrumbAux = { items: [] };
 
-        let idx = 0;
-        for (idx = 0; idx < this.breadcrumb.items.length; idx++) {
+        for (let idx = 0; idx < this.breadcrumb.items.length; idx++) {
             if (this.breadcrumb.items[idx].label !== literal) {
                 breadcrumbAux.items.push(this.breadcrumb.items[idx]);
             } else {
@@ -50,6 +49,22 @@ export class BreadcrumbControlService {
 
         currentRouterURL = currentRouterURL.replace(valueOld, valueNew);
         this.addBreadcrumbURL(literal, currentRouterURL);
+    }
+
+    public delBreadcrumb(literal: string): void {
+        if (!literal || literal === '') { return; }
+        if (!this.breadcrumb || !this.breadcrumb.items) { return; }
+        if (this.breadcrumb.items.length === 0) { return; }
+
+        const breadcrumbAux = { items: [] };
+
+        for (let idx = 0; idx < this.breadcrumb.items.length; idx++) {
+            if (this.breadcrumb.items[idx].label !== literal) {
+                breadcrumbAux.items.push(this.breadcrumb.items[idx]);
+            }
+        }
+
+        this.breadcrumb = breadcrumbAux;
     }
 
     public getBreadcrumb(): PoBreadcrumb {
