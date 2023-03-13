@@ -155,8 +155,8 @@ this.menuDatasulService.sendNotification(notification);
 No HTML usar da seguinte forma:
 ```
 <app-totvs-schedule-execution 
-  programName="mpd.html.approvalorder"
-  externalName="pdp/pdapi701"
+  programName="pdapi701"
+  externalName="pdp/pdapi701.p"
   programEMS5="false"
   programVersion=""
   [parameters]="parametersRpw"
@@ -185,7 +185,7 @@ Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
-| programName | string | Sim | Nome do programa cadastrado no menu, que é utilizado para acessar a tela HTML que utiliza o componente. |
+| programName | string | Sim | Código de Programa cadastrado no menu, do programa que será executado no RPW. |
 | externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
@@ -320,7 +320,7 @@ createSchedule(): void {
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
   execParam.executionServer = executionServer;
-  execParam.programName = 'html.techfinMonitor';
+  execParam.programName = 'api_executa_carga_dados_carol';
   execParam.externalName = 'api_executa_carga_dados_carol';
   execParam.programEMS5 = true;
   execParam.programVersion = '1.00.00.001';
@@ -421,7 +421,7 @@ IExecutionParameters
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
 | executionServer | string | Sim | Código do Servidor RPW. |
-| programName | string | Sim | Nome do programa cadastrado no menu, que é utilizado para acessar a tela HTML que utiliza o serviço. |
+| programName | string | Sim | Código de Programa cadastrado no menu, do programa que será executado no RPW. |
 | externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
 | programVersion | string | Não | Versão do programa progress. |
