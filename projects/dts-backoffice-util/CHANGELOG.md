@@ -1,5 +1,10 @@
 # Changelog
 
+**14.4.0 (17-03-2023):**
+
+Melhorias:
+- **MenuDatasulService** - Novo mótodo: **"programSecurity"**, que verifica a Segurança do Menu, identificando se o usuário corrente possui acesso a um ou mais programas.
+
 **14.3.0 (13-03-2023):**
 
 Melhorias:
