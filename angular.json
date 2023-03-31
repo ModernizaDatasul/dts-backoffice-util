@@ -23,6 +23,15 @@
             "tsConfig": "projects/dts-backoffice-util/tsconfig.spec.json",
             "karmaConfig": "projects/dts-backoffice-util/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dts-backoffice-util/**/*.ts",
+              "projects/dts-backoffice-util/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -51,6 +60,9 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

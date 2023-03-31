@@ -1,5 +1,10 @@
 # Changelog
 
+**15.0.0 (31-03-2023):**
+
+Melhorias:
+- ATUALIZAÇÃO: **PO-UI v15** E **ANGULAR v15**.
+
 **14.0.0 / 14.0.1 / 14.0.2 / 14.0.3 (02-09-2022):**
 
 Melhorias:
