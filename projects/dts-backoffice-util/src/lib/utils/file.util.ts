@@ -42,7 +42,7 @@ export class FileUtil {
         }
     }
 
-    private static b64toBlob(b64Data: any, contentType?: string, sliceSize?: number): Blob {
+    static b64toBlob(b64Data: any, contentType?: string, sliceSize?: number): Blob {
         contentType = contentType || '';
         sliceSize = sliceSize || 512;
 

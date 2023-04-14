@@ -1,5 +1,10 @@
 # Changelog
 
+**15.1.0 (14-04-2023):**
+
+Melhorias:
+- **FileUtil** - Incluído o novo método chamado **b64toBlob**, que realiza a conversão de um arquivo que está no formato Base64, para o formato Blob.
+
 **15.0.0 (31-03-2023):**
 
 Melhorias:

@@ -1,6 +1,6 @@
 {
     "name": "dts-backoffice-util",
-    "version": "15.0.0",
+    "version": "15.1.0",
     "dependencies": {
         "tslib": "^2.0.0"
     },

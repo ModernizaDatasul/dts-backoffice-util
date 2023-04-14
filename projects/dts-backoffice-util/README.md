@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-| -|
-| v15 | v15 | 15.0.0 |
+| v15 | v15 | 15.1.0 |
 | v14 | v14 | 14.4.1 |
 | v6 | v13 | 6.0.2 |
 | v5 | v12 | 5.0.1 |
@@ -703,6 +703,7 @@ Métodos:
 | downloadFile | Realiza o Download de um arquivo que foi enviado do backEnd.<br>**Parâmetros:**<br>- data (any): Conteúdo do Arquivo, podendo estar no formato Base64 ou Blob.<br>- fileName (string): Nome do Arquivo, podendo ser diferente do nome original. O valor informado, será o nome que o arquivo terá, quando for realizado o download.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional, mas quando não informado, deve-se garantir que a extensão do arquivo, informado no nome do arquivo, esteja correta.<br>- base64 (boolean): Indica se o conteúdo do arquivo está no formato Base64. Se o parâmetro não for informado ou for igual a **"true"**, será considerado como Base64. Se for informado **"false"**, será considerado o formato Blob.<br>**Retorno:** não há. |
 | downloadData | Realiza a criação e o download de um arquivo CSV gerado a partir de um listagem de dados (criada diretamente no FrontEnd ou retornada do BackEnd). Este método pode ser utilizado para, por exemplo, exportar os dados de um Grid.<br>**Parâmetros:**<br>- data (Array): Um Array com a listagem de dados, por exemplo, uma lista de clientes.<br>- dwldDataParam (IDownloadDataParams): Parâmetros de configuração do arquivo. Este parâmetro é opcional, caso ele não seja informado, serão assumidos valores padrões de configuração, conforme descrito na inteface **IDownloadDataParams**.<br>**Retorno:** não há. |
 | fileToB64 | Realiza a conversão de um arquivo para o formato Base64.<br>**Parâmetros:**<br>- file (File): Objeto do Tipo "File".<br>**Retorno:**<br>- content (string): Conteúdo do arquivo no formato Base64. |
+| b64toBlob | Realiza a conversão de um arquivo que está no formato Base64, para o formato Blob.<br>**Parâmetros:**<br>- b64Data (any): Conteúdo do Arquivo no formato Base64.<br>- contentType (string): Tipo do Arquivo no formato [**MIME Type**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types). Este parâmetro é opcional.<br>**Retorno:**<br>- content (Blob): Conteúdo do arquivo no formato Blob. |
 
 ---
 
