@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-| -|
-| v15 | v15 | 15.1.0 |
+| v15 | v15 | 15.2.0 |
 | v14 | v14 | 14.4.1 |
 | v6 | v13 | 6.0.2 |
 | v5 | v12 | 5.0.1 |
@@ -104,7 +104,8 @@ Métodos:
 | Nome | Descrição |
 |-|-|
 | callProgress | Executa uma tela Progress que esteja cadastrada no menu.<br>**Importante:** Este método realiza uma integração direta com o Menu do Datasul (parte HTML do Menu). Portanto, ele somente funciona quando o projeto está sendo executado por dentro do Menu do Datasul.<br>**Parâmetros:**<br>- program (object): Objeto com os seguintes atributos:<br>prg (string): Nome do programa no menu.<br>params (Array(object)): Array de Objetos de Parâmetros. O objeto possui dois atributos: "type" com o tipo de dado (character, integer, logical, etc...). E "value" com o conteúdo.<br>**Retorno:** Não há. |
-| openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Importante:** Este método realiza uma integração direta com o Menu do Datasul (parte HTML do Menu). Portanto, ele somente funciona quando o projeto está sendo executado por dentro do Menu do Datasul.<br>**Parâmetros:**<br>- programName (string): Nome interno do Programa, no cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navegador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
+| openTHF | Executa uma tela construídas em THF1 que esteja cadastrada no menu.<br>**Importante:** Este método realiza uma integração direta com o Menu do Datasul (parte HTML do Menu). Portanto, ele somente funciona quando o projeto está sendo executado por dentro do Menu do Datasul.<br>**Parâmetros:**<br>- externalName (string): Nome EXTERNO do Programa, cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navegador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
+| openPath | Executa uma tela PO-UI que esteja cadastrada no menu.<br>**Importante:** Este método realiza uma integração direta com o Menu do Datasul (parte HTML do Menu). Portanto, ele somente funciona quando o projeto está sendo executado por dentro do Menu do Datasul.<br>**Parâmetros:**<br>- programName (string): Nome INTERNO do Programa, código do programa cadastro de menu.<br>- params (string): Parâmetros que serão adicionados na URL.<br>- parent (boolean): Indica se a tela deve abrir na mesma Aba do Navegador (valor: **true**) ou em outra Aba do Navegador (valor: **false**). **Obs:** Quando a tela abrir na mesma Aba do Navegador, irá abrir em outra Aba do Menu do Datasul.<br>**Retorno:** Não há. |
 | sendNotification | Apresenta uma notificação ao usuário.<br>**Importante:** Este método realiza uma integração direta com o Menu do Datasul (parte HTML do Menu). Portanto, ele somente funciona quando o projeto está sendo executado por dentro do Menu do Datasul.<br>**Parâmetros:**<br>- notification (object): Objeto com os seguintes atributos:<br>type (string): Tipo de notificação (success, warning, error).<br>title (string): Título da Notificação.<br>detail (string): Descrição da Notificação.<br>**Retorno:** Não há. |
 | programSecurity | Verifica a Segurança do Menu, identificando se o usuário corrente possui acesso a um ou mais programas.<br>**Parâmetros:**<br>- programName (string ou Array): Nome do Programa cadastro no Menu, que se deseja consultar a segurança. Podendo ser informado uma string simples com o Nome do Programa, ou um Array de strings com a lista de Programas.<br>**Retorno:** response (Observable(Array)): Array com as informações dos Programas pesquisados. O objeto contido no Array terá dois atributos:<br>programName (string): Nome do Programa no Menu.<br>hasAccess (boolean): Valor "TRUE" ou "FALSE", indicando se o usuário tem acesso ao programa. **Obs:** Se o programa não estiver cadastro no Menu, o retorno deste atributo será "FALSE". |
 ---
@@ -121,8 +122,11 @@ program = {
 };
 this.menuDatasulService.callProgress(program);
 
-// Executando uma Tela HTML
-this.menuDatasulService.openPath('html.inquiryItem', '1509;10;1', true);
+// Executando uma Tela THF1
+this.menuDatasulService.openTHF('dts/mab/activities', '', true);
+
+// Executando uma Tela PO-UI
+this.menuDatasulService.openPath('html.creditCardOperator', '1509;10;1', true);
 
 // Disparando uma Notificação
 notification = { 

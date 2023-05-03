@@ -1,5 +1,10 @@
 # Changelog
 
+**15.2.0 (03-05-2023):**
+
+Melhorias:
+- **MenuDatasulService** - Incluído o novo método chamado **openTHF**, para abrir telas construídas em THF1, que estejam cadastradas no menu do Datasul.
+
 **15.1.0 (14-04-2023):**
 
 Melhorias:

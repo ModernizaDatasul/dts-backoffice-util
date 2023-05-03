@@ -33,6 +33,17 @@ export class MenuDatasulService {
         const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
         let baseUrl = `/${datasulPath}/#/${datasulPath}/program-html/${programName}/#`;
 
+        this.openHTMLProgram(baseUrl, params, parent);
+    }
+
+    public openTHF(externalName: string, params: any, parent = true): void {
+        const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
+        let baseUrl = `/${datasulPath}/#/${externalName}/#`;
+
+        this.openHTMLProgram(baseUrl, params, parent);
+    }
+
+    private openHTMLProgram(baseUrl: string, params: any, parent: boolean): void {
         if (params) {
             baseUrl = `${baseUrl}/${params}`;
         }
