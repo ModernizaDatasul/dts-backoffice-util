@@ -3,7 +3,7 @@ Versão: 1.009
 Data Criação: 06/08/2018
 */
 
-import { PoDisclaimer, PoI18nPipe, PoCheckboxGroupOption, PoMultiselectOption } from '@po-ui/ng-components';
+import { PoDisclaimer, PoI18nPipe, PoCheckboxGroupOption, PoMultiselectOption, PoDatepickerRange } from '@po-ui/ng-components';
 import { IFilterRangeCharacter, IFilterRangeNumber, IFilterRangeDate } from '../../lib/interfaces/filter-range.interface';
 import { PoNotificationService } from '@po-ui/ng-components';
 
@@ -218,6 +218,21 @@ export class DisclaimerUtil {
         };
     }
 
+    public makeDisclaimerFromDatepickerRange(property: string, value: PoDatepickerRange, hideClose = false): PoDisclaimer {
+        if (!value) {
+            return { label: '', property: '', value: '' };
+        }
+
+        let filterRangeDate = {
+            iniInitial: new Date(1900, 1, 1),
+            valInitial: this.ajustDate(value.start),
+            iniFinal: new Date(9999, 11, 31),
+            valFinal: this.ajustDate(value.end)
+        }
+
+        return this.makeDisclaimerFromRangeDate(property, filterRangeDate, hideClose, true);
+    }
+
     public makeDisclaimerFromRangeDate(property: string, value: IFilterRangeDate, hideClose = false, validateEqual = true): PoDisclaimer {
         let valInitDate: Date = this.ajustDate(value.valInitial);
         let valFinalDate: Date = this.ajustDate(value.valFinal);
@@ -412,6 +427,28 @@ export class DisclaimerUtil {
         return this.atzRangeNumFromQueryParam(value, rangeNum);
     }
 
+    public atzDatepickerRangeFromDisclamer(disclaimers: Array<PoDisclaimer>, property: string,
+        rangeDate: PoDatepickerRange): PoDatepickerRange {
+
+        let filterRangeDate = {
+            iniInitial: null,
+            valInitial: rangeDate ? this.ajustDate(rangeDate.start) : null,
+            iniFinal: null,
+            valFinal: rangeDate ? this.ajustDate(rangeDate.end) : null
+        }
+
+        filterRangeDate = this.atzRangeDateFromDisclamer(disclaimers, property, filterRangeDate);
+
+        if (filterRangeDate.valInitial === null || filterRangeDate.valFinal === null) {
+            return null;
+        }
+
+        return {
+            start: filterRangeDate.valInitial,
+            end: filterRangeDate.valFinal
+        }
+    }
+
     public atzRangeDateFromDisclamer(disclaimers: Array<PoDisclaimer>, property: string,
         rangeDate: IFilterRangeDate): IFilterRangeDate {
         let value = '';
@@ -469,6 +506,8 @@ export class DisclaimerUtil {
     }
 
     public dateToQueryParam(date: Date): string {
+        if (date === null) { return null; }
+
         const iDay = date.getDate();
         const iMonth = date.getMonth() + 1;
         const iYear = date.getFullYear();
@@ -477,6 +516,8 @@ export class DisclaimerUtil {
     }
 
     public queryParamToDate(param: string): Date {
+        if (param === null) { return null; }
+
         const iDay = +param.split('-')[2];
         const iMonth = +param.split('-')[1];
         const iYear = +param.split('-')[0];
@@ -489,13 +530,14 @@ export class DisclaimerUtil {
     }
 
     public ajustDate(param: any): Date {
+        if (param === null) { return null; }
         if (param instanceof Date) { return param; }
         if (!param) { return param; }
 
         return this.queryParamToDate(param.split('T')[0]);
     }
 
-    public pad(number) {
+    public pad(number: number) {
         if (number < 10) {
             return '0' + number;
         }

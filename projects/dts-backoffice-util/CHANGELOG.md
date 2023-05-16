@@ -1,5 +1,10 @@
 # Changelog
 
+**15.3.0 (16-05-2023):**
+
+Melhorias:
+- **DisclaimerUtil** - Incluído novos métodos (**makeDisclaimerFromDatepickerRange** e **atzDatepickerRangeFromDisclamer**) para criação e atualização do objeto de Disclaimer para o componente **PoDatepickerRange**.
+
 **15.2.0 (03-05-2023):**
 
 Melhorias:
