@@ -30,22 +30,30 @@ export class MenuDatasulService {
     }
 
     public openPath(programName: string, params: any, parent = true): void {
-        const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
-        let baseUrl = `/${datasulPath}/#/${datasulPath}/program-html/${programName}/#`;
-
-        this.openHTMLProgram(baseUrl, params, parent);
+        this.openHTMLProgram('THF2', programName, params, parent);
     }
 
     public openTHF(externalName: string, params: any, parent = true): void {
-        const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
-        let baseUrl = `/${datasulPath}/#/${externalName}/#`;
-
-        this.openHTMLProgram(baseUrl, params, parent);
+        this.openHTMLProgram('THF1', externalName, params, parent);
     }
 
-    private openHTMLProgram(baseUrl: string, params: any, parent: boolean): void {
+    private openHTMLProgram(type: string, HTMLProgram: string, params: any, parent: boolean): void {
+        const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
+
+        HTMLProgram = HTMLProgram.replace(/\\/g, '/');
+        if (HTMLProgram.charAt(0) === '/') { HTMLProgram = HTMLProgram.slice(1); }
+        if (HTMLProgram.charAt(HTMLProgram.length - 1) === '/') { HTMLProgram = HTMLProgram.slice(0, -1); }
+
+        let baseUrl = `/${datasulPath}/#/`;
+        if (type === 'THF2') {
+            baseUrl = `${baseUrl}${datasulPath}/program-html/${HTMLProgram}/`;
+        } else {
+            baseUrl = `${baseUrl}${HTMLProgram}`;
+        }
+
         if (params) {
-            baseUrl = `${baseUrl}/${params}`;
+            if (baseUrl.charAt(baseUrl.length - 1) === '/') { baseUrl = baseUrl.slice(0, -1); }
+            baseUrl = `${baseUrl}/#/${params}`;
         }
 
         if (parent) {

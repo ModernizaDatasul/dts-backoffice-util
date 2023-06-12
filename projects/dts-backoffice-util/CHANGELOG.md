@@ -1,5 +1,10 @@
 # Changelog
 
+**15.3.1 (12-06-2023):**
+
+Correção:
+- **MenuDatasulService** - Corrigido o método **openTHF**, para abrir corretamente as telas construídas em THF1.
+
 **15.3.0 (16-05-2023):**
 
 Melhorias:
