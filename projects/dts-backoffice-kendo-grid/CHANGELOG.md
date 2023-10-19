@@ -1,5 +1,11 @@
 # Changelog
 
+**15.0.1 (19-10-2023):**
+
+Correção:
+- **Gerenciador de Colunas** - Corrigido para apresentar corretamente o gerenciador de colunas e as colunas disponíveis para alteração. Correção apenas visual.
+- **Ações da Tabela** - Corrigido para apresentar corretamente o menu-popup de ações da tabela. Correção apenas visual.
+
 **15.0.0 (31-03-2023):**
 
 Melhorias:

@@ -43,6 +43,7 @@ ERROS:
 - filtro + campo tipo "date": Quando esta na resolução "celular", o Calendário aparece como um modal. Escolher uma data, ele fecha o filtro.
 
 MELHORIAS:
+- d-editable: Ter a opção de uma linha entrar no modo de edição (método onde vc passa a linha que quer que entre em edição). Este novo método pode chamar o método "editClickHandler", só precisa "preparar" o terreno, por exemplo "copiar" o registro para aparecer os dados na tela.
 - d-editable + d-selectable: Na edição, se tiver "seleção", esconder o check-box.
 - grid: Rever scroll lateral, não é usual (tem que ir para o último registro).
 - grid: Mesmo com valor fixo, alguns parâmetros obrigam passar como "[". Exemplo: d-filterable="false", ele mostra o filtro.

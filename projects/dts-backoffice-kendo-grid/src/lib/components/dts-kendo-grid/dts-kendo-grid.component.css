@@ -18409,7 +18409,7 @@ li.k-item.k-drag-clue {
 
 .d-grid-bt-tools-bar {
     float: right !important;
-    color: var(--color-table-color-header);
+    color: #045b8f;
     font-size: 20px;
     padding: 7px 7px 7px 7px;
     background-color: transparent;
@@ -18432,6 +18432,44 @@ li.k-item.k-drag-clue {
     background-color: #0c9abe;
     border-radius: 2px;
 }  
+
+.d-table-column-manager-header {
+    border-bottom: 1px solid #eceeee;
+    display: table;
+    height: 44px;
+    width: 100%;
+}
+
+.d-table-column-manager-header-title {
+    font-family: NunitoSans,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1d2426;
+    padding: 0 16px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.d-table-column-manager-header-close {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.d-table-column-manager-header-close-button {
+    background-color: transparent;
+    border: none;
+    color: #0c9abe;
+    font-size: 16px;
+    margin: 4px 2px;
+    padding: 6px;
+}
+
+.d-table-column-manager-footer {
+    border-top: 1px solid #eceeee;
+    font-family: NunitoSans,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+}
 
 .d-column-manager-action {
     letter-spacing: normal;
@@ -18474,4 +18512,105 @@ li.k-item.k-drag-clue {
 
 .d-dts-kendo-grid {
     background-color: white;
+}
+
+.po-popup-item-default {
+    color: #0c9abe;
+}
+
+.po-popup-item-danger, .po-popup-item-default {
+    font-family: NunitoSans,sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: normal;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.po-popup {
+    border-radius: 3px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.3);
+    left: 0;
+    max-width: 300px;
+    position: fixed;
+    text-align: left;
+    width: auto;
+    word-wrap: break-word;
+    z-index: 3;
+}
+
+.po-popup, .po-popup-arrow {
+    background-color: #fff;
+}
+
+.po-popup-arrow {
+    box-shadow: -1px -1px 1px 0 rgba(0,0,0,.1);
+    z-index: -1;
+}
+
+.po-arrow-bottom-right, .po-arrow-top-right {
+    left: calc(100% - 20px);
+}
+
+.po-arrow-top, .po-arrow-top-left, .po-arrow-top-right {
+    top: -3px;
+    transform: rotate(45deg);
+}
+
+.po-arrow-bottom, .po-arrow-bottom-left, .po-arrow-bottom-right, .po-arrow-left, .po-arrow-left-bottom, .po-arrow-left-top, .po-arrow-right, .po-arrow-right-bottom, .po-arrow-right-top, .po-arrow-top, .po-arrow-top-left, .po-arrow-top-right {
+    height: 8px;
+    position: absolute;
+    width: 8px;
+}
+
+.po-checkbox-group-input+.po-checkbox-group-label:before {
+    background-color: #fff;
+    border: 1px solid #b6bdbf;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 8px 0 rgba(0,0,0,.1);
+    content: " ";
+    display: inline-block;
+    height: 19px;
+    width: 19px;
+    left: 0;
+    margin-right: 8px;
+    margin-top: -2px;
+    top: 12px;
+    vertical-align: middle;
+}
+
+.po-checkbox-group-label {
+    margin-top: -29px;
+    margin-left: 0px;
+    display: block;
+}
+
+.po-checkbox-group-item {
+    font-family: NunitoSans,sans-serif;
+    font-size: 14px;
+    line-height: 10px;
+    min-height: 10px;
+    padding: 0px 0px 0px 0;
+}
+
+.po-checkbox-group-input-checked+.po-checkbox-group-label:before {
+    content: "\e93c";
+}
+
+.po-checkbox-group-input-checked+.po-checkbox-group-label:before, .po-checkbox-group-input-indeterminate+.po-checkbox-group-label:before {
+    background-color: #0c9abe;
+    border: 1px solid #0c9abe;
+    box-shadow: none;
+    color: #fff;
+    font-family: PoIcon!important;
+    line-height: 17px;
+    padding-left: 2px;
+}
+
+.po-input:focus {
+    border-color: var(--color-focused);
+    outline-color: var(--outline-color-focused);
+    outline-width: 4px;
+    outline-style: none;
+    outline-offset: 2px;
 }
