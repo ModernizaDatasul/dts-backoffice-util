@@ -1,5 +1,10 @@
 # Changelog
 
+**16.0.0 (06-12-2023):**
+
+Melhorias:
+- ATUALIZAÇÃO: **PO-UI v16** E **ANGULAR v16**.
+
 **15.3.1 (12-06-2023):**
 
 Correção:
