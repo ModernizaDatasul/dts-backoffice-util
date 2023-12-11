@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsKendoGrid |
 |-|-| -|
-| v16 | v16 | 16.0.1 |
+| v16 | v16 | 16.0.2 |
 | v15 | v15 | 15.0.1 |
 | v14 | v14 | 14.0.3 |
 | v6 | v13 | 6.0.1 |
@@ -41,12 +41,13 @@ Segue abaixo as dependência utilizadas e as respectivas **versões homologadas*
         "@progress/kendo-angular-inputs": "^10.1.2",
         "@progress/kendo-angular-intl": "^4.1.1",
         "@progress/kendo-angular-l10n": "^4.0.1",
-        "@progress/kendo-angular-label": "^1.4.0",
+        "@progress/kendo-angular-label": "^4.0.2",
         "@progress/kendo-angular-pdf-export": "^4.0.1",
         "@progress/kendo-angular-popup": "^5.0.2",
         "@progress/kendo-angular-treeview": "^7.1.5",
         "@progress/kendo-data-query": "^1.7.0",
         "@progress/kendo-drawing": "^1.19.0",
+        "@progress/kendo-licensing": "^1.3.3",
         "@progress/kendo-theme-default": "^2.63.0",
 ```
 
