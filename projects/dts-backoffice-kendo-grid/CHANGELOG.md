@@ -1,5 +1,10 @@
 # Changelog
 
+**15.1.0 (12-12-2023):**
+
+Melhorias:
+- ATUALIZAÇÃO: Evoluídas as versões das Bibliotecas do Kendo para serem compatíveis com o Angular 15.
+
 **15.0.1 (19-10-2023):**
 
 Correção:
