@@ -1,6 +1,6 @@
 # Changelog
 
-**15.3.2 (12-12-2023):**
+**15.3.2 / 15.3.3 (12-12-2023):**
 
 Melhorias:
 - ATUALIZAÇÃO: Ajuste nas dependências das bibliotecas utilizadas.
