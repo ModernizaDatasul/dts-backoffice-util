@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsKendoGrid |
 |-|-| -|
-| v15 | v15 | 15.1.1 |
+| v15 | v15 | 15.2.0 |
 | v14 | v14 | 14.0.3 |
 | v6 | v13 | 6.0.1 |
 | v5 | v12 | 5.0.2 |
@@ -47,7 +47,7 @@ Segue abaixo as dependência utilizadas e as respectivas **versões homologadas*
     "@progress/kendo-data-query": "~1.7.0",
     "@progress/kendo-drawing": "~1.19.0",
     "@progress/kendo-licensing": "~1.3.3",
-    "@progress/kendo-theme-default": "~2.63.0",
+    "@progress/kendo-theme-default": "~6.7.0",
 ```
 
 **Instalação do Pacote:**
