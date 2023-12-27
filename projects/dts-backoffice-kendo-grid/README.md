@@ -11,7 +11,7 @@ Componente que encapsula o [Kendo Grid](https://www.telerik.com/kendo-angular-ui
 Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e Angular correspondentes.<br>Detalhes das alterações: **[**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-kendo-grid/CHANGELOG.md)**.
 
 | PO-UI | Angular | Versão dtsKendoGrid |
-|-|-| -|
+|-|-|-|
 | v15 | v15 | 15.2.0 |
 | v14 | v14 | 14.0.3 |
 | v6 | v13 | 6.0.1 |
@@ -27,28 +27,29 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 **Dependências:**
 
 É necessário incluir no package do projeto as Dependências do **Kendo Grid**.
-Segue abaixo as dependência utilizadas e as respectivas **versões homologadas** para o componente:
+Segue abaixo as dependência utilizadas e as respectivas **versões homologadas** para o componente, conforme a versão do Angular:
 
-```
-    "@progress/kendo-angular-buttons": "~8.2.2",
-    "@progress/kendo-angular-common": "~3.2.2",
-    "@progress/kendo-angular-dateinputs": "~7.1.6",
-    "@progress/kendo-angular-dialog": "~7.1.5",
-    "@progress/kendo-angular-dropdowns": "~7.2.4",
-    "@progress/kendo-angular-excel-export": "~5.0.2",
-    "@progress/kendo-angular-grid": "~7.4.2",
-    "@progress/kendo-angular-inputs": "~10.1.2",
-    "@progress/kendo-angular-intl": "~4.1.1",
-    "@progress/kendo-angular-l10n": "~4.0.1",
-    "@progress/kendo-angular-label": "~4.0.2",
-    "@progress/kendo-angular-pdf-export": "~4.0.1",
-    "@progress/kendo-angular-popup": "~5.0.2",
-    "@progress/kendo-angular-treeview": "~7.1.5",
-    "@progress/kendo-data-query": "~1.7.0",
-    "@progress/kendo-drawing": "~1.19.0",
-    "@progress/kendo-licensing": "~1.3.3",
-    "@progress/kendo-theme-default": "~6.7.0",
-```
+| Biblioteca Kendo | Angular até v14 | Angular v15 | Angular v16 em diante
+|-|-|-|-|
+| @progress/kendo-angular-buttons | 5.5.1 | 8.2.2 | 8.2.2 |
+| @progress/kendo-angular-common | 1.2.3 | 3.2.2 | 3.2.2 |
+| @progress/kendo-angular-dateinputs | 4.3.1 | 7.1.6 | 7.1.6 |
+| @progress/kendo-angular-dialog | Não Usa | 7.1.5 | 7.1.5 |
+| @progress/kendo-angular-dropdowns | 4.3.2 | 7.2.4 | 7.2.4 |
+| @progress/kendo-angular-excel-export | 3.1.2 | 5.0.2 | 5.0.2 |
+| @progress/kendo-angular-grid | 4.7.4 | 7.4.2 | 7.4.2 |
+| @progress/kendo-angular-inputs | 6.6.1 | 10.1.2 | 10.1.2 |
+| @progress/kendo-angular-intl | 2.0.3 | 4.1.1 | 4.1.1 |
+| @progress/kendo-angular-l10n | 2.0.2 | 4.0.1 | 4.0.1 |
+| @progress/kendo-angular-label | Não Usa | 4.0.2 | 4.0.2 |
+| @progress/kendo-angular-pdf-export | 2.0.4 | 4.0.1 | 4.0.1 |
+| @progress/kendo-angular-popup | 3.0.6 | 5.0.2 | 5.0.2 |
+| @progress/kendo-angular-treeview | Não Usa | 7.1.5 | 7.1.5 |
+| @progress/kendo-data-query | 1.5.2 | 1.7.0 | 1.7.0 |
+| @progress/kendo-drawing | 1.9.1 | 1.19.0 | 1.19.0 |
+| @progress/kendo-licensing | Não Usa | 1.3.3 | 1.3.3 |
+| @progress/kendo-theme-default | 2.63.0 | 6.7.0 | 6.7.0 |
+
 
 **Instalação do Pacote:**
 
