@@ -1,5 +1,10 @@
 # Changelog
 
+**16.1.0 (27-12-2023):**
+
+Correção:
+- **Visual Componente**: Correção geral do CSS, que foi impactado pelas novas versões das bibliotecas do Kendo.
+
 **16.0.0 / 16.0.1 / 16.0.2 (06-12-2023):**
 
 Melhorias:
