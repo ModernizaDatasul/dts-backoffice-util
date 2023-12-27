@@ -11,9 +11,9 @@ Biblioteca que engloba diversos componentes e serviços utilizados no desenvolvi
 Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e Angular correspondentes.<br>Detalhes das alterações: **[**VER CHANGE LOG**](https://github.com/ModernizaDatasul/dts-backoffice-util/blob/master/projects/dts-backoffice-util/CHANGELOG.md)**.
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
-|-|-| -|
+|-|-|-|
 | v16 | v16 | 16.0.0 |
-| v15 | v15 | 15.3.1 |
+| v15 | v15 | 15.3.3 |
 | v14 | v14 | 14.4.1 |
 | v6 | v13 | 6.0.2 |
 | v5 | v12 | 5.0.1 |

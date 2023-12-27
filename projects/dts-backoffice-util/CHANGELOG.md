@@ -5,6 +5,11 @@
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v16** E **ANGULAR v16**.
 
+**15.3.2 / 15.3.3 (12-12-2023):**
+
+Melhorias:
+- ATUALIZAÇÃO: Ajuste nas dependências das bibliotecas utilizadas.
+
 **15.3.1 (12-06-2023):**
 
 Correção:

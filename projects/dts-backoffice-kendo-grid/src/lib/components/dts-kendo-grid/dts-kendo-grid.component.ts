@@ -24,7 +24,7 @@ import { DtsColumnConfigView } from './dts-kendo-grid-column.interface';
     selector: 'dts-kendo-grid',
     encapsulation: ViewEncapsulation.None,
     templateUrl: './dts-kendo-grid.component.html',
-    styleUrls: ['./custom-telerik.css', './dts-kendo-grid.component.css']
+    styleUrls: ['./dts-kendo-grid.component.css']
 })
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy {
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;

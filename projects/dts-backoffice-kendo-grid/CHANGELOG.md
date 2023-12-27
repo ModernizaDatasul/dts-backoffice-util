@@ -5,6 +5,16 @@
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v16** E **ANGULAR v16**.
 
+**15.2.0 (26-12-2023):**
+
+Correção:
+- **Visual Componente**: Correção geral do CSS, que foi impactado pelas novas versões das bibliotecas do Kendo.
+
+**15.1.0 / 15.1.1 (12-12-2023):**
+
+Melhorias:
+- ATUALIZAÇÃO: Evoluídas as versões das Bibliotecas do Kendo para serem compatíveis com o Angular 15.
+
 **15.0.1 (19-10-2023):**
 
 Correção:

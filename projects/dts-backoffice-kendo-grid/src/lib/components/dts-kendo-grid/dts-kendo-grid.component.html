@@ -190,7 +190,8 @@
             </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-command-column *ngIf="isCommandColumnVisible() && viewColumnVisible" title="" width="80" locked="true">
+        <kendo-grid-command-column *ngIf="isCommandColumnVisible() && viewColumnVisible" title="" width="80" locked="true"
+                                   [headerClass]="{'d-command-header': true}">
             <ng-template *ngIf="showCommandTools('any')"
                          kendoGridHeaderTemplate>
 
