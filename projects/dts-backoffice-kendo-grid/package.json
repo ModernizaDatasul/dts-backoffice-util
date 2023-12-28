@@ -1,6 +1,6 @@
 {
     "name": "dts-backoffice-kendo-grid",
-    "version": "15.2.0",
+    "version": "15.2.1",
     "dependencies": {
         "tslib": "^2.2.0"
     },

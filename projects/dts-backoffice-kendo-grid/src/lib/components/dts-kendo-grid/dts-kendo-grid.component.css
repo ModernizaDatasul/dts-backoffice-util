@@ -19535,6 +19535,11 @@ li.k-item.k-drag-clue {
     background-color: #f9f9f9;
 }
 
+.k-grid-show-more-button:disabled {
+    border-color: #b2b2b2;
+    color: #b2b2b2;
+}
+
 .k-grid-show-more-button {
     padding-top: 8px;
     font-family: NunitoSans-Bold, sans-serif;
@@ -19723,6 +19728,10 @@ li.k-item.k-drag-clue {
     padding: 0px 0;
     position: relative;
     width: 100%;
+}
+
+.po-tooltip {
+    opacity: 50;
 }
 
 .po-calendar-content .d-calendar-today {

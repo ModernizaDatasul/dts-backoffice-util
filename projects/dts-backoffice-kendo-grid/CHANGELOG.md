@@ -1,5 +1,11 @@
 # Changelog
 
+**15.2.1 (28-12-2023):**
+
+Correção:
+- **Carregar Mais**: O botão de carregar mais não estava mudando de cor quando ficava desabilitado.
+- **Coluna do Tipo Label**: Para colunas do tipo **Label** não estava aparecendo a Legenda ao passar o mouse sobre os itens.
+
 **15.2.0 (26-12-2023):**
 
 Correção:
