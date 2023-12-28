@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsKendoGrid |
 |-|-|-|
-| v16 | v16 | 16.1.0 |
+| v16 | v16 | 16.1.1 |
 | v15 | v15 | 15.2.1 |
 | v14 | v14 | 14.0.3 |
 | v6 | v13 | 6.0.1 |
@@ -32,20 +32,20 @@ Segue abaixo as dependência utilizadas e as respectivas **versões homologadas*
 
 | Biblioteca Kendo | Angular até v14 | Angular v15 | Angular v16 em diante
 |-|-|-|-|
-| @progress/kendo-angular-buttons | 5.5.1 | 8.2.2 | 8.2.2 |
-| @progress/kendo-angular-common | 1.2.3 | 3.2.2 | 3.2.2 |
-| @progress/kendo-angular-dateinputs | 4.3.1 | 7.1.6 | 7.1.6 |
-| @progress/kendo-angular-dialog | Não Usa | 7.1.5 | 7.1.5 |
-| @progress/kendo-angular-dropdowns | 4.3.2 | 7.2.4 | 7.2.4 |
-| @progress/kendo-angular-excel-export | 3.1.2 | 5.0.2 | 5.0.2 |
-| @progress/kendo-angular-grid | 4.7.4 | 7.4.2 | 7.4.2 |
-| @progress/kendo-angular-inputs | 6.6.1 | 10.1.2 | 10.1.2 |
-| @progress/kendo-angular-intl | 2.0.3 | 4.1.1 | 4.1.1 |
-| @progress/kendo-angular-l10n | 2.0.2 | 4.0.1 | 4.0.1 |
-| @progress/kendo-angular-label | Não Usa | 4.0.2 | 4.0.2 |
-| @progress/kendo-angular-pdf-export | 2.0.4 | 4.0.1 | 4.0.1 |
-| @progress/kendo-angular-popup | 3.0.6 | 5.0.2 | 5.0.2 |
-| @progress/kendo-angular-treeview | Não Usa | 7.1.5 | 7.1.5 |
+| @progress/kendo-angular-buttons | 5.5.1 | 8.2.2 | 12.1.0 |
+| @progress/kendo-angular-common | 1.2.3 | 3.2.2 | 12.1.0 |
+| @progress/kendo-angular-dateinputs | 4.3.1 | 7.1.6 | 12.1.0 |
+| @progress/kendo-angular-dialog | Não Usa | 7.1.5 | 12.1.0 |
+| @progress/kendo-angular-dropdowns | 4.3.2 | 7.2.4 | 12.1.0 |
+| @progress/kendo-angular-excel-export | 3.1.2 | 5.0.2 | 12.1.0 |
+| @progress/kendo-angular-grid | 4.7.4 | 7.4.2 | 12.1.0 |
+| @progress/kendo-angular-inputs | 6.6.1 | 10.1.2 | 12.1.0 |
+| @progress/kendo-angular-intl | 2.0.3 | 4.1.1 | 12.1.0 |
+| @progress/kendo-angular-l10n | 2.0.2 | 4.0.1 | 12.1.0 |
+| @progress/kendo-angular-label | Não Usa | 4.0.2 | 12.1.0 |
+| @progress/kendo-angular-pdf-export | 2.0.4 | 4.0.1 | 12.1.0 |
+| @progress/kendo-angular-popup | 3.0.6 | 5.0.2 | 12.1.0 |
+| @progress/kendo-angular-treeview | Não Usa | 7.1.5 | 12.1.0 |
 | @progress/kendo-data-query | 1.5.2 | 1.7.0 | 1.7.0 |
 | @progress/kendo-drawing | 1.9.1 | 1.19.0 | 1.19.0 |
 | @progress/kendo-licensing | Não Usa | 1.3.3 | 1.3.3 |

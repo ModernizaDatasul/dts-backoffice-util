@@ -1,6 +1,9 @@
 # Changelog
 
-**16.1.0 (27-12-2023):**
+**16.1.0 / 16.1.1 (27-12-2023):**
+
+Melhorias:
+- ATUALIZAÇÃO: Evoluídas as versões das Bibliotecas do Kendo para serem compatíveis com o Angular 16.
 
 Correção:
 - **Visual Componente**: Correção geral do CSS, que foi impactado pelas novas versões das bibliotecas do Kendo.
