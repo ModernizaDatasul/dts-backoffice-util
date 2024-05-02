@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v15 | v15 | 15.3.3 |
+| v15 | v15 | 15.4.0 |
 | v14 | v14 | 14.4.1 |
 | v6 | v13 | 6.0.2 |
 | v5 | v12 | 5.0.1 |
@@ -187,35 +187,6 @@ this.menuDatasulService
 })
 ```
 
-No HTML usar da seguinte forma:
-```
-<app-totvs-schedule-execution 
-  programName="pdapi701"
-  externalName="pdp/pdapi701.p"
-  programEMS5="false"
-  programVersion=""
-  [parameters]="parametersRpw"
-  (endExecution)="endExecution($event)">
-</app-totvs-schedule-execution>
-```
-
-**Definição no JavaScript:**
-```
-this.parametersRpw = [
-    { chave: 'destino', valor: 2, tipo: 'integer' },
-    { chave: 'arquivo', valor: '', tipo: 'character' },
-    { chave: 'usuario', valor: 'FERNANDO', tipo: 'character' },
-    { chave: 'perfil', valor: 880, tipo: 'integer' }
-];
-```
-**Definição no Progress:**
-```
-DEFINE TEMP-TABLE tt-param NO-UNDO
-    FIELD destino AS INTEGER
-    FIELD arquivo AS CHARACTER
-    FIELD usuario AS CHARACTER
-    FIELD perfil AS INTEGER.
-```
 Parâmetros:
 
 | Nome | Tipo | Obrigatório | Descrição |
@@ -223,8 +194,12 @@ Parâmetros:
 | programName | string | Sim | Código de Programa cadastrado no menu, do programa que será executado no RPW. |
 | externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
+| programStyle | number | Não | Número que representa o Estilo do Relatório no EMS5. | 
 | programVersion | string | Não | Versão do programa progress. |
 | parameters | Array | Sim | Objeto representando a Temp-Table que será enviada ao progress. |
+| paramDigitDef | Array | Não | Definição da Temp-Table tt-digita. Utilizado apenas pelo EMS2. Para cada campo da tt-digita, deve ser enviado um objeto com o seguinte formato: **{"chave": "string", "tipo": "string" }**. Onde **chave** representa o nome do campo, e **tipo** representa o tipo de dado (exemplo: character, integer, etc...). |
+| paramDigitData | Array | Não | Dados que serão enviados e alimentados na tt-digita. Utilizado apenas pelo EMS2. |
+| paramSelections | Array | Não | Parâmetros de Seleção. Utilizado apenas pelo EMS5. |
 | disabledParams | boolean | Não | Quando for igual a **"Sim"**, irá desabilitar todos os campos do Agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
 | loading | boolean | Não | Quando for igual a **"Sim"**, irá apresentar a tela de "loading" no momento da criação da agenda até o retorno do serviço. |
 | endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **IScheduleParameters**, contendo os parâmetros informados pelo usuário. |
@@ -240,23 +215,76 @@ Exemplo de Uso:
 
 Em conjunto com o parâmetro **endExecution** o método **setScheduleParameters** pode ser utilizado para salvar e recuperar as informações de agendamento informadas pelo usuário.
 
+**Definições no HTML:**
 ```
-- HTML -
+// EXEMPLO PARA EMS5
 <app-totvs-schedule-execution #schParam
-  ...
+  programName="rpt_grp_repres"
+  externalName="rpt_grp_repres"        
+  programEMS5="true"
+  programStyle="40"
+  programVersion="1.00.00.004"
+  [parameters]="parametersRpw"
+  [paramSelections]="paramSelectionsRpw"
   (endExecution)="endExecutionSchedule($event)">
 </app-totvs-schedule-execution>
 
-- TS -
+// EXEMPLO PARA EMS2
+<app-totvs-schedule-execution #schParam
+  programName="pdapi701"
+  externalName="pdp/pdapi701.p"
+  [parameters]="parametersRpw"
+  [paramDigitDef]="paramDigitDefRpw"
+  [paramDigitData]="paramDigitDataRpw"
+  (endExecution)="endExecutionSchedule($event)">
+</app-totvs-schedule-execution>    
+```
+**Definições no JavaScript:**
+```
 @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
-...
+
 scheduleParams: IScheduleParameters;
-...
+parametersRpw = new Array<any>();
+paramDigitDefRpw = new Array<any>();
+paramDigitDataRpw = new Array<any>();
+paramSelectionsRpw = new Array<any>();
+
 ngOnInit(): void {
-  ...
   this.loadLocalStorage();
   this.schParam.setScheduleParameters(this.scheduleParams);
-  ...
+
+  this.createParametersRpw();
+}
+
+createParametersRpw(): void {
+  // Parâmetros
+  this.parametersRpw = [
+    { chave: 'destino', valor: 2, tipo: 'integer' },
+    { chave: 'arquivo', valor: '', tipo: 'character' },
+    { chave: 'usuario', valor: 'FERNANDO', tipo: 'character' },
+    { chave: 'perfil', valor: 880, tipo: 'integer' }
+  ];
+
+  // Definição da tt-digita (EMS2)
+  this.paramDigitDefRpw = [
+    { chave: 'cod-estab', tipo: 'character' },
+    { chave: 'cod-ccusto', tipo: 'integer' }
+  ];
+
+  // Dados da tt-digita (EMS2)
+  this.paramDigitDataRpw = [
+    { "cod-estab": '19', "cod-ccusto": 17 },
+    { "cod-estab": '28', "cod-ccusto": 11 },
+    { "cod-estab": '73', "cod-ccusto": 90 }
+  ];
+
+  // Seleção (Relatório Regra/Exceção do EMS5)
+  this.paramSelectionsRpw = [
+    { ind_dwb_set_type: "Regra", cod_dwb_set: "estab",
+      cod_dwb_set_initial: "01", cod_dwb_set_final: "FF", log_dwb_rule: true },
+    { ind_dwb_set_type: "Exceção", cod_dwb_set: "ccusto",
+      cod_dwb_set_initial: "30", cod_dwb_set_final: "35", log_dwb_rule: false }
+  ]
 }
 
 endExecutionSchedule(event): void {
@@ -273,6 +301,18 @@ private loadLocalStorage(): void {
   if (typeof (Storage) === 'undefined') { return; }
   this.scheduleParams = JSON.parse(localStorage.getItem('param-maint.schParam'));
 }
+```
+**Definições no Progress:**
+```
+DEFINE TEMP-TABLE tt-param NO-UNDO
+  FIELD destino AS INTEGER
+  FIELD arquivo AS CHARACTER
+  FIELD usuario AS CHARACTER
+  FIELD perfil  AS INTEGER.
+
+DEFINE TEMP-TABLE tt-digita NO-UNDO
+  FIELD cod-estab  AS CHARACTER
+  FIELD cod-ccusto AS INTEGER.
 ```
 
 Interfaces:
@@ -315,8 +355,8 @@ Exemplo de Uso:
 
 Segue abaixo exemplos da geração de agendamento, busca e acompanhamento da execução.
 
+**Definições no HTML:**
 ```
-- HTML -
 <po-lookup
   p-label="Servidor RPW"
   p-placeholder="Servidor RPW"
@@ -327,8 +367,9 @@ Segue abaixo exemplos da geração de agendamento, busca e acompanhamento da exe
   p-field-value="code"
   [(ngModel)]="executionServer">
 </po-lookup>
-
-- TS -
+```
+**Definições no JavaScript:**
+```
 executionServer: string;
 jobScheduleID: string;
 executionID: string;
@@ -355,14 +396,45 @@ createSchedule(): void {
   // Criar um Agendamento para ser Executado "agora"
   const execParam = new ExecutionParameters();
   execParam.executionServer = executionServer;
-  execParam.programName = 'api_executa_carga_dados_carol';
-  execParam.externalName = 'api_executa_carga_dados_carol';
+
+  // Exemplo de Parâmetros para o EMS5
+  execParam.programName = 'rpt_grp_repres';
+  execParam.externalName = 'rpt_grp_repres';
   execParam.programEMS5 = true;
-  execParam.programVersion = '1.00.00.001';
+  execParam.programStyle = 40;
+  execParam.programVersion = '1.00.00.004';
   execParam.businessParams = [
     { chave: 'cTipoCarga', valor: 'register', tipo: 'character' },
     { chave: 'lCargaTotal', valor: false, tipo: 'logical' },
     { chave: 'dDataCorte', valor: null, tipo: 'date' }
+  ];
+  // Seleção (Relatório Regra/Exceção do EMS5)
+  execParam.paramSelections = [
+    { ind_dwb_set_type: "Regra", cod_dwb_set: "estab",
+      cod_dwb_set_initial: "01", cod_dwb_set_final: "FF", log_dwb_rule: true },
+    { ind_dwb_set_type: "Exceção", cod_dwb_set: "ccusto",
+      cod_dwb_set_initial: "30", cod_dwb_set_final: "35", log_dwb_rule: false }
+  ];
+
+  // Exemplo de Parâmetros para o EMS2
+  execParam.programName = 'pdapi701';
+  execParam.externalName = 'pdp/pdapi701.p';
+  execParam.businessParams = [
+    { chave: 'destino', valor: 2, tipo: 'integer' },
+    { chave: 'arquivo', valor: '', tipo: 'character' },
+    { chave: 'usuario', valor: 'FERNANDO', tipo: 'character' },
+    { chave: 'perfil', valor: 880, tipo: 'integer' }
+  ];
+  // Definição da tt-digita (EMS2)
+  execParam.paramDigitDef = [
+    { chave: 'cod-estab', tipo: 'character' },
+    { chave: 'cod-ccusto', tipo: 'integer' }
+  ];
+  // Dados da tt-digita (EMS2)
+  execParam.paramDigitData = [
+    { "cod-estab": '19', "cod-ccusto": 17 },
+    { "cod-estab": '28', "cod-ccusto": 11 },
+    { "cod-estab": '73', "cod-ccusto": 90 }
   ];
 
   this.schedExecSubscription$ = this.scheduleExecution
@@ -449,6 +521,18 @@ followUpCallBack(execStatus: IExecutionStatus): boolean {
   return true; // Continua monitorando - retornar "false" para parar o monitoramento
 }
 ```
+**Definições no Progress:**
+```
+DEFINE TEMP-TABLE tt-param NO-UNDO
+  FIELD destino AS INTEGER
+  FIELD arquivo AS CHARACTER
+  FIELD usuario AS CHARACTER
+  FIELD perfil  AS INTEGER.
+
+DEFINE TEMP-TABLE tt-digita NO-UNDO
+  FIELD cod-estab  AS CHARACTER
+  FIELD cod-ccusto AS INTEGER.
+```
 
 Interfaces:
 
@@ -459,8 +543,12 @@ IExecutionParameters
 | programName | string | Sim | Código de Programa cadastrado no menu, do programa que será executado no RPW. |
 | externalName | string | Sim | Nome completo do Programa que será executado no RPW, diretório + nome externo.<br>**Importante:** Em virtude do dicionário (Foundation), este parâmetro é limitado a 24 dígitos. |
 | programEMS5 | boolean | Não | Indica se o programa progress é do EMS5. |
+| programStyle | number | Não | Número que representa o Estilo do Relatório no EMS5. | 
 | programVersion | string | Não | Versão do programa progress. |
-| businessParams | Array | Não | Objeto representando a Temp-Table que será enviada ao progress. Ver exemplo do objeto **parametersRpw** no **TotvsScheduleExecutionComponent**. |
+| businessParams | Array | Não | Objeto representando a Temp-Table que será enviada ao progress. |
+| paramDigitDef | Array | Não | Definição da Temp-Table tt-digita. Utilizado apenas pelo EMS2. Para cada campo da tt-digita, deve ser enviado um objeto com o seguinte formato: **{"chave": "string", "tipo": "string" }**. Onde **chave** representa o nome do campo, e **tipo** representa o tipo de dado (exemplo: character, integer, etc...). |
+| paramDigitData | Array | Não | Dados que serão enviados e alimentados na tt-digita. Utilizado apenas pelo EMS2. |
+| paramSelections | Array | Não | Parâmetros de Seleção. Utilizado apenas pelo EMS5. |
 
 IExecutionStatus
 | Nome | Tipo | Descrição |
@@ -712,10 +800,11 @@ Métodos:
 ---
 
 Exemplo de Uso:
-```
--- JavaScript --
 
-- TS da Tela -
+**Definições no JavaScript:**
+```
+// TS da Tela
+
 import { FileUtil } from 'dts-backoffice-util';
 
 fileBase64: string;
@@ -763,7 +852,8 @@ onConfirmUpload(): void {
   );
 }
 
-- TS do Serviço -
+// TS do Serviço
+
 getFile(id: string): Observable<Object> {
   const url = `/customer/${id}/file`;
   return this.http.get(url);
@@ -773,9 +863,9 @@ getQrCode(text: string): Observable<Blob> {
   const url = `/qrcode/download?text=${text}`;
   return this.http.get(url, { responseType: 'blob' });
 }
-
--- Progress --
-
+```
+**Definições no Progress:**
+```
 // Conteúdo do Método que BackEnd que retorna o Arquivo em Base64
 DEFINE VARIABLE v_dir_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_cod_arq AS CHARACTER NO-UNDO.

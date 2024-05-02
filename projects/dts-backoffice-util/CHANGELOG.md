@@ -1,5 +1,11 @@
 # Changelog
 
+**15.4.0 (01-05-2024):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** - Incluído novos parâmetros para envio de informações para o RPW, conforme o produto:<br>- EMS5: **programStyle** e **paramSelections** - Estilo do Relatório e Parâmetros de Seleção;<br>- EMS2: **paramDigitDef** e **paramDigitData** - Definição e Dados para alimentar a tt_digita.
+- **TotvsScheduleExecutionService** - Alterada a interface **IExecutionParameters**, para possibilitar o envio de novos parâmetros para o método **createExecutionForNow**. Os novos parâmetros, são os mesmos descritos acima para o componente **TotvsScheduleExecutionComponent**.
+
 **15.3.2 / 15.3.3 (12-12-2023):**
 
 Melhorias:

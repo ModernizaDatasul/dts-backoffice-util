@@ -16,8 +16,12 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     @Input() programName: string;
     @Input() externalName: string;
     @Input() programEMS5 = false;
+    @Input() programStyle = 0;
     @Input() programVersion = '';
     @Input() parameters: [];
+    @Input() paramDigitDef = [];
+    @Input() paramDigitData = [];
+    @Input() paramSelections = [];
     @Input() disabledParams = false;
     @Input() loading = false;
     @Output() endExecution = new EventEmitter();
@@ -153,6 +157,8 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         if (this.disabledParams) { return; }
         if (!this.validate()) { return; }
 
+        let idxParam: number;
+
         this.jsonObject = {};
         this.jsonObject.status = 'active';
         this.jsonObject.processID = this.programName;
@@ -168,13 +174,38 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         }
 
         this.jsonObject.executionParameter.parametros = [];
+
         this.jsonObject.executionParameter.parametros[0] = { chave: 'rpwServer', valor: this.model.executionServer };
         this.jsonObject.executionParameter.parametros[1] = { chave: 'RPW_PROGRAM', valor: this.externalName };
         this.jsonObject.executionParameter.parametros[2] = { chave: 'RPW_PRG_EMS5', valor: this.programEMS5 ? 'yes' : 'no' };
-        this.jsonObject.executionParameter.parametros[3] = { chave: 'RPW_PRG_VERS', valor: this.programVersion };
+        this.jsonObject.executionParameter.parametros[3] = { chave: 'RPW_PRG_ESTILO', valor: this.programStyle };
+        this.jsonObject.executionParameter.parametros[4] = { chave: 'RPW_PRG_VERS', valor: this.programVersion };
 
-        this.jsonObject.executionParameter.parametros[4] = {};
-        this.jsonObject.executionParameter.parametros[4].parametros_negocio = this.parameters;
+        idxParam = 4;
+
+        if (this.parameters && this.parameters.length > 0) {
+            idxParam++;
+            this.jsonObject.executionParameter.parametros[idxParam] = {};
+            this.jsonObject.executionParameter.parametros[idxParam].parametros_negocio = this.parameters;
+        }
+
+        if (this.paramDigitDef && this.paramDigitDef.length > 0) {
+            idxParam++;
+            this.jsonObject.executionParameter.parametros[idxParam] = {};
+            this.jsonObject.executionParameter.parametros[idxParam].param_digita_def = this.paramDigitDef;
+        }
+
+        if (this.paramDigitData && this.paramDigitData.length > 0) {
+            idxParam++;
+            this.jsonObject.executionParameter.parametros[idxParam] = {};
+            this.jsonObject.executionParameter.parametros[idxParam].param_digita_dados = this.paramDigitData;
+        }
+
+        if (this.paramSelections && this.paramSelections.length > 0) {
+            idxParam++;
+            this.jsonObject.executionParameter.parametros[idxParam] = {};
+            this.jsonObject.executionParameter.parametros[idxParam].selecoes = this.paramSelections;
+        }
 
         // Executa hoje ou agendada
         this.rpwService.createExecution(this.jsonObject, this.loading).subscribe(() => {
