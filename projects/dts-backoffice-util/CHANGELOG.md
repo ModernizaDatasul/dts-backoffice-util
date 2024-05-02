@@ -11,7 +11,7 @@ Melhorias:
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v16** E **ANGULAR v16**.
 
-**15.4.0 (01-05-2024):**
+**15.4.0 / 15.4.1 (01-05-2024):**
 
 Melhorias:
 - **TotvsScheduleExecutionComponent** - Incluído novos parâmetros para envio de informações para o RPW, conforme o produto:<br>- EMS5: **programStyle** e **paramSelections** - Estilo do Relatório e Parâmetros de Seleção;<br>- EMS2: **paramDigitDef** e **paramDigitData** - Definição e Dados para alimentar a tt-digita.
