@@ -53,6 +53,10 @@ export class TotvsScheduleExecutionService {
         const date = new Date();
 
         const params = JSON.parse(JSON.stringify(executionParams).replace(/\\\\/g, '*|'));
+
+        if (!params.programEMS5) { params.programEMS5 = false; }
+        if (!params.programStyle) { params.programStyle = 0; }
+        if (!params.programVersion) { params.programVersion = ''; }
         if (!params.businessParams || params.businessParams.length === 0) {
             params.businessParams = [{ chave: '', valor: '' }];
         }
@@ -68,10 +72,29 @@ export class TotvsScheduleExecutionService {
                 { chave: 'rpwServer', valor: params.executionServer },
                 { chave: 'RPW_PROGRAM', valor: params.externalName },
                 { chave: 'RPW_PRG_EMS5', valor: params.programEMS5 ? 'yes' : 'no' },
+                { chave: 'RPW_PRG_ESTILO', valor: params.programStyle },
                 { chave: 'RPW_PRG_VERS', valor: params.programVersion },
                 { parametros_negocio: params.businessParams }
             ]
         };
+
+        if (params.paramDigitDef && params.paramDigitDef.length > 0) {
+            jobScheduleParams.executionParameter.parametros.push({
+                param_digita_def: params.paramDigitDef
+            });
+        }
+
+        if (params.paramDigitData && params.paramDigitData.length > 0) {
+            jobScheduleParams.executionParameter.parametros.push({
+                param_digita_dados: params.paramDigitData
+            });
+        }
+
+        if (params.paramSelections && params.paramSelections.length > 0) {
+            jobScheduleParams.executionParameter.parametros.push({
+                selecoes: params.paramSelections
+            });
+        }
 
         if (loading) {
             return this.http.post(`${this.urlJobScheduler}`, jobScheduleParams, this.headers);

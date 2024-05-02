@@ -50,16 +50,24 @@ export interface IExecutionParameters {
     executionServer: string;
     programName: string;
     externalName: string;
-    programEMS5: boolean;
-    programVersion: string;
+    programEMS5?: boolean;
+    programStyle?: number;
+    programVersion?: string;
     businessParams: Array<any>;
+    paramDigitDef?: Array<any>;
+    paramDigitData?: Array<any>;
+    paramSelections?: Array<any>;
 }
 
 export class ExecutionParameters implements IExecutionParameters {
     executionServer: string;
     programName: string;
     externalName: string;
-    programEMS5: boolean;
-    programVersion: string;
+    programEMS5?: boolean;
+    programStyle?: number;
+    programVersion?: string;
     businessParams: Array<any>;
+    paramDigitDef?: Array<any>;
+    paramDigitData?: Array<any>;
+    paramSelections?: Array<any>;
 }
