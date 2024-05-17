@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { DateFilterMenuComponent, FilterService } from '@progress/kendo-angular-grid';
-import { LocalizationService } from '@progress/kendo-angular-l10n';
+import { ContextService, DateFilterMenuComponent, FilterService } from '@progress/kendo-angular-grid';
 import { CompositeFilterDescriptor, FilterDescriptor } from '@progress/kendo-data-query';
 
 import { ElementRef } from '@angular/core';
@@ -36,9 +35,9 @@ export class CustomDateFilterComponent extends DateFilterMenuComponent implement
     constructor(
         private element: ElementRef,
         public popupService: SinglePopupService,
-        public localization: LocalizationService) {
+        public ctx: ContextService) {
 
-        super(localization);
+        super(ctx);
 
         this.popupSubscription = popupService
             .onClose
