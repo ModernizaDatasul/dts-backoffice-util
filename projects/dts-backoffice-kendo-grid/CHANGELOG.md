@@ -1,5 +1,10 @@
 # Changelog
 
+**17.0.1 (01-07-2024):**
+
+Melhorias:
+- ATUALIZAÇÃO: Dependências para o Kendo-Grid - 14.3.0.
+
 **17.0.0 (16-05-2024):**
 
 Melhorias:
