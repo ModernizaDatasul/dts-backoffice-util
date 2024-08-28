@@ -1,5 +1,10 @@
 # Changelog
 
+**17.1.0 (22-08-2024):**
+
+Melhorias:
+- **ValidateService** - Criação de serviço para tratar a validação de campos em formulários, quando utilizados vários componentes **Dynamic Form** na tela de criação/edição. Nesse caso, ao disparar uma validação através de um campo presente em um formulário e nessa validação alterar propriedades e valores de campos que estão em um formulário diferente, a validação não é aplicada. Para o correto funcionamento das validações, é necessário que haja um tratamento na validação no Front End e para isso foram criados os seguintes métodos nesse serviço:<br>- **validate**: Faz a requisição POST para a URL de validação.<br>- **updateFormFields**: Atualiza as propriedades dos campos do formulário enviado por parâmetro com base nas validações.<br>- **updateFormValue**: Atualiza os valores dos campos utilizados no formulário com base nas validações.    
+  
 **17.0.0 (16-05-2024):**
 
 Melhorias:
