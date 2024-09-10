@@ -210,7 +210,7 @@ IScheduleParameters
 ---
 <br>
 
-## TotvsScheduleExecutionComponent
+## TotvsMapComponent
 <br>
 
 **Objetivo:** Componente para utilização de um mapa interativo, que permite a seleção de um estado específico, que dispara um evento, pegando o estado selecionado.
