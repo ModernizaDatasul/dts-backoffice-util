@@ -210,6 +210,97 @@ IScheduleParameters
 ---
 <br>
 
+## TotvsScheduleExecutionComponent
+<br>
+
+**Objetivo:** Componente para utilização de um mapa interativo, que permite a seleção de um estado específico, que dispara um evento, pegando o estado selecionado.
+
+**Importação:** Importar o componente do mapa no módulo que será utilizado.
+
+```ts
+@NgModule({
+  declarations: [
+    TotvsMapComponent
+  ],
+  imports: [],
+  exports: [
+    TotvsMapComponent
+  ],
+  providers: []
+})
+```
+
+**Métodos:**
+
+| Nome | Descrição |
+|-|-|
+| selectedState | Evento disparado ao selecionar um estado do mapa, que retorna o estado.<br>**Parâmetros:**<br>- State: Responsável por receber o retorno do componente com o estado selecionado. |
+---
+**Exemplo de Uso:**
+
+Para a utilização, basta chamar o componente no .HMTL e fazer a importação do mesmo no .TS e chamando seu único método.
+
+**Definições no HTML:**
+```html
+// EXEMPLO 
+<app-totvs-map (selectedStateEvent)="selectedState($event)"></app-totvs-map>
+```
+
+**Definições no JavaScript:**
+```ts
+import { TotvsMapComponent } from 'dts-backoffice-utils'
+
+@ViewChild("taxMonitorMap", { static: false }) taxMonitorMap: TotvsMapComponent;
+
+state;
+
+selectedState(state: string) {
+   this.state = state;
+}
+```
+
+**Alterando as cores do mapa:**
+Para alterar as cores do mapa, deve-se utilizar o código abaixo dentro do styles.css do projeto, alterando os valores. O mapa já possui as cores da TOTVS como padrão, nesse caso não precisa incluir o código abaixo dentro do arquivo styles.css.
+
+```css
+//Muda a cor de fundo do mapa todo
+#svg-map path {
+    fill: #0c6c94;
+}
+
+//Muda a cor do texto
+#svg-map text {
+    fill: #fff;
+    font: 12px Arial-BoldMT, sans-serif;
+    cursor: pointer
+}
+
+#svg-map a {
+    text-decoration: none
+}
+
+#svg-map a:hover {
+    cursor: pointer;
+    text-decoration: none
+}
+
+//Muda a cor do estado quando passar o mouse em cima
+#svg-map a:hover path {
+    fill: #29b5c4 !important;
+}
+
+//Muda a cor dos círculos para pequenos estados
+#svg-map .circle {
+    fill: #29b5c4;
+}
+
+//Muda a cor dos círculos para pequenos estados quando passa o mouse em cima
+#svg-map a:hover .circle {
+    fill: #4c8d94 !important;
+    cursor: pointer
+}
+```
+
 # Pipes
 
 ## dtsDateFormat
