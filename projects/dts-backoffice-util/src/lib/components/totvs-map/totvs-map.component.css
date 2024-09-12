@@ -1,0 +1,31 @@
+#svg-map path {
+    fill: #0c6c94;
+}
+
+#svg-map text {
+    fill: #fff;
+    font: 12px Arial-BoldMT, sans-serif;
+    cursor: pointer
+}
+
+#svg-map a {
+    text-decoration: none
+}
+
+#svg-map a:hover {
+    cursor: pointer;
+    text-decoration: none
+}
+
+#svg-map a:hover path {
+    fill: #29b5c4 !important;
+}
+
+#svg-map .circle {
+    fill: #29b5c4;
+}
+
+#svg-map a:hover .circle {
+    fill: #4c8d94 !important;
+    cursor: pointer
+}
