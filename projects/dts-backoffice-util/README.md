@@ -239,7 +239,7 @@ IScheduleParameters
 ---
 **Exemplo de Uso:**
 
-Para a utilização, basta chamar o componente no .HMTL e fazer a importação do mesmo no .TS e chamando seu único método.
+Para a utilização, basta chamar o componente no .HTML e fazer a definição no .TS do seu método.
 
 **Definições no HTML:**
 ```html
