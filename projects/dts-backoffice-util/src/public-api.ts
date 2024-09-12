@@ -31,9 +31,16 @@ export * from './lib/interfaces/filter-range.interface';
 export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.component';
 export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.model';
 export * from './lib/components/totvs-schedule-execution/totvs-schedule-execution.service';
-export * from './lib/dts-backoffice-util.module';
 // Schedule Execution
+
+// Map
+export * from './lib/components/totvs-map/totvs-map.component';
+// Map
 
 // Pipes
 export * from './lib/pipes/dts-date-format.pipe';
 // Pipes
+
+// Utils Module
+export * from './lib/dts-backoffice-util.module';
+// Utils Module

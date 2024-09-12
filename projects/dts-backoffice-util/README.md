@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v18 | v18 | 18.0.0 |
+| v18 | v18 | 18.1.0 |
 | v17 | v17 | 17.1.0 |
 | v16 | v16 | 16.1.0 |
 | v15 | v15 | 15.4.1 |
@@ -213,28 +213,29 @@ IScheduleParameters
 ## TotvsMapComponent
 <br>
 
-**Objetivo:** Componente para utilização de um mapa interativo, que permite a seleção de um estado específico, que dispara um evento, pegando o estado selecionado.
+**Objetivo:** Componente para utilização de um mapa do Brasil interativo, que permite a seleção de um estado específico, que dispara um evento, pegando o estado selecionado.
 
 **Importação:** Importar o componente do mapa no módulo que será utilizado.
 
 ```ts
 @NgModule({
-  declarations: [
-    TotvsMapComponent
-  ],
-  imports: [],
-  exports: [
-    TotvsMapComponent
-  ],
-  providers: []
+    declarations: [
+        ...
+    ],
+    imports: [
+        ...,
+        DtsBackofficeUtilsModule.forRoot()
+    ],
+    providers: [],
+    bootstrap: [...]
 })
 ```
 
-**Métodos:**
+**Parâmetros:**
 
-| Nome | Descrição |
-|-|-|
-| selectedState | Evento disparado ao selecionar um estado do mapa, que retorna o estado.<br>**Parâmetros:**<br>- State: Responsável por receber o retorno do componente com o estado selecionado. |
+| Nome | Tipo | Obrigatório | Descrição |
+|-|-|-|-|
+| selectedStateEvent | EventEmitter | Sim | Evento disparado ao selecionar um estado do mapa.<br>**Parâmetros:**<br>- State: Responsável por receber do componente o estado selecionado. |
 ---
 **Exemplo de Uso:**
 
@@ -248,11 +249,7 @@ Para a utilização, basta chamar o componente no .HMTL e fazer a importação d
 
 **Definições no JavaScript:**
 ```ts
-import { TotvsMapComponent } from 'dts-backoffice-utils'
-
-@ViewChild("taxMonitorMap", { static: false }) taxMonitorMap: TotvsMapComponent;
-
-state;
+state: string;
 
 selectedState(state: string) {
    this.state = state;
@@ -260,7 +257,8 @@ selectedState(state: string) {
 ```
 
 **Alterando as cores do mapa:**
-Para alterar as cores do mapa, deve-se utilizar o código abaixo dentro do styles.css do projeto, alterando os valores. O mapa já possui as cores da TOTVS como padrão, nesse caso não precisa incluir o código abaixo dentro do arquivo styles.css.
+
+O mapa já possui as cores da TOTVS como padrão. Mas caso seja necessário alterar alguma cor, deve-se utilizar o código abaixo dentro do styles.css do projeto, alterando os valores.
 
 ```css
 //Muda a cor de fundo do mapa todo
