@@ -235,6 +235,8 @@ IScheduleParameters
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
+| enabledStates | string[] | Não | Parâmetro que recebe uma lista de siglas de estados para habilitar no mapa. O restante será desabilitado por padrão.
+| initialSelectedState | string | Não | Parâmetro para fornecer um estado inicial a ser selecionado pelo mapa.
 | selectedStateEvent | EventEmitter | Sim | Evento disparado ao selecionar um estado do mapa.<br>**Parâmetros:**<br>- State: Responsável por receber do componente o estado selecionado. |
 ---
 **Exemplo de Uso:**
@@ -244,12 +246,13 @@ Para a utilização, basta chamar o componente no .HTML e fazer a definição no
 **Definições no HTML:**
 ```html
 // EXEMPLO 
-<app-totvs-map (selectedStateEvent)="selectedState($event)"></app-totvs-map>
+<app-totvs-map [enabledStates]="enabledStates" initialSelectedState="SC" (selectedStateEvent)="selectedState($event)"></app-totvs-map>
 ```
 
 **Definições no JavaScript:**
 ```ts
 state: string;
+enabledStates: string[] = ["SC", "RJ", "PR", "SP"];
 
 selectedState(state: string) {
    this.state = state;
