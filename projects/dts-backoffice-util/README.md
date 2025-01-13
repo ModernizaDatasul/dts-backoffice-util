@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v18 | v18 | 18.1.0 |
+| v18 | v18 | 18.2.0 |
 | v17 | v17 | 17.1.0 |
 | v16 | v16 | 16.1.0 |
 | v15 | v15 | 15.4.1 |
@@ -246,7 +246,11 @@ Para a utilização, basta chamar o componente no .HTML e fazer a definição no
 **Definições no HTML:**
 ```html
 // EXEMPLO 
-<app-totvs-map [enabledStates]="enabledStates" initialSelectedState="SC" (selectedStateEvent)="selectedState($event)"></app-totvs-map>
+<app-totvs-map
+   [enabledStates]="enabledStates"
+   initialSelectedState="SC"
+   (selectedStateEvent)="selectedState($event)">
+</app-totvs-map>
 ```
 
 **Definições no JavaScript:**
