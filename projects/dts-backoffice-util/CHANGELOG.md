@@ -1,5 +1,12 @@
 # Changelog
 
+**18.2.0 (09-01-2025):**
+Melhorias:
+- **TotvsMapComponent** - Inclusão de dois novos parâmetros para utilização do mapa:
+**enabledStates**: recebe um array de strings com as siglas dos estados que devem estar habilitados no mapa. O estado que não for informado nesta lista terá os eventos de clique e seleção desabilitados e passará a ser cinza.
+**initialSelectedState**: possibilitar selecionar um estado do mapa ao inicializar o componente. Recebe uma string com a sigla do estado que será marcado.
+Para melhor visualização do estado selecionado pelo usuário no mapa, o estado selecionado será destacado com a mesma cor apresentada ao passar o mouse sobre um estado.
+
 **18.1.0 (10-09-2024):**
 Melhorias:
 - **TotvsMapComponent** - Criação do componente que permite a inclusão de um mapa do Brasil interativo em tela, podendo selecionar um estado e disparar um evento. Também permite a customização do mapa, para que seja possível a alteração de suas cores.

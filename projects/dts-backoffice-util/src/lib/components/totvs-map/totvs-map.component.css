@@ -29,3 +29,11 @@
     fill: #4c8d94 !important;
     cursor: pointer
 }
+
+.disabledState {
+    fill: grey !important;
+}
+
+.disableEvents {
+    pointer-events: none;
+}
