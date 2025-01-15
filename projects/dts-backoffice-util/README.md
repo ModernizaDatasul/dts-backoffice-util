@@ -29,7 +29,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 **Instalação do Pacote:**
 
-```
+```cmd
 npm install dts-backoffice-util
 ```
 
@@ -177,7 +177,7 @@ private loadLocalStorage(): void {
 }
 ```
 **Definições no Progress:**
-```
+```ts
 DEFINE TEMP-TABLE tt-param NO-UNDO
   FIELD destino AS INTEGER
   FIELD arquivo AS CHARACTER
@@ -248,7 +248,7 @@ Para a utilização, basta chamar o componente no .HTML e fazer a definição no
 // EXEMPLO 
 <app-totvs-map
    [enabledStates]="enabledStates"
-   initialSelectedState="SC"
+   [initialSelectedState]="initialSelectedState"
    (selectedStateEvent)="selectedState($event)">
 </app-totvs-map>
 ```
@@ -256,11 +256,25 @@ Para a utilização, basta chamar o componente no .HTML e fazer a definição no
 **Definições no JavaScript:**
 ```ts
 state: string;
-enabledStates: string[] = ["SC", "RJ", "PR", "SP"];
+enabledStates: string[];
+initialSelectedState: string;
+
+searchTax(): void {
+    this.servTaxSubscription$ = this.servTax
+        .getTax()
+        .subscribe((response: ITotalTax) => {
+
+        if (response) {
+            ...
+            this.enabledStates = response.listStates;
+            this.initialSelectedState = response.listStates[0];
+        }
+    });
+}
 
 selectedState(state: string) {
-   this.state = state;
-}
+  this.state = state;
+}    
 ```
 
 **Alterando as cores do mapa:**
@@ -770,7 +784,7 @@ followUpCallBack(execStatus: IExecutionStatus): boolean {
 }
 ```
 **Definições no Progress:**
-```
+```ts
 DEFINE TEMP-TABLE tt-param NO-UNDO
   FIELD destino AS INTEGER
   FIELD arquivo AS CHARACTER
@@ -1047,7 +1061,7 @@ getQrCode(text: string): Observable<Blob> {
 }
 ```
 **Definições no Progress:**
-```
+```ts
 // Conteúdo do Método que BackEnd que retorna o Arquivo em Base64
 DEFINE VARIABLE v_dir_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_cod_arq AS CHARACTER NO-UNDO.
