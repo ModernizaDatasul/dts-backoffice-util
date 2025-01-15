@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v18 | v18 | 18.2.0 |
+| v18 | v18 | 18.2.1 |
 | v17 | v17 | 17.1.0 |
 | v16 | v16 | 16.1.0 |
 | v15 | v15 | 15.4.1 |
@@ -235,8 +235,8 @@ IScheduleParameters
 
 | Nome | Tipo | Obrigatório | Descrição |
 |-|-|-|-|
-| enabledStates | string[] | Não | Parâmetro que recebe uma lista de siglas de estados para habilitar no mapa. O restante será desabilitado por padrão.
-| initialSelectedState | string | Não | Parâmetro para fornecer um estado inicial a ser selecionado pelo mapa.
+| enabledStates | string[] | Não | Parâmetro que recebe uma lista de siglas de estados que devem ser habilitados no mapa, aqueles não que forem informados serão desabilitado. Se este parâmetro não for informado, todos os estados ficaram habilitados.<br>**Observações:**<br>- Para o correto funcionamento, a variável informada no parâmetro, deve ser atualizada depois da inicialização da tela (ngOnInit);<br>- Sempre que o conteúdo da variável informada neste parâmetro for alterado, o mapa será atualizado automaticamente com o novo valor.
+| initialSelectedState | string | Não | Parâmetro para fornecer um estado a ser selecionado no mapa.<br>**Observações:**<br>- Para o correto funcionamento, a variável informada no parâmetro, deve ser atualizada depois da inicialização da tela (ngOnInit);<br>- Sempre que o conteúdo da variável informada neste parâmetro for alterado, o mapa será atualizado automaticamente com o novo valor.
 | selectedStateEvent | EventEmitter | Sim | Evento disparado ao selecionar um estado do mapa.<br>**Parâmetros:**<br>- State: Responsável por receber do componente o estado selecionado. |
 ---
 **Exemplo de Uso:**

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-totvs-map',
@@ -8,28 +8,31 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, O
 export class TotvsMapComponent implements OnChanges {
   literals: any = {};
 
-  @ViewChildren("anchorStateElement", { read: ElementRef }) mapLinks: QueryList<ElementRef>;
+  @ViewChildren("anchorStateElement") mapLinks: QueryList<ElementRef>;
 
   @Input({required: false}) enabledStates!: string[];
   @Input({required: false}) initialSelectedState!: string;
   @Output() selectedStateEvent = new EventEmitter<string>();
-
 
   constructor(
     private renderer: Renderer2
   ) { }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
-    this.mapLinks?.forEach((anchor: ElementRef) => {
-      const anchorElement: HTMLElement = anchor.nativeElement;
-      const stateElement: Element = anchorElement.children[anchorElement.children.length - 1];
+    if (this.enabledStates) {
+      this.mapLinks?.forEach((anchor: ElementRef) => {
+        const anchorElement: HTMLElement = anchor.nativeElement;
+        const stateElement: Element = anchorElement.children[anchorElement.children.length - 1];
+        if (!this.enabledStates?.includes(stateElement.innerHTML)) {
+          this.disableState(anchorElement, stateElement);
+        } else {
+          this.enableState(anchorElement, stateElement);
+        }
+      });
+    }
+    if (this.initialSelectedState) {
       this.selectedState(this.initialSelectedState);
-      if (!this.enabledStates?.includes(stateElement.innerHTML)) {
-        this.disableState(anchorElement, stateElement);
-      } else {
-        this.enableState(anchorElement, stateElement);
-      }
-    });
+    }
   }
 
   enableState(parentElement: HTMLElement, stateElement: Element): void {
