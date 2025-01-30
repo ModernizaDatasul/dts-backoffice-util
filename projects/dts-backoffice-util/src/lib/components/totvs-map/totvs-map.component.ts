@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
 
 @Component({
-  selector: 'app-totvs-map-teste',
+  selector: 'app-totvs-map',
   templateUrl: './totvs-map.component.html',
   styleUrls: ['./totvs-map.component.css']
 })
