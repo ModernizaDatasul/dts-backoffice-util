@@ -282,41 +282,67 @@ selectedState(state: string) {
 O mapa já possui as cores da TOTVS como padrão. Mas caso seja necessário alterar alguma cor, deve-se utilizar o código abaixo dentro do styles.css do projeto, alterando os valores.
 
 ```css
-//Muda a cor de fundo do mapa todo
-#svg-map path {
+/* Cor padrão de um estado não selecionado */
+.defaultState {
     fill: #0c6c94;
 }
 
-//Muda a cor do texto
-#svg-map text {
+/* Cor padrão de um estado não selecionado, quando passar o mouse em cima*/
+.defaultState:hover {
+    fill: #29b5c4;
+    cursor: pointer;
+}
+
+/* Cor padrão de um estado pequeno (DF, ES, RJ) não selecionado */
+.defaultStateCircle {
+    fill: #0c6c94;
+}
+
+/* Cor padrão de um estado pequeno (DF, ES, RJ) não selecionado, quando passar o mouse em cima */
+.defaultStateCircle:hover {
+    fill: #29b5c4;
+    cursor: pointer;
+}
+
+/* Cor padrão de um estado desabilitado */
+.disabledState {
+    fill: grey !important;
+}
+
+/* Cor padrão de um estado selecionado */
+.selectedState {
+    fill: #29b5c4;
+}
+
+/* Cor padrão de um estado pequeno (DF, ES, RJ) selecionado */
+.selectedStateCircle {
+    fill: #29b5c4;
+}
+
+.disableEvents {
+    pointer-events: none;
+}
+
+/* Cor e fonte padrão do nome dos estados */
+.text {
     fill: #fff;
     font: 12px Arial-BoldMT, sans-serif;
     cursor: pointer
 }
 
-#svg-map a {
+/* Padrão do estado como um todo - estado + texto (que seria a tag <a>) */
+.stateWithText {
     text-decoration: none
 }
 
-#svg-map a:hover {
+.stateWithText:hover {
     cursor: pointer;
-    text-decoration: none
+    text-decoration: none;
 }
 
-//Muda a cor do estado quando passar o mouse em cima
-#svg-map a:hover path {
-    fill: #29b5c4 !important;
-}
-
-//Muda a cor dos círculos para pequenos estados
-#svg-map .circle {
+/* Cor padrão ao passar o mouse em cima do estado como um todo - estado + texto */
+.stateWithText:hover .defaultState, .stateWithText:hover .defaultStateCircle {
     fill: #29b5c4;
-}
-
-//Muda a cor dos círculos para pequenos estados quando passa o mouse em cima
-#svg-map a:hover .circle {
-    fill: #4c8d94 !important;
-    cursor: pointer
 }
 ```
 
