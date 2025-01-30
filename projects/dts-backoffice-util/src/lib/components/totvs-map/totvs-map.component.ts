@@ -8,7 +8,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, O
 export class TotvsMapComponent implements OnChanges {
   literals: any = {};
 
-  @ViewChildren("anchorStateElement", { read: ElementRef }) mapLinks: QueryList<ElementRef>;
+  @ViewChildren("anchorStateElement") mapLinks: QueryList<ElementRef>;
 
   @Input({required: false}) enabledStates!: string[];
   @Input({required: false}) initialSelectedState!: string;
