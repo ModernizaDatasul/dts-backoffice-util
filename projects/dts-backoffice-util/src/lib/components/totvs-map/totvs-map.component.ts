@@ -20,16 +20,20 @@ export class TotvsMapComponent implements OnChanges {
   ) { }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
-    this.mapLinks?.forEach((anchor: ElementRef) => {
-      const anchorElement: HTMLElement = anchor.nativeElement;
-      const stateElement: Element = anchorElement.children[anchorElement.children.length - 1];
+    if (this.enabledStates) {
+      this.mapLinks?.forEach((anchor: ElementRef) => {
+        const anchorElement: HTMLElement = anchor.nativeElement;
+        const stateElement: Element = anchorElement.children[anchorElement.children.length - 1];
+        if (!this.enabledStates?.includes(stateElement.innerHTML)) {
+          this.disableState(anchorElement, stateElement);
+        } else {
+          this.enableState(anchorElement, stateElement);
+        }
+      });
+    }
+    if (this.initialSelectedState) {
       this.selectedState(this.initialSelectedState);
-      if (!this.enabledStates?.includes(stateElement.innerHTML)) {
-        this.disableState(anchorElement, stateElement);
-      } else {
-        this.enableState(anchorElement, stateElement);
-      }
-    });
+    }
   }
 
   enableState(parentElement: HTMLElement, stateElement: Element): void {
