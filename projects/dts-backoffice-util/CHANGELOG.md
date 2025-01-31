@@ -1,5 +1,10 @@
 # Changelog
 
+**18.3.0 (30-01-2025):**
+
+Melhorias:
+- **TotvsMapComponent** - Alterado a estilização do mapa, permitindo o dev alterar todas as cores do mapa através de suas classes no arquivo styles.css do projeto.
+
 **18.2.0 / 18.2.1 (09-01-2025):**
 
 Melhorias:

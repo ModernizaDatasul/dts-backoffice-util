@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-totvs-map',
@@ -13,6 +13,7 @@ export class TotvsMapComponent implements OnChanges {
   @Input({required: false}) enabledStates!: string[];
   @Input({required: false}) initialSelectedState!: string;
   @Output() selectedStateEvent = new EventEmitter<string>();
+
 
   constructor(
     private renderer: Renderer2
@@ -44,6 +45,7 @@ export class TotvsMapComponent implements OnChanges {
   }
 
   disableState(parentElement: HTMLElement, stateElement: Element): void {
+    this.removeClassStyles(parentElement, "defaultState");
     for (let i = 0; i < parentElement.children.length - 1; i++) {
       this.renderer.addClass(parentElement.children[i], "disabledState");
       this.renderer.addClass(parentElement.children[i], "disableEvents");
@@ -51,14 +53,29 @@ export class TotvsMapComponent implements OnChanges {
     this.renderer.addClass(stateElement, "disableEvents");
   }
 
-  applyStyleOnState(anchorElement: HTMLElement, originalStyles: boolean): void {
-    const stateStyle: string = originalStyles ? "#0c6c94" : "#29b5c4";
-    const circleStyle: string = originalStyles ? "#29b5c4" : "#4c8d94";
+  removeClassStyles(anchorElement: HTMLElement, className: string) {
+    for (let i = 0; i < anchorElement.children.length; i++) {
+      this.renderer.removeClass(anchorElement.children[i], className);
+      this.renderer.removeClass(anchorElement.children[i], className + 'Circle');
+    }
+  }
 
-    this.renderer.setStyle(anchorElement.children[0], "fill", stateStyle)
+  applyStyleOnState(anchorElement: HTMLElement, originalStyles: boolean): void {
+    const stateStyle: string = originalStyles ? "defaultState" : "selectedState";
+
+    if (originalStyles) {
+      this.removeClassStyles(anchorElement, 'selectedState');
+    } else {
+      this.removeClassStyles(anchorElement, 'defaultState');
+    }
+    
+    this.renderer.addClass(anchorElement.children[0], stateStyle)
     if (anchorElement.children.length > 2) { // Estados pequenos com o círculo
-      this.renderer.setStyle(anchorElement.children[1], "fill", circleStyle);
+      this.renderer.addClass(anchorElement.children[1], stateStyle + 'Circle');
     } 
+
+    this.renderer.addClass(anchorElement, 'stateWithText');
+    this.renderer.addClass(anchorElement.children[anchorElement.children.length - 1], 'text')
   }
 
   selectedState(state: string): void {
