@@ -26,7 +26,8 @@ import { EpoTooltipBaseDirective } from './e-po-tooltip-base.directive';
  */
 @Directive({
     selector: '[p-tooltip]',
-    providers: [EpoControlPositionService]
+    providers: [EpoControlPositionService],
+    standalone: false
 })
 export class EpoTooltipDirective extends EpoTooltipBaseDirective implements OnInit {
 

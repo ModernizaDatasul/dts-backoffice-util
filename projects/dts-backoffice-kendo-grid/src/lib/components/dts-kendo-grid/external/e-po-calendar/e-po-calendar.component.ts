@@ -17,7 +17,8 @@ const poCalendarLocales = ['pt', 'en', 'es'];
 @Component({
     selector: 'e-po-calendar',
     templateUrl: './e-po-calendar.component.html',
-    providers: [EpoCalendarService, EpoCalendarLangService]
+    providers: [EpoCalendarService, EpoCalendarLangService],
+    standalone: false
 })
 export class EpoCalendarComponent {
     private _dateEnd: Date;

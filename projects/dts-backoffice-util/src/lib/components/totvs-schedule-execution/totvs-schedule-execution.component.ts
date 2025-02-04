@@ -7,7 +7,8 @@ import { TotvsScheduleExecutionService } from './totvs-schedule-execution.servic
 @Component({
     selector: 'app-totvs-schedule-execution',
     templateUrl: './totvs-schedule-execution.component.html',
-    styleUrls: ['./totvs-schedule-execution.component.css']
+    styleUrls: ['./totvs-schedule-execution.component.css'],
+    standalone: false
 })
 
 export class TotvsScheduleExecutionComponent implements OnInit {

@@ -24,7 +24,8 @@ import { DtsColumnConfigView } from './dts-kendo-grid-column.interface';
     selector: 'dts-kendo-grid',
     encapsulation: ViewEncapsulation.None,
     templateUrl: './dts-kendo-grid.component.html',
-    styleUrls: ['./dts-kendo-grid.component.css']
+    styleUrls: ['./dts-kendo-grid.component.css'],
+    standalone: false
 })
 export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements OnInit, DoCheck, AfterViewInit, OnDestroy {
     @ViewChild(GridComponent, { static: true }) private grid: GridComponent;
@@ -729,7 +730,7 @@ export class DtsKendoGridComponent extends DtsKendoGridBaseComponent implements 
             !this.matches(target, `#${this.idGrid} tbody *, #${this.idGrid} .k-grid-toolbar .k-button`)) {
 
             if (this.matches(target, '.d-no-close-edit')) { return; }
-            if (this.matches(target, '.po-toaster, .po-toaster-message, .po-icon-close')) { return; }
+            if (this.matches(target, '.po-toaster, .po-toaster-message, .an an-x')) { return; }
 
             this.saveClick();
             return;

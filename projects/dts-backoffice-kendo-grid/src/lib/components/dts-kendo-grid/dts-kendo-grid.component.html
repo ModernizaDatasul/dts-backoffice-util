@@ -196,7 +196,7 @@
                          kendoGridHeaderTemplate>
 
                 <div *ngIf="showCommandTools('tools')">
-                    <button class="d-grid-bt-tools po-icon po-icon-settings po-clickable"
+                    <button class="d-grid-bt-tools  an an-gear po-clickable"
                             (click)="onChooseBtTools($event)"
                             #btToolsTarget>
                     </button>
@@ -209,23 +209,23 @@
                     </button>
 
                     <button *ngIf="exportButtons"
-                            class="d-grid-bt-tools po-icon po-icon-pdf po-clickable"
+                            class="d-grid-bt-tools  an an-file-pdf po-clickable"
                             (click)="onChooseBtExportPDF($event)">
                     </button>                
 
                     <button *ngIf="columnManagerButton"
-                            class="d-grid-bt-tools po-icon po-icon-parameters po-clickable"
+                            class="d-grid-bt-tools  an an-sliders-horizontal po-clickable"
                             (click)="onChooseColumnManager($event)"
                             #columnManagerTarget>
                     </button>
 
                     <button *ngIf="maximizeButton && isMaximize"
-                            class="d-grid-bt-tools po-icon po-icon-zoom-out po-clickable"
+                            class="d-grid-bt-tools  an an-magnifying-glass-minus po-clickable"
                             (click)="onChooseBtMaximize($event)">
                     </button>
 
                     <button *ngIf="maximizeButton && !isMaximize"
-                            class="d-grid-bt-tools po-icon po-icon-zoom-in po-clickable"
+                            class="d-grid-bt-tools  an an-magnifying-glass-plus po-clickable"
                             (click)="onChooseBtMaximize($event)">
                     </button>
                 </div>
@@ -233,14 +233,14 @@
 
             <ng-template kendoGridCellTemplate let-data>
                 <div *ngIf="actions.length > 1">
-                    <span class="d-actions po-icon po-icon-more po-clickable"
+                    <span class="d-actions  an an-dots-three po-clickable"
                         #target
                         (click)="onClickActions($event, data)">
                     </span>
                 </div>
 
                 <div *ngIf="actions.length === 1">
-                    <span class="d-action-span po-icon {{actions[0].icon}} po-clickable"></span>
+                    <span class="d-action-span an {{actions[0].icon}} po-clickable"></span>
                     <span class="d-action po-clickable"
                         (click)="onClickAction(data, actions[0])">
                         {{ actions[0].label }}
@@ -283,7 +283,7 @@
 
         <div *ngIf="action.visible !== false">
             <span *ngIf="action.icon"
-                  class="d-action-span po-icon {{ action.icon }} po-popup-icon-item po-clickable"></span>
+                  class="d-action-span an {{ action.icon }} po-popup-icon-item po-clickable"></span>
 
             <span class="d-action po-clickable">{{ action.label }}</span>
         </div>
@@ -306,7 +306,7 @@
     
         <div class="d-table-column-manager-header-close">
             <button
-                class="d-table-column-manager-header-close-button po-clickable po-icon po-icon-close"
+                class="d-table-column-manager-header-close-button po-clickable  an an-x"
                 (click)="hidePopup(kgPopupColMng)">
             </button>
         </div>
@@ -360,7 +360,7 @@
 
     <div class="d-grid-tools-bar">
         <button *ngIf="exportButtons"
-            class="d-grid-bt-tools-bar po-icon po-icon-pdf po-clickable"
+            class="d-grid-bt-tools-bar  an an-file-pdf po-clickable"
             (click)="onChooseBtExportPDF($event)">
         </button>
 
@@ -370,18 +370,18 @@
         </button>
 
         <button *ngIf="columnManagerButton"
-            class="d-grid-bt-tools-bar po-icon po-icon-parameters po-clickable"
+            class="d-grid-bt-tools-bar  an an-sliders-horizontal po-clickable"
             (click)="onChooseColumnManager($event)"
             #columnManagerTarget>
         </button>
 
         <button *ngIf="maximizeButton && isMaximize"
-            class="d-grid-bt-tools-bar po-icon po-icon-zoom-out po-clickable"
+            class="d-grid-bt-tools-bar  an an-magnifying-glass-minus po-clickable"
             (click)="onChooseBtMaximize($event)">
         </button>
 
         <button *ngIf="maximizeButton && !isMaximize"
-            class="d-grid-bt-tools-bar po-icon po-icon-zoom-in po-clickable"
+            class="d-grid-bt-tools-bar  an an-magnifying-glass-plus po-clickable"
             (click)="onChooseBtMaximize($event)">
         </button>
     </div>

@@ -15,7 +15,8 @@ const closest = (node: any, predicate: any): any => {
 @Component({
     selector: 'custom-date-filter',
     templateUrl: './custom-date-filter.component.html',
-    styleUrls: ['./custom-date-filter.component.css']
+    styleUrls: ['./custom-date-filter.component.css'],
+    standalone: false
 })
 export class CustomDateFilterComponent extends DateFilterMenuComponent implements OnInit, OnDestroy {
     @Input() public filter: CompositeFilterDescriptor;

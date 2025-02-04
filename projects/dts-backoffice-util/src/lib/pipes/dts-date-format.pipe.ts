@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'dtsDateFormat'
+    name: 'dtsDateFormat',
+    standalone: false
 })
 
 export class DtsDateFormatPipe implements PipeTransform {

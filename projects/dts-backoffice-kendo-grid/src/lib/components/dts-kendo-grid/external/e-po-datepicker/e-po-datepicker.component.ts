@@ -52,7 +52,8 @@ const poCalendarPositionDefault = 'bottom-left';
             multi: true
         },
         EpoControlPositionService
-    ]
+    ],
+    standalone: false
 })
 export class EpoDatepickerComponent extends EpoDatepickerBaseComponent implements AfterViewInit, OnDestroy {
     date;
