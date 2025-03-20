@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v19 | v19 | 19.0.0 |
+| v19 | v19 | 19.1.0 |
 | v18 | v18 | 18.3.0 |
 | v17 | v17 | 17.1.0 |
 | v16 | v16 | 16.1.0 |
@@ -502,7 +502,7 @@ constructor(public preferenceService: ProfileService) {
 
 | Nome | Descrição |
 |-|-|
-| setProfile | Salva informações no profile do usuário.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário e as informações serem salvas.<br>**Retorno:**<br>- response (Observable(any)): Retorno do BackEnd. |
+| setProfile | Salva informações no profile do usuário.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário e as informações serem salvas.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto salva as informações.<br>**Retorno:**<br>- response (Observable(any)): Retorno do BackEnd. |
 | getProfileAsString | Retorna os valores salvos no formato de uma string.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(string)): Informações salvas. |
 | getProfileAsJSON | Retorna os valores salvos no formato de um JSON.<br>**Parâmetros:**<br>- profile (IProfile): Objeto com as informações do usuário.<br>- showLoading (boolean): Indica se deve apresentar a tela de loading enquanto busca as informações.<br>**Retorno:**<br>- response (Observable(object)): Informações salvas. |
 ---

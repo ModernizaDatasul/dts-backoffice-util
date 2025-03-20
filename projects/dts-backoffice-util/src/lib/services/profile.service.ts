@@ -30,8 +30,8 @@ export class ProfileService {
 
     constructor(public http: HttpClient) { }
 
-    setProfile(profile: IProfile): Observable<any> {
-        const headers = { 'X-PO-Screen-Lock': 'true' };
+    setProfile(profile: IProfile, showLoading = true): Observable<any> {
+        const headers = { 'X-PO-Screen-Lock': showLoading ? 'true' : 'false' };
         const { pageId, userCode } = profile;
 
         return this.http
@@ -39,16 +39,16 @@ export class ProfileService {
 
     }
 
-    getProfileAsString(profile: IProfile, showLoading?: boolean): Observable<string> {
-        return this.getProfile(profile, EDataType.STRING, showLoading ? 'true' : 'false');
+    getProfileAsString(profile: IProfile, showLoading = false): Observable<string> {
+        return this.getProfile(profile, EDataType.STRING, showLoading);
     }
 
-    getProfileAsJSON(profile: IProfile, showLoading?: boolean): Observable<object> {
-        return this.getProfile(profile, EDataType.JSON, showLoading ? 'true' : 'false');
+    getProfileAsJSON(profile: IProfile, showLoading = false): Observable<object> {
+        return this.getProfile(profile, EDataType.JSON, showLoading);
     }
 
-    private getProfile(profile: IProfile, dataType: EDataType, showLoading?: string): Observable<any> {
-        const headers = { 'X-PO-Screen-Lock': showLoading };
+    private getProfile(profile: IProfile, dataType: EDataType, showLoading = false): Observable<any> {
+        const headers = { 'X-PO-Screen-Lock': showLoading ? 'true' : 'false' };
         const { pageId, dataCode, userCode } = profile;
 
         return this.http
