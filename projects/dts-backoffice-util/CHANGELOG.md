@@ -1,6 +1,6 @@
 # Changelog
 
-**19.1.0 (20-03-2025):**
+**19.1.1 (20-03-2025):**
 
 Melhorias:
 - **ProfileService**: Agora é possível passar um parâmetro a mais no método **setProfile** indicando se deve ser apresentado a tela de Loading, enquanto o serviço está sendo executado.

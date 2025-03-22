@@ -1,6 +1,6 @@
 # Changelog
 
-**19.0.0 (04-02-2025):**
+**19.0.1 (04-02-2025):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v19** E **ANGULAR v19**.

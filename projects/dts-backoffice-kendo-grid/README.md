@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsKendoGrid |
 |-|-|-|
-| v19 | v19 | 19.0.0 |
+| v19 | v19 | 19.0.1 |
 | v18 | v18 | 18.0.0 |
 | v17 | v17 | 17.0.1 |
 | v16 | v16 | 16.1.1 |
