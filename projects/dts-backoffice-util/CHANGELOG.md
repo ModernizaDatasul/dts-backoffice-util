@@ -1,5 +1,10 @@
 # Changelog
 
+**19.2.0 (22-03-2025):**
+
+Melhorias:
+- **DisclaimerUtil**: Alterado o método **makeDisclaimerFromNumber** para receber um quinto parâmetro chamado **options**, que deve conter uma lista de de-para (valor x label). Desta forma, se informado, será apresentado o label no disclaimer, ao invés do valor. Este parâmetro não afeta o valor, que continua sendo o número.
+
 **19.1.1 (20-03-2025):**
 
 Melhorias:

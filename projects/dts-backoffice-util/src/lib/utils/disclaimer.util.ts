@@ -39,7 +39,10 @@ export class DisclaimerUtil {
         };
     }
 
-    public makeDisclaimerFromNumber(property: string, value: number, hideClose = false, vldBlank = false): PoDisclaimer {
+    public makeDisclaimerFromNumber(property: string, value: number, hideClose = false, vldBlank = false, options = new Array<any>()): PoDisclaimer {
+        let opt = null;
+        let label = '';
+
         if (value === null || value === undefined) {
             return { label: '', property: '', value: '' };
         }
@@ -48,9 +51,18 @@ export class DisclaimerUtil {
             return { label: '', property: '', value: '' };
         }
 
+        label = `${this.literals[property]}:`;
+
+        if (options && options.length > 0) {
+            opt = options.find(itOpt => itOpt.value === value);
+            label = `${label} ${opt ? opt.label : value}`;
+        } else {
+            label = `${label} ${value}`;
+        }
+
         return {
             hideClose,
-            label: `${this.literals[property]}: ${value}`,
+            label: `${label}`,
             property: `${property}`,
             value: `${value}`
         };

@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v19 | v19 | 19.1.1 |
+| v19 | v19 | 19.2.0 |
 | v18 | v18 | 18.3.0 |
 | v17 | v17 | 17.1.0 |
 | v16 | v16 | 16.1.0 |
