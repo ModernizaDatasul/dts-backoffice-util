@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'dtsDateFormat',
-    standalone: false
+  name: 'dtsDateFormat',
+  standalone: false
 })
 
 export class DtsDateFormatPipe implements PipeTransform {
@@ -11,8 +11,8 @@ export class DtsDateFormatPipe implements PipeTransform {
     const { 0: year, 1: month, 2: day } = value.split('-');
 
     const formattedDate = format.replace('dd', day)
-                                .replace('MM', month)
-                                .replace('yyyy', year);
+      .replace('MM', month)
+      .replace('yyyy', year);
 
     return formattedDate;
   }
