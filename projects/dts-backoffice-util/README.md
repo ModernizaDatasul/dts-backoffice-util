@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v19 | v19 | 19.2.0 |
+| v19 | v19 | 19.3.0 |
 | v18 | v18 | 18.3.0 |
 | v17 | v17 | 17.1.0 |
 | v16 | v16 | 16.1.0 |
@@ -77,7 +77,7 @@ npm i rxjs-compat --save
 | paramSelections | Array | Não | Parâmetros de Seleção. Utilizado apenas pelo EMS5. |
 | disabledParams | boolean | Não | Quando for igual a **"Sim"**, irá desabilitar todos os campos do Agendamento (Data Execução, Servidor, Repetir ocorrência, etc...). |
 | loading | boolean | Não | Quando for igual a **"Sim"**, irá apresentar a tela de "loading" no momento da criação da agenda até o retorno do serviço. |
-| endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **IScheduleParameters**, contendo os parâmetros informados pelo usuário. |
+| endExecution | EventEmitter | Não | Evento que será disparado ao finalizar o agendamento. Ele irá enviar como parâmetro um objeto da interface **IScheduleParameters**, contendo os parâmetros informados pelo usuário e o número da agenda criada no RPW. |
 ---
 **Métodos:**
 
@@ -119,6 +119,7 @@ Em conjunto com o parâmetro **endExecution** o método **setScheduleParameters*
 @ViewChild('schParam', { static: true }) schParam: TotvsScheduleExecutionComponent;
 
 scheduleParams: IScheduleParameters;
+listExecutionID = new Array<string>();
 parametersRpw = new Array<any>();
 paramDigitDefRpw = new Array<any>();
 paramDigitDataRpw = new Array<any>();
@@ -164,6 +165,10 @@ createParametersRpw(): void {
 
 endExecutionSchedule(event): void {
   this.scheduleParams = event;
+
+  // Pega a lista dos códigos das Agendas criadas
+  this.listExecutionID = this.scheduleParams.listExecutionID;
+
   this.saveLocalStorage();
 }
 
@@ -208,6 +213,7 @@ IScheduleParameters
 | execAppointHourFinal | string | Hora Final Frequência | |
 | selectWeeklys | Array | Dia da Semana<br>Frequência Semanal | Sunday - Domingo<br>Monday - Segunda<br>Tuesday - Terça<br>Wednesday - Quarta<br>Thursday - Quinta<br>Friday - Sexta<br>Saturday - Sábado |
 | dayOfMonth | number | Dia do Mês<br>Frequência Mensal | |
+| listExecutionID | Array | Lista de Códigos das Agendas criadas. Quando o usuário cria uma agenda "simples" (que não se repete) é criado apenas um agendamento, portanto esta propriedade terá apenas um código. Mas, quando o usuário cria uma agenda que se repete, são criados dois agendamentos: um para executar "agora", e outro para executar "futuramente" com base nos parâmetros informados pelo usuário (diário, semana, mensal, frequência, etc...) | |
 ---
 <br>
 

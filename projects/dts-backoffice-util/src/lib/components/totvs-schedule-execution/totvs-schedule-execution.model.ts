@@ -12,6 +12,7 @@ export interface IScheduleParameters {
     execAppointHourFinal: string;
     selectWeeklys: [];
     dayOfMonth: number;
+    listExecutionID: string[];
 }
 
 export class ScheduleParameters implements IScheduleParameters {
@@ -28,6 +29,7 @@ export class ScheduleParameters implements IScheduleParameters {
     execAppointHourFinal: string;
     selectWeeklys: [];
     dayOfMonth: number;
+    listExecutionID: string[];
 }
 
 export interface IExecutionStatus {

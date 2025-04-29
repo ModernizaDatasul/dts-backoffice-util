@@ -1,5 +1,10 @@
 # Changelog
 
+**19.3.0 (29-04-2025):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent**: Alterado o componente para retornar o número da Agenda criada no RPW. A informação estará disponível no propriedade **listExecutionID** da interface **IScheduleParameters** que é recebida através do método **endExecution**.
+
 **19.2.0 (22-03-2025):**
 
 Melhorias:

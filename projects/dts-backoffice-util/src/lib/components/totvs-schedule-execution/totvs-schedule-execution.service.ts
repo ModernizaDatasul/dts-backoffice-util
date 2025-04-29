@@ -14,8 +14,9 @@ export class TotvsScheduleExecutionService {
     private urlJobScheduler = '/dts/datasul-rest/resources/prg/framework/v1/jobScheduler';
     private urlJobExecution = '/dts/datasul-rest/resources/prg/framework/v1/jobExecution';
 
-    // private urlCadServidor = '/genericsZoom';
-    // private urlJobScheduler = '/jobScheduler';
+    //private urlCadServidor = '/genericsZoom';
+    //private urlJobScheduler = '/jobScheduler';
+    //private urlJobExecution = '/jobExecution';
 
     private jobExecutionSubscription$: Subscription;
 
@@ -38,7 +39,7 @@ export class TotvsScheduleExecutionService {
         return this.http.get<any>(`${this.urlCadServidor}/${id}`, this.headers);
     }
 
-    createExecution(parameters: Object, loading: boolean): Observable<any> {
+    createExecution(parameters: object, loading: boolean): Observable<any> {
         const params = JSON.parse(JSON.stringify(parameters).replace(/\\\\/g, '*|'));
 
         if (loading) {

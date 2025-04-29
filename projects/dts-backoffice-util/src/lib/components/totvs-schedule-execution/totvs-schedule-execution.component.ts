@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { PoRadioGroupOption, PoI18nService, PoNotificationService, PoLookupColumn } from '@po-ui/ng-components';
-import { IScheduleParameters, ScheduleParameters } from './totvs-schedule-execution.model';
+import { IExecutionStatus, IScheduleParameters, ScheduleParameters } from './totvs-schedule-execution.model';
 import { NgForm } from '@angular/forms';
 import { TotvsScheduleExecutionService } from './totvs-schedule-execution.service';
 
@@ -158,6 +158,22 @@ export class TotvsScheduleExecutionComponent implements OnInit {
         if (this.disabledParams) { return; }
         if (!this.validate()) { return; }
 
+        this.createJobScheduleParameters();
+
+        this.model.listExecutionID = [];
+
+        // Executa hoje ou agendada
+        this.rpwService.createExecution(this.jsonObject, this.loading).subscribe({
+            next: (response: object) => {
+                this.finishSchedule(true, true, response);
+            },
+            error: () => {
+                this.finishSchedule(true, false, null);
+            }
+        });
+    }
+
+    createJobScheduleParameters(): void {
         let idxParam: number;
 
         this.jsonObject = {};
@@ -207,55 +223,100 @@ export class TotvsScheduleExecutionComponent implements OnInit {
             this.jsonObject.executionParameter.parametros[idxParam] = {};
             this.jsonObject.executionParameter.parametros[idxParam].selecoes = this.paramSelections;
         }
+    }
 
-        // Executa hoje ou agendada
-        this.rpwService.createExecution(this.jsonObject, this.loading).subscribe(() => {
+    verifyRepeatExecution() {
+        if (!this.model.repeatExecution) {
             this.poNotification.success('Agendamento realizado com sucesso !');
-        });
-
-        if (this.model.repeatExecution) {
-            if (this.model.repeatType === 1) {
-                this.jsonObject.daily = {
-                    hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
-                    minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm')
-                };
-            }
-
-            if (this.model.repeatType === 2) {
-                this.jsonObject.weekly = {
-                    hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
-                    minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
-                    daysOfWeek: this.model.selectWeeklys
-                };
-            }
-
-            if (this.model.repeatType === 3) {
-                this.jsonObject.monthly = {
-                    hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
-                    minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
-                    day: this.model.dayOfMonth
-                };
-            }
-
-            if (this.isFrenquency()) {
-                this.jsonObject.rangeExecutions = {
-                    frequency: {
-                        type: this.model.frequencyType,
-                        value: this.model.frequencyValue
-                    },
-                    rangeLimit: {
-                        hour: this.getHourOrMinute(this.model.execAppointHourFinal, 'h'),
-                        minute: this.getHourOrMinute(this.model.execAppointHourFinal, 'm')
-                    }
-                };
-            }
-
-            // Executa a diária, semanal ou mensal
-            this.rpwService.createExecution(this.jsonObject, this.loading).subscribe(() => {
-            });
+            this.endExecution.emit(this.model);
+            return;
         }
 
-        this.endExecution.emit(this.model);
+        this.createRepeatExecutionParameters();
+
+        // Executa a diária, semanal ou mensal
+        this.rpwService.createExecution(this.jsonObject, this.loading).subscribe({
+            next: (response: object) => {
+                this.finishSchedule(false, true, response);
+            },
+            error: () => {
+                this.finishSchedule(false, false, null);
+            }
+        });
+    }
+
+    createRepeatExecutionParameters(): void {
+        if (this.model.repeatType === 1) {
+            this.jsonObject.daily = {
+                hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
+                minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm')
+            };
+        }
+
+        if (this.model.repeatType === 2) {
+            this.jsonObject.weekly = {
+                hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
+                minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
+                daysOfWeek: this.model.selectWeeklys
+            };
+        }
+
+        if (this.model.repeatType === 3) {
+            this.jsonObject.monthly = {
+                hour: this.getHourOrMinute(this.model.execAppointHourInit, 'h'),
+                minute: this.getHourOrMinute(this.model.execAppointHourInit, 'm'),
+                day: this.model.dayOfMonth
+            };
+        }
+
+        if (this.isFrenquency()) {
+            this.jsonObject.rangeExecutions = {
+                frequency: {
+                    type: this.model.frequencyType,
+                    value: this.model.frequencyValue
+                },
+                rangeLimit: {
+                    hour: this.getHourOrMinute(this.model.execAppointHourFinal, 'h'),
+                    minute: this.getHourOrMinute(this.model.execAppointHourFinal, 'm')
+                }
+            };
+        }
+    }
+
+    finishSchedule(firstSchedure: boolean, isOK: boolean, response: object) {
+        if (!isOK) {
+            this.endExecution.emit(this.model);
+            return;
+        }
+
+        if (!response['jobScheduleID']) {
+            if (firstSchedure) {
+                this.verifyRepeatExecution();
+            } else {
+                this.poNotification.success('Agendamento realizado com sucesso !');
+                this.endExecution.emit(this.model);
+            }
+            return;
+        }
+
+        this.rpwService.getExecutionByJobScheduleID(response['jobScheduleID'], this.loading).subscribe({
+            next: (response: IExecutionStatus) => {
+                if (response) {
+                    this.model.listExecutionID.push(response.executionID);
+                }
+                if (firstSchedure) {
+                    this.verifyRepeatExecution();
+                } else {
+                    this.poNotification.success('Agendamento realizado com sucesso !');
+                    this.endExecution.emit(this.model);
+                }
+            },
+            error: () => {
+                if (firstSchedure) {
+                    this.verifyRepeatExecution();
+                }
+            }
+        });
     }
 
     getHourOrMinute(value: string, type: string): number {
