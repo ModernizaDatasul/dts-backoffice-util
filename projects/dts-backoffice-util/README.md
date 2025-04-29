@@ -198,22 +198,22 @@ DEFINE TEMP-TABLE tt-digita NO-UNDO
 Interfaces:
 
 IScheduleParameters
-| Nome | Tipo | Descrição | Valor - Label Valor |
-|-|-|-|-|
-| executionType | number | Tipo Execução | 1 - Executar Hoje<br>2 - Agendar Execução |
-| execAppointDate | date | Data Agendada | |
-| execAppointHour | string | Hora Agendada | |
-| executionServer | string | Servidor RPW | |
-| repeatExecution | boolean | Repetir Ocorrência | |
-| repeatType | number | Tipo Repetição | 1 - Diária<br>2 - Semanal<br>3 - Mensal |
-| frequency | string | Frequência | "no" - Uma vez no dia<br>"yes" - Várias vezes no dia |
-| frequencyValue | number | Quantidade da Frequência | |
-| frequencyType | string | Tipo Frequência | "hour" - Hora(s)<br>"minute" - Minuto(s) |
-| execAppointHourInit | string | Hora Inicial Frequência | |
-| execAppointHourFinal | string | Hora Final Frequência | |
-| selectWeeklys | Array | Dia da Semana<br>Frequência Semanal | Sunday - Domingo<br>Monday - Segunda<br>Tuesday - Terça<br>Wednesday - Quarta<br>Thursday - Quinta<br>Friday - Sexta<br>Saturday - Sábado |
-| dayOfMonth | number | Dia do Mês<br>Frequência Mensal | |
-| listExecutionID | Array | Lista de Códigos das Agendas criadas. Quando o usuário cria uma agenda "simples" (que não se repete) é criado apenas um agendamento, portanto esta propriedade terá apenas um código. Mas, quando o usuário cria uma agenda que se repete, são criados dois agendamentos: um para executar "agora", e outro para executar "futuramente" com base nos parâmetros informados pelo usuário (diário, semana, mensal, frequência, etc...) | |
+| Nome | Tipo | Descrição |
+|-|-|-|
+| executionType | number | Tipo Execução<br>Valor - Label Valor:<br>1 - Executar Hoje<br>2 - Agendar Execução |
+| execAppointDate | date | Data Agendada |
+| execAppointHour | string | Hora Agendada |
+| executionServer | string | Servidor RPW |
+| repeatExecution | boolean | Repetir Ocorrência |
+| repeatType | number | Tipo Repetição<br>Valor - Label Valor:<br>1 - Diária<br>2 - Semanal<br>3 - Mensal |
+| frequency | string | Frequência<br>Valor - Label Valor:<br>"no" - Uma vez no dia<br>"yes" - Várias vezes no dia |
+| frequencyValue | number | Quantidade da Frequência |
+| frequencyType | string | Tipo Frequência<br>Valor - Label Valor:<br>"hour" - Hora(s)<br>"minute" - Minuto(s) |
+| execAppointHourInit | string | Hora Inicial Frequência |
+| execAppointHourFinal | string | Hora Final Frequência |
+| selectWeeklys | Array | Dia da Semana<br>Frequência Semanal<br>Valor - Label Valor:<br>Sunday - Domingo<br>Monday - Segunda<br>Tuesday - Terça<br>Wednesday - Quarta<br>Thursday - Quinta<br>Friday - Sexta<br>Saturday - Sábado |
+| dayOfMonth | number | Dia do Mês<br>Frequência Mensal |
+| listExecutionID | Array | Lista de Códigos das Agendas criadas. Quando o usuário cria uma agenda "simples" (que não se repete) é criado apenas um agendamento, portanto esta propriedade terá apenas um código. Mas, quando o usuário cria uma agenda que se repete, são criados dois agendamentos: um para executar "agora", e outro para executar "futuramente" com base nos parâmetros informados pelo usuário (diário, semana, mensal, frequência, etc...) |
 ---
 <br>
 
