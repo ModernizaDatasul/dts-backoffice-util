@@ -25,6 +25,7 @@ export class TotvsScheduleExecutionComponent implements OnInit {
     @Input() paramSelections = [];
     @Input() disabledParams = false;
     @Input() loading = false;
+    @Input() hideRepeatExecution = false;
     @Output() endExecution = new EventEmitter();
 
     constructor(

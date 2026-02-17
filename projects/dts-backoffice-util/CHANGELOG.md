@@ -1,5 +1,10 @@
 # Changelog
 
+**19.4.0 (18-02-2026):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent**: Incluído o parâmetro **hideRepeatExecution** para esconder a opção **Repetir ocorrência ?**. Este parâmetro é opcional e o padrão é **false**.
+
 **19.3.0 (29-04-2025):**
 
 Melhorias:
