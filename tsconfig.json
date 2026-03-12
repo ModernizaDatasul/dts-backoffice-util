@@ -7,7 +7,7 @@
     "sourceMap": true,
     "declaration": false,
     "module": "es2020",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
