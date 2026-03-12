@@ -1,5 +1,10 @@
 # Changelog
 
+**20.0.0 (12-03-2026):**
+
+Melhorias:
+- ATUALIZAÇÃO: **PO-UI v20** E **ANGULAR v20**.
+
 **19.4.0 (18-02-2026):**
 
 Melhorias:
