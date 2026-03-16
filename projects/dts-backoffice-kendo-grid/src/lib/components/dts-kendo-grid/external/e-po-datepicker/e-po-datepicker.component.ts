@@ -4,7 +4,6 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { formatYear, isMobile, setYearFrom0To100 } from '../e-utils/e-util';
 import { EpoControlPositionService } from '../e-po-control-position/e-po-control-position.service';
 
-import { EpoCalendarComponent } from '../e-po-calendar/e-po-calendar.component';
 import { EpoDatepickerBaseComponent } from './e-po-datepicker-base.component';
 
 const poCalendarContentOffset = 8;
@@ -78,7 +77,6 @@ export class EpoDatepickerComponent extends EpoDatepickerBaseComponent implement
     eventListenerFunction: () => void;
     eventResizeListener: () => void;
 
-    @ViewChild('calendar', { static: true }) calendar: EpoCalendarComponent;
     @ViewChild('dialogPicker', { read: ElementRef, static: true }) dialogPicker: ElementRef;
     @ViewChild('iconDatepicker', { read: ElementRef, static: true }) iconDatepicker: ElementRef;
     @ViewChild('inp', { read: ElementRef, static: true }) inputEl: ElementRef;
@@ -134,14 +132,8 @@ export class EpoDatepickerComponent extends EpoDatepickerBaseComponent implement
             return;
         }
 
-        if (!this.calendar.visible) {
-            this.calendar.init();
-            this.setCalendarPosition();
-            this.initializeListeners();
-        } else {
-            this.inputEl.nativeElement.disabled = false;
-            this.closeCalendar();
-        }
+        this.inputEl.nativeElement.disabled = false;
+        this.closeCalendar();
     }
 
     dateSelected() {
@@ -333,7 +325,6 @@ export class EpoDatepickerComponent extends EpoDatepickerBaseComponent implement
     }
 
     private closeCalendar() {
-        this.calendar.close();
         this.removeListeners();
         this.setDialogPickerStyleDisplay('none');
     }

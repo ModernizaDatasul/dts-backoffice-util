@@ -12,26 +12,7 @@
         [required]="required"
         (blur)="eventOnBlur($event)"
         (click)="eventOnClick($event)"/>
-
-    <div class="po-field-icon-container-right">
-        <span
-            #iconDatepicker
-            class=" po-field-icon an an-calendar-dots"
-            [class.po-field-icon]="!disabled && !readonly"
-            [class.po-field-icon-disabled]="disabled || readonly"
-            (click)="togglePicker()">
-        </span>
-    </div>
 </div>
 
 <div #dialogPicker class="k-grid-ignore-click" [class.po-datepicker-popup-calendar]="!verifyMobile()">
-    <e-po-calendar
-        #calendar
-        [p-date-end]="maxDate"
-        [p-date-start]="minDate"
-        [p-locale]="locale"
-        [p-date-input]="inputEl"
-        [(p-selected-date)]="date"
-        (p-submit)="dateSelected()">
-    </e-po-calendar>
 </div>

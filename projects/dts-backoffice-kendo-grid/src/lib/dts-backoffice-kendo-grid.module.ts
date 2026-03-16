@@ -8,8 +8,7 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { DtsKendoGridComponent } from './components/dts-kendo-grid/dts-kendo-grid.component';
 import { EpoTooltipModule } from './components/dts-kendo-grid/external/e-po-tooltip/e-po-tooltip.module';
 import { CustomDateFilterModule } from './components/dts-kendo-grid/custom/custom-date-filter/custom-date-filter.module';
-import { EpoDatePickerModule } from './components/dts-kendo-grid/external/e-po-datepicker/e-po-datepicker.module';
-import { EpoCalendarModule } from './components/dts-kendo-grid/external/e-po-calendar/e-po-calendar.module';
+import { EpoDatepickerModule } from './components/dts-kendo-grid/external/e-po-datepicker/e-po-datepicker.module';
 
 @NgModule({
   declarations: [
@@ -25,8 +24,7 @@ import { EpoCalendarModule } from './components/dts-kendo-grid/external/e-po-cal
     ExcelModule,
     PDFModule,
     CustomDateFilterModule,
-    EpoDatePickerModule,
-    EpoCalendarModule
+    EpoDatepickerModule
   ],
   exports: [
     DtsKendoGridComponent

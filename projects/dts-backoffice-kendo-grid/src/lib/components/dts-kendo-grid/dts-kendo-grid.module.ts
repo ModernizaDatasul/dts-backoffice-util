@@ -7,7 +7,7 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 
 import { EpoTooltipModule } from './external/e-po-tooltip/e-po-tooltip.module';
 import { CustomDateFilterModule } from './custom/custom-date-filter/custom-date-filter.module';
-import { EpoDatePickerModule } from '../../components/dts-kendo-grid/external/e-po-datepicker/e-po-datepicker.module';
+import { EpoDatepickerModule } from '../../components/dts-kendo-grid/external/e-po-datepicker/e-po-datepicker.module';
 import { EpoCalendarModule } from '../../components/dts-kendo-grid/external/e-po-calendar/e-po-calendar.module';
 
 /**
@@ -26,7 +26,7 @@ import { EpoCalendarModule } from '../../components/dts-kendo-grid/external/e-po
     EpoTooltipModule,
     PDFModule,
     CustomDateFilterModule,
-    EpoDatePickerModule,
+    EpoDatepickerModule,
     EpoCalendarModule
   ],
   declarations: [

@@ -1,388 +1,462 @@
 <div [id]="idDsGrid" class="d-dts-kendo-grid">
 
-    <kendo-grid
-        [id]="idGrid"
-        [data]="gridView"
-        [scrollable]="scrollable"
-        [filterable]="filterable ? 'menu' : ''"
-        [filter]="state.filter"
-        [sortable]="sortableSettings"
-        [sort]="sort"
-        [groupable]="groupable"
-        [group]="groups"
-        [selectable]="selectableSettings"
-        [rowSelected]="isRowSelected"
-        [reorderable]="reorderable"
-        [resizable]="resizable || isMaximize"
-        (dataStateChange)="dataStateChange($event)"
-        (groupChange)="groupChange($event)"
-        (selectionChange)="onSelectionChange($event)"
-        (sortChange)="sortChange($event)"
-        (add)="addHandler($event)"
-        (cellClick)="editClickHandler($event)">
+  <kendo-grid
+    [id]="idGrid"
+    [data]="gridView"
+    [scrollable]="scrollable"
+    [filterable]="filterable ? 'menu' : ''"
+    [filter]="state.filter"
+    [sortable]="sortableSettings"
+    [sort]="sort"
+    [groupable]="groupable"
+    [group]="groups"
+    [selectable]="selectableSettings"
+    [rowSelected]="isRowSelected"
+    [reorderable]="reorderable"
+    [resizable]="resizable || isMaximize"
+    (dataStateChange)="dataStateChange($event)"
+    (groupChange)="groupChange($event)"
+    (selectionChange)="onSelectionChange($event)"
+    (sortChange)="sortChange($event)"
+    (add)="addHandler($event)"
+    (cellClick)="editClickHandler($event)">
 
-        <!-- https://www.telerik.com/kendo-angular-ui/components/grid/api/CustomMessagesComponent/ -->
+    <!-- https://www.telerik.com/kendo-angular-ui/components/grid/api/CustomMessagesComponent/ -->
 
-        <kendo-grid-messages
-            [noRecords]="literals.noRecords || localLiterals.noRecords"
-            [groupPanelEmpty]="literals.groupPanelEmpty || localLiterals.groupPanelEmpty"
-            [filterContainsOperator]="literals.filterContainsOperator || localLiterals.filterContainsOperator"
-            [filterAndLogic]="literals.filterAndLogic || localLiterals.filterAndLogic"
-            [filterOrLogic]="literals.filterOrLogic || localLiterals.filterOrLogic"
-            [filterEqOperator]="literals.filterEqOperator || localLiterals.filterEqOperator"
-            [filterNotEqOperator]="literals.filterNotEqOperator || localLiterals.filterNotEqOperator"
-            [filterNotContainsOperator]="literals.filterNotContainsOperator || localLiterals.filterNotContainsOperator"
-            [filterStartsWithOperator]="literals.filterStartsWithOperator || localLiterals.filterStartsWithOperator"
-            [filterEndsWithOperator]="literals.filterEndsWithOperator || localLiterals.filterEndsWithOperator"
-            [filterIsNullOperator]="literals.filterIsNullOperator || localLiterals.filterIsNullOperator"
-            [filterIsNotNullOperator]="literals.filterIsNotNullOperator || localLiterals.filterIsNotNullOperator"
-            [filterIsEmptyOperator]="literals.filterIsEmptyOperator || localLiterals.filterIsEmptyOperator"
-            [filterIsNotEmptyOperator]="literals.filterIsNotEmptyOperator || localLiterals.filterIsNotEmptyOperator"
-            [filterClearButton]="literals.filterClearButton || localLiterals.filterClearButton"
-            [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton"
-            [filterGteOperator]="literals.filterGteOperator || localLiterals.filterGteOperator"
-            [filterGtOperator]="literals.filterGtOperator || localLiterals.filterGtOperator"
-            [filterLtOperator]="literals.filterLtOperator || localLiterals.filterLtOperator"
-            [filterLteOperator]="literals.filterLteOperator || localLiterals.filterLteOperator"
-            [filterAfterOrEqualOperator]="literals.filterAfterOrEqualOperator || localLiterals.filterAfterOrEqualOperator"
-            [filterAfterOperator]="literals.filterAfterOperator || localLiterals.filterAfterOperator"
-            [filterBeforeOrEqualOperator]="literals.filterBeforeOrEqualOperator || localLiterals.filterBeforeOrEqualOperator"
-            [filterBeforeOperator]="literals.filterBeforeOperator || localLiterals.filterBeforeOperator"
-            [filterIsTrue]="literals.filterIsTrue || localLiterals.filterIsTrue"
-            [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse">
-        </kendo-grid-messages>
+    <kendo-grid-messages
+      [noRecords]="literals.noRecords || localLiterals.noRecords"
+      [groupPanelEmpty]="literals.groupPanelEmpty || localLiterals.groupPanelEmpty"
+      [filterContainsOperator]="literals.filterContainsOperator || localLiterals.filterContainsOperator"
+      [filterAndLogic]="literals.filterAndLogic || localLiterals.filterAndLogic"
+      [filterOrLogic]="literals.filterOrLogic || localLiterals.filterOrLogic"
+      [filterEqOperator]="literals.filterEqOperator || localLiterals.filterEqOperator"
+      [filterNotEqOperator]="literals.filterNotEqOperator || localLiterals.filterNotEqOperator"
+      [filterNotContainsOperator]="literals.filterNotContainsOperator || localLiterals.filterNotContainsOperator"
+      [filterStartsWithOperator]="literals.filterStartsWithOperator || localLiterals.filterStartsWithOperator"
+      [filterEndsWithOperator]="literals.filterEndsWithOperator || localLiterals.filterEndsWithOperator"
+      [filterIsNullOperator]="literals.filterIsNullOperator || localLiterals.filterIsNullOperator"
+      [filterIsNotNullOperator]="literals.filterIsNotNullOperator || localLiterals.filterIsNotNullOperator"
+      [filterIsEmptyOperator]="literals.filterIsEmptyOperator || localLiterals.filterIsEmptyOperator"
+      [filterIsNotEmptyOperator]="literals.filterIsNotEmptyOperator || localLiterals.filterIsNotEmptyOperator"
+      [filterClearButton]="literals.filterClearButton || localLiterals.filterClearButton"
+      [filterFilterButton]="literals.filterFilterButton || localLiterals.filterFilterButton"
+      [filterGteOperator]="literals.filterGteOperator || localLiterals.filterGteOperator"
+      [filterGtOperator]="literals.filterGtOperator || localLiterals.filterGtOperator"
+      [filterLtOperator]="literals.filterLtOperator || localLiterals.filterLtOperator"
+      [filterLteOperator]="literals.filterLteOperator || localLiterals.filterLteOperator"
+      [filterAfterOrEqualOperator]="literals.filterAfterOrEqualOperator || localLiterals.filterAfterOrEqualOperator"
+      [filterAfterOperator]="literals.filterAfterOperator || localLiterals.filterAfterOperator"
+      [filterBeforeOrEqualOperator]="literals.filterBeforeOrEqualOperator || localLiterals.filterBeforeOrEqualOperator"
+      [filterBeforeOperator]="literals.filterBeforeOperator || localLiterals.filterBeforeOperator"
+      [filterIsTrue]="literals.filterIsTrue || localLiterals.filterIsTrue"
+      [filterIsFalse]="literals.filterIsFalse || localLiterals.filterIsFalse">
+    </kendo-grid-messages>
 
-        <ng-template *ngIf="isShowToolbarGrid()"
-                     kendoGridToolbarTemplate>
-            <button *ngIf="addButton" kendoGridAddCommand class="k-primary">{{ literals.add || localLiterals.add }}</button>
-            <button *ngIf="cancelButton" class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
+    @if (isShowToolbarGrid()) {
+      <ng-template
+        kendoGridToolbarTemplate>
+        @if (addButton) {
+          <button kendoGridAddCommand class="k-primary">{{ literals.add || localLiterals.add }}</button>
+        }
+        @if (cancelButton) {
+          <button class="k-button" (click)="onChooseBtCancel()">{{ literals.cancel || localLiterals.cancel }}</button>
+        }
+      </ng-template>
+    }
+
+    @if (selectable) {
+      <kendo-grid-checkbox-column
+        [width]="30"
+        [showSelectAll]="!singleSelect">
+      </kendo-grid-checkbox-column>
+    }
+
+    @for (col of columns; track col; let i = $index) {
+      <kendo-grid-column
+        [headerClass]="{'d-number-header': col.editType === 'numeric', 'd-column-header': true}"
+        [field]="col.column"
+        [title]="col.label"
+        [width]="col.width"
+        [filter]="col.filterType"
+        [editor]="col.editType"
+        [format]="col.editFormat"
+        [hidden]="!col.visible"
+        (click)="onClickColumn(col)">
+
+        @if (groupable && col.type === 'numeric'; as value) {
+          <ng-template
+            kendoGridGroupHeaderTemplate let-value="value">
+            {{ col.label }}: {{ col.format ? (value | number : col.format) : (value) }}
+          </ng-template>
+        }
+
+        @if (col.type === 'numeric'; as data) {
+          <ng-template
+            kendoGridCellTemplate let-data>
+            <div style="text-align: right;">
+              {{ col.format ? (data[col.column] | number : col.format) : (data[col.column]) }}
+            </div>
+          </ng-template>
+        }
+
+        @if (groupable && col.type === 'currency'; as value) {
+          <ng-template
+            kendoGridGroupHeaderTemplate let-value="value">
+            {{ col.label }}: {{ value | currency : col.currency : 'symbol' : col.symbol }}
+          </ng-template>
+        }
+
+        @if (col.type === 'currency'; as data) {
+          <ng-template
+            kendoGridCellTemplate let-data>
+            <div style="text-align: right;">
+              {{ data[col.column] | currency : col.currency : 'symbol' : col.symbol }}
+            </div>
+          </ng-template>
+        }
+
+        @if (groupable && col.type === 'boolean'; as value) {
+          <ng-template
+            kendoGridGroupHeaderTemplate let-value="value">
+            {{ col.label }}: {{ getBooleanDescription(value) }}
+          </ng-template>
+        }
+
+        @if (col.type === 'boolean'; as data) {
+          <ng-template
+            kendoGridCellTemplate let-data>
+            @if (col.checkbox) {
+              <input type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
+            }
+            @if (!col.checkbox) {
+              <div>
+                {{ getBooleanDescription(data[col.column]) }}
+              </div>
+            }
+          </ng-template>
+        }
+
+        @if (filterable && col.type === 'date'; as column) {
+          <ng-template  
+            kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
+            <custom-date-filter
+              [filter]="filter"
+              [filterService]="filterService"
+              [field]="column.field"
+              [dateFormat]="literals.dateFormat || localLiterals.dateFormat"
+              [dateFormatDesc]="literals.dateFormatDesc || localLiterals.dateFormatDesc">
+            </custom-date-filter>
+          </ng-template>
+        }
+
+        @if (editable && col.editable === true && col.type === 'date'; as column) {
+          <ng-template
+            kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <e-po-datepicker
+              [p-format]="literals.dateFormat || localLiterals.dateFormat"
+              [p-placeholder]="literals.dateFormatDesc || localLiterals.dateFormatDesc"
+              [formControl]="formGroup.get(column.field)">
+            </e-po-datepicker>
+          </ng-template>
+        }
+
+        @if (groupable && col.type === 'date'; as value) {
+          <ng-template
+            kendoGridGroupHeaderTemplate let-value="value">
+            {{ col.label }}: {{ value | date : col.format }}
+          </ng-template>
+        }
+
+        @if (col.type === 'date'; as data) {
+          <ng-template
+            kendoGridCellTemplate let-data>
+            {{ data[col.column] | date : col.format }}
+          </ng-template>
+        }
+
+        @if (groupable && col.type === 'label'; as value) {
+          <ng-template
+            kendoGridGroupHeaderTemplate let-value="value">
+            {{ col.label }}:
+            @for (label of col.labels; track label) {
+              <div>
+                @if (label.value === value) {
+                  <span class="po-table-column-label po-{{ label.color }}">
+                    {{ label.label }}
+                  </span>
+                }
+              </div>
+            }
+          </ng-template>
+        }
+
+        @if (col.type === 'label'; as type) {
+          <ng-template
+            kendoGridCellTemplate let-type>
+            @for (label of col.labels; track label) {
+              <div>
+                @if (label.value === type[col.column]) {
+                  <span class="po-table-column-label po-{{ label.color }}">
+                    {{ label.label }}
+                  </span>
+                }
+              </div>
+            }
+          </ng-template>
+        }
+
+        @if (groupable && col.type === 'subtitle'; as value) {
+          <ng-template
+            kendoGridGroupHeaderTemplate let-value="value">
+            {{ col.label }}:
+            <div class="d-subtitle">
+              @for (label of col.labels; track label) {
+                <div>
+                  @if (isValidSubtitle(label.value, value)) {
+                    <span class="po-mr-1 po-table-column-label po-{{ label.color }}"
+                      [p-tooltip]="label.tooltip">
+                      {{ label.label }}
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+          </ng-template>
+        }
+
+        @if (col.type === 'subtitle'; as type) {
+          <ng-template
+            kendoGridCellTemplate let-type>
+            <div class="d-subtitle">
+              @for (label of col.labels; track label) {
+                <div>
+                  @if (isValidSubtitle(label.value, type[col.column])) {
+                    <span class="po-mr-1 po-table-column-label po-{{ label.color }}"
+                      [p-tooltip]="label.tooltip">
+                      {{ label.label }}
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+          </ng-template>
+        }
+    </kendo-grid-column>
+  }
+
+  @if (isCommandColumnVisible() && viewColumnVisible) {
+    <kendo-grid-command-column title="" width="80" locked="true"
+      [headerClass]="{'d-command-header': true}">
+      @if (showCommandTools('any')) {
+        <ng-template
+          kendoGridHeaderTemplate>
+          @if (showCommandTools('tools')) {
+            <div>
+              <button class="d-grid-bt-tools an an-gear po-clickable"
+                (click)="onChooseBtTools($event)"
+                #btToolsTarget>
+              </button>
+            </div>
+          }
+          @if (showCommandTools('one')) {
+            <div>
+              @if (exportButtons) {
+                <button class="d-grid-bt-tools an an-microsoft-excel-logo po-clickable"
+                  (click)="onChooseBtExportExcel($event)">
+                </button>
+              }
+              @if (exportButtons) {
+                <button class="d-grid-bt-tools an an-file-pdf po-clickable"
+                  (click)="onChooseBtExportPDF($event)">
+                </button>
+              }
+              @if (columnManagerButton) {
+                <button class="d-grid-bt-tools an an-sliders-horizontal po-clickable"
+                  (click)="onChooseColumnManager($event)"
+                  #columnManagerTarget>
+                </button>
+              }
+              @if (maximizeButton && isMaximize) {
+                <button class="d-grid-bt-tools an an-magnifying-glass-minus po-clickable"
+                  (click)="onChooseBtMaximize($event)">
+                </button>
+              }
+              @if (maximizeButton && !isMaximize) {
+                <button class="d-grid-bt-tools an an-magnifying-glass-plus po-clickable"
+                  (click)="onChooseBtMaximize($event)">
+                </button>
+              }
+            </div>
+          }
         </ng-template>
+      }
+      <ng-template kendoGridCellTemplate let-data>
+        @if (actions.length > 1) {
+          <div>
+            <span class="d-actions an an-dots-three po-clickable"
+              #target
+              (click)="onClickActions($event, data)">
+            </span>
+          </div>
+        }
+        @if (actions.length === 1) {
+          <div>
+            <span class="d-action-span an {{actions[0].icon}} po-clickable"></span>
+            <span class="d-action po-clickable"
+              (click)="onClickAction(data, actions[0])">
+              {{ actions[0].label }}
+            </span>
+          </div>
+        }
+      </ng-template>
+    </kendo-grid-command-column>
+  }
 
-        <kendo-grid-checkbox-column *ngIf="selectable"
-            [width]="30"
-            [showSelectAll]="!singleSelect">
-        </kendo-grid-checkbox-column>
+  <kendo-grid-excel fileName="spreadsheet.xlsx" [fetchData]="allData"></kendo-grid-excel>
 
-        <kendo-grid-column *ngFor="let col of columns; let i = index"
-            [headerClass]="{'d-number-header': col.editType === 'numeric', 'd-column-header': true}"
-            [field]="col.column"
-            [title]="col.label"
-            [width]="col.width"
-            [filter]="col.filterType"
-            [editor]="col.editType"
-            [format]="col.editFormat"
-            [hidden]="!col.visible"
-            (click)="onClickColumn(col)">
+  <kendo-grid-pdf fileName="grid.pdf" [allPages]="true">
+    <kendo-grid-pdf-margin top="1cm" left="1cm" right="1cm" bottom="1cm"></kendo-grid-pdf-margin>
+  </kendo-grid-pdf>
+</kendo-grid>
 
-            <ng-template *ngIf="groupable && col.type === 'numeric'"
-                         kendoGridGroupHeaderTemplate let-value="value">
-                {{ col.label }}: {{ col.format ? (value | number : col.format) : (value) }}
-            </ng-template>
-
-            <ng-template *ngIf="col.type === 'numeric'"
-                         kendoGridCellTemplate let-data>
-                <div style="text-align: right;">
-                    {{ col.format ? (data[col.column] | number : col.format) : (data[col.column]) }}
-                </div>
-            </ng-template>
-
-            <ng-template *ngIf="groupable && col.type === 'currency'"
-                         kendoGridGroupHeaderTemplate let-value="value">
-                {{ col.label }}: {{ value | currency : col.currency : 'symbol' : col.symbol }}
-            </ng-template>
-
-            <ng-template *ngIf="col.type === 'currency'"
-                         kendoGridCellTemplate let-data>
-                <div style="text-align: right;">
-                    {{ data[col.column] | currency : col.currency : 'symbol' : col.symbol }}
-                </div>
-            </ng-template>
-
-            <ng-template *ngIf="groupable && col.type === 'boolean'"
-                         kendoGridGroupHeaderTemplate let-value="value">
-                {{ col.label }}: {{ getBooleanDescription(value) }}
-            </ng-template>
-
-            <ng-template *ngIf="col.type === 'boolean'"
-                         kendoGridCellTemplate let-data>
-                <input *ngIf="col.checkbox" type="checkbox" disabled="true" kendoCheckBox [(ngModel)]="data[col.column]"/>
-                <div *ngIf="!col.checkbox">
-                    {{ getBooleanDescription(data[col.column]) }}
-                </div>
-            </ng-template>
-
-            <ng-template *ngIf="filterable && col.type === 'date'"
-                         kendoGridFilterMenuTemplate let-filter let-column="column" let-filterService="filterService">
-                <custom-date-filter
-                    [filter]="filter"
-                    [filterService]="filterService"
-                    [field]="column.field"
-                    [dateFormat]="literals.dateFormat || localLiterals.dateFormat"
-                    [dateFormatDesc]="literals.dateFormatDesc || localLiterals.dateFormatDesc">
-                </custom-date-filter>
-            </ng-template>
-
-            <ng-template *ngIf="editable && col.editable === true && col.type === 'date'"
-                         kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-                <e-po-datepicker
-                    [p-format]="literals.dateFormat || localLiterals.dateFormat"
-                    [p-placeholder]="literals.dateFormatDesc || localLiterals.dateFormatDesc"
-                    [formControl]="formGroup.get(column.field)">
-                </e-po-datepicker>
-            </ng-template>
-
-            <ng-template *ngIf="groupable && col.type === 'date'"
-                         kendoGridGroupHeaderTemplate let-value="value">
-                {{ col.label }}: {{ value | date : col.format }}
-            </ng-template>
-
-            <ng-template *ngIf="col.type === 'date'"
-                         kendoGridCellTemplate let-data>
-                {{ data[col.column] | date : col.format }}
-            </ng-template>
-
-            <ng-template *ngIf="groupable && col.type === 'label'"
-                         kendoGridGroupHeaderTemplate let-value="value">
-                {{ col.label }}:
-                <div *ngFor="let label of col.labels">
-                    <span *ngIf="label.value === value"
-                        class="po-table-column-label po-{{ label.color }}">
-                        {{ label.label }}
-                    </span>
-                </div>
-            </ng-template>
-
-            <ng-template *ngIf="col.type === 'label'"
-                         kendoGridCellTemplate let-type>
-                <div *ngFor="let label of col.labels">
-                    <span *ngIf="label.value === type[col.column]"
-                        class="po-table-column-label po-{{ label.color }}">
-                        {{ label.label }}
-                    </span>
-                </div>
-            </ng-template>
-
-            <ng-template *ngIf="groupable && col.type === 'subtitle'"
-                         kendoGridGroupHeaderTemplate let-value="value">
-                {{ col.label }}:
-                <div class="d-subtitle">
-                    <div *ngFor="let label of col.labels">
-                        <span *ngIf="isValidSubtitle(label.value, value)"
-                            [p-tooltip]="label.tooltip"
-                            class="po-mr-1 po-table-column-label po-{{ label.color }}">
-                            {{ label.label }}
-                        </span>
-                    </div>
-                </div>            
-            </ng-template>
-
-            <ng-template *ngIf="col.type === 'subtitle'"
-                         kendoGridCellTemplate let-type>
-                <div class="d-subtitle">
-                    <div *ngFor="let label of col.labels">
-                        <span *ngIf="isValidSubtitle(label.value, type[col.column])"
-                            [p-tooltip]="label.tooltip"
-                            class="po-mr-1 po-table-column-label po-{{ label.color }}">
-                            {{ label.label }}
-                        </span>
-                    </div>
-                </div>
-            </ng-template>
-        </kendo-grid-column>
-
-        <kendo-grid-command-column *ngIf="isCommandColumnVisible() && viewColumnVisible" title="" width="80" locked="true"
-                                   [headerClass]="{'d-command-header': true}">
-            <ng-template *ngIf="showCommandTools('any')"
-                         kendoGridHeaderTemplate>
-
-                <div *ngIf="showCommandTools('tools')">
-                    <button class="d-grid-bt-tools  an an-gear po-clickable"
-                            (click)="onChooseBtTools($event)"
-                            #btToolsTarget>
-                    </button>
-                </div>
-
-                <div *ngIf="showCommandTools('one')">
-                    <button *ngIf="exportButtons"
-                            class="d-grid-bt-tools k-icon k-i-file-excel po-clickable"
-                            (click)="onChooseBtExportExcel($event)">
-                    </button>
-
-                    <button *ngIf="exportButtons"
-                            class="d-grid-bt-tools  an an-file-pdf po-clickable"
-                            (click)="onChooseBtExportPDF($event)">
-                    </button>                
-
-                    <button *ngIf="columnManagerButton"
-                            class="d-grid-bt-tools  an an-sliders-horizontal po-clickable"
-                            (click)="onChooseColumnManager($event)"
-                            #columnManagerTarget>
-                    </button>
-
-                    <button *ngIf="maximizeButton && isMaximize"
-                            class="d-grid-bt-tools  an an-magnifying-glass-minus po-clickable"
-                            (click)="onChooseBtMaximize($event)">
-                    </button>
-
-                    <button *ngIf="maximizeButton && !isMaximize"
-                            class="d-grid-bt-tools  an an-magnifying-glass-plus po-clickable"
-                            (click)="onChooseBtMaximize($event)">
-                    </button>
-                </div>
-            </ng-template>
-
-            <ng-template kendoGridCellTemplate let-data>
-                <div *ngIf="actions.length > 1">
-                    <span class="d-actions  an an-dots-three po-clickable"
-                        #target
-                        (click)="onClickActions($event, data)">
-                    </span>
-                </div>
-
-                <div *ngIf="actions.length === 1">
-                    <span class="d-action-span an {{actions[0].icon}} po-clickable"></span>
-                    <span class="d-action po-clickable"
-                        (click)="onClickAction(data, actions[0])">
-                        {{ actions[0].label }}
-                    </span>
-                </div>
-            </ng-template>
-        </kendo-grid-command-column>
-
-        <kendo-grid-excel fileName="spreadsheet.xlsx" [fetchData]="allData"></kendo-grid-excel>
-
-        <kendo-grid-pdf fileName="grid.pdf" [allPages]="true">
-            <kendo-grid-pdf-margin top="1cm" left="1cm" right="1cm" bottom="1cm"></kendo-grid-pdf-margin>
-        </kendo-grid-pdf>
-    </kendo-grid>
-
-    <div *ngIf="showMore.observers.length > 0"
-        class="k-grid-show-more po-offset-xl-4 po-offset-lg-4 po-offset-md-3 po-lg-4 po-md-6">
-        <div style="text-align: center;">
-            <button class="k-grid-show-more-button po-button po-text-ellipsis"
-                (click)="onShowMore()"
-                [disabled]="showMoreDisabled">
-                {{ literals.showMore || localLiterals.showMore }}
-            </button>
-        </div>
+@if (showMore.observers.length > 0) {
+  <div class="k-grid-show-more po-offset-xl-4 po-offset-lg-4 po-offset-md-3 po-lg-4 po-md-6">
+    <div style="text-align: center;">
+      <button class="k-grid-show-more-button po-button po-text-ellipsis"
+        (click)="onShowMore()"
+        [disabled]="showMoreDisabled">
+        {{ literals.showMore || localLiterals.showMore }}
+      </button>
     </div>
+  </div>
+}
 </div>
 
 <div [id]="kgPopupAct.id"
-     class="po-popup"     
-     style="top: -300px; left: -300px; z-index: 200;"
-     [hidden]="!kgPopupAct.showHtml">
+  class="po-popup"
+  style="top: -300px; left: -300px; z-index: 200;"
+  [hidden]="!kgPopupAct.showHtml">
 
-    <ng-content select="[p-popup-header-template]"></ng-content>
+  <ng-content select="[p-popup-header-template]"></ng-content>
 
-    <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
+  <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
 
+  @for (action of actions; track action; let actionIndex = $index) {
     <div class="po-popup-item-default"
-         *ngFor="let action of actions; let actionIndex = index"
-         (click)="executeAction(action)">
-
-        <div *ngIf="action.visible !== false">
-            <span *ngIf="action.icon"
-                  class="d-action-span an {{ action.icon }} po-popup-icon-item po-clickable"></span>
-
-            <span class="d-action po-clickable">{{ action.label }}</span>
+      (click)="executeAction(action)">
+      @if (action.visible !== false) {
+        <div>
+          @if (action.icon) {
+            <span class="d-action-span an {{ action.icon }} po-popup-icon-item po-clickable"></span>
+          }
+          <span class="d-action po-clickable">{{ action.label }}</span>
         </div>
+      }
     </div>
+  }
 </div>
 
 <div [id]="kgPopupColMng.id"
-     class="po-popup"     
-     style="top: -300px; left: -300px; max-width: 240px; z-index: 200;"
-     [hidden]="!kgPopupColMng.showHtml">
+  class="po-popup"
+  style="top: -300px; left: -300px; max-width: 240px; z-index: 200;"
+  [hidden]="!kgPopupColMng.showHtml">
 
-    <ng-content select="[p-popup-header-template]"></ng-content>
+  <ng-content select="[p-popup-header-template]"></ng-content>
 
-    <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
+  <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
 
-    <div class="d-table-column-manager-header">
-        <div class="d-table-column-manager-header-title">
-            {{ literals.columnsManager || localLiterals.columnsManager }}
-        </div>
-    
-        <div class="d-table-column-manager-header-close">
-            <button
-                class="d-table-column-manager-header-close-button po-clickable  an an-x"
-                (click)="hidePopup(kgPopupColMng)">
-            </button>
-        </div>
+  <div class="d-table-column-manager-header">
+    <div class="d-table-column-manager-header-title">
+      {{ literals.columnsManager || localLiterals.columnsManager }}
     </div>
 
-    <div class="d-column-manager-container po-row po-pt-1 po-pb-1">
-        <div *ngFor="let column of columns" class="po-lg-12 po-md-12">
-            <div *ngIf="!column.locked" class="po-checkbox-group-item po-ml-1">
-                <input [id]="column.column"
-                    class="po-input po-checkbox-group-input"
-                    type="checkbox"
-                    [class.po-checkbox-group-input-checked]="column.visible"
-                    [checked]="column.visible"
-                    [value]="column.visible"/>
-
-                <label [for]="column.column"
-                    class="po-checkbox-group-label d-column-manager-label"
-                    (click)="onClickVisibleColumnManager(column.column, column.visible)">
-                    {{ column.label }}
-                </label>
-            </div>
-        </div>
+    <div class="d-table-column-manager-header-close">
+      <button class="d-table-column-manager-header-close-button po-clickable  an an-x"
+        (click)="hidePopup(kgPopupColMng)">
+      </button>
     </div>
+  </div>
 
-    <div class="d-table-column-manager-footer">
-        <div class="d-column-manager-action">
-            <span class="po-font-text-bold po-text-center po-clickable"
-                  (click)="onClickRestoreDefault()">
-                {{ literals.restoreDefault || localLiterals.restoreDefault }}
-            </span>
+  <div class="d-column-manager-container po-row po-pt-1 po-pb-1">
+    @for (column of columns; track column) {
+      <div class="po-lg-12 po-md-12">
+        @if (!column.locked) {
+          <div class="po-checkbox-group-item po-ml-1">
+            <input [id]="column.column" class="po-input po-checkbox-group-input"
+              type="checkbox"
+              [class.po-checkbox-group-input-checked]="column.visible"
+              [checked]="column.visible"
+              [value]="column.visible"/>
+            <label [for]="column.column" class="po-checkbox-group-label d-column-manager-label"
+              (click)="onClickVisibleColumnManager(column.column, column.visible)">
+              {{ column.label }}
+            </label>
+          </div>
+        }
+      </div>
+    }
+  </div>
 
-            <span *ngIf="saveColumnManager.observers.length > 0" class="d-divider-vertical">|</span>
+  <div class="d-table-column-manager-footer">
+    <div class="d-column-manager-action">
+      <span class="po-font-text-bold po-text-center po-clickable"
+        (click)="onClickRestoreDefault()">
+        {{ literals.restoreDefault || localLiterals.restoreDefault }}
+      </span>
 
-            <span *ngIf="saveColumnManager.observers.length > 0"
-                  class="po-font-text-bold po-text-center po-clickable"
-                  (click)="onClickSaveColumnManager()">
-                {{ literals.save || localLiterals.save }}
-            </span>
-        </div>
+      @if (saveColumnManager.observers.length > 0) {
+        <span class="d-divider-vertical">|</span>
+      }
+
+      @if (saveColumnManager.observers.length > 0) {
+        <span class="po-font-text-bold po-text-center po-clickable"
+          (click)="onClickSaveColumnManager()">
+          {{ literals.save || localLiterals.save }}
+        </span>
+      }
     </div>
+  </div>
 </div>
 
 <div [id]="kgPopupTools.id"
-     class="po-popup"     
-     style="top: -300px; left: -300px; z-index: 200;"
-     [hidden]="!kgPopupTools.showHtml">
+  class="po-popup"
+  style="top: -300px; left: -300px; z-index: 200;"
+  [hidden]="!kgPopupTools.showHtml">
 
-    <ng-content select="[p-popup-header-template]"></ng-content>
+  <ng-content select="[p-popup-header-template]"></ng-content>
 
-    <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
+  <div class="po-popup-arrow po-arrow-{{ arrowDirection }}"></div>
 
-    <div class="d-grid-tools-bar">
-        <button *ngIf="exportButtons"
-            class="d-grid-bt-tools-bar  an an-file-pdf po-clickable"
-            (click)="onChooseBtExportPDF($event)">
-        </button>
+  <div class="d-grid-tools-bar">
+    @if (exportButtons) {
+      <button class="d-grid-bt-tools-bar an an-file-pdf po-clickable"
+        (click)="onChooseBtExportPDF($event)">
+      </button>
+    }
 
-        <button *ngIf="exportButtons"
-            class="d-grid-bt-tools-bar k-icon k-i-file-excel po-clickable"
-            (click)="onChooseBtExportExcel($event)">
-        </button>
+    @if (exportButtons) {
+      <button class="d-grid-bt-tools-bar an an-microsoft-excel-logo po-clickable"
+        (click)="onChooseBtExportExcel($event)">
+      </button>
+    }
 
-        <button *ngIf="columnManagerButton"
-            class="d-grid-bt-tools-bar  an an-sliders-horizontal po-clickable"
-            (click)="onChooseColumnManager($event)"
-            #columnManagerTarget>
-        </button>
+    @if (columnManagerButton) {
+      <button class="d-grid-bt-tools-bar an an-sliders-horizontal po-clickable"
+        (click)="onChooseColumnManager($event)"
+        #columnManagerTarget>
+      </button>
+    }
 
-        <button *ngIf="maximizeButton && isMaximize"
-            class="d-grid-bt-tools-bar  an an-magnifying-glass-minus po-clickable"
-            (click)="onChooseBtMaximize($event)">
-        </button>
+    @if (maximizeButton && isMaximize) {
+      <button class="d-grid-bt-tools-bar an an-magnifying-glass-minus po-clickable"
+        (click)="onChooseBtMaximize($event)">
+      </button>
+    }
 
-        <button *ngIf="maximizeButton && !isMaximize"
-            class="d-grid-bt-tools-bar  an an-magnifying-glass-plus po-clickable"
-            (click)="onChooseBtMaximize($event)">
-        </button>
-    </div>
+    @if (maximizeButton && !isMaximize) {
+      <button class="d-grid-bt-tools-bar an an-magnifying-glass-plus po-clickable"
+        (click)="onChooseBtMaximize($event)">
+      </button>
+    }
+  </div>
 </div>
