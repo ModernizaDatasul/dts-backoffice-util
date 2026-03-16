@@ -25,8 +25,29 @@ export interface DtsKendoGridColumn {
      */
     type?: string;
 
+    /**
+     * Define o tipo da coluna no formato de Edição. Os Tipos válidos são:
+     * - **`text` (padrão)**: Campo do tipo texto.
+     * - **`numeric`**: Campo do tipo numérico.
+     * - **`boolean`**: Campo do tipo lógico.
+     * - **`date`**: Campo do tipo data.
+     */
+    editType?: string;
+
+    /**
+     * Define o tipo da coluna para o Filtro. Os Tipos válidos são:
+     * - **`text` (padrão)**: Campo do tipo texto.
+     * - **`numeric`**: Campo do tipo numérico.
+     * - **`boolean`**: Campo do tipo lógico.
+     * - **`date`**: Campo do tipo data.
+     */
+    filterType?: string;
+
     /** Formata os dados da coluna de acordo com o tipo. */
     format?: string;
+
+    /** Define o formato do campo no modo de edição. */
+    editFormat?: string;
 
     /** Tamanho da coluna em pixels. */
     width?: number;
