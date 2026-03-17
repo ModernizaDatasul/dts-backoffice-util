@@ -1,27 +1,27 @@
 {
     "name": "dts-backoffice-kendo-grid",
-    "version": "20.0.0",
+    "version": "21.0.0",
     "dependencies": {
         "tslib": "^2.3.0"
     },
     "peerDependencies": {
-        "@progress/kendo-angular-buttons": "^20.0.2",
-        "@progress/kendo-angular-common": "^20.0.2",
-        "@progress/kendo-angular-dateinputs": "^20.0.2",
-        "@progress/kendo-angular-dialog": "^20.0.2",
-        "@progress/kendo-angular-dropdowns": "^20.0.2",
-        "@progress/kendo-angular-excel-export": "^20.0.2",
-        "@progress/kendo-angular-grid": "^20.0.2",
-        "@progress/kendo-angular-inputs": "^20.0.2",
-        "@progress/kendo-angular-intl": "^20.0.2",
-        "@progress/kendo-angular-l10n": "^20.0.2",
-        "@progress/kendo-angular-label": "^20.0.2",
-        "@progress/kendo-angular-pdf-export": "^20.0.2",
-        "@progress/kendo-angular-popup": "^20.0.2",
-        "@progress/kendo-angular-treeview": "^20.0.2",
-        "@progress/kendo-data-query": "^1.7.1",
-        "@progress/kendo-drawing": "^1.21.2",
-        "@progress/kendo-licensing": "^1.7.0",
-        "@progress/kendo-theme-default": "^11.2.0"
+        "@progress/kendo-angular-buttons": "^21.3.0",
+        "@progress/kendo-angular-common": "^21.3.0",
+        "@progress/kendo-angular-dateinputs": "^21.3.0",
+        "@progress/kendo-angular-dialog": "^21.3.0",
+        "@progress/kendo-angular-dropdowns": "^21.3.0",
+        "@progress/kendo-angular-excel-export": "^21.3.0",
+        "@progress/kendo-angular-grid": "^21.3.0",
+        "@progress/kendo-angular-inputs": "^21.3.0",
+        "@progress/kendo-angular-intl": "^21.3.0",
+        "@progress/kendo-angular-l10n": "^21.3.0",
+        "@progress/kendo-angular-label": "^21.3.0",
+        "@progress/kendo-angular-pdf-export": "^21.3.0",
+        "@progress/kendo-angular-popup": "^21.3.0",
+        "@progress/kendo-angular-treeview": "^21.3.0",
+        "@progress/kendo-data-query": "^1.7.2",
+        "@progress/kendo-drawing": "^1.23.1",
+        "@progress/kendo-licensing": "^1.8.0",
+        "@progress/kendo-theme-default": "^12.3.0"
         }
 }

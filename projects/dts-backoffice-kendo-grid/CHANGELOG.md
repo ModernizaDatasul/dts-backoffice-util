@@ -1,5 +1,10 @@
 # Changelog
 
+**21.0.0 (16-03-2026):**
+
+Melhorias:
+- ATUALIZAÇÃO: **PO-UI v21** E **ANGULAR v21**.
+
 **20.0.0 (12-03-2026):**
 
 Melhorias:
