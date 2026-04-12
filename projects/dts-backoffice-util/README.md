@@ -12,7 +12,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 | PO-UI | Angular | Versão dtsBackofficeUtil |
 |-|-|-|
-| v17 | v17 | 17.1.0 |
+| v17 | v17 | 17.2.0 |
 | v16 | v16 | 16.1.0 |
 | v15 | v15 | 15.4.1 |
 | v14 | v14 | 14.4.1 |
@@ -28,7 +28,7 @@ Segue abaixo as últimas versões da Biblioteca, conforme a versão do PO-UI e A
 
 **Instalação do Pacote:**
 
-```
+```cmd
 npm install dts-backoffice-util
 ```
 
@@ -176,7 +176,7 @@ private loadLocalStorage(): void {
 }
 ```
 **Definições no Progress:**
-```
+```ts
 DEFINE TEMP-TABLE tt-param NO-UNDO
   FIELD destino AS INTEGER
   FIELD arquivo AS CHARACTER
@@ -208,6 +208,142 @@ IScheduleParameters
 | dayOfMonth | number | Dia do Mês<br>Frequência Mensal | |
 ---
 <br>
+
+## TotvsMapComponent
+<br>
+
+**Objetivo:** Componente para utilização de um mapa do Brasil interativo, que permite a seleção de um estado específico, que dispara um evento, pegando o estado selecionado.
+
+**Importação:** Importar o componente do mapa no módulo que será utilizado.
+
+```ts
+@NgModule({
+    declarations: [
+        ...
+    ],
+    imports: [
+        ...,
+        DtsBackofficeUtilsModule.forRoot()
+    ],
+    providers: [],
+    bootstrap: [...]
+})
+```
+
+**Parâmetros:**
+
+| Nome | Tipo | Obrigatório | Descrição |
+|-|-|-|-|
+| enabledStates | string[] | Não | Parâmetro que recebe uma lista de siglas de estados que devem ser habilitados no mapa, aqueles não que forem informados serão desabilitado. Se este parâmetro não for informado, todos os estados ficaram habilitados.<br>Se o parâmetro receber uma variável, sempre que o conteúdo dela for alterado, o mapa será atualizado automaticamente com o novo valor.
+| initialSelectedState | string | Não | Parâmetro para fornecer um estado a ser selecionado no mapa.<br>Se o parâmetro receber uma variável, sempre que o conteúdo dela for alterado, o mapa será atualizado automaticamente com o novo valor.
+| selectedStateEvent | EventEmitter | Sim | Evento disparado ao selecionar um estado do mapa.<br>**Parâmetros:**<br>- State: Responsável por receber do componente o estado selecionado. |
+---
+**Exemplo de Uso:**
+
+Para a utilização, basta chamar o componente no .HTML e fazer a definição no .TS do seu método.
+
+**Definições no HTML:**
+```html
+// EXEMPLO 
+<app-totvs-map
+   [enabledStates]="enabledStates"
+   [initialSelectedState]="initialSelectedState"
+   (selectedStateEvent)="selectedState($event)">
+</app-totvs-map>
+```
+
+**Definições no JavaScript:**
+```ts
+state: string;
+enabledStates: string[];
+initialSelectedState: string;
+
+searchTax(): void {
+    this.servTaxSubscription$ = this.servTax
+        .getTax()
+        .subscribe((response: ITotalTax) => {
+
+        if (response) {
+            ...
+            this.enabledStates = response.listStates;
+            this.initialSelectedState = response.listStates[0];
+        }
+    });
+}
+
+selectedState(state: string) {
+  this.state = state;
+}    
+```
+
+**Alterando as cores do mapa:**
+
+O mapa já possui as cores da TOTVS como padrão. Mas caso seja necessário alterar alguma cor, deve-se utilizar o código abaixo dentro do styles.css do projeto, alterando os valores.
+
+```css
+/* Cor padrão de um estado não selecionado */
+.defaultState {
+    fill: #0c6c94;
+}
+
+/* Cor padrão de um estado não selecionado, quando passar o mouse em cima*/
+.defaultState:hover {
+    fill: #29b5c4;
+    cursor: pointer;
+}
+
+/* Cor padrão de um estado pequeno (DF, ES, RJ) não selecionado */
+.defaultStateCircle {
+    fill: #0c6c94;
+}
+
+/* Cor padrão de um estado pequeno (DF, ES, RJ) não selecionado, quando passar o mouse em cima */
+.defaultStateCircle:hover {
+    fill: #29b5c4;
+    cursor: pointer;
+}
+
+/* Cor padrão de um estado desabilitado */
+.disabledState {
+    fill: grey !important;
+}
+
+/* Cor padrão de um estado selecionado */
+.selectedState {
+    fill: #29b5c4;
+}
+
+/* Cor padrão de um estado pequeno (DF, ES, RJ) selecionado */
+.selectedStateCircle {
+    fill: #29b5c4;
+}
+
+.disableEvents {
+    pointer-events: none;
+}
+
+/* Cor e fonte padrão do nome dos estados */
+.text {
+    fill: #fff;
+    font: 12px Arial-BoldMT, sans-serif;
+    cursor: pointer
+}
+
+/* Padrão do estado como um todo - estado + texto (que seria a tag <a>) */
+.stateWithText {
+    text-decoration: none
+}
+
+.stateWithText:hover {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Cor padrão ao passar o mouse em cima do estado como um todo - estado + texto */
+.stateWithText:hover .defaultState, .stateWithText:hover .defaultStateCircle {
+    fill: #29b5c4;
+}
+```
 
 # Pipes
 
@@ -673,7 +809,7 @@ followUpCallBack(execStatus: IExecutionStatus): boolean {
 }
 ```
 **Definições no Progress:**
-```
+```ts
 DEFINE TEMP-TABLE tt-param NO-UNDO
   FIELD destino AS INTEGER
   FIELD arquivo AS CHARACTER
@@ -950,7 +1086,7 @@ getQrCode(text: string): Observable<Blob> {
 }
 ```
 **Definições no Progress:**
-```
+```ts
 // Conteúdo do Método que BackEnd que retorna o Arquivo em Base64
 DEFINE VARIABLE v_dir_arq AS CHARACTER NO-UNDO.
 DEFINE VARIABLE v_cod_arq AS CHARACTER NO-UNDO.

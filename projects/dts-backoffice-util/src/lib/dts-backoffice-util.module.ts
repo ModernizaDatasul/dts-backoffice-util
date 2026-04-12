@@ -1,18 +1,22 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import {
-  TotvsScheduleExecutionComponent
-} from './components/totvs-schedule-execution/totvs-schedule-execution.component';
+import { TotvsScheduleExecutionComponent } from './components/totvs-schedule-execution/totvs-schedule-execution.component';
 import { FormsModule } from '@angular/forms';
-import { PoModule, PoI18nService } from '@po-ui/ng-components';
-import { HttpClientModule } from '@angular/common/http';
-// import { BrowserModule } from '@angular/platform-browser';
-import { TotvsScheduleExecutionService } from './components/totvs-schedule-execution/totvs-schedule-execution.service';
+import { PoModule } from '@po-ui/ng-components';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { TotvsScheduleExecutionService } from './components/totvs-schedule-execution/totvs-schedule-execution.service';
+import { TotvsMapComponent } from './components/totvs-map/totvs-map.component';
 import { DtsDateFormatPipe } from './pipes/dts-date-format.pipe';
 
 @NgModule({
   declarations: [
     TotvsScheduleExecutionComponent,
+    TotvsMapComponent,
+    DtsDateFormatPipe
+  ],
+  exports: [
+    TotvsScheduleExecutionComponent,
+    TotvsMapComponent,
     DtsDateFormatPipe
   ],
   imports: [
@@ -20,10 +24,6 @@ import { DtsDateFormatPipe } from './pipes/dts-date-format.pipe';
     PoModule,
     FormsModule,
     HttpClientModule
-  ],
-  exports: [
-    TotvsScheduleExecutionComponent,
-    DtsDateFormatPipe
   ],
   providers: [
     TotvsScheduleExecutionService

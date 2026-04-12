@@ -1,5 +1,10 @@
 # Changelog
 
+**17.2.0 (10-09-2024):**
+
+Melhorias:
+- **TotvsMapComponent** - Criação do componente que permite a inclusão de um mapa do Brasil interativo em tela, podendo selecionar um estado e disparar um evento. Também permite a customização do mapa, para que seja possível a alteração de suas cores.
+
 **17.1.0 (22-08-2024):**
 
 Melhorias:
