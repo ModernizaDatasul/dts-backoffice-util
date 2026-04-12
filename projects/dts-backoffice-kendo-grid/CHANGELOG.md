@@ -1,14 +1,19 @@
 # Changelog
 
-**21.0.0 (16-03-2026):**
+**21.0.0 / 21.0.1 (11-04-2026):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v21** E **ANGULAR v21**.
 
-**20.0.0 (12-03-2026):**
+**20.0.0 / 20.0.1 (11-04-2026):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v20** E **ANGULAR v20**.
+
+**19.1.0 (11-04-2026):**
+
+Correção:
+- Ajuste nas bibliotecas do Kendo-Grid.
 
 **19.0.1 (04-02-2025):**
 
