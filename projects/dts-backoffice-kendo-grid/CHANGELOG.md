@@ -1,5 +1,10 @@
 # Changelog
 
+**19.1.0 (11-04-2026):**
+
+Correção:
+- Ajuste nas bibliotecas do Kendo-Grid.
+
 **19.0.1 (04-02-2025):**
 
 Melhorias:
