@@ -49,7 +49,7 @@ Segue abaixo as dependência utilizadas e as respectivas **versões homologadas*
 | @progress/kendo-angular-popup | 3.0.6 | 5.0.2 | 12.1.0 | 14.3.0 | 16.4.0 |
 | @progress/kendo-angular-treeview | Não Usa | 7.1.5 | 12.1.0 | 14.3.0 | 16.4.0 |
 | @progress/kendo-data-query | 1.5.2 | 1.7.0 | 1.7.0 | 1.7.0 | 1.7.0 |
-| @progress/kendo-drawing | 1.9.1 | 1.19.0 | 1.19.0 | 1.19.0 | 1.20.0 |
+| @progress/kendo-drawing | 1.9.1 | 1.19.0 | 1.19.0 | 1.19.0 | 1.20.1 |
 | @progress/kendo-licensing | Não Usa | 1.3.3 | 1.3.3 | 1.3.3 | 1.3.3 |
 | @progress/kendo-theme-default | 2.63.0 | 6.7.0 | 6.7.0 | 6.7.0 | 8.2.1 |
 
