@@ -43,6 +43,7 @@ yarn-error.log
 testem.log
 /typings
 install-kendo.bat
+kendo-ui-license.txt
 
 # System Files
 .DS_Store
