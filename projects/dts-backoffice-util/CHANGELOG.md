@@ -1,6 +1,6 @@
 # Changelog
 
-**21.0.0 (16-03-2026):**
+**21.0.0 / 21.0.1 (16-03-2026):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v21** E **ANGULAR v21**.
@@ -40,20 +40,20 @@ Melhorias:
 Melhorias:
 - **TotvsMapComponent** - Alterado a estilização do mapa, permitindo o dev alterar todas as cores do mapa através de suas classes no arquivo styles.css do projeto.
 
-**18.2.0 / 18.2.1 (09-01-2025):**
+**18.1.0 / 18.2.0 / 18.2.1 (09-01-2025):**
 
 Melhorias:
 - **TotvsMapComponent** - Inclusão de dois novos parâmetros para utilização do mapa:<br>-**enabledStates**: recebe um array de strings com as siglas dos estados que devem estar habilitados no mapa. O estado que não for informado nesta lista terá os eventos de clique e seleção desabilitados e passará a ser cinza.<br>-**initialSelectedState**: possibilitar selecionar um estado do mapa ao inicializar o componente. Recebe uma string com a sigla do estado que será marcado.<br>Para melhor visualização do estado selecionado pelo usuário no mapa, o estado selecionado será destacado com a mesma cor apresentada ao passar o mouse sobre um estado.
-
-**18.1.0 (10-09-2024):**
-
-Melhorias:
-- **TotvsMapComponent** - Criação do componente que permite a inclusão de um mapa do Brasil interativo em tela, podendo selecionar um estado e disparar um evento. Também permite a customização do mapa, para que seja possível a alteração de suas cores.
 
 **18.0.0 (03-09-2024):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v18** E **ANGULAR v18**.
+
+**17.2.0 (10-09-2024):**
+
+Melhorias:
+- **TotvsMapComponent** - Criação do componente que permite a inclusão de um mapa do Brasil interativo em tela, podendo selecionar um estado e disparar um evento. Também permite a customização do mapa, para que seja possível a alteração de suas cores.
 
 **17.1.0 (22-08-2024):**
 
