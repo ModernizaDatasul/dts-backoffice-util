@@ -1,14 +1,29 @@
 # Changelog
 
+**21.1.0 (29-05-2026):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** e **TotvsScheduleExecutionService**: Passa a incluir automaticamente a propriedade **svUuidToken** nas requisições para serviço **jobScheduler**.
+
 **21.0.0 / 21.0.1 (16-03-2026):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v21** E **ANGULAR v21**.
 
+**20.1.0 (29-05-2026):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** e **TotvsScheduleExecutionService**: Passa a incluir automaticamente a propriedade **svUuidToken** nas requisições para serviço **jobScheduler**.
+
 **20.0.0 (12-03-2026):**
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v20** E **ANGULAR v20**.
+
+**19.5.0 (29-05-2026):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** e **TotvsScheduleExecutionService**: Passa a incluir automaticamente a propriedade **svUuidToken** nas requisições para serviço **jobScheduler**.
 
 **19.4.0 (18-02-2026):**
 
