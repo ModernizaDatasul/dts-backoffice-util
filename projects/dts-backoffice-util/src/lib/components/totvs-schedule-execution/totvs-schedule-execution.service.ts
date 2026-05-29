@@ -42,6 +42,10 @@ export class TotvsScheduleExecutionService {
     createExecution(parameters: object, loading: boolean): Observable<any> {
         const params = JSON.parse(JSON.stringify(parameters).replace(/\\\\/g, '*|'));
 
+        if (params) {
+            params.svUuidToken = this.getUuidAccessToken();
+        }
+
         if (loading) {
             return this.http.post(`${this.urlJobScheduler}`, params, this.headers);
         } else {
@@ -53,55 +57,49 @@ export class TotvsScheduleExecutionService {
         let jobScheduleParams: any;
         const date = new Date();
 
-        const params = JSON.parse(JSON.stringify(executionParams).replace(/\\\\/g, '*|'));
-
-        if (!params.programEMS5) { params.programEMS5 = false; }
-        if (!params.programStyle) { params.programStyle = 0; }
-        if (!params.programVersion) { params.programVersion = ''; }
-        if (!params.businessParams || params.businessParams.length === 0) {
-            params.businessParams = [{ chave: '', valor: '' }];
+        if (!executionParams.programEMS5) { executionParams.programEMS5 = false; }
+        if (!executionParams.programStyle) { executionParams.programStyle = 0; }
+        if (!executionParams.programVersion) { executionParams.programVersion = ''; }
+        if (!executionParams.businessParams || executionParams.businessParams.length === 0) {
+            executionParams.businessParams = [{ chave: '', valor: '' }];
         }
 
         jobScheduleParams = {};
         jobScheduleParams.status = 'active';
-        jobScheduleParams.processID = params.programName;
+        jobScheduleParams.processID = executionParams.programName;
         jobScheduleParams.firstExecution = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()}T${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}:00.000Z`;
         jobScheduleParams.recurrent = false;
 
         jobScheduleParams.executionParameter = {
             parametros: [
-                { chave: 'rpwServer', valor: params.executionServer },
-                { chave: 'RPW_PROGRAM', valor: params.externalName },
-                { chave: 'RPW_PRG_EMS5', valor: params.programEMS5 ? 'yes' : 'no' },
-                { chave: 'RPW_PRG_ESTILO', valor: params.programStyle },
-                { chave: 'RPW_PRG_VERS', valor: params.programVersion },
-                { parametros_negocio: params.businessParams }
+                { chave: 'rpwServer', valor: executionParams.executionServer },
+                { chave: 'RPW_PROGRAM', valor: executionParams.externalName },
+                { chave: 'RPW_PRG_EMS5', valor: executionParams.programEMS5 ? 'yes' : 'no' },
+                { chave: 'RPW_PRG_ESTILO', valor: executionParams.programStyle },
+                { chave: 'RPW_PRG_VERS', valor: executionParams.programVersion },
+                { parametros_negocio: executionParams.businessParams }
             ]
         };
 
-        if (params.paramDigitDef && params.paramDigitDef.length > 0) {
+        if (executionParams.paramDigitDef && executionParams.paramDigitDef.length > 0) {
             jobScheduleParams.executionParameter.parametros.push({
-                param_digita_def: params.paramDigitDef
+                param_digita_def: executionParams.paramDigitDef
             });
         }
 
-        if (params.paramDigitData && params.paramDigitData.length > 0) {
+        if (executionParams.paramDigitData && executionParams.paramDigitData.length > 0) {
             jobScheduleParams.executionParameter.parametros.push({
-                param_digita_dados: params.paramDigitData
+                param_digita_dados: executionParams.paramDigitData
             });
         }
 
-        if (params.paramSelections && params.paramSelections.length > 0) {
+        if (executionParams.paramSelections && executionParams.paramSelections.length > 0) {
             jobScheduleParams.executionParameter.parametros.push({
-                selecoes: params.paramSelections
+                selecoes: executionParams.paramSelections
             });
         }
 
-        if (loading) {
-            return this.http.post(`${this.urlJobScheduler}`, jobScheduleParams, this.headers);
-        } else {
-            return this.http.post(`${this.urlJobScheduler}`, jobScheduleParams);
-        }
+        return this.createExecution(jobScheduleParams, loading);
     }
 
     getExecutionByJobScheduleID(jobScheduleID: string, loading = false): Observable<IExecutionStatus> {
@@ -231,5 +229,18 @@ export class TotvsScheduleExecutionService {
         let str = `${num}`;
         if (num < 10) { str = `0${num}`; }
         return str;
+    }
+
+    private getUuidAccessToken(): string {
+        let tokenService = localStorage.getItem('token-service.token');
+        if (tokenService) {
+            let jsonTokenService = JSON.parse(tokenService);
+            let accessToken = jsonTokenService['access_token'];
+            let payload = accessToken.split(".");
+            let decodedAccessToken = atob(payload[1]);
+            let jsonDecodedAccessToken = JSON.parse(decodedAccessToken);
+            return jsonDecodedAccessToken['jti'];
+        }
+        return '';
     }
 }
