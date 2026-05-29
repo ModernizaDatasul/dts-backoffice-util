@@ -1,5 +1,10 @@
 # Changelog
 
+**19.5.0 (29-05-2026):**
+
+Melhorias:
+- **TotvsScheduleExecutionComponent** e **TotvsScheduleExecutionService**: Passa a incluir automaticamente a propriedade **svUuidToken** nas requisições para serviço **jobScheduler**.
+
 **19.4.0 (18-02-2026):**
 
 Melhorias:
