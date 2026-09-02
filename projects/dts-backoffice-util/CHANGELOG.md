@@ -1,5 +1,10 @@
 # Changelog
 
+**21.2.0 (02-09-2026):**
+
+Melhorias:
+- **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
+
 **21.1.0 (29-05-2026):**
 
 Melhorias:
@@ -10,6 +15,11 @@ Melhorias:
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v21** E **ANGULAR v21**.
 
+**20.2.0 (02-09-2026):**
+
+Melhorias:
+- **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
+
 **20.1.0 (29-05-2026):**
 
 Melhorias:
@@ -19,6 +29,11 @@ Melhorias:
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v20** E **ANGULAR v20**.
+
+**19.6.0 (02-09-2026):**
+
+Melhorias:
+- **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
 
 **19.5.0 (29-05-2026):**
 
@@ -55,10 +70,15 @@ Melhorias:
 Melhorias:
 - **TotvsMapComponent** - Alterado a estilização do mapa, permitindo o dev alterar todas as cores do mapa através de suas classes no arquivo styles.css do projeto.
 
-**18.1.0 / 18.2.0 / 18.2.1 (09-01-2025):**
+**18.2.0 / 18.2.1 (09-01-2025):**
 
 Melhorias:
 - **TotvsMapComponent** - Inclusão de dois novos parâmetros para utilização do mapa:<br>-**enabledStates**: recebe um array de strings com as siglas dos estados que devem estar habilitados no mapa. O estado que não for informado nesta lista terá os eventos de clique e seleção desabilitados e passará a ser cinza.<br>-**initialSelectedState**: possibilitar selecionar um estado do mapa ao inicializar o componente. Recebe uma string com a sigla do estado que será marcado.<br>Para melhor visualização do estado selecionado pelo usuário no mapa, o estado selecionado será destacado com a mesma cor apresentada ao passar o mouse sobre um estado.
+
+**18.1.0 (10-09-2024):**
+
+Melhorias:
+- **TotvsMapComponent** - Criação do componente que permite a inclusão de um mapa do Brasil interativo em tela, podendo selecionar um estado e disparar um evento. Também permite a customização do mapa, para que seja possível a alteração de suas cores.
 
 **18.0.0 (03-09-2024):**
 
