@@ -38,6 +38,15 @@ export class MenuDatasulService {
     }
 
     private openHTMLProgram(type: string, HTMLProgram: string, params: any, parent: boolean): void {
+        const backendType = sessionStorage.getItem('totvs.product.backend.type');
+        if (backendType === 'DSS') {
+            this.openOnDSS(type, HTMLProgram, params, parent);
+        } else {
+            this.openOnDTS4THF(type, HTMLProgram, params, parent);
+        }
+    }
+
+    private openOnDTS4THF(type: string, HTMLProgram: string, params: any, parent: boolean): void {
         const datasulPath = document.referrer.indexOf('totvs-menu') > 0 ? 'totvs-menu' : 'menu-html';
 
         HTMLProgram = HTMLProgram.replace(/\\/g, '/');
@@ -53,9 +62,35 @@ export class MenuDatasulService {
 
         if (params) {
             if (baseUrl.charAt(baseUrl.length - 1) === '/') { baseUrl = baseUrl.slice(0, -1); }
-            baseUrl = `${baseUrl}/#/${params}`;
+            if (type === 'THF2') {
+                baseUrl = `${baseUrl}/#`;
+            }
+            baseUrl = `${baseUrl}/${params}`;
         }
 
+        this.openWindow(baseUrl, parent);
+    }
+
+    private openOnDSS(type: string, HTMLProgram: string, params: any, parent: boolean): void {
+        let baseUrl = `${HTMLProgram}`;
+        if (params) {
+            baseUrl = `${baseUrl}/${params}`;
+        }
+
+        try {
+            if (window.top && typeof (window.top as any).navigateSmartX === 'function') {
+                (window.top as any).navigateSmartX(baseUrl);
+            } else {
+                // Se falhar e precisar do window.open, a barra na frente e o smart-x
+                // são necessários para o navegador não emendar na URL atual do iframe
+                this.openWindow(`/smart-x/${baseUrl}`, parent);
+            }
+        } catch (e) {
+            this.openWindow(`/smart-x/${baseUrl}`, parent);
+        }
+    }
+
+    private openWindow(baseUrl: string, parent: boolean): void {
         if (parent) {
             window.open(baseUrl, '_parent');
         } else {
@@ -83,7 +118,7 @@ export class MenuDatasulService {
 
         const aRequest = [];
         programList.forEach(programSearch => {
-            aRequest.push(this.http.post<Object>(this.urlMenuPrograms, { search: programSearch }));
+            aRequest.push(this.http.post<Object>(this.urlMenuPrograms, this.getPayloadSearchProg(programSearch)));
         });
 
         return forkJoin(aRequest).pipe(
@@ -117,6 +152,10 @@ export class MenuDatasulService {
                 return responseReturn;
             })
         );
+    }
+
+    private getPayloadSearchProg(programSearch: string): object {
+        return { 'codModul': null, 'search': programSearch, 'typeProg': '4,3,1,2', 'groupAplicat': [] };
     }
 }
 
