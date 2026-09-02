@@ -1,5 +1,10 @@
 # Changelog
 
+**19.6.0 (02-09-2026):**
+
+Melhorias:
+- **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
+
 **19.5.0 (29-05-2026):**
 
 Melhorias:
