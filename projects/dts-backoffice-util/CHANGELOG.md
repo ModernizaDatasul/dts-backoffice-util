@@ -1,6 +1,9 @@
 # Changelog
 
-**19.6.0 (02-09-2026):**
+**19.6.0 / 19.6.1 (03-09-2026):**
+
+Correção:
+- **UserLoginService**: Alterado para buscar o usuário corrente de **sessionStorage**.
 
 Melhorias:
 - **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
@@ -54,6 +57,11 @@ Melhorias:
 
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v18** E **ANGULAR v18**.
+
+**17.2.0 (10-09-2024):**
+
+Melhorias:
+- **TotvsMapComponent** - Criação do componente que permite a inclusão de um mapa do Brasil interativo em tela, podendo selecionar um estado e disparar um evento. Também permite a customização do mapa, para que seja possível a alteração de suas cores.
 
 **17.1.0 (22-08-2024):**
 
