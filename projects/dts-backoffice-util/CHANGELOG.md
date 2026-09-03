@@ -1,6 +1,9 @@
 # Changelog
 
-**21.2.0 (02-09-2026):**
+**21.2.0 / 21.2.1 (03-09-2026):**
+
+Correção:
+- **UserLoginService**: Alterado para buscar o usuário corrente de **sessionStorage**.
 
 Melhorias:
 - **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
@@ -15,7 +18,10 @@ Melhorias:
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v21** E **ANGULAR v21**.
 
-**20.2.0 (02-09-2026):**
+**20.2.0 / 20.2.1 (03-09-2026):**
+
+Correção:
+- **UserLoginService**: Alterado para buscar o usuário corrente de **sessionStorage**.
 
 Melhorias:
 - **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
@@ -30,7 +36,10 @@ Melhorias:
 Melhorias:
 - ATUALIZAÇÃO: **PO-UI v20** E **ANGULAR v20**.
 
-**19.6.0 (02-09-2026):**
+**19.6.0 / 19.6.1 (03-09-2026):**
+
+Correção:
+- **UserLoginService**: Alterado para buscar o usuário corrente de **sessionStorage**.
 
 Melhorias:
 - **MenuDatasulService**: Alterado os métodos **openPath** e **openTHF** para funcionar no **DTS4THF** e no **DSS**. Não há impacto para quem está utilizando os métodos, a alteração é transparente.
